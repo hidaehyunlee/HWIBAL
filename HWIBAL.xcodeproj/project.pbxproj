@@ -72,11 +72,11 @@
 		DEFE39FE2AD53C3A0076FE11 /* HWIBAL */ = {
 			isa = PBXGroup;
 			children = (
+				DEFE3A0D2AD53C3B0076FE11 /* Info.plist */,
 				DEFE3A2E2AD542CF0076FE11 /* Models */,
 				DEFE3A262AD541D50076FE11 /* Controllers */,
 				DEFE3A142AD53EB30076FE11 /* Views */,
 				DEFE3A132AD53E720076FE11 /* Resources */,
-				DEFE3A0D2AD53C3B0076FE11 /* Info.plist */,
 			);
 			path = HWIBAL;
 			sourceTree = "<group>";
