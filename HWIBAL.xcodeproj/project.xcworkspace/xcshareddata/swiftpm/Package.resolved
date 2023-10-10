@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "autocleaner",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftarium/AutoCleaner.git",
+      "state" : {
+        "revision" : "e2612fb66683b5e3b98053ca799527e6a8ab7684",
+        "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "eventbus",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftarium/EventBus.git",
+      "state" : {
+        "revision" : "083274660833b4313b8209474cdd8a6fd417a882",
+        "version" : "1.1.2"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "state" : {
+        "revision" : "f222cbdf325885926566172f6f5f06af95473158",
+        "version" : "5.6.0"
+      }
+    },
+    {
+      "identity" : "weakref",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftarium/WeakRef.git",
+      "state" : {
+        "revision" : "b464717e3d6c47b63df96209f7ba2023d66b6c2e",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 2
+}
