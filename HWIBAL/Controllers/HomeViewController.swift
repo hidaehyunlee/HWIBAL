@@ -16,6 +16,8 @@ final class HomeViewController: RootViewController<HomeView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initializeUI()
+        
         EventBus.shared.on(PushToMyPageScreenEvent.self, by: self) { listener, _ in
             listener.navigationController?.pushViewController(MyPageViewController(), animated: true)
         }
@@ -23,11 +25,11 @@ final class HomeViewController: RootViewController<HomeView> {
 }
 
 private extension HomeViewController {
-    func setup() {
+    func initializeUI() {
         
         // MARK: - Navigation Setting
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-            backBarButtonItem.tintColor = .black
-            self.navigationItem.backBarButtonItem = backBarButtonItem
+        backBarButtonItem.tintColor = ColorGuide.main
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
 }
