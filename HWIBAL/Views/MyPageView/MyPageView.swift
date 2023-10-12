@@ -161,7 +161,7 @@ final class MyPageView: UIView, RootView {
     
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(SettingCustomCell.self, forCellReuseIdentifier: SettingCustomCell.identifier)
+        tableView.register(MyPageCustomCell.self, forCellReuseIdentifier: MyPageCustomCell.identifier)
         return tableView
     }()
     
