@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-final class SettingView: UIView, RootView {
+final class MyPageView: UIView, RootView {
     private lazy var label = {
         let label = UILabel()
         label.text = "MyPage Screen"
