@@ -12,6 +12,8 @@
 		3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */; };
 		3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */; };
 		3F783A212AD7DFBB0024D692 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A1B2AD7DFBB0024D692 /* User+CoreDataClass.swift */; };
+		DED6E5A72AD8ECA50025A545 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5A62AD8ECA50025A545 /* SignInView.swift */; };
+		DED6E5A92AD8ECC30025A545 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */; };
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
@@ -31,6 +33,8 @@
 		3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A1B2AD7DFBB0024D692 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DED6E5A62AD8ECA50025A545 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +63,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DED6E5A32AD8EC7D0025A545 /* SignInView */ = {
+			isa = PBXGroup;
+			children = (
+				DED6E5A62AD8ECA50025A545 /* SignInView.swift */,
+			);
+			path = SignInView;
+			sourceTree = "<group>";
+		};
 		DEFE39F32AD53C3A0076FE11 = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +113,7 @@
 		DEFE3A142AD53EB30076FE11 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DED6E5A32AD8EC7D0025A545 /* SignInView */,
 				DEFE3A232AD5415F0076FE11 /* MyPageView */,
 				DEFE3A1D2AD540140076FE11 /* HomeView */,
 				DEFE3A152AD53EE80076FE11 /* Shared */,
@@ -140,6 +153,7 @@
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
+				DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -248,6 +262,8 @@
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
 				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
+				DED6E5A92AD8ECC30025A545 /* SignInViewController.swift in Sources */,
+				DED6E5A72AD8ECA50025A545 /* SignInView.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
