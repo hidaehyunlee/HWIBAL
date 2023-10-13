@@ -88,7 +88,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             let days = ["1일", "2일", "3일", "4일", "5일", "6일", "일주일"]
             for day in days {
                 let action = UIAlertAction(title: day, style: .default) { _ in
-                    print("\(day)일 후 감쓰를 태워 드립니다.")
+                    print("\(day) 후 감쓰를 태워 드립니다.")
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
                         cell.updateDateLabel(day)

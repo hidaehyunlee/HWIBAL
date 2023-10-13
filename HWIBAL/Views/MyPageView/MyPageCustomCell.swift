@@ -41,7 +41,6 @@ class MyPageCustomCell: UITableViewCell {
 
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = ColorGuide.textHint
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
