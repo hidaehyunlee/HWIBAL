@@ -19,6 +19,7 @@
 		3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A2C2AD8C4750024D692 /* ReportViewController.swift */; };
 		3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A2E2AD8C81D0024D692 /* MainButton.swift */; };
 		3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A302AD8E76B0024D692 /* CloseButton.swift */; };
+		3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A322AD8EA7E0024D692 /* CircleButton.swift */; };
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 		3F783A2C2AD8C4750024D692 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		3F783A2E2AD8C81D0024D692 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		3F783A302AD8E76B0024D692 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		3F783A322AD8EA7E0024D692 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			children = (
 				DEFE3A162AD53F3C0076FE11 /* RootView.swift */,
 				3F783A2E2AD8C81D0024D692 /* MainButton.swift */,
+				3F783A322AD8EA7E0024D692 /* CircleButton.swift */,
 				3F783A302AD8E76B0024D692 /* CloseButton.swift */,
 			);
 			path = Shared;
@@ -269,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */,
 				DEFE3A172AD53F3C0076FE11 /* RootView.swift in Sources */,
 				DEFE3A2D2AD5429D0076FE11 /* MyPageViewController.swift in Sources */,
 				3F783A242AD805330024D692 /* ColorGuide.swift in Sources */,
