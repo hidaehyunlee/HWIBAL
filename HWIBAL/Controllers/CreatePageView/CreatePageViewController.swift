@@ -5,19 +5,15 @@
 //  Created by 김도윤 on 2023/10/12.
 //
 
-// CreatePageViewController.swift
-
-// CreatePageViewController
 import UIKit
 
 class CreatePageViewController: UIViewController {
-
     let createPageView = CreatePageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
-        view.addSubview(createPageView)
+        self.setupNavigationBar()
+        view.addSubview(self.createPageView)
         self.view.backgroundColor = UIColor.white
     }
 
@@ -28,7 +24,7 @@ class CreatePageViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 0.94)
 
         let titleColor = UIColor(red: 115/255, green: 78/255, blue: 247/255, alpha: 1)
-        
+
         let leftItem = UIBarButtonItem(title: "취소", style: .plain, target: nil, action: nil)
         leftItem.tintColor = titleColor
         self.navigationItem.leftBarButtonItem = leftItem
@@ -47,7 +43,6 @@ class CreatePageViewController: UIViewController {
             .paragraphStyle: paragraphStyle
         ]
 
-        // Custom titleLabel with padding
         let titleLabel = UILabel()
         titleLabel.attributedText = NSAttributedString(string: "감정 쓰레기", attributes: titleAttributes)
         titleLabel.backgroundColor = .clear
@@ -71,6 +66,6 @@ class CreatePageViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        createPageView.frame = view.bounds
+        self.createPageView.frame = view.bounds
     }
 }

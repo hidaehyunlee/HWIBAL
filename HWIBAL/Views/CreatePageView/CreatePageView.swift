@@ -5,15 +5,17 @@
 //  Created by 김도윤 on 2023/10/13.
 //
 
-// CreatePageView.swift
-
 import UIKit
 
 class CreatePageView: UIView {
     let bgView = UIView()
     let dateLabel = UILabel()
     let counterLabel = UILabel()
-    let imageView = UIImageView()
+    let firstImageView = UIImageView()
+    let secondImageView = UIImageView()
+    let thirdImageView = UIImageView()
+    let soundImageView = UIImageView()
+    let cameraImageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,7 +46,7 @@ class CreatePageView: UIView {
         
         // Counter Label
         counterLabel.alpha = 0.2
-        counterLabel.textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        counterLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         counterLabel.font = UIFont(name: "Inter-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .bold)
         let paragraphStyle2 = NSMutableParagraphStyle()
         paragraphStyle2.lineHeightMultiple = 1.03
@@ -53,8 +55,26 @@ class CreatePageView: UIView {
         addSubview(counterLabel)
         
         if let image = UIImage(named: "create페이지 사진.png") {
-            imageView.image = image
-            addSubview(imageView)
+            firstImageView.image = image
+            addSubview(firstImageView)
+        }
+        
+        if let secondImage = UIImage(named: "동그라미.png") {
+            secondImageView.image = secondImage
+            addSubview(secondImageView)
+            
+            thirdImageView.image = secondImage
+            addSubview(thirdImageView)
+        }
+        
+        if let soundImage = UIImage(named: "음성.png") {
+            soundImageView.image = soundImage
+            addSubview(soundImageView)
+        }
+        
+        if let cameraImage = UIImage(named: "카메라.png") {
+            cameraImageView.image = cameraImage
+            addSubview(cameraImageView)
         }
     }
     
@@ -71,8 +91,6 @@ class CreatePageView: UIView {
         bgView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 168)
         bgView.backgroundColor = UIColor(red: 60/60, green: 60/60, blue: 67/67, alpha: 0.36)
         
-        
-        // Adjusting dateLabel's position and size
         dateLabel.frame = CGRect(x: 123, y: bgView.frame.maxY - 25 - 20, width: 148, height: 20)
         
         counterLabel.frame = CGRect(x: bounds.width - 45 - 55, y: bgView.frame.maxY + 467, width: 55, height: 20)
@@ -84,6 +102,30 @@ class CreatePageView: UIView {
         let imageWidth: CGFloat = 241
         let imageHeight: CGFloat = 150.02
         let imageY = bounds.height - imageHeight - 31.98
-        imageView.frame = CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight)
+        firstImageView.frame = CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight)
+        
+        let secondImageX: CGFloat = 74
+        let secondImageWidth: CGFloat = 36
+        let secondImageHeight: CGFloat = 36
+        let secondImageY = bounds.height - secondImageHeight - 32
+        secondImageView.frame = CGRect(x: secondImageX, y: secondImageY, width: secondImageWidth, height: secondImageHeight)
+        
+        let thirdImageX: CGFloat = 25
+        let thirdImageWidth: CGFloat = 36
+        let thirdImageHeight: CGFloat = 36
+        let thirdImageY = bounds.height - secondImageHeight - 32
+        thirdImageView.frame = CGRect(x: thirdImageX, y: thirdImageY, width: secondImageWidth, height: secondImageHeight)
+        
+        let soundImageX: CGFloat = 83
+        let soundImageWidth: CGFloat = 19
+        let soundImageHeight: CGFloat = 19
+        let soundImageY = bounds.height - soundImageHeight - 40
+        soundImageView.frame = CGRect(x: soundImageX, y: soundImageY, width: soundImageWidth, height: soundImageHeight)
+        
+        let cameraImageX: CGFloat = 33
+        let cameraImageWidth: CGFloat = 20
+        let cameraImageHeight: CGFloat = 20
+        let cameraImageY = bounds.height - cameraImageHeight - 40
+        cameraImageView.frame = CGRect(x: cameraImageX, y: cameraImageY, width: cameraImageWidth, height: cameraImageHeight)
     }
 }

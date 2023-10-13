@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
 		07D18F782AD8D83B0080FACA /* CreatePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F772AD8D83B0080FACA /* CreatePageView.swift */; };
+		07D18F7A2AD9482C0080FACA /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F792AD9482C0080FACA /* AlertView.swift */; };
+		07D18F7C2AD948450080FACA /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F7B2AD948450080FACA /* AlertViewController.swift */; };
 		3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F14EA8D2AD55E6C0047CE34 /* SnapKit */; };
 		3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */; };
 		3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */; };
@@ -31,6 +33,8 @@
 /* Begin PBXFileReference section */
 		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
 		07D18F772AD8D83B0080FACA /* CreatePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageView.swift; sourceTree = "<group>"; };
+		07D18F792AD9482C0080FACA /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		07D18F7B2AD948450080FACA /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		3F783A092AD7DC1A0024D692 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				DEFE3A162AD53F3C0076FE11 /* RootView.swift */,
+				07D18F792AD9482C0080FACA /* AlertView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				DEFE3A272AD541FB0076FE11 /* RootViewController.swift */,
+				07D18F7B2AD948450080FACA /* AlertViewController.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -270,11 +276,13 @@
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
 				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
+				07D18F7C2AD948450080FACA /* AlertViewController.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
 				3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */,
 				3F783A212AD7DFBB0024D692 /* User+CoreDataClass.swift in Sources */,
+				07D18F7A2AD9482C0080FACA /* AlertView.swift in Sources */,
 				07D18F782AD8D83B0080FACA /* CreatePageView.swift in Sources */,
 				07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */,
 			);
