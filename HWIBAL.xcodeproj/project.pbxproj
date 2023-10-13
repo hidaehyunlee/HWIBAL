@@ -18,6 +18,14 @@
 		DED6E5AE2AD8EF4D0025A545 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DED6E5AD2AD8EF4D0025A545 /* GoogleSignInSwift */; };
 		DED6E5B12AD905850025A545 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5B02AD905850025A545 /* CoreDataManager.swift */; };
 		DED6E5B32AD905B70025A545 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5B22AD905B70025A545 /* UserService.swift */; };
+		3F783A242AD805330024D692 /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A232AD805330024D692 /* ColorGuide.swift */; };
+		3F783A262AD8053D0024D692 /* FontGiude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A252AD8053D0024D692 /* FontGiude.swift */; };
+		3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A272AD8090E0024D692 /* MyPageCustomCell.swift */; };
+		3F783A2A2AD8C41B0024D692 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A292AD8C41B0024D692 /* ReportView.swift */; };
+		3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A2C2AD8C4750024D692 /* ReportViewController.swift */; };
+		3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A2E2AD8C81D0024D692 /* MainButton.swift */; };
+		3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A302AD8E76B0024D692 /* CloseButton.swift */; };
+		3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A322AD8EA7E0024D692 /* CircleButton.swift */; };
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
@@ -41,6 +49,14 @@
 		DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DED6E5B02AD905850025A545 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DED6E5B22AD905B70025A545 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		3F783A232AD805330024D692 /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
+		3F783A252AD8053D0024D692 /* FontGiude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGiude.swift; sourceTree = "<group>"; };
+		3F783A272AD8090E0024D692 /* MyPageCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCustomCell.swift; sourceTree = "<group>"; };
+		3F783A292AD8C41B0024D692 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		3F783A2C2AD8C4750024D692 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		3F783A2E2AD8C81D0024D692 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
+		3F783A302AD8E76B0024D692 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		3F783A322AD8EA7E0024D692 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +102,12 @@
 				DED6E5B22AD905B70025A545 /* UserService.swift */,
 			);
 			path = Services;
+		3F783A2B2AD8C4210024D692 /* ReportView */ = {
+			isa = PBXGroup;
+			children = (
+				3F783A292AD8C41B0024D692 /* ReportView.swift */,
+			);
+			path = ReportView;
 			sourceTree = "<group>";
 		};
 		DEFE39F32AD53C3A0076FE11 = {
@@ -124,6 +146,8 @@
 				DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */,
 				DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */,
 				DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */,
+				3F783A232AD805330024D692 /* ColorGuide.swift */,
+				3F783A252AD8053D0024D692 /* FontGiude.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -132,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				DED6E5A32AD8EC7D0025A545 /* SignInView */,
+				3F783A2B2AD8C4210024D692 /* ReportView */,
 				DEFE3A232AD5415F0076FE11 /* MyPageView */,
 				DEFE3A1D2AD540140076FE11 /* HomeView */,
 				DEFE3A152AD53EE80076FE11 /* Shared */,
@@ -144,6 +169,9 @@
 			isa = PBXGroup;
 			children = (
 				DEFE3A162AD53F3C0076FE11 /* RootView.swift */,
+				3F783A2E2AD8C81D0024D692 /* MainButton.swift */,
+				3F783A322AD8EA7E0024D692 /* CircleButton.swift */,
+				3F783A302AD8E76B0024D692 /* CloseButton.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -160,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				DEFE3A242AD541820076FE11 /* MyPageView.swift */,
+				3F783A272AD8090E0024D692 /* MyPageCustomCell.swift */,
 			);
 			path = MyPageView;
 			sourceTree = "<group>";
@@ -168,8 +197,9 @@
 			isa = PBXGroup;
 			children = (
 				DEFE3A292AD5420A0076FE11 /* Shared */,
-				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
+				3F783A2C2AD8C4750024D692 /* ReportViewController.swift */,
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
+				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
 				DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */,
 			);
@@ -275,19 +305,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */,
 				DEFE3A172AD53F3C0076FE11 /* RootView.swift in Sources */,
 				DEFE3A2D2AD5429D0076FE11 /* MyPageViewController.swift in Sources */,
+				3F783A242AD805330024D692 /* ColorGuide.swift in Sources */,
 				DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */,
 				DEFE3A2B2AD542300076FE11 /* HomeViewController.swift in Sources */,
+				3F783A262AD8053D0024D692 /* FontGiude.swift in Sources */,
 				DEFE3A1F2AD5402C0076FE11 /* HomeView.swift in Sources */,
+				3F783A2A2AD8C41B0024D692 /* ReportView.swift in Sources */,
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
 				DED6E5B32AD905B70025A545 /* UserService.swift in Sources */,
 				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
+				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
 				DED6E5A92AD8ECC30025A545 /* SignInViewController.swift in Sources */,
 				DED6E5A72AD8ECA50025A545 /* SignInView.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
+				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
+				3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */,
+				3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
 				3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */,
 				DED6E5B12AD905850025A545 /* CoreDataManager.swift in Sources */,
