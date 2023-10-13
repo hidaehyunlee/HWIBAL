@@ -86,8 +86,8 @@ final class HomeView: UIView, RootView {
     }
 
     private func myPageButton() {
-        let userIconView = UIImageView(image: UIImage(systemName: "person.fill"))
-        userIconView.tintColor = UIColor(red: 0.451, green: 0.305, blue: 0.968, alpha: 1.0)
+        let userIconView = UIImageView(image: UIImage(named: "user"))
+        userIconView.contentMode = .scaleAspectFit
 
         let userButton = UIBarButtonItem(customView: userIconView)
         viewController?.navigationItem.rightBarButtonItem = userButton
