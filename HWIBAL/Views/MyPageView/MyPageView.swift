@@ -9,6 +9,9 @@ import SnapKit
 import UIKit
 
 final class MyPageView: UIView, RootView {
+    var totalEmotionTrashCount = 234
+    var averageEmotionTrashCount = 100
+    
     private let reportSummuryView: UIView = {
         let view = UIView()
         view.backgroundColor = ColorGuide.main
@@ -18,75 +21,26 @@ final class MyPageView: UIView, RootView {
         return view
     }()
     
-    private let firstTitle: UILabel = {
+    private lazy var reportSummuryTitle: UILabel = {
         let label = UILabel()
-        label.text = "가입 이후 작성한"
+        label.text = """
+                     가입 이후 작성한
+                     감쓰 \(self.totalEmotionTrashCount)개
+                     """
         label.font = FontGuide.size24Bold
         label.textColor = .white
         label.textAlignment = .left
+        label.numberOfLines = 2
         label.snp.makeConstraints { make in
             make.width.equalTo(162)
-            make.height.equalTo(29)
+            make.height.equalTo(60)
         }
         return label
     }()
     
-    private let secondTitle: UILabel = {
+    private lazy var reportSummurySubTitle: UILabel = {
         let label = UILabel()
-        label.text = "감쓰"
-        label.font = FontGuide.size24Bold
-        label.textColor = .white
-        label.textAlignment = .left
-        label.snp.makeConstraints { make in
-            make.width.equalTo(44)
-            make.height.equalTo(29)
-        }
-        return label
-    }()
-    
-    private let totalEmotionTrashCount: UILabel = {
-        let label = UILabel()
-        label.text = "234"
-        label.font = FontGuide.size24Bold
-        label.textColor = .white
-        label.textAlignment = .left
-        label.snp.makeConstraints { make in
-            make.height.equalTo(29)
-        }
-        return label
-    }()
-    
-    private let unitTitle: UILabel = {
-        let label = UILabel()
-        label.text = "개"
-        label.font = FontGuide.size24Bold
-        label.textColor = .white
-        label.textAlignment = .left
-        label.snp.makeConstraints { make in
-            make.height.equalTo(29)
-        }
-        return label
-    }()
-    
-    private lazy var titleStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [secondTitle, totalEmotionTrashCount, unitTitle])
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 5
-        return stackView
-    }()
-    
-    private lazy var reportSummuryTitle: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [firstTitle, titleStackView])
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.spacing = 0
-        return stackView
-    }()
-    
-    private let firstSubTitle: UILabel = {
-        let label = UILabel()
-        label.text = "평균보다"
+        label.text = "평균보다 \(self.averageEmotionTrashCount)개 더 썼어요"
         label.font = FontGuide.size14
         label.textColor = .white
         label.textAlignment = .left
@@ -94,38 +48,6 @@ final class MyPageView: UIView, RootView {
             make.height.equalTo(17)
         }
         return label
-    }()
-    
-    private let averageEmotionTrashCount: UILabel = {
-        let label = UILabel()
-        label.text = "100"
-        label.font = FontGuide.size14
-        label.textColor = .white
-        label.textAlignment = .left
-        label.snp.makeConstraints { make in
-            make.height.equalTo(17)
-        }
-        return label
-    }()
-    
-    private let secondSubTitle: UILabel = {
-        let label = UILabel()
-        label.text = "개 더 썼어요"
-        label.font = FontGuide.size14
-        label.textColor = .white
-        label.textAlignment = .left
-        label.snp.makeConstraints { make in
-            make.height.equalTo(17)
-        }
-        return label
-    }()
-    
-    private lazy var reportSummurySubTitle: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [firstSubTitle, averageEmotionTrashCount, secondSubTitle])
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 5
-        return stackView
     }()
     
     private let moreTitle: UILabel = {
