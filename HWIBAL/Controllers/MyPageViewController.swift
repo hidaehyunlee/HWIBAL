@@ -34,14 +34,22 @@ private extension MyPageViewController {
         let logoutItem = SettingItem(type: .logout, title: "로그아웃", icon: UIImage(named: ">"), isSwitchOn: false)
         settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
-        // MARK: - addTaget
+        // MARK: - Action
         myPageView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        myPageView.reportSummuryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
     }
 }
 
 private extension MyPageViewController {
     @objc func cancelButtonTapped() {
         print("🫵 클릭: 회원탈퇴")
+    }
+    
+    @objc func myPageToReport() {
+        let reportVC = ReportViewController()
+        reportVC.modalPresentationStyle = .fullScreen
+        present(reportVC, animated: true, completion: nil)
+        print("🫵 클릭: 리포트 더보기")
     }
 }
 

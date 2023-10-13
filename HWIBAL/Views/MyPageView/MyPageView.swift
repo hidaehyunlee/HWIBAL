@@ -12,7 +12,7 @@ final class MyPageView: UIView, RootView {
     var totalEmotionTrashCount = 234
     var averageEmotionTrashCount = 100
     
-    private let reportSummuryView: UIView = {
+    let reportSummuryView: UIView = {
         let view = UIView()
         view.backgroundColor = ColorGuide.main
         view.layer.cornerRadius = 12
