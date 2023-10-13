@@ -71,11 +71,11 @@ final class HomeView: UIView, RootView {
     private func setupConstraints() {
         if let safeAreaLayoutGuide = viewController?.view.safeAreaLayoutGuide {
             titleLabel1.snp.makeConstraints { make in
-                make.top.equalTo(safeAreaLayoutGuide).offset(10)
+                make.top.equalTo(safeAreaLayoutGuide)
                 make.left.equalTo(40)
             }
             titleLabel2.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel1.snp.bottom).offset(0)
+                make.top.equalTo(titleLabel1.snp.bottom)
                 make.left.equalTo(40)
             }
             hwibariImage.snp.makeConstraints { make in
