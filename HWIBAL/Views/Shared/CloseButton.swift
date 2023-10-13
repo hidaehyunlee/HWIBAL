@@ -10,10 +10,21 @@ import UIKit
 import SnapKit
 
 class CloseButton: UIButton {
-    init() {
+    enum ButtonColor {
+        case white
+        case black
+    }
+    
+    init(color: ButtonColor) {
         super.init(frame: .zero)
-        setImage(UIImage(named: "close"), for: .normal)
-        tintColor = ColorGuide.black
+        let closeImage = UIImage(named: "close")?.withRenderingMode(.alwaysTemplate)
+        setImage(closeImage, for: .normal)
+        switch color {
+        case .white:
+            tintColor = .white
+        case .black:
+            tintColor = .black
+        }
         snp.makeConstraints { make in
             make.width.height.equalTo(24)
         }
