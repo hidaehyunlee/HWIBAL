@@ -10,7 +10,7 @@ import UIKit
 
 final class MyPageView: UIView, RootView {
     var totalEmotionTrashCount = 234
-    var averageEmotionTrashCount = 100
+    var averageEmotionTrashCount = 134
     
     let reportSummuryView: UIView = {
         let view = UIView()
@@ -40,7 +40,7 @@ final class MyPageView: UIView, RootView {
     
     private lazy var reportSummurySubTitle: UILabel = {
         let label = UILabel()
-        label.text = "평균보다 \(self.averageEmotionTrashCount)개 더 썼어요"
+        label.text = "평균보다 \(self.totalEmotionTrashCount - self.averageEmotionTrashCount)개 더 썼어요"
         label.font = FontGuide.size14
         label.textColor = .white
         label.textAlignment = .left
@@ -106,7 +106,7 @@ final class MyPageView: UIView, RootView {
         reportSummuryView.snp.makeConstraints { make in
             make.top.equalTo(layoutMarginsGuide.snp.top).offset(50)
             make.centerX.equalToSuperview()
-            make.width.equalTo(345)
+            make.width.equalTo(343)
             make.height.equalTo(161)
         }
         
