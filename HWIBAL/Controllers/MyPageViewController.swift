@@ -33,6 +33,15 @@ private extension MyPageViewController {
         let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발일 설정", icon: UIImage(named: ">"), isSwitchOn: false)
         let logoutItem = SettingItem(type: .logout, title: "로그아웃", icon: UIImage(named: ">"), isSwitchOn: false)
         settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
+        
+        // MARK: - addTaget
+        myPageView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+    }
+}
+
+private extension MyPageViewController {
+    @objc func cancelButtonTapped() {
+        print("🫵 클릭: 회원탈퇴")
     }
 }
 

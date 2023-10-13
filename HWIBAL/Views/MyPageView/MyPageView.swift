@@ -165,21 +165,7 @@ final class MyPageView: UIView, RootView {
         return tableView
     }()
     
-    let cancelButton: UIButton = {
-        let button = UIButton()
-        let attributedText = NSAttributedString(string: "회원탈퇴", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
-        button.setAttributedTitle(attributedText, for: .normal)
-        button.titleLabel?.font = FontGuide.size16
-        button.setTitleColor(ColorGuide.black, for: .normal)
-        button.backgroundColor = .white
-        button.layer.borderColor = ColorGuide.inputLine.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 4
-        button.snp.makeConstraints { make in
-            make.height.equalTo(56)
-        }
-        return button
-    }()
+    let cancelButton = MainButton(type: .withdrawal)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
