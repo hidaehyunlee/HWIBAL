@@ -12,6 +12,12 @@
 		3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */; };
 		3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */; };
 		3F783A212AD7DFBB0024D692 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A1B2AD7DFBB0024D692 /* User+CoreDataClass.swift */; };
+		DED6E5A72AD8ECA50025A545 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5A62AD8ECA50025A545 /* SignInView.swift */; };
+		DED6E5A92AD8ECC30025A545 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */; };
+		DED6E5AC2AD8EF4D0025A545 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DED6E5AB2AD8EF4D0025A545 /* GoogleSignIn */; };
+		DED6E5AE2AD8EF4D0025A545 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DED6E5AD2AD8EF4D0025A545 /* GoogleSignInSwift */; };
+		DED6E5B12AD905850025A545 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5B02AD905850025A545 /* CoreDataManager.swift */; };
+		DED6E5B32AD905B70025A545 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5B22AD905B70025A545 /* UserService.swift */; };
 		3F783A242AD805330024D692 /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A232AD805330024D692 /* ColorGuide.swift */; };
 		3F783A262AD8053D0024D692 /* FontGiude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A252AD8053D0024D692 /* FontGiude.swift */; };
 		3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A272AD8090E0024D692 /* MyPageCustomCell.swift */; };
@@ -39,6 +45,10 @@
 		3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A1B2AD7DFBB0024D692 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DED6E5A62AD8ECA50025A545 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		DED6E5B02AD905850025A545 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		DED6E5B22AD905B70025A545 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		3F783A232AD805330024D692 /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		3F783A252AD8053D0024D692 /* FontGiude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGiude.swift; sourceTree = "<group>"; };
 		3F783A272AD8090E0024D692 /* MyPageCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCustomCell.swift; sourceTree = "<group>"; };
@@ -69,12 +79,29 @@
 			files = (
 				DEFE3A222AD541250076FE11 /* EventBus in Frameworks */,
 				3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */,
+				DED6E5AC2AD8EF4D0025A545 /* GoogleSignIn in Frameworks */,
+				DED6E5AE2AD8EF4D0025A545 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DED6E5A32AD8EC7D0025A545 /* SignInView */ = {
+			isa = PBXGroup;
+			children = (
+				DED6E5A62AD8ECA50025A545 /* SignInView.swift */,
+			);
+			path = SignInView;
+			sourceTree = "<group>";
+		};
+		DED6E5AF2AD905500025A545 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DED6E5B02AD905850025A545 /* CoreDataManager.swift */,
+				DED6E5B22AD905B70025A545 /* UserService.swift */,
+			);
+			path = Services;
 		3F783A2B2AD8C4210024D692 /* ReportView */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +130,7 @@
 		DEFE39FE2AD53C3A0076FE11 /* HWIBAL */ = {
 			isa = PBXGroup;
 			children = (
+				DED6E5AF2AD905500025A545 /* Services */,
 				DEFE3A0D2AD53C3B0076FE11 /* Info.plist */,
 				DEFE3A2E2AD542CF0076FE11 /* Models */,
 				DEFE3A262AD541D50076FE11 /* Controllers */,
@@ -127,6 +155,7 @@
 		DEFE3A142AD53EB30076FE11 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DED6E5A32AD8EC7D0025A545 /* SignInView */,
 				3F783A2B2AD8C4210024D692 /* ReportView */,
 				DEFE3A232AD5415F0076FE11 /* MyPageView */,
 				DEFE3A1D2AD540140076FE11 /* HomeView */,
@@ -172,6 +201,7 @@
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
+				DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -213,6 +243,8 @@
 			packageProductDependencies = (
 				DEFE3A212AD541250076FE11 /* EventBus */,
 				3F14EA8D2AD55E6C0047CE34 /* SnapKit */,
+				DED6E5AB2AD8EF4D0025A545 /* GoogleSignIn */,
+				DED6E5AD2AD8EF4D0025A545 /* GoogleSignInSwift */,
 			);
 			productName = HWIBAL;
 			productReference = DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */;
@@ -245,6 +277,7 @@
 			packageReferences = (
 				DEFE3A202AD541250076FE11 /* XCRemoteSwiftPackageReference "EventBus" */,
 				3F14EA8C2AD55E6C0047CE34 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				DED6E5AA2AD8EF4D0025A545 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = DEFE39FD2AD53C3A0076FE11 /* Products */;
 			projectDirPath = "";
@@ -282,9 +315,12 @@
 				DEFE3A1F2AD5402C0076FE11 /* HomeView.swift in Sources */,
 				3F783A2A2AD8C41B0024D692 /* ReportView.swift in Sources */,
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
+				DED6E5B32AD905B70025A545 /* UserService.swift in Sources */,
 				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
+				DED6E5A92AD8ECC30025A545 /* SignInViewController.swift in Sources */,
+				DED6E5A72AD8ECA50025A545 /* SignInView.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
@@ -292,6 +328,7 @@
 				3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
 				3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */,
+				DED6E5B12AD905850025A545 /* CoreDataManager.swift in Sources */,
 				3F783A212AD7DFBB0024D692 /* User+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,6 +554,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		DED6E5AA2AD8EF4D0025A545 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		DEFE3A202AD541250076FE11 /* XCRemoteSwiftPackageReference "EventBus" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/swiftarium/EventBus.git";
@@ -532,6 +577,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3F14EA8C2AD55E6C0047CE34 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		DED6E5AB2AD8EF4D0025A545 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DED6E5AA2AD8EF4D0025A545 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		DED6E5AD2AD8EF4D0025A545 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DED6E5AA2AD8EF4D0025A545 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		DEFE3A212AD541250076FE11 /* EventBus */ = {
 			isa = XCSwiftPackageProductDependency;
