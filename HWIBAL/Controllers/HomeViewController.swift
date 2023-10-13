@@ -17,7 +17,15 @@ final class HomeViewController: RootViewController<HomeView> {
         super.viewDidLoad()
 
         EventBus.shared.on(PushToMyPageScreenEvent.self, by: self) { listener, _ in
-            listener.navigationController?.pushViewController(MyPageViewController(), animated: true)
+            let createPageVC = CreatePageViewController()
+            let navigationController = UINavigationController(rootViewController: createPageVC)
+            listener.present(navigationController, animated: true, completion: nil)
         }
     }
 }
+
+
+
+
+
+
