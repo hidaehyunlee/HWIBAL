@@ -20,6 +20,18 @@ class MyPageCustomCell: UITableViewCell {
         }
         return label
     }()
+    
+    var dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "일주일"
+        label.textAlignment = .right
+        label.font = FontGuide.size16
+        label.textColor = ColorGuide.textHint
+        label.snp.makeConstraints { make in
+            make.height.equalTo(20)
+        }
+        return label
+    }()
 
     let switchControl: UISwitch = {
         let switchControl = UISwitch()
@@ -29,6 +41,7 @@ class MyPageCustomCell: UITableViewCell {
 
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.tintColor = ColorGuide.textHint
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -40,10 +53,17 @@ class MyPageCustomCell: UITableViewCell {
         case .autoLogin:
             switchControl.isHidden = false
             iconImageView.isHidden = true
+            dateLabel.isHidden = true
             switchControl.isOn = settingItem.isSwitchOn
-        case .autoVolatilizationDate, .logout:
+        case .autoVolatilizationDate:
             switchControl.isHidden = true
             iconImageView.isHidden = false
+            dateLabel.isHidden = false
+            iconImageView.image = settingItem.icon
+        case .logout:
+            switchControl.isHidden = true
+            iconImageView.isHidden = false
+            dateLabel.isHidden = true
             iconImageView.image = settingItem.icon
         }
         initializeUI()
@@ -68,5 +88,16 @@ class MyPageCustomCell: UITableViewCell {
             make.trailing.equalToSuperview().offset(-30)
             make.width.height.equalTo(24)
         }
+        
+        contentView.addSubview(dateLabel)
+        dateLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalTo(iconImageView.snp.leading).offset(-10)
+            make.width.equalTo(44)
+        }
+    }
+    
+    func updateDateLabel(_ text: String) {
+        dateLabel.text = text
     }
 }
