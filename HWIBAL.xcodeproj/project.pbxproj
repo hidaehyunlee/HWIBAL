@@ -16,6 +16,8 @@
 		DED6E5A92AD8ECC30025A545 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */; };
 		DED6E5AC2AD8EF4D0025A545 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DED6E5AB2AD8EF4D0025A545 /* GoogleSignIn */; };
 		DED6E5AE2AD8EF4D0025A545 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DED6E5AD2AD8EF4D0025A545 /* GoogleSignInSwift */; };
+		DED6E5B12AD905850025A545 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5B02AD905850025A545 /* CoreDataManager.swift */; };
+		DED6E5B32AD905B70025A545 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED6E5B22AD905B70025A545 /* UserService.swift */; };
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
@@ -37,6 +39,8 @@
 		3F783A1B2AD7DFBB0024D692 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DED6E5A62AD8ECA50025A545 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		DED6E5A82AD8ECC30025A545 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		DED6E5B02AD905850025A545 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		DED6E5B22AD905B70025A545 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +79,15 @@
 			path = SignInView;
 			sourceTree = "<group>";
 		};
+		DED6E5AF2AD905500025A545 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DED6E5B02AD905850025A545 /* CoreDataManager.swift */,
+				DED6E5B22AD905B70025A545 /* UserService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		DEFE39F32AD53C3A0076FE11 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +108,7 @@
 		DEFE39FE2AD53C3A0076FE11 /* HWIBAL */ = {
 			isa = PBXGroup;
 			children = (
+				DED6E5AF2AD905500025A545 /* Services */,
 				DEFE3A0D2AD53C3B0076FE11 /* Info.plist */,
 				DEFE3A2E2AD542CF0076FE11 /* Models */,
 				DEFE3A262AD541D50076FE11 /* Controllers */,
@@ -267,6 +281,7 @@
 				DEFE3A2B2AD542300076FE11 /* HomeViewController.swift in Sources */,
 				DEFE3A1F2AD5402C0076FE11 /* HomeView.swift in Sources */,
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
+				DED6E5B32AD905B70025A545 /* UserService.swift in Sources */,
 				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
 				DED6E5A92AD8ECC30025A545 /* SignInViewController.swift in Sources */,
@@ -275,6 +290,7 @@
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
 				3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */,
+				DED6E5B12AD905850025A545 /* CoreDataManager.swift in Sources */,
 				3F783A212AD7DFBB0024D692 /* User+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

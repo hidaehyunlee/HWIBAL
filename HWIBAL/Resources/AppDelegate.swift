@@ -6,11 +6,20 @@
 //
 
 import CoreData
+import GoogleSignIn
 import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // 사용자의 로그인 상태 복원 시도 관리
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            if error != nil || user == nil {
+                // Show the app's signed-out state.
+            } else {
+                // Show the app's signed-in state.
+            }
+        }
         return true
     }
 
@@ -29,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
+    
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
+        return GIDSignIn.sharedInstance.handle(url)
+    }
 
     func saveContext() {
         let context = persistentContainer.viewContext

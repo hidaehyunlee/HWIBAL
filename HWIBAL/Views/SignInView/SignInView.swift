@@ -5,24 +5,35 @@
 //  Created by daelee on 10/13/23.
 //
 
+import GoogleSignIn
 import SnapKit
 import UIKit
 
 final class SignInView: UIView, RootView {
-    private lazy var label = {
-        let label = UILabel()
-        label.text = "SignInView Screen"
-        label.sizeToFit()
-        return label
+    var onGoogleSignInTapped: (() -> Void)?
+
+    private let googleSignInButton: GIDSignInButton = {
+        let button = GIDSignInButton()
+
+        button.colorScheme = .light
+        button.style = .wide
+
+        return button
     }()
 
     func initializeUI() {
         backgroundColor = .systemBackground
 
-        addSubview(label)
+        addSubview(googleSignInButton)
         
-        label.snp.makeConstraints { make in
+        googleSignInButton.addTarget(self, action: #selector(handleGoogleSignIn), for: .touchUpInside)
+        googleSignInButton.snp.makeConstraints { make in
             make.center.equalTo(self)
         }
+    }
+
+    @objc
+    private func handleGoogleSignIn() {
+        onGoogleSignInTapped?()
     }
 }
