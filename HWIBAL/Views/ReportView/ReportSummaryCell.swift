@@ -62,7 +62,7 @@ class ReportSummaryCell: UICollectionViewCell {
         
         chartView.rightAxis.enabled = false
         chartView.legend.enabled = false
-        chartView.animate(xAxisDuration: 2, yAxisDuration: 2)
+        chartView.animate(xAxisDuration: 2, yAxisDuration: 2, easingOption: .easeInBack)
         chartView.snp.makeConstraints { make in
             make.width.equalTo(295)
         }
