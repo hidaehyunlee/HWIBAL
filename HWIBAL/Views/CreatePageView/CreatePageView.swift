@@ -2,7 +2,7 @@
 //  CreatePageView.swift
 //  HWIBAL
 //
-//  Created by 김도윤 on 2023/10/13.
+//  Created by 김도윤 on 2023/10/16.
 //
 
 import UIKit
@@ -166,3 +166,4 @@ class CreatePageView: UIView, UITextViewDelegate {
         )
     }
 }
+
