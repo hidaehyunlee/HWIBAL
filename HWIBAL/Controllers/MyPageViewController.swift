@@ -36,7 +36,7 @@ private extension MyPageViewController {
         
         // MARK: - Action
         rootView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        rootView.reportSummuryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
+        rootView.reportSummaryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
     }
 }
 

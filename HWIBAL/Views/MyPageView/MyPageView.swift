@@ -12,7 +12,7 @@ final class MyPageView: UIView, RootView {
     var totalEmotionTrashCount = 234
     var averageEmotionTrashCount = 134
     
-    let reportSummuryView: UIView = {
+    let reportSummaryView: UIView = {
         let view = UIView()
         view.backgroundColor = ColorGuide.main
         view.layer.cornerRadius = 12
@@ -21,7 +21,7 @@ final class MyPageView: UIView, RootView {
         return view
     }()
     
-    private lazy var reportSummuryTitle: UILabel = {
+    private lazy var reportSummaryTitle: UILabel = {
         let label = UILabel()
         label.text = """
                      가입 이후 작성한
@@ -38,7 +38,7 @@ final class MyPageView: UIView, RootView {
         return label
     }()
     
-    private lazy var reportSummurySubTitle: UILabel = {
+    private lazy var reportSummarySubTitle: UILabel = {
         let label = UILabel()
         label.text = "평균보다 \(self.totalEmotionTrashCount - self.averageEmotionTrashCount)개 더 썼어요"
         label.font = FontGuide.size14
@@ -102,35 +102,35 @@ final class MyPageView: UIView, RootView {
     func initializeUI() {
         backgroundColor = .systemBackground
         
-        addSubview(reportSummuryView)
-        reportSummuryView.snp.makeConstraints { make in
+        addSubview(reportSummaryView)
+        reportSummaryView.snp.makeConstraints { make in
             make.top.equalTo(layoutMarginsGuide.snp.top).offset(50)
             make.centerX.equalToSuperview()
             make.width.equalTo(343)
             make.height.equalTo(161)
         }
         
-        reportSummuryView.addSubview(reportSummuryTitle)
-        reportSummuryTitle.snp.makeConstraints { make in
-            make.top.equalTo(reportSummuryView.snp.top).offset(30)
-            make.leading.equalTo(reportSummuryView.snp.leading).offset(25)
+        reportSummaryView.addSubview(reportSummaryTitle)
+        reportSummaryTitle.snp.makeConstraints { make in
+            make.top.equalTo(reportSummaryView.snp.top).offset(30)
+            make.leading.equalTo(reportSummaryView.snp.leading).offset(25)
         }
         
-        reportSummuryView.addSubview(reportSummurySubTitle)
-        reportSummurySubTitle.snp.makeConstraints { make in
-            make.top.equalTo(reportSummuryTitle.snp.bottom).offset(7)
-            make.leading.equalTo(reportSummuryView.snp.leading).offset(25)
+        reportSummaryView.addSubview(reportSummarySubTitle)
+        reportSummarySubTitle.snp.makeConstraints { make in
+            make.top.equalTo(reportSummaryTitle.snp.bottom).offset(7)
+            make.leading.equalTo(reportSummaryView.snp.leading).offset(25)
         }
         
-        reportSummuryView.addSubview(moreInfo)
+        reportSummaryView.addSubview(moreInfo)
         moreInfo.snp.makeConstraints { make in
-            make.bottom.equalTo(reportSummuryView.snp.bottom).offset(-16)
-            make.trailing.equalTo(reportSummuryView.snp.trailing).offset(-10)
+            make.bottom.equalTo(reportSummaryView.snp.bottom).offset(-16)
+            make.trailing.equalTo(reportSummaryView.snp.trailing).offset(-10)
         }
         
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(reportSummuryView.snp.bottom).offset(50)
+            make.top.equalTo(reportSummaryView.snp.bottom).offset(50)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(200)
