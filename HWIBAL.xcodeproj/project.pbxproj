@@ -20,8 +20,10 @@
 		3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A2E2AD8C81D0024D692 /* MainButton.swift */; };
 		3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A302AD8E76B0024D692 /* CloseButton.swift */; };
 		3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A322AD8EA7E0024D692 /* CircleButton.swift */; };
-		3F783A352AD931C70024D692 /* ReportCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A342AD931C70024D692 /* ReportCustomCell.swift */; };
+		3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A342AD931C70024D692 /* ReportSummaryCell.swift */; };
 		3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9445582ADCDE4B0003DCD4 /* DGCharts */; };
+		3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */; };
+		3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
 		DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */; };
 		DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */; };
@@ -55,7 +57,9 @@
 		3F783A2E2AD8C81D0024D692 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		3F783A302AD8E76B0024D692 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		3F783A322AD8EA7E0024D692 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
-		3F783A342AD931C70024D692 /* ReportCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCustomCell.swift; sourceTree = "<group>"; };
+		3F783A342AD931C70024D692 /* ReportSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSummaryCell.swift; sourceTree = "<group>"; };
+		3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDayOfTheWeekCell.swift; sourceTree = "<group>"; };
+		3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimeZoneCell.swift; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -95,7 +99,9 @@
 			isa = PBXGroup;
 			children = (
 				3F783A292AD8C41B0024D692 /* ReportView.swift */,
-				3F783A342AD931C70024D692 /* ReportCustomCell.swift */,
+				3F783A342AD931C70024D692 /* ReportSummaryCell.swift */,
+				3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */,
+				3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */,
 			);
 			path = ReportView;
 			sourceTree = "<group>";
@@ -323,7 +329,8 @@
 				3F783A262AD8053D0024D692 /* FontGiude.swift in Sources */,
 				DE434DF92ADCCDF500C77FE4 /* UserService.swift in Sources */,
 				DEFE3A1F2AD5402C0076FE11 /* HomeView.swift in Sources */,
-				3F783A352AD931C70024D692 /* ReportCustomCell.swift in Sources */,
+				3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */,
+				3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */,
 				DE434E002ADCCE5200C77FE4 /* SignInView.swift in Sources */,
 				3F783A2A2AD8C41B0024D692 /* ReportView.swift in Sources */,
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
@@ -336,6 +343,7 @@
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */,
 				3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */,
+				3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */,
 				DE434DFB2ADCCE0F00C77FE4 /* SignInViewController.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
 				3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */,

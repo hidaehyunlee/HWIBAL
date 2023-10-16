@@ -25,10 +25,10 @@ private extension ReportViewController {
         reportView.collectionView.dataSource = self
         reportView.collectionView.delegate = self
         
-        let totalCountReportItem = ReportPage(type: .totalCountReport, title: "", subTitle: "")
-        let dayOfTheWeekReportItem = ReportPage(type: .dayOfTheWeekReport, title: "", subTitle: "")
-        let hourlyReportItem = ReportPage(type: .hourlyReport, title: "", subTitle: "")
-        ReportPageItems = [totalCountReportItem, dayOfTheWeekReportItem, hourlyReportItem]
+        let summaryReportItem = ReportPage(type: .summaryReport)
+        let dayOfTheWeekReportItem = ReportPage(type: .dayOfTheWeekReport)
+        let hourlyReportItem = ReportPage(type: .hourlyReport)
+        ReportPageItems = [summaryReportItem, dayOfTheWeekReportItem, hourlyReportItem]
         
         reportView.closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
     }
@@ -44,9 +44,24 @@ extension ReportViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReportCustomCell.identifier, for: indexPath) as! ReportCustomCell
-        let totalCountReport = ReportPageItems[indexPath.row]
-        cell.configure(totalCountReport)
+        let reportPage = ReportPageItems[indexPath.row]
+        var cell: UICollectionViewCell
+
+        switch reportPage.type {
+        case .summaryReport:
+            let totalCountCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReportSummaryCell.identifier, for: indexPath) as! ReportSummaryCell
+            totalCountCell.configure()
+            cell = totalCountCell
+        case .dayOfTheWeekReport:
+            let dayOfTheWeekCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReportDayOfTheWeekCell.identifier, for: indexPath) as! ReportDayOfTheWeekCell
+            dayOfTheWeekCell.configure()
+            cell = dayOfTheWeekCell
+        case .hourlyReport:
+            let timeZoneCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReportTimeZoneCell.identifier, for: indexPath) as! ReportTimeZoneCell
+            timeZoneCell.configure()
+            cell = timeZoneCell
+        }
+        
         cell.layer.cornerRadius = 12
         cell.layer.masksToBounds = true
         return cell
@@ -65,19 +80,15 @@ extension ReportViewController: UICollectionViewDelegateFlowLayout {
 
 struct ReportPage {
     enum ItemType {
-        case totalCountReport
+        case summaryReport
         case dayOfTheWeekReport
         case hourlyReport
     }
 
     let type: ItemType
-    let title: String
-    let subTitle: String
 
-    init(type: ItemType, title: String, subTitle: String) {
+    init(type: ItemType) {
         self.type = type
-        self.title = title
-        self.subTitle = subTitle
     }
 }
 

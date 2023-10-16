@@ -60,7 +60,9 @@ final class ReportView: UIView, RootView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .black
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(ReportCustomCell.self, forCellWithReuseIdentifier: ReportCustomCell.identifier)
+        collectionView.register(ReportSummaryCell.self, forCellWithReuseIdentifier: ReportSummaryCell.identifier)
+        collectionView.register(ReportDayOfTheWeekCell.self, forCellWithReuseIdentifier: ReportDayOfTheWeekCell.identifier)
+        collectionView.register(ReportTimeZoneCell.self, forCellWithReuseIdentifier: ReportTimeZoneCell.identifier)
         return collectionView
     }()
     
