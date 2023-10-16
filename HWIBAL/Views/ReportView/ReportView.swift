@@ -16,26 +16,9 @@ final class ReportView: UIView, RootView {
     
     let goToFirstButton: UIButton = {
         let button = UIButton()
-        if let image = UIImage(named: "up") {
-            let title = "맨 위로"
-            
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .center
-            
-            let attributes: [NSAttributedString.Key: Any] = [
-                .paragraphStyle: paragraphStyle
-            ]
-        
-            let attributedString = NSMutableAttributedString(string: "\(title) ", attributes: attributes)
-            
-            let imageAttachment = NSTextAttachment()
-            imageAttachment.image = image
-            let imageString = NSAttributedString(attachment: imageAttachment)
-            
-            attributedString.append(imageString)
-            
-            button.setAttributedTitle(attributedString, for: .normal)
-        }
+        button.setTitle("맨 위로 ", for: .normal)
+        button.setImage(UIImage(named: "up"), for: .normal)
+        button.semanticContentAttribute = .forceRightToLeft
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = FontGuide.size14Bold
         button.backgroundColor = ColorGuide.subButton

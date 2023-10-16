@@ -113,13 +113,13 @@ final class MyPageView: UIView, RootView {
         reportSummuryView.addSubview(reportSummuryTitle)
         reportSummuryTitle.snp.makeConstraints { make in
             make.top.equalTo(reportSummuryView.snp.top).offset(30)
-            make.leading.equalTo(reportSummuryView.snp.leading).offset(24)
+            make.leading.equalTo(reportSummuryView.snp.leading).offset(25)
         }
         
         reportSummuryView.addSubview(reportSummurySubTitle)
         reportSummurySubTitle.snp.makeConstraints { make in
             make.top.equalTo(reportSummuryTitle.snp.bottom).offset(7)
-            make.leading.equalTo(reportSummuryView.snp.leading).offset(24)
+            make.leading.equalTo(reportSummuryView.snp.leading).offset(25)
         }
         
         reportSummuryView.addSubview(moreInfo)

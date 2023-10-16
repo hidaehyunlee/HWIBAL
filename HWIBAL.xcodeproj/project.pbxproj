@@ -21,6 +21,7 @@
 		3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A302AD8E76B0024D692 /* CloseButton.swift */; };
 		3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A322AD8EA7E0024D692 /* CircleButton.swift */; };
 		3F783A352AD931C70024D692 /* ReportCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A342AD931C70024D692 /* ReportCustomCell.swift */; };
+		3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9445582ADCDE4B0003DCD4 /* DGCharts */; };
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEFE3A222AD541250076FE11 /* EventBus in Frameworks */,
+				3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */,
 				3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,6 +218,7 @@
 			packageProductDependencies = (
 				DEFE3A212AD541250076FE11 /* EventBus */,
 				3F14EA8D2AD55E6C0047CE34 /* SnapKit */,
+				3F9445582ADCDE4B0003DCD4 /* DGCharts */,
 			);
 			productName = HWIBAL;
 			productReference = DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */;
@@ -248,6 +251,7 @@
 			packageReferences = (
 				DEFE3A202AD541250076FE11 /* XCRemoteSwiftPackageReference "EventBus" */,
 				3F14EA8C2AD55E6C0047CE34 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				3F9445572ADCDE4B0003DCD4 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = DEFE39FD2AD53C3A0076FE11 /* Products */;
 			projectDirPath = "";
@@ -466,6 +470,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TMQF6RX33C;
@@ -483,6 +488,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hidaehuynlee.HWIBAL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -521,6 +527,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		3F9445572ADCDE4B0003DCD4 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		DEFE3A202AD541250076FE11 /* XCRemoteSwiftPackageReference "EventBus" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/swiftarium/EventBus.git";
@@ -536,6 +550,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3F14EA8C2AD55E6C0047CE34 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		3F9445582ADCDE4B0003DCD4 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F9445572ADCDE4B0003DCD4 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
 		};
 		DEFE3A212AD541250076FE11 /* EventBus */ = {
 			isa = XCSwiftPackageProductDependency;

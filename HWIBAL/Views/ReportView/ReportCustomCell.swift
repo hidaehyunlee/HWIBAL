@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Charts
 
 class ReportCustomCell: UICollectionViewCell {
     static let identifier = "reportCustomCell"
@@ -18,8 +19,6 @@ class ReportCustomCell: UICollectionViewCell {
     private let view: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-//        view.layer.cornerRadius = 12
-//        view.clipsToBounds = true
         return view
     }()
     
