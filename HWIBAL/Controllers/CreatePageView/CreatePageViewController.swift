@@ -15,6 +15,7 @@ class CreatePageViewController: UIViewController {
         self.setupNavigationBar()
         view.addSubview(self.createPageView)
         self.view.backgroundColor = UIColor.white
+        self.createPageView.textView.becomeFirstResponder()
     }
 
     func setupNavigationBar() {
@@ -54,9 +55,10 @@ class CreatePageViewController: UIViewController {
 
         let titleViewHeight = self.navigationController?.navigationBar.bounds.height ?? 44.0
 
-        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: titleLabel.frame.width + leftPadding + rightPadding, height: titleViewHeight))
-        titleLabel.frame.origin = CGPoint(x: leftPadding, y: titleViewHeight - titleLabel.frame.height - bottomPadding)
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: titleLabel.frame.width, height: titleViewHeight))
+        titleLabel.frame.origin = CGPoint(x: 0, y: titleViewHeight - titleLabel.frame.height - bottomPadding)
         titleView.addSubview(titleLabel)
+        
 
         self.navigationItem.titleView = titleView
 

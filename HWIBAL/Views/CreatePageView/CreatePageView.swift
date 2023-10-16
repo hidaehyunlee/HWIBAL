@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreatePageView: UIView {
+class CreatePageView: UIView, UITextViewDelegate {
     let bgView = UIView()
     let dateLabel = UILabel()
     let counterLabel = UILabel()
@@ -16,6 +16,9 @@ class CreatePageView: UIView {
     let thirdImageView = UIImageView()
     let soundImageView = UIImageView()
     let cameraImageView = UIImageView()
+    let textView = UITextView()
+
+    let paragraphStyle2 = NSMutableParagraphStyle()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,8 +51,11 @@ class CreatePageView: UIView {
         counterLabel.alpha = 0.2
         counterLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         counterLabel.font = UIFont(name: "Inter-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .bold)
-        let paragraphStyle2 = NSMutableParagraphStyle()
+        
         paragraphStyle2.lineHeightMultiple = 1.03
+        counterLabel.alpha = 0.2
+        counterLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        counterLabel.font = UIFont(name: "Inter-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .bold)
         counterLabel.textAlignment = .right
         counterLabel.attributedText = NSMutableAttributedString(string: "0 / 300", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle2])
         addSubview(counterLabel)
@@ -76,6 +82,23 @@ class CreatePageView: UIView {
             cameraImageView.image = cameraImage
             addSubview(cameraImageView)
         }
+        textView.delegate = self
+        textView.backgroundColor = .white
+        textView.layer.cornerRadius = 5
+        textView.font = UIFont.systemFont(ofSize: 14)
+        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        addSubview(textView)
+    }
+    
+    @objc func textViewDidChange(_ textView: UITextView) {
+        if let text = textView.text {
+            counterLabel.attributedText = NSMutableAttributedString(string: "\(text.count) / 300", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle2])
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text! as NSString).replacingCharacters(in: range, with: text)
+        return newText.count <= 300
     }
     
     func getCurrentDateString() -> String {
@@ -93,7 +116,7 @@ class CreatePageView: UIView {
         
         dateLabel.frame = CGRect(x: 123, y: bgView.frame.maxY - 25 - 20, width: 148, height: 20)
         
-        counterLabel.frame = CGRect(x: bounds.width - 45 - 55, y: bgView.frame.maxY + 467, width: 55, height: 20)
+        counterLabel.frame = CGRect(x: bounds.width - 45 - 55, y: bgView.frame.maxY + 467, width: 70, height: 20)
         counterLabel.alpha = 0.2
         let counterLabelY = bounds.height - 197
         counterLabel.frame.origin.y = counterLabelY - counterLabel.frame.height
@@ -127,5 +150,19 @@ class CreatePageView: UIView {
         let cameraImageHeight: CGFloat = 20
         let cameraImageY = bounds.height - cameraImageHeight - 40
         cameraImageView.frame = CGRect(x: cameraImageX, y: cameraImageY, width: cameraImageWidth, height: cameraImageHeight)
+        
+        textView.frame = CGRect(x: dateLabel.frame.origin.x, y: dateLabel.frame.maxY + 10, width: bounds.width - 40, height: 30)
+        
+        let textViewPaddingHorizontal: CGFloat = 16
+        let textViewPaddingVertical: CGFloat = 10
+        let textViewWidth = bounds.width - 2 * textViewPaddingHorizontal
+        let textViewHeight: CGFloat = 400 // Set this to your desired height or dynamic height
+        
+        textView.frame = CGRect(
+            x: textViewPaddingHorizontal,
+            y: dateLabel.frame.maxY + textViewPaddingVertical,
+            width: textViewWidth,
+            height: textViewHeight
+        )
     }
 }
