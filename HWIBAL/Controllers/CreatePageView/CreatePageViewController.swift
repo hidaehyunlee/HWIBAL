@@ -26,11 +26,11 @@ class CreatePageViewController: UIViewController {
 
         let titleColor = UIColor(red: 115/255, green: 78/255, blue: 247/255, alpha: 1)
 
-        let leftItem = UIBarButtonItem(title: "취소", style: .plain, target: nil, action: nil)
+        let leftItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(showAlert))
         leftItem.tintColor = titleColor
         self.navigationItem.leftBarButtonItem = leftItem
 
-        let rightItem = UIBarButtonItem(title: "작성", style: .plain, target: nil, action: nil)
+        let rightItem = UIBarButtonItem(title: "작성", style: .plain, target: self, action: #selector(showAlert))
         rightItem.tintColor = titleColor
         self.navigationItem.rightBarButtonItem = rightItem
 
@@ -64,6 +64,11 @@ class CreatePageViewController: UIViewController {
 
         self.navigationController?.navigationBar.largeTitleTextAttributes = titleAttributes
         self.navigationController?.navigationBar.titleTextAttributes = titleAttributes
+    }
+    
+    @objc func showAlert() {
+        let alertVC = AlertViewController(title: "아,휘발", message: "이 작업을 수행하시겠습니까?")
+        self.present(alertVC, animated: true, completion: nil)
     }
 
     override func viewWillLayoutSubviews() {
