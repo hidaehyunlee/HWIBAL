@@ -22,13 +22,13 @@ final class SignInView: UIView, RootView {
         let label = UILabel()
 
         label.text = "아, 휘발\n나만의 안전한 공간"
-        label.textColor = UIColor(red: 0.451, green: 0.306, blue: 0.969, alpha: 1) // 추후 변경
-        label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.textColor = ColorGuide.main
+        label.font = FontGuide.size32Bold
         label.numberOfLines = 2
 
         return label
     }()
-    
+
     private lazy var googleSignInButton: GIDSignInButton = {
         let button = GIDSignInButton()
 
@@ -38,6 +38,8 @@ final class SignInView: UIView, RootView {
 
         return button
     }()
+
+    //let googleSignInButton = MainButton(type: .googleLogin)
 
     func initializeUI() {
         backgroundColor = .systemBackground
@@ -60,7 +62,7 @@ final class SignInView: UIView, RootView {
             make.leading.equalToSuperview().offset(36)
             make.trailing.equalToSuperview().offset(-109)
         }
-        
+
         googleSignInButton.snp.makeConstraints { make in
             make.width.equalTo(333)
             make.height.equalTo(56)

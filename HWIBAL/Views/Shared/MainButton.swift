@@ -38,7 +38,15 @@ class MainButton: UIButton {
         var title: NSAttributedString {
             switch self {
             case .googleLogin:
-                return NSAttributedString(string: "\(String(describing: UIImage(named: "google"))), Google로 로그인")
+                let attachment = NSTextAttachment()
+                attachment.image = UIImage(named: "google")
+                let attachmentString = NSAttributedString(attachment: attachment)
+                let textString = NSAttributedString(string: " Google로 로그인")
+                let combination = NSMutableAttributedString()
+                combination.append(attachmentString)
+                combination.append(textString)
+                
+                return combination
             case .appleLogin:
                 return NSAttributedString(string: "\(String(describing: UIImage(named: "apple"))), Apple로 로그인")
             case .delete:
