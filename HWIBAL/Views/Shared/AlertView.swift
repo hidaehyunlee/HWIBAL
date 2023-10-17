@@ -10,54 +10,73 @@ import UIKit
 class AlertView: UIView {
     private let titleLabel = UILabel()
     private let messageLabel = UILabel()
-    private let button = UIButton(type: .system)
-    
-    var buttonAction: (() -> Void)?
-    
+    private let cancelButton = UIButton(type: .system)
+    private let confirmButton = UIButton(type: .system)
+    private let separatorLine = UIView()
+    private let bottomSeparatorLine = UIView()
+
+    var cancelAction: (() -> Void)?
+    var confirmAction: (() -> Void)?
+
     init(title: String, message: String) {
         super.init(frame: .zero)
-        
+
         titleLabel.text = title
         messageLabel.text = message
-        
-        button.setTitle("OK", for: .normal)
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        
+
+        cancelButton.setTitle("취소", for: .normal)
+        cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
+        cancelButton.tintColor = .black
+
+        confirmButton.setTitle("확인", for: .normal)
+        confirmButton.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
+        confirmButton.tintColor = .black
+
         setupViews()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
-        // 1. alertView의 스타일 설정
-        self.layer.cornerRadius = 14
-        self.backgroundColor = .white
-        
-        // 2. titleLabel 스타일 설정
-        titleLabel.textColor = UIColor(red: 115/255.0, green: 78/255.0, blue: 247/255.0, alpha: 1.0)
+        layer.cornerRadius = 14
+        backgroundColor = .white
+        frame.size = CGSize(width: 273, height: 250)
+
+        titleLabel.textColor = UIColor(red: 115 / 255.0, green: 78 / 255.0, blue: 247 / 255.0, alpha: 1.0)
         titleLabel.font = UIFont(name: "Inter", size: 17)
         titleLabel.textAlignment = .center
-        titleLabel.frame = CGRect(x: 0, y: 0, width: 241, height: 22)
-        
-        // 3. messageLabel 스타일 설정
+        titleLabel.frame = CGRect(x: 0, y: 20, width: frame.width, height: 22)
+
         messageLabel.textColor = .black
         messageLabel.font = UIFont(name: "Inter", size: 13)
         messageLabel.textAlignment = .center
-        messageLabel.frame = CGRect(x: 0, y: titleLabel.frame.maxY, width: 241, height: 36)
-        
-        // 4. 각 뷰를 alertView에 추가
+        messageLabel.frame = CGRect(x: 0, y: titleLabel.frame.maxY + 20, width: frame.width, height: 36)
+
+        cancelButton.frame = CGRect(x: 0, y: messageLabel.frame.maxY + 30, width: frame.width / 2, height: 40)
+        confirmButton.frame = CGRect(x: cancelButton.frame.maxX, y: messageLabel.frame.maxY + 30, width: frame.width / 2, height: 40)
+
+        separatorLine.backgroundColor = .systemGray
+        separatorLine.frame = CGRect(x: frame.width / 2, y: messageLabel.frame.maxY + 30, width: 1, height: 40)
+
+        bottomSeparatorLine.backgroundColor = .systemGray
+        bottomSeparatorLine.frame = CGRect(x: 0, y: cancelButton.frame.minY - 1, width: frame.width, height: 1)
+
         addSubview(titleLabel)
         addSubview(messageLabel)
-        addSubview(button)
-        
-        // TODO: 버튼의 위치와 크기를 설정하세요.
+        addSubview(cancelButton)
+        addSubview(confirmButton)
+        addSubview(separatorLine)
+        addSubview(bottomSeparatorLine)
     }
 
-    
-    @objc private func didTapButton() {
-        buttonAction?()
+    @objc private func didTapCancelButton() {
+        cancelAction?()
+    }
+
+    @objc private func didTapConfirmButton() {
+        confirmAction?()
     }
 }
-

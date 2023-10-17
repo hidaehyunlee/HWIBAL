@@ -4,7 +4,7 @@
 //
 //  Created by 김도윤 on 2023/10/12.
 //
-
+import EventBus
 import UIKit
 
 class CreatePageViewController: UIViewController {
@@ -67,7 +67,7 @@ class CreatePageViewController: UIViewController {
     }
     
     @objc func showAlert() {
-        let alertVC = AlertViewController(title: "아,휘발", message: "이 작업을 수행하시겠습니까?")
+        let alertVC = AlertViewController(title: "아,휘발", message: "정말로 삭제 하시겠습니까?")
         self.present(alertVC, animated: true, completion: nil)
     }
 

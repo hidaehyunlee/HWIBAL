@@ -15,12 +15,14 @@ struct PushToMyPageScreenEvent: EventProtocol {
 final class HomeViewController: RootViewController<HomeView> {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         initializeUI()
-        
+
         EventBus.shared.on(PushToMyPageScreenEvent.self, by: self) { listener, _ in
             let createPageVC = CreatePageViewController()
             let navigationController = UINavigationController(rootViewController: createPageVC)
+            navigationController.modalPresentationStyle = .automatic
+            navigationController.modalTransitionStyle = .coverVertical
             listener.present(navigationController, animated: true, completion: nil)
         }
     }
@@ -28,8 +30,8 @@ final class HomeViewController: RootViewController<HomeView> {
 
 private extension HomeViewController {
     func initializeUI() {
-        
         // MARK: - Navigation Setting
+
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         backBarButtonItem.tintColor = ColorGuide.main
         self.navigationItem.backBarButtonItem = backBarButtonItem

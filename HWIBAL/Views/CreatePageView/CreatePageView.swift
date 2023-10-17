@@ -4,7 +4,7 @@
 //
 //  Created by 김도윤 on 2023/10/16.
 //
-
+import EventBus
 import UIKit
 
 class CreatePageView: UIView, UITextViewDelegate {
@@ -156,7 +156,7 @@ class CreatePageView: UIView, UITextViewDelegate {
         let textViewPaddingHorizontal: CGFloat = 16
         let textViewPaddingVertical: CGFloat = 10
         let textViewWidth = bounds.width - 2 * textViewPaddingHorizontal
-        let textViewHeight: CGFloat = 400 // Set this to your desired height or dynamic height
+        let textViewHeight: CGFloat = 400 
         
         textView.frame = CGRect(
             x: textViewPaddingHorizontal,
