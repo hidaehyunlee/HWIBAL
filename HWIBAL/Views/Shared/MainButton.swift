@@ -16,6 +16,7 @@ class MainButton: UIButton {
         self.customButtonType = type
         super.init(frame: .zero)
         setAttributedTitle(customButtonType.title, for: .normal)
+        setImage(customButtonType.image, for: .normal)
         titleLabel?.font = customButtonType.font
         setTitleColor(customButtonType.titleColor, for: .normal)
         backgroundColor = customButtonType.backgroundColor
@@ -33,14 +34,14 @@ class MainButton: UIButton {
     }
     
     enum ButtonType {
-        case googleLogin, appleLogin, delete, withdrawal
+        case googleLogin(image: UIImage?), appleLogin(image: UIImage?), delete, withdrawal
         
         var title: NSAttributedString {
             switch self {
             case .googleLogin:
-                return NSAttributedString(string: "\(String(describing: UIImage(named: "google"))), Google로 로그인")
+                return NSAttributedString(string:"Google로 로그인")
             case .appleLogin:
-                return NSAttributedString(string: "\(String(describing: UIImage(named: "apple"))), Apple로 로그인")
+                return NSAttributedString(string: "Apple로 로그인")
             case .delete:
                 return NSAttributedString(string: "아, 휘발🔥")
             case .withdrawal:
