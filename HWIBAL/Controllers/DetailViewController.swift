@@ -16,7 +16,7 @@ final class DetailViewController: UIViewController {
         view.backgroundColor = .white
         
         let removeView = UIView()
-        removeView.backgroundColor = UIColor(red: 0.451, green: 0.306, blue: 0.969, alpha: 1)
+        removeView.backgroundColor = ColorGuide.main
         removeView.layer.cornerRadius = 4
         view.addSubview(removeView)
         
@@ -31,7 +31,7 @@ final class DetailViewController: UIViewController {
         
         let removeButton = UIButton()
         removeButton.setTitle("아, 휘발 🔥", for: .normal)
-        removeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19)
+        removeButton.titleLabel?.font = FontGuide.size19Bold
         removeButton.setTitleColor(.white, for: .normal)
         removeButton.backgroundColor = .clear
         removeButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
@@ -42,7 +42,7 @@ final class DetailViewController: UIViewController {
         }
         
         let returnView = UIButton()
-        returnView.backgroundColor = UIColor(red: 0.161, green: 0.161, blue: 0.161, alpha: 1)
+        returnView.backgroundColor = ColorGuide.main
         returnView.layer.cornerRadius = 15
         returnView.addTarget(self, action: #selector(returnViewTapped), for: .touchUpInside)
         view.addSubview(returnView)
