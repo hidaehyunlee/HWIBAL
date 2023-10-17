@@ -14,6 +14,7 @@ final class ReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        overrideUserInterfaceStyle = .dark
         initializeUI()
     }
     

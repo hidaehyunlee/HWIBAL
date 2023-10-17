@@ -77,7 +77,7 @@ final class ReportView: UIView, RootView {
     }
     
     func initializeUI() {
-        backgroundColor = .black
+        backgroundColor = .systemBackground
         
         addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
