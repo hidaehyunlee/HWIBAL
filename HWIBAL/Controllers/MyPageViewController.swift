@@ -43,6 +43,9 @@ private extension MyPageViewController {
 private extension MyPageViewController {
     @objc func cancelButtonTapped() {
         print("🫵 클릭: 회원탈퇴")
+        UserDefaults.standard.set(false, forKey: "isLoggedIn")
+        UserService.shared.deleteUser((UserService.loginedUser?.email)!)
+        goToSignInVC()
     }
     
     @objc func myPageToReport() {
@@ -50,6 +53,14 @@ private extension MyPageViewController {
         reportVC.modalPresentationStyle = .fullScreen
         present(reportVC, animated: true, completion: nil)
         print("🫵 클릭: 리포트 더보기")
+    }
+    
+    func goToSignInVC() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let sceneDelegate = windowScene.delegate as? SceneDelegate {
+            let signInViewController = SignInViewController()
+            sceneDelegate.window?.rootViewController = signInViewController
+        }
     }
 }
 
@@ -103,6 +114,13 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             
             case .logout:
             print("🫵 클릭: 로그아웃")
+            UserDefaults.standard.set(false, forKey: "isLoggedIn")
+            
+            print(UserDefaults.standard.bool(forKey: "isLoggedIn"))
+            print(UserDefaults.standard.string(forKey: "LoggedInUserEmail") as Any)
+            
+            goToSignInVC()
+            
                 break
         }
 

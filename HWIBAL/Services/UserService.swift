@@ -10,6 +10,7 @@ import Foundation
 
 class UserService {
     static let shared = UserService()
+    static var loginedUser: User?
     let coreDataManager = CoreDataManager.shared
 
     func createUser(email: String, name: String, id: String, autoLoginEnabled: Bool, autoExpireDays: Int64) {
@@ -46,12 +47,35 @@ class UserService {
 
         do {
             let users = try context.fetch(fetchRequest)
-            for user in users {
-                print("User -")
-                print("Email: \(user.email ?? "No email"), Name: \(user.name ?? "No name"), ID: \(user.id ?? "No ID"), AutoLoginEnabled: \(user.autoLoginEnabled), AutoExpireDays: \(user.autoExpireDays)")
+            if users.isEmpty {
+                print("유저 정보 없읍")
+            } else {
+                for user in users {
+                    print("User -")
+                    print("Email: \(user.email ?? "No email"), Name: \(user.name ?? "No name"), ID: \(user.id ?? "No ID"), AutoLoginEnabled: \(user.autoLoginEnabled), AutoExpireDays: \(user.autoExpireDays)")
+                }
             }
         } catch {
             print("Failed to fetch users: \(error)")
+        }
+    }
+    
+    func deleteUser(_ email: String) {
+        let context = coreDataManager.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "email == %@", email)
+
+        do {
+            if let deleteUser = try context.fetch(fetchRequest).first {
+                context.delete(deleteUser)
+                print("삭제된 유저: ", deleteUser.email as Any)
+                coreDataManager.saveContext()
+                printAllUsers()
+            } else {
+                print("User not found.")
+            }
+        } catch {
+            print("Error deleting user: \(error)")
         }
     }
 }

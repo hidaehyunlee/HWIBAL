@@ -8,8 +8,6 @@
 import GoogleSignIn
 import UIKit
 
-var loginedUser: User? // 더 효율적인 방법 고민하기
-
 final class SignInViewController: RootViewController<SignInView> {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +29,14 @@ final class SignInViewController: RootViewController<SignInView> {
             let autoLoginEnabled = true
             let autoExpireDays: Int64 = 7
 
-            self.setUserDefaults(email)
-
             if let existUser = UserService.shared.getExistUser(email) {
                 print("이미 가입한 회원")
-                loginedUser = existUser
+                UserService.loginedUser = existUser
+                self.setUserDefaults(existUser.email!)
             } else {
                 UserService.shared.createUser(email: email, name: name, id: id, autoLoginEnabled: autoLoginEnabled, autoExpireDays: autoExpireDays)
+                UserService.loginedUser = UserService.shared.getExistUser(email)
+                self.setUserDefaults(email)
                 UserService.shared.printAllUsers()
             }
 
@@ -53,7 +52,6 @@ final class SignInViewController: RootViewController<SignInView> {
     
     private func setUserDefaults(_ email: String) {
         UserDefaults.standard.set(email, forKey: "LoggedInUserEmail")
-        UserDefaults.standard.set(true, forKey: "AutoLoginEnabled")
-        UserDefaults.standard.set(7, forKey: "AutoExpireDays")
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
     }
 }
