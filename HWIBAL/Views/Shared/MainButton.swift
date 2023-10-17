@@ -39,9 +39,9 @@ class MainButton: UIButton {
         var title: NSAttributedString {
             switch self {
             case .googleLogin:
-                return NSAttributedString(string:"Google로 로그인")
+                return NSAttributedString(string:" Google로 로그인")
             case .appleLogin:
-                return NSAttributedString(string: "Apple로 로그인")
+                return NSAttributedString(string: " Apple로 로그인")
             case .delete:
                 return NSAttributedString(string: "아, 휘발🔥")
             case .withdrawal:
