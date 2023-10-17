@@ -195,6 +195,7 @@ final class HomeView: UIView, RootView {
 
     @objc private func hwibariImageViewTapped() {
         print("'hwibari'가 탭되었습니다.")
+        EventBus.shared.emit(PushToDetailScreenEvent())
     }
 
     @objc private func removeButtonTapped() {
