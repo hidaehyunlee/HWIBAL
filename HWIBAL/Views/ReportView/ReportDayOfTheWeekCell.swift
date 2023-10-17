@@ -212,6 +212,22 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         subTitle.text = "다른 요일보다 평균 감쓰 개수가 많아요"
         
         // MARK: - Day of The Week
+        generateChartForDayOfWeek()
+        
+        // MARK: - Rank
+        let sortedDaysOfWeekCount = daysOfWeekCount.sorted { $0.value > $1.value }
+
+        if sortedDaysOfWeekCount.count >= 3 {
+            firstRankingDayOfTheWeek.text = "1. \(sortedDaysOfWeekCount[0].key)요일"
+            secondRankingDayOfTheWeek.text = "2. \(sortedDaysOfWeekCount[1].key)요일"
+            thirdRankingDayOfTheWeek.text = "3. \(sortedDaysOfWeekCount[2].key)요일"
+            firstRankingCount.text = "\(sortedDaysOfWeekCount[0].value)개"
+            secondRankingCount.text = "\(sortedDaysOfWeekCount[1].value)개"
+            thirdRankingCount.text = "\(sortedDaysOfWeekCount[2].value)개"
+        }
+    }
+    
+    private func generateChartForDayOfWeek() {
         var delay: TimeInterval = 0.0
         for day in ["일", "월", "화", "수", "목", "금", "토"] {
             let isMaxDay = day == maxDay
@@ -242,18 +258,6 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
             
             daysOfWeekStackView.addArrangedSubview(circleLabel)
             delay += 0.3
-        }
-        
-        // MARK: - Rank
-        let sortedDaysOfWeekCount = daysOfWeekCount.sorted { $0.value > $1.value }
-
-        if sortedDaysOfWeekCount.count >= 3 {
-            firstRankingDayOfTheWeek.text = "1. \(sortedDaysOfWeekCount[0].key)요일"
-            secondRankingDayOfTheWeek.text = "2. \(sortedDaysOfWeekCount[1].key)요일"
-            thirdRankingDayOfTheWeek.text = "3. \(sortedDaysOfWeekCount[2].key)요일"
-            firstRankingCount.text = "\(sortedDaysOfWeekCount[0].value)개"
-            secondRankingCount.text = "\(sortedDaysOfWeekCount[1].value)개"
-            thirdRankingCount.text = "\(sortedDaysOfWeekCount[2].value)개"
         }
     }
     

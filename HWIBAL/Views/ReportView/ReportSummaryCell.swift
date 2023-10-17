@@ -20,7 +20,7 @@ class ReportSummaryCell: UICollectionViewCell {
         return view
     }()
     
-    lazy var title: UILabel = {
+    lazy var title: UILabel =  {
         let label = UILabel()
         label.font = FontGuide.size24Bold
         label.textColor = .black
@@ -108,7 +108,7 @@ class ReportSummaryCell: UICollectionViewCell {
         dataSet.valueColors = [ColorGuide.main, ColorGuide.textHint]
 
         let data = BarChartData(dataSet: dataSet)
-        data.setValueFont(FontGuide.size32Bold)
+        data.setValueFont(FontGuide.size32Heavy)
         chartView.data = data
         chartView.barData?.barWidth = 0.3
         

@@ -210,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				DEFE3A292AD5420A0076FE11 /* Shared */,
+				DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */,
 				3F783A2C2AD8C4750024D692 /* ReportViewController.swift */,
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
@@ -232,7 +233,6 @@
 				3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */,
 				3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */,
 				3F783A1B2AD7DFBB0024D692 /* User+CoreDataClass.swift */,
-				DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
