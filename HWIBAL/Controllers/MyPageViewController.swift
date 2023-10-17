@@ -83,11 +83,11 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 break
             
             case .autoVolatilizationDate:
-            let volatilizationDateSettingAlert = UIAlertController(title: "당신의 감쓰를 며칠 후 불태워 드릴까요?", message: "", preferredStyle: .actionSheet)
-            let days = ["1일", "2일", "3일", "4일", "5일", "6일", "일주일"]
+            let volatilizationDateSettingAlert = UIAlertController(title: "", message: "당신의 감정쓰레기를 며칠 후 불태워 드릴까요?", preferredStyle: .actionSheet)
+            let days = ["1일", "3일", "일주일"]
             for day in days {
                 let action = UIAlertAction(title: day, style: .default) { _ in
-                    print("\(day) 후 감쓰를 태워 드립니다.")
+                    print("\(day) 후 감정쓰레기를 태워 드립니다.")
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
                         cell.updateDateLabel(day)

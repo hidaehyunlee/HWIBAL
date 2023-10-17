@@ -25,14 +25,13 @@ final class MyPageView: UIView, RootView {
         let label = UILabel()
         label.text = """
                      가입 이후 작성한
-                     감쓰 \(self.totalEmotionTrashCount)개
+                     감정쓰레기 \(self.totalEmotionTrashCount)개
                      """
         label.font = FontGuide.size24Bold
         label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 2
         label.snp.makeConstraints { make in
-            make.width.equalTo(162)
             make.height.equalTo(60)
         }
         return label
