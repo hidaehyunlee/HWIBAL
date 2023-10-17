@@ -31,10 +31,15 @@ private extension ReportViewController {
         ReportPageItems = [summaryReportItem, dayOfTheWeekReportItem, hourlyReportItem]
         
         reportView.closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        reportView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
     }
     
     @objc func closeButtonTapped() {
         dismiss(animated: true)
+    }
+    
+    @objc func goToFirstButtonTapped() {
+        reportView.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
 }
 
