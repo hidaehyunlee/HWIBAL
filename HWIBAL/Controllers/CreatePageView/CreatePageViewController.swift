@@ -24,22 +24,19 @@ class CreatePageViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 0.94)
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 0.94)
 
-        let titleColor = UIColor(red: 115/255, green: 78/255, blue: 247/255, alpha: 1)
-
-        let leftItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(showCancelAlert))
-        leftItem.tintColor = titleColor
+        let leftItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(self.showCancelAlert))
+        leftItem.tintColor = ColorGuide.main
         self.navigationItem.leftBarButtonItem = leftItem
 
-        let rightItem = UIBarButtonItem(title: "작성", style: .plain, target: self, action: #selector(showWriteAlert))
-        rightItem.tintColor = titleColor
+        let rightItem = UIBarButtonItem(title: "작성", style: .plain, target: self, action: #selector(self.showWriteAlert))
+        rightItem.tintColor = ColorGuide.main
         self.navigationItem.rightBarButtonItem = rightItem
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
-        paragraphStyle.lineHeightMultiple = 41.0/34.0
+        paragraphStyle.lineHeightMultiple = 41.0 / 34.0
 
         let titleAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont(name: "Arial-BoldMT", size: 34) ?? UIFont.systemFont(ofSize: 34, weight: .bold),
             .kern: 0.374,
             .paragraphStyle: paragraphStyle
         ]
@@ -47,30 +44,32 @@ class CreatePageViewController: UIViewController {
         let titleLabel = UILabel()
         titleLabel.attributedText = NSAttributedString(string: "감정 쓰레기", attributes: titleAttributes)
         titleLabel.backgroundColor = .clear
+        titleLabel.textColor = ColorGuide.black
+        titleLabel.font = FontGuide.size32Bold
         titleLabel.sizeToFit()
 
-        let leftPadding: CGFloat = 16
+        let leftPadding: CGFloat = -12
         let rightPadding: CGFloat = 16
         let bottomPadding: CGFloat = 15
 
         let titleViewHeight = self.navigationController?.navigationBar.bounds.height ?? 44.0
+        let titleViewWidth = self.navigationController?.navigationBar.bounds.width ?? UIScreen.main.bounds.width
 
-        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: titleLabel.frame.width, height: titleViewHeight))
-        titleLabel.frame.origin = CGPoint(x: 0, y: titleViewHeight - titleLabel.frame.height - bottomPadding)
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: titleViewWidth, height: titleViewHeight))
+        titleLabel.frame.origin = CGPoint(x: leftPadding, y: titleViewHeight - titleLabel.frame.height - bottomPadding)
         titleView.addSubview(titleLabel)
-        
 
         self.navigationItem.titleView = titleView
 
         self.navigationController?.navigationBar.largeTitleTextAttributes = titleAttributes
         self.navigationController?.navigationBar.titleTextAttributes = titleAttributes
     }
-    
+
     @objc func showCancelAlert() {
         let alertVC = AlertViewController(title: "아, 휘발 🔥", message: "정말로 삭제 하시겠습니까?")
         self.present(alertVC, animated: true, completion: nil)
     }
-    
+
     @objc func showWriteAlert() {
         let alertVC = AlertViewControllerDesc(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n 당신의 감정을 3일 후에 불태워 드릴게요 🔥")
         self.present(alertVC, animated: true, completion: nil)
