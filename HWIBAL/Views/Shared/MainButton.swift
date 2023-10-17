@@ -34,7 +34,7 @@ class MainButton: UIButton {
     }
     
     enum ButtonType {
-        case googleLogin(image: UIImage?), appleLogin(image: UIImage?), delete, withdrawal
+        case googleLogin(_ image: UIImage?), appleLogin(_ image: UIImage?), delete, withdrawal
         
         var title: NSAttributedString {
             switch self {
@@ -49,6 +49,15 @@ class MainButton: UIButton {
                     .underlineStyle: NSUnderlineStyle.single.rawValue
                 ])
                 return underlinedTitle
+            }
+        }
+        
+        var image: UIImage? {
+            switch self {
+            case .googleLogin(let image), .appleLogin(let image):
+                return image
+            default:
+                return nil
             }
         }
         
