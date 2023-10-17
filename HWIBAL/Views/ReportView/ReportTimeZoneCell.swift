@@ -1,0 +1,245 @@
+//
+//  ReportTimeZoneCell.swift
+//  HWIBAL
+//
+//  Created by t2023-m0076 on 2023/10/16.
+//
+
+import UIKit
+import SnapKit
+
+class ReportTimeZoneCell: UICollectionViewCell {
+    static let identifier = "timeZoneCell"
+    var timeZoneCount = ["8To11":15, "11To15":13, "15To19":8, "19To22":10, "22To2":7, "2To8":5]
+    var maxTimeZone = ""
+    var maxCount = 0
+    var averageCount = 0
+    
+    private let view: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    lazy var title: UILabel = {
+        let label = UILabel()
+        label.font = FontGuide.size24Bold
+        label.textColor = .black
+        label.textAlignment = .left
+        label.numberOfLines = 2
+        label.snp.makeConstraints { make in
+            make.width.equalTo(180)
+        }
+        return label
+    }()
+    
+    lazy var subTitle: UILabel = {
+        let label = UILabel()
+        label.font = FontGuide.size14
+        label.textColor = .black
+        label.textAlignment = .left
+        label.numberOfLines = 2
+        label.snp.makeConstraints { make in
+            make.width.equalTo(250)
+        }
+        return label
+    }()
+    
+    lazy var fromTimeUnit: UILabel = {
+        let label = UILabel()
+        label.font = FontGuide.size14Bold
+        label.textColor = ColorGuide.main
+        label.textAlignment = .left
+        label.snp.makeConstraints { make in
+            make.width.equalTo(30)
+        }
+        return label
+    }()
+    
+    lazy var fromTime: UILabel = {
+        let label = UILabel()
+        label.font = FontGuide.size75Heavy
+        label.textColor = ColorGuide.main
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var fromTimeStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [fromTimeUnit, fromTime])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 10
+        return stackView
+    }()
+    
+    lazy var untilTimeUnit: UILabel = {
+        let label = UILabel()
+        label.font = FontGuide.size14Bold
+        label.textColor = ColorGuide.main
+        label.textAlignment = .left
+        label.snp.makeConstraints { make in
+            make.width.equalTo(30)
+        }
+        return label
+    }()
+    
+    lazy var untilTime: UILabel = {
+        let label = UILabel()
+        label.font = FontGuide.size75Heavy
+        label.textColor = ColorGuide.main
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var untilTimeStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [untilTimeUnit, untilTime])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 10
+        return stackView
+    }()
+    
+    private lazy var fromTimeLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = ColorGuide.main
+        view.snp.makeConstraints { make in
+            make.height.equalTo(4)
+        }
+        return view
+    }()
+    
+    private lazy var untilTimeLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = ColorGuide.main
+        view.snp.makeConstraints { make in
+            make.height.equalTo(4)
+        }
+        return view
+    }()
+    
+    public func configure() {
+        // MARK: - initializeUI
+        initializeUI()
+        
+        // MARK: - Title, SubTitle
+        for (timeZone, count) in timeZoneCount {
+            if count > maxCount {
+                maxCount = count
+                maxTimeZone = timeZone
+            }
+        }
+        
+        title.text = """
+                     \(generateGreetingForHour(maxTimeZone))에
+                     분주한 내 감쓰
+                     """
+        subTitle.text = """
+                        평균 감쓰 개수 \(averageEmotionTrashCount())개
+                        다른 시간대보다 감쓰 개수가 많아요
+                        """
+        
+        // MARK: - TimeZone
+        generateForHourRange(maxTimeZone)
+    }
+    
+    private func averageEmotionTrashCount() -> Int {
+        let totalValues = timeZoneCount.values.reduce(0, +)
+        averageCount = Int(Double(totalValues)) / timeZoneCount.count
+        
+        return averageCount
+    }
+    
+    private func generateGreetingForHour(_ timeZone: String) -> String {
+        var greeting = ""
+        switch timeZone {
+        case "8To11":
+            greeting = "상쾌한 아침"
+        case "11To15":
+            greeting = "즐거운 점심"
+        case "15To19":
+            greeting = "따뜻한 오후"
+        case "19To22":
+            greeting = "즐거운 저녁"
+        case "22To2":
+            greeting = "센치한 밤"
+        case "2To8":
+            greeting = "고요한 새벽"
+        default:
+            greeting = "알 수 없는 시간"
+        }
+        return greeting
+    }
+    
+    private func generateForHourRange(_ timeZone: String) {
+        let (from, until, fromHour, untilHour) = {
+            switch timeZone {
+            case "8To11":
+                return ("AM", "AM", 8, 11)
+            case "11To15":
+                return ("AM", "PM", 11, 15)
+            case "15To19":
+                return ("PM", "PM", 15, 19)
+            case "19To22":
+                return ("PM", "PM", 19, 22)
+            case "22To2":
+                return ("PM", "AM", 22, 2)
+            case "2To8":
+                return ("AM", "AM", 2, 8)
+            default:
+                return ("AM", "AM", 0, 0)
+            }
+        }()
+        
+        fromTimeUnit.text = from
+        fromTime.text = "\(fromHour):00"
+        untilTimeUnit.text = until
+        untilTime.text = "\(untilHour):00"
+    }
+    
+    func initializeUI() {
+        backgroundColor = .white
+        
+        contentView.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        view.addSubview(title)
+        title.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(25)
+            make.leading.equalToSuperview().offset(25)
+        }
+        
+        view.addSubview(subTitle)
+        subTitle.snp.makeConstraints { make in
+            make.top.equalTo(title.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(25)
+        }
+        
+        view.addSubview(fromTimeStackView)
+        fromTimeStackView.snp.makeConstraints { make in
+            make.top.equalTo(subTitle.snp.bottom).offset(109)
+            make.leading.equalToSuperview().offset(25)
+        }
+        
+        view.addSubview(untilTimeStackView)
+        untilTimeStackView.snp.makeConstraints { make in
+            make.top.equalTo(fromTimeStackView.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().offset(-25)
+        }
+        
+        view.addSubview(fromTimeLine)
+        fromTimeLine.snp.makeConstraints { make in
+            make.top.equalTo(fromTimeStackView.snp.top).offset(46)
+            make.leading.equalTo(fromTimeStackView.snp.trailing).offset(10)
+            make.trailing.equalToSuperview()
+        }
+        
+        view.addSubview(untilTimeLine)
+        untilTimeLine.snp.makeConstraints { make in
+            make.top.equalTo(untilTimeStackView.snp.top).offset(45)
+            make.leading.equalToSuperview()
+            make.trailing.equalTo(untilTimeStackView.snp.leading).offset(-10)
+        }
+    }
+}

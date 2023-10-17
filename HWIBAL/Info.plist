@@ -2,22 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Inter-Regular.ot</string>
-		<string>Inter-Bold.otf</string>
-	</array>
-	<key>GIDClientID</key>
-	<string>506591939944-n3bg8gghlb632d53iq8nm0alan3sfo8r.apps.googleusercontent.com</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.506591939944-n3bg8gghlb632d53iq8nm0alan3sfo8r</string>
-			</array>
-		</dict>
-	</array>
+    <key>GIDClientID</key>
+    <string>506591939944-n3bg8gghlb632d53iq8nm0alan3sfo8r.apps.googleusercontent.com</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.506591939944-n3bg8gghlb632d53iq8nm0alan3sfo8r</string>
+        </array>
+      </dict>
+    </array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -31,8 +26,6 @@
 					<string>Default Configuration</string>
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-					<key>UISceneClassName</key>
-					<string>Inter-Bold.otf</string>
 				</dict>
 			</array>
 		</dict>
