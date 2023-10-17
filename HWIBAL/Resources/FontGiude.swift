@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 enum FontGuide {
-    static func customFont(size: CGFloat, lineHeight: CGFloat, isBold: Bool = false) -> UIFont {
+    static func customFont(size: CGFloat, lineHeight: CGFloat, isBold: Bool = false, isHeavy: Bool = false) -> UIFont {
         let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
         
         var fontAttributes: [UIFontDescriptor.AttributeName: Any] = [
@@ -28,6 +28,12 @@ enum FontGuide {
             ]
         }
         
+        if isHeavy {
+            fontAttributes[UIFontDescriptor.AttributeName.traits] = [
+                UIFontDescriptor.TraitKey.weight: UIFont.Weight.heavy
+            ]
+        }
+        
         let customFontDescriptor = fontDescriptor.addingAttributes(fontAttributes)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = lineHeight
@@ -36,8 +42,16 @@ enum FontGuide {
         return UIFont(descriptor: customFontDescriptor, size: size)
     }
     
+    static let size75 = customFont(size: 75, lineHeight: 91)
+    static let size75Bold = customFont(size: 75, lineHeight: 91, isBold: true)
+    static let size75Heavy = customFont(size: 75, lineHeight: 91, isHeavy: true)
+    
+    static let size64 = customFont(size: 64, lineHeight: 77)
+    static let size64Bold = customFont(size: 64, lineHeight: 77, isBold: true)
+    
     static let size32 = customFont(size: 32, lineHeight: 40)
     static let size32Bold = customFont(size: 32, lineHeight: 40, isBold: true)
+    static let size32Heavy = customFont(size: 32, lineHeight: 40, isHeavy: true)
     
     static let size28 = customFont(size: 28, lineHeight: 36)
     static let size28Bold = customFont(size: 28, lineHeight: 36, isBold: true)
