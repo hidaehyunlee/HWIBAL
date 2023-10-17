@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                let user = UserService.shared.getExistUser(loggedInUserEmail) {
                 UserService.loginedUser = user
                 window?.rootViewController = MainViewController()
-                gerUserInfo()
+                getUserInfo()
             }
         } else {
             window?.rootViewController = SignInViewController()
@@ -35,7 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return UserDefaults.standard.string(forKey: "LoggedInUserEmail")
     }
     
-    private func gerUserInfo() {
+    private func getUserInfo() {
         print("--------------------------------")
         print("👤 [로그인 유저 정보]")
         print("Email: \(UserService.loginedUser?.email ?? "No email")\nName: \(UserService.loginedUser?.name ?? "No name")\nID: \(UserService.loginedUser?.id ?? "No ID")\nAutoLoginEnabled: \(String(describing: UserService.loginedUser?.autoLoginEnabled))\nAutoExpireDays: \(String(describing: UserService.loginedUser?.autoExpireDays))")
