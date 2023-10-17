@@ -26,11 +26,11 @@ class CreatePageViewController: UIViewController {
 
         let titleColor = UIColor(red: 115/255, green: 78/255, blue: 247/255, alpha: 1)
 
-        let leftItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(showAlert))
+        let leftItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(showCancelAlert))
         leftItem.tintColor = titleColor
         self.navigationItem.leftBarButtonItem = leftItem
 
-        let rightItem = UIBarButtonItem(title: "작성", style: .plain, target: self, action: #selector(showAlert))
+        let rightItem = UIBarButtonItem(title: "작성", style: .plain, target: self, action: #selector(showWriteAlert))
         rightItem.tintColor = titleColor
         self.navigationItem.rightBarButtonItem = rightItem
 
@@ -66,8 +66,13 @@ class CreatePageViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = titleAttributes
     }
     
-    @objc func showAlert() {
-        let alertVC = AlertViewController(title: "아,휘발", message: "정말로 삭제 하시겠습니까?")
+    @objc func showCancelAlert() {
+        let alertVC = AlertViewController(title: "아, 휘발 🔥", message: "정말로 삭제 하시겠습니까?")
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    @objc func showWriteAlert() {
+        let alertVC = AlertViewControllerDesc(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n 당신의 감정을 3일 후에 불태워 드릴게요 🔥")
         self.present(alertVC, animated: true, completion: nil)
     }
 

@@ -46,12 +46,11 @@ class AlertView: UIView {
         frame.size = CGSize(width: 273, height: 250)
 
         titleLabel.textColor = UIColor(red: 115 / 255.0, green: 78 / 255.0, blue: 247 / 255.0, alpha: 1.0)
-        titleLabel.font = UIFont(name: "Inter", size: 17)
+        titleLabel.font = UIFont(name: "Helvetica-Bold", size: 17)
         titleLabel.textAlignment = .center
         titleLabel.frame = CGRect(x: 0, y: 20, width: frame.width, height: 22)
-
         messageLabel.textColor = .black
-        messageLabel.font = UIFont(name: "Inter", size: 13)
+        messageLabel.font = UIFont(name: "Inter", size: 9)
         messageLabel.textAlignment = .center
         messageLabel.frame = CGRect(x: 0, y: titleLabel.frame.maxY + 20, width: frame.width, height: 36)
 

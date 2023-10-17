@@ -210,7 +210,7 @@ final class HomeView: UIView, RootView {
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
         
-        let alertController = AlertViewController(title: "아,휘발", message: "정말로 전체 지우시겠습니까?")
+        let alertController = AlertViewController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?")
 
         
         let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
