@@ -28,7 +28,7 @@ final class HomeView: UIView, RootView {
     }()
     
     private lazy var hwibariImage: UIImageView = {
-        let imageView = createImageView(named: "hwibari", contentMode: .scaleAspectFit)
+        let imageView = createImageView(named: "hwibari_default", contentMode: .scaleAspectFit)
         return imageView
     }()
     
@@ -70,7 +70,6 @@ final class HomeView: UIView, RootView {
     }
     
     private func setupConstraints() {
-        if let safeAreaLayoutGuide = viewController?.view.safeAreaLayoutGuide {
             titleLabel1.snp.makeConstraints { make in
                 make.top.equalToSuperview().offset(107)
                 make.left.equalTo(40)
@@ -83,7 +82,6 @@ final class HomeView: UIView, RootView {
                 make.centerX.equalToSuperview()
                 make.top.equalTo(titleLabel2.snp.bottom).offset(60)
             }
-        }
     }
     
     private func myPageButton() {
@@ -188,7 +186,7 @@ final class HomeView: UIView, RootView {
     }
     
     func resetHwibariImage() {
-        hwibariImage.image = UIImage(named: "hwibari")
+        hwibariImage.image = UIImage(named: "hwibari_default")
     }
     
     // MARK: - Event Handling
@@ -202,21 +200,29 @@ final class HomeView: UIView, RootView {
         if isHwibariImageTapped {
             return
         }
-        isHwibariImageTapped = true  // hwibariImageViewTapped 중복실행방지 (True/false)
-        
+        isHwibariImageTapped = true // hwibariImageViewTapped 중복실행 방지 (True/false)
+
         print("'hwibari'가 탭되었습니다.")
-        
+
         // Dispatch Queue - 비동기
         DispatchQueue.global().async {
             let newImageName = "hwibariopen"
             if let newImage = UIImage(named: newImageName) {
                 DispatchQueue.main.async {
                     self.hwibariImage.image = newImage
+
+                    // 변경 전에 짧은 지연 추가
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        let secondImageName = "hwibariopen2"
+                        if let secondImage = UIImage(named: secondImageName) {
+                            self.hwibariImage.image = secondImage
+                        }
+                    }
                 }
             }
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             let detailViewController = DetailViewController()
             if let navigationController = self.viewController?.navigationController {
                 navigationController.pushViewController(detailViewController, animated: true)
@@ -224,6 +230,7 @@ final class HomeView: UIView, RootView {
             self.isHwibariImageTapped = false
         }
     }
+
     
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
