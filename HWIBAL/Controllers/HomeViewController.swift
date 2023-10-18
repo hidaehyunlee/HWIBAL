@@ -12,6 +12,10 @@ struct PushToMyPageScreenEvent: EventProtocol {
     let payload: Void = ()
 }
 
+struct PushToDetailScreenEvent: EventProtocol {
+    let payload: Void = ()
+}
+
 final class HomeViewController: RootViewController<HomeView> {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +24,10 @@ final class HomeViewController: RootViewController<HomeView> {
         
         EventBus.shared.on(PushToMyPageScreenEvent.self, by: self) { listener, _ in
             listener.navigationController?.pushViewController(MyPageViewController(), animated: true)
+        }
+        
+        EventBus.shared.on(PushToDetailScreenEvent.self, by: self) { listener, _ in
+            listener.navigationController?.pushViewController(DetailViewController(), animated: true)
         }
     }
     
