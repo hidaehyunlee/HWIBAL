@@ -47,7 +47,7 @@ class CreatePageView: UIView, UITextViewDelegate {
         counterLabel.alpha = 1.0
         paragraphStyle2.lineHeightMultiple = 1.03
         counterLabel.textColor = ColorGuide.textHint
-        counterLabel.font =  FontGuide.size16Bold
+        counterLabel.font = FontGuide.size16Bold
         counterLabel.textAlignment = .right
         counterLabel.attributedText = NSMutableAttributedString(string: "0 / 300", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle2])
         addSubview(counterLabel)
@@ -93,7 +93,7 @@ class CreatePageView: UIView, UITextViewDelegate {
         super.layoutSubviews()
         
         bgView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 168)
-        bgView.backgroundColor = UIColor(red: 60/60, green: 60/60, blue: 67/67, alpha: 0.36)
+        bgView.backgroundColor = UIColor(red: 60/60, green: 60/60, blue: 67/67, alpha: 0.36) // bgView크기 줄여서 datalable있는곳은 흰색으로 만들기
         
         dateLabel.frame = CGRect(x: 120, y: bgView.frame.maxY - 25 - 20, width: 153, height: 20)
         
@@ -102,7 +102,7 @@ class CreatePageView: UIView, UITextViewDelegate {
         let imageViewX: CGFloat = 127
         let imageViewY: CGFloat = bounds.height - imageViewHeight - 31.98
         firstImageView.frame = CGRect(x: imageViewX, y: imageViewY, width: imageViewWidth, height: imageViewHeight)
-
+        
         textView.frame = CGRect(x: dateLabel.frame.origin.x, y: dateLabel.frame.maxY + 10, width: bounds.width - 40, height: 30)
         
         let textViewPaddingHorizontal: CGFloat = 16
@@ -115,8 +115,15 @@ class CreatePageView: UIView, UITextViewDelegate {
             width: textViewWidth,
             height: textViewHeight
         )
+        let textViewMaxHeight: CGFloat = bounds.height - textView.frame.origin.y - (cameraButton.buttonSize + 2 * 40) // Ensure there's space for the buttons and counterLabel
+        textView.frame = CGRect(
+            x: textViewPaddingHorizontal,
+            y: dateLabel.frame.maxY + textViewPaddingVertical,
+            width: textViewWidth,
+            height: min(textViewHeight, textViewMaxHeight)
+        )
         
-        let counterLabelWidth: CGFloat = bounds.width - 293 - 45 
+        let counterLabelWidth: CGFloat = bounds.width - 293 - 45
         let counterLabelHeight: CGFloat = 20
         let counterLabelX: CGFloat = 293
         let counterLabelY: CGFloat = bounds.height - counterLabelHeight - 197
@@ -127,7 +134,7 @@ class CreatePageView: UIView, UITextViewDelegate {
         let cameraButtonSize: CGFloat = cameraButton.buttonSize
         let cameraButtonY = bounds.height - cameraButtonSize - 40
         cameraButton.frame = CGRect(x: cameraButtonX, y: cameraButtonY, width: cameraButtonSize, height: cameraButtonSize)
-
+        
         let soundButtonX: CGFloat = 83
         let soundButtonSize: CGFloat = soundButton.buttonSize
         let soundButtonY = bounds.height - soundButtonSize - 40

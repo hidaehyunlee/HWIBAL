@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */; };
+		0791B3432AE04F95004B8740 /* EmotionTrashCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791B3422AE04F95004B8740 /* EmotionTrashCount.swift */; };
 		07CBDAA82ADE367300313D15 /* AlertViewDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */; };
 		07CBDAAA2ADE368400313D15 /* AlertViewControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */; };
 		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
@@ -30,6 +31,7 @@
 		3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9445582ADCDE4B0003DCD4 /* DGCharts */; };
 		3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */; };
 		3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */; };
+		6AC073C02ADE696F00277862 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC073BF2ADE696F00277862 /* DetailViewController.swift */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
 		DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */; };
 		DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */; };
@@ -52,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageView.swift; sourceTree = "<group>"; };
+		0791B3422AE04F95004B8740 /* EmotionTrashCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashCount.swift; sourceTree = "<group>"; };
 		07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewDesc.swift; sourceTree = "<group>"; };
 		07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewControllerDesc.swift; sourceTree = "<group>"; };
 		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +75,7 @@
 		3F783A342AD931C70024D692 /* ReportSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSummaryCell.swift; sourceTree = "<group>"; };
 		3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDayOfTheWeekCell.swift; sourceTree = "<group>"; };
 		3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimeZoneCell.swift; sourceTree = "<group>"; };
+		6AC073BF2ADE696F00277862 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -216,6 +220,7 @@
 				3F783A322AD8EA7E0024D692 /* CircleButton.swift */,
 				3F783A302AD8E76B0024D692 /* CloseButton.swift */,
 				07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */,
+				0791B3422AE04F95004B8740 /* EmotionTrashCount.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
+				6AC073BF2ADE696F00277862 /* DetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -369,6 +375,7 @@
 				3F783A2A2AD8C41B0024D692 /* ReportView.swift in Sources */,
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
 				DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */,
+				6AC073C02ADE696F00277862 /* DetailViewController.swift in Sources */,
 				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
@@ -381,6 +388,7 @@
 				076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */,
 				3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */,
 				3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */,
+				0791B3432AE04F95004B8740 /* EmotionTrashCount.swift in Sources */,
 				DE434DFB2ADCCE0F00C77FE4 /* SignInViewController.swift in Sources */,
 				07CBDAA82ADE367300313D15 /* AlertViewDesc.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
