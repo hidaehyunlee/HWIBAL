@@ -72,7 +72,7 @@ final class HomeView: UIView, RootView {
     private func setupConstraints() {
         if let safeAreaLayoutGuide = viewController?.view.safeAreaLayoutGuide {
             titleLabel1.snp.makeConstraints { make in
-                make.top.equalTo(safeAreaLayoutGuide)
+                make.top.equalToSuperview().offset(107)
                 make.left.equalTo(40)
             }
             titleLabel2.snp.makeConstraints { make in
