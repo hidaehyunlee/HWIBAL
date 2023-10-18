@@ -8,6 +8,8 @@
 import UIKit
 
 final class DetailViewController: RootViewController<DetailView> {
+    var data: [EmotionTrashDummy] = DummyData.generateDummyData()
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }

@@ -30,8 +30,9 @@
 		DE434DF92ADCCDF500C77FE4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF82ADCCDF500C77FE4 /* UserService.swift */; };
 		DE434DFB2ADCCE0F00C77FE4 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */; };
 		DE434E002ADCCE5200C77FE4 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DFF2ADCCE5200C77FE4 /* SignInView.swift */; };
-		DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */; };
+		DE434E0B2ADE4F0900C77FE4 /* DetailViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0A2ADE4F0900C77FE4 /* DetailViewController2.swift */; };
 		DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */; };
+		DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0F2ADE75D900C77FE4 /* DummyData.swift */; };
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
@@ -66,8 +67,9 @@
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DE434DFF2ADCCE5200C77FE4 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
-		DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		DE434E0A2ADE4F0900C77FE4 /* DetailViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController2.swift; sourceTree = "<group>"; };
 		DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		DE434E0F2ADE75D900C77FE4 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */,
 				3F783A232AD805330024D692 /* ColorGuide.swift */,
 				3F783A252AD8053D0024D692 /* FontGiude.swift */,
+				DE434E0F2ADE75D900C77FE4 /* DummyData.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -228,7 +231,7 @@
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
-				DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */,
+				DE434E0A2ADE4F0900C77FE4 /* DetailViewController2.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -349,12 +352,13 @@
 				3F783A2A2AD8C41B0024D692 /* ReportView.swift in Sources */,
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
 				DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */,
-				DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */,
+				DE434E0B2ADE4F0900C77FE4 /* DetailViewController2.swift in Sources */,
 				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
+				DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */,
 				DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */,
