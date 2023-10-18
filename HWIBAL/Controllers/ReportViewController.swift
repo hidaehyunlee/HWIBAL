@@ -7,8 +7,7 @@
 
 import UIKit
 
-final class ReportViewController: UIViewController {
-    private let reportView = ReportView()
+final class ReportViewController: RootViewController<ReportView> {
     private var ReportPageItems: [ReportPage] = []
 
     override func viewDidLoad() {
@@ -22,17 +21,17 @@ final class ReportViewController: UIViewController {
 
 private extension ReportViewController {
     func initializeUI() {
-        view = reportView
-        reportView.collectionView.dataSource = self
-        reportView.collectionView.delegate = self
+        view = rootView
+        rootView.collectionView.dataSource = self
+        rootView.collectionView.delegate = self
         
         let summaryReportItem = ReportPage(type: .summaryReport)
         let dayOfTheWeekReportItem = ReportPage(type: .dayOfTheWeekReport)
         let hourlyReportItem = ReportPage(type: .hourlyReport)
         ReportPageItems = [summaryReportItem, dayOfTheWeekReportItem, hourlyReportItem]
         
-        reportView.closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        reportView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
+        rootView.closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        rootView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
     }
     
     @objc func closeButtonTapped() {
@@ -40,7 +39,7 @@ private extension ReportViewController {
     }
     
     @objc func goToFirstButtonTapped() {
-        reportView.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        rootView.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
 }
 
