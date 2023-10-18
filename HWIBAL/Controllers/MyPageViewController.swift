@@ -8,7 +8,6 @@
 import UIKit
 
 final class MyPageViewController: RootViewController<MyPageView> {
-    private let myPageView = MyPageView()
     private var settingsItems: [SettingItem] = []
     private var selectedIndexPath: IndexPath?
     
@@ -22,9 +21,9 @@ final class MyPageViewController: RootViewController<MyPageView> {
 
 private extension MyPageViewController {
     func initializeUI() {
-        view = myPageView
-        myPageView.tableView.dataSource = self
-        myPageView.tableView.delegate = self
+        view = rootView
+        rootView.tableView.dataSource = self
+        rootView.tableView.delegate = self
         
         // MARK: - Navigation Setting
         navigationItem.title = "내 정보"
@@ -36,8 +35,8 @@ private extension MyPageViewController {
         settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
         // MARK: - Action
-        myPageView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        myPageView.reportSummuryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
+        rootView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        rootView.reportSummaryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
     }
 }
 

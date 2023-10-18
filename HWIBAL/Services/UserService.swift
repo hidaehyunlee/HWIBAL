@@ -26,16 +26,17 @@ class UserService {
         }
     }
 
-    func isUserExist(_ email: String) -> Bool {
+    // 이메일에 해당하는 사용자가 있으면 해당 사용자를 반환, 없으면 nil 반환
+    func getExistUser(_ email: String) -> User? {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "email == %@", email)
 
         do {
             let users = try CoreDataManager.shared.mainContext.fetch(fetchRequest)
-            return !users.isEmpty
+            return users.first(where: { $0.email == email })
         } catch {
             print("Error fetching users: \(error)")
-            return false
+            return nil
         }
     }
 
