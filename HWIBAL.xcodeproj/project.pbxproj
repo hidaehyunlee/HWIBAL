@@ -24,16 +24,16 @@
 		3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9445582ADCDE4B0003DCD4 /* DGCharts */; };
 		3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */; };
 		3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */; };
-		6AC073C02ADE696F00277862 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC073BF2ADE696F00277862 /* DetailViewController.swift */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
 		DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */; };
 		DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */; };
 		DE434DF92ADCCDF500C77FE4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF82ADCCDF500C77FE4 /* UserService.swift */; };
 		DE434DFB2ADCCE0F00C77FE4 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */; };
 		DE434E002ADCCE5200C77FE4 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DFF2ADCCE5200C77FE4 /* SignInView.swift */; };
-		DE434E0B2ADE4F0900C77FE4 /* DetailViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0A2ADE4F0900C77FE4 /* DetailViewController2.swift */; };
+		DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */; };
 		DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */; };
 		DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0F2ADE75D900C77FE4 /* DummyData.swift */; };
+		DEDA76992ADFB98600EA41C1 /* EmotionTrashCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */; };
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
@@ -64,14 +64,14 @@
 		3F783A342AD931C70024D692 /* ReportSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSummaryCell.swift; sourceTree = "<group>"; };
 		3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDayOfTheWeekCell.swift; sourceTree = "<group>"; };
 		3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimeZoneCell.swift; sourceTree = "<group>"; };
-		6AC073BF2ADE696F00277862 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DE434DFF2ADCCE5200C77FE4 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
-		DE434E0A2ADE4F0900C77FE4 /* DetailViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController2.swift; sourceTree = "<group>"; };
+		DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DE434E0F2ADE75D900C77FE4 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
+		DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashCell.swift; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */,
+				DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -233,8 +234,7 @@
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
-				6AC073BF2ADE696F00277862 /* DetailViewController.swift */,
-				DE434E0A2ADE4F0900C77FE4 /* DetailViewController2.swift */,
+				DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -354,9 +354,9 @@
 				DE434E002ADCCE5200C77FE4 /* SignInView.swift in Sources */,
 				3F783A2A2AD8C41B0024D692 /* ReportView.swift in Sources */,
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
+				DEDA76992ADFB98600EA41C1 /* EmotionTrashCell.swift in Sources */,
 				DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */,
-				6AC073C02ADE696F00277862 /* DetailViewController.swift in Sources */,
-				DE434E0B2ADE4F0900C77FE4 /* DetailViewController2.swift in Sources */,
+				DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */,
 				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,

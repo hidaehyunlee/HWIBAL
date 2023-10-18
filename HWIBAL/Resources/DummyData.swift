@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+var testData: [EmotionTrashDummy] = DummyData.generateDummyData()
+
 class EmotionTrashDummy {
     let audioRecording: Data?
     let id: UUID
