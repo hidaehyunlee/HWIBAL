@@ -35,6 +35,7 @@ class CreatePageViewController: UIViewController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
         paragraphStyle.lineHeightMultiple = 41.0 / 34.0
+        paragraphStyle.firstLineHeadIndent = 14.0 
 
         let titleAttributes: [NSAttributedString.Key: Any] = [
             .kern: 0.374,
@@ -42,13 +43,13 @@ class CreatePageViewController: UIViewController {
         ]
 
         let titleLabel = UILabel()
-        titleLabel.attributedText = NSAttributedString(string: "감정 쓰레기", attributes: titleAttributes)
+        titleLabel.attributedText = NSAttributedString(string: "감정쓰레기", attributes: titleAttributes)
         titleLabel.backgroundColor = .clear
         titleLabel.textColor = ColorGuide.black
         titleLabel.font = FontGuide.size32Bold
         titleLabel.sizeToFit()
 
-        let leftPadding: CGFloat = -12
+        let leftPadding: CGFloat = 16
         let rightPadding: CGFloat = 16
         let bottomPadding: CGFloat = 15
 
@@ -59,7 +60,7 @@ class CreatePageViewController: UIViewController {
         titleLabel.frame.origin = CGPoint(x: leftPadding, y: titleViewHeight - titleLabel.frame.height - bottomPadding)
         titleView.addSubview(titleLabel)
 
-        self.navigationItem.titleView = titleView
+        self.navigationItem.title = "감정쓰레기"
 
         self.navigationController?.navigationBar.largeTitleTextAttributes = titleAttributes
         self.navigationController?.navigationBar.titleTextAttributes = titleAttributes
@@ -71,7 +72,7 @@ class CreatePageViewController: UIViewController {
     }
 
     @objc func showWriteAlert() {
-        let alertVC = AlertViewControllerDesc(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n 당신의 감정을 3일 후에 불태워 드릴게요 🔥")
+        let alertVC = AlertViewControllerDesc(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥")
         self.present(alertVC, animated: true, completion: nil)
     }
 

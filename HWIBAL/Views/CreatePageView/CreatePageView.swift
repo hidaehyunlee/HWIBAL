@@ -35,7 +35,7 @@ class CreatePageView: UIView, UITextViewDelegate {
         bgView.backgroundColor = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 0.94)
         addSubview(bgView)
         
-        dateLabel.textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        dateLabel.textColor = ColorGuide.textHint
         
         dateLabel.font = FontGuide.size14
         
@@ -46,7 +46,7 @@ class CreatePageView: UIView, UITextViewDelegate {
         
         counterLabel.alpha = 1.0
         paragraphStyle2.lineHeightMultiple = 1.03
-        counterLabel.textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        counterLabel.textColor = ColorGuide.textHint
         counterLabel.font =  FontGuide.size16Bold
         counterLabel.textAlignment = .right
         counterLabel.attributedText = NSMutableAttributedString(string: "0 / 300", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle2])

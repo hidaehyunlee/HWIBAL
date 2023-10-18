@@ -42,7 +42,7 @@ class AlertViewControllerDesc: UIViewController {
             alertViewDesc.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertViewDesc.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             alertViewDesc.widthAnchor.constraint(equalToConstant: 273),
-            alertViewDesc.heightAnchor.constraint(equalToConstant: 92)
+            alertViewDesc.heightAnchor.constraint(equalToConstant: 162)
         ])
     }
 }

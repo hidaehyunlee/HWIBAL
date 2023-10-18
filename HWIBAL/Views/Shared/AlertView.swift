@@ -45,7 +45,7 @@ class AlertView: UIView {
         backgroundColor = .white
         frame.size = CGSize(width: 273, height: 250)
 
-        titleLabel.textColor = ColorGuide.black
+        titleLabel.textColor = ColorGuide.main
         titleLabel.font = FontGuide.size16Bold
         titleLabel.textAlignment = .center
         titleLabel.frame = CGRect(x: 0, y: 20, width: frame.width, height: 22)

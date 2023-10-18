@@ -15,7 +15,6 @@ struct PushToMyPageScreenEvent: EventProtocol {
 final class HomeViewController: RootViewController<HomeView> {
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initializeUI()
 
         EventBus.shared.on(PushToMyPageScreenEvent.self, by: self) { listener, _ in

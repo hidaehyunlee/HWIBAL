@@ -47,7 +47,6 @@ final class HomeView: UIView, RootView {
         backgroundColor = .systemBackground
         addSubviews()
         setupConstraints()
-
         myPageButton()
         setupHwibariImageView()
         setupRemove()
@@ -214,7 +213,7 @@ final class HomeView: UIView, RootView {
 
         
         let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-            // 삭제 관련 로직
+           
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         

@@ -28,18 +28,18 @@ class AlertViewDesc: UIView {
     private func setupViews() {
         layer.cornerRadius = 14
         backgroundColor = .white
-        frame.size = CGSize(width: 273, height: 200)
+        frame.size = CGSize(width: 273, height: 250)
 
         titleLabel.textColor = ColorGuide.main
         titleLabel.font = FontGuide.size16Bold
         titleLabel.textAlignment = .center
-        titleLabel.frame = CGRect(x: 0, y: 20, width: frame.width, height: 22)
+        titleLabel.frame = CGRect(x: 0, y: 30, width: frame.width, height: 22)
 
         messageLabel.textColor = .black
         messageLabel.font = FontGuide.size14
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
-        messageLabel.frame = CGRect(x: 0, y: titleLabel.frame.maxY + 9, width: frame.width, height: 36)
+        messageLabel.frame = CGRect(x: 0, y: titleLabel.frame.maxY + 28, width: frame.width, height: 36)
 
         addSubview(titleLabel)
         addSubview(messageLabel)
