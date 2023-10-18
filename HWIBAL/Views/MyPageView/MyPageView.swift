@@ -25,14 +25,13 @@ final class MyPageView: UIView, RootView {
         let label = UILabel()
         label.text = """
                      가입 이후 작성한
-                     감쓰 \(self.totalEmotionTrashCount)개
+                     감정쓰레기 \(self.totalEmotionTrashCount)개
                      """
         label.font = FontGuide.size24Bold
         label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 2
         label.snp.makeConstraints { make in
-            make.width.equalTo(162)
             make.height.equalTo(60)
         }
         return label
@@ -87,7 +86,7 @@ final class MyPageView: UIView, RootView {
         return tableView
     }()
     
-    let cancelButton = MainButton(type: .withdrawal)
+    let withdrawalButton = MainButton(type: .withdrawal)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -136,8 +135,8 @@ final class MyPageView: UIView, RootView {
             make.height.equalTo(200)
         }
         
-        addSubview(cancelButton)
-        cancelButton.snp.makeConstraints { make in
+        addSubview(withdrawalButton)
+        withdrawalButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(30)
             make.trailing.equalToSuperview().offset(-30)

@@ -36,6 +36,7 @@ class MyPageCustomCell: UITableViewCell {
     let switchControl: UISwitch = {
         let switchControl = UISwitch()
         switchControl.onTintColor = ColorGuide.main
+        switchControl.isOn = true
         return switchControl
     }()
 
@@ -44,20 +45,34 @@ class MyPageCustomCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    
+    @objc func didTapSwitch(sender: UISwitch) {
+        if sender.isOn {
+            SignInService.shared.setSignedInUser((SignInService.shared.signedInUser?.email)!)
+            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoLoginEnabled: true)
+            print(SignInService.shared.isSignedIn())
+        } else {
+            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
+            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoLoginEnabled: false)
+            print(SignInService.shared.isSignedIn())
+        }
+    }
 
-    public func configure(_ settingItem: SettingItem) {
+    public func configure(_ settingItem: SettingItem, _ user: User) {
         titleLabel.text = settingItem.title
-
+        switchControl.addTarget(self, action: #selector(didTapSwitch(sender:)), for: .valueChanged)
+        
         switch settingItem.type {
         case .autoLogin:
             switchControl.isHidden = false
             iconImageView.isHidden = true
             dateLabel.isHidden = true
-            switchControl.isOn = settingItem.isSwitchOn
+            switchControl.isOn = user.autoLoginEnabled
         case .autoVolatilizationDate:
             switchControl.isHidden = true
             iconImageView.isHidden = false
             dateLabel.isHidden = false
+            dateLabel.text = "\(user.autoExpireDays)일"
             iconImageView.image = settingItem.icon
         case .logout:
             switchControl.isHidden = true
