@@ -30,6 +30,12 @@ final class HomeViewController: RootViewController<HomeView> {
             listener.navigationController?.pushViewController(DetailViewController(), animated: true)
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        rootView.resetHwibariImage() // 홈뷰 로드시 휘바리 이미지 초기화
+    }
 }
 
 private extension HomeViewController {

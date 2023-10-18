@@ -8,6 +8,8 @@
 import GoogleSignIn
 import UIKit
 
+var loginedUser: User? // 더 효율적인 방법 고민하기
+
 final class SignInViewController: RootViewController<SignInView> {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,14 +23,6 @@ final class SignInViewController: RootViewController<SignInView> {
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
             guard error == nil else { return }
             guard let signInResult = signInResult else { return }
-
-            // signInResult로부터 가져올 수 있는 정보
-            // let emailAddress = user.profile?.email
-            // let fullName = user.profile?.name
-            // let givenName = user.profile?.givenName
-            // let familyName = user.profile?.familyName
-            // let profilePicUrl = user.profile?.imageURL(withDimension: 320)
-
             let user = signInResult.user
 
             let email = user.profile?.email ?? "default email"
@@ -37,8 +31,11 @@ final class SignInViewController: RootViewController<SignInView> {
             let autoLoginEnabled = true
             let autoExpireDays: Int64 = 7
 
-            if UserService.shared.isUserExist(email) {
+            self.setUserDefaults(email)
+
+            if let existUser = UserService.shared.getExistUser(email) {
                 print("이미 가입한 회원")
+                loginedUser = existUser
             } else {
                 UserService.shared.createUser(email: email, name: name, id: id, autoLoginEnabled: autoLoginEnabled, autoExpireDays: autoExpireDays)
                 UserService.shared.printAllUsers()
@@ -52,5 +49,11 @@ final class SignInViewController: RootViewController<SignInView> {
                 sceneDelegate.window?.rootViewController = mainViewController
             }
         }
+    }
+    
+    private func setUserDefaults(_ email: String) {
+        UserDefaults.standard.set(email, forKey: "LoggedInUserEmail")
+        UserDefaults.standard.set(true, forKey: "AutoLoginEnabled")
+        UserDefaults.standard.set(7, forKey: "AutoExpireDays")
     }
 }
