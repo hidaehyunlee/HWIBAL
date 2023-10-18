@@ -74,18 +74,18 @@ final class HomeView: UIView, RootView {
     }
     
     private func setupConstraints() {
-            titleLabel1.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(107)
-                make.left.equalTo(40)
-            }
-            titleLabel2.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel1.snp.bottom)
-                make.left.equalTo(40)
-            }
-            hwibariImage.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(titleLabel2.snp.bottom).offset(60)
-            }
+        titleLabel1.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(107)
+            make.left.equalTo(40)
+        }
+        titleLabel2.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel1.snp.bottom)
+            make.left.equalTo(40)
+        }
+        hwibariImage.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(titleLabel2.snp.bottom).offset(60)
+        }
     }
     
     private func myPageButton() {
@@ -145,7 +145,7 @@ final class HomeView: UIView, RootView {
         removeButton.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.04
-        removeButton.attributedText = NSMutableAttributedString(string: "아, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        removeButton.attributedText = NSMutableAttributedString(string: "다, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         return removeButton
     }
     
@@ -193,6 +193,22 @@ final class HomeView: UIView, RootView {
         hwibariImage.image = UIImage(named: "hwibari_default")
     }
     
+    func returnHwibari() {
+        if hwibariImage.image == UIImage(named: "hwibariopen2") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.hwibariImage.image = UIImage(named: "hwibariopen2")
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                self.hwibariImage.image = UIImage(named: "hwibariopen")
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                self.hwibariImage.image = UIImage(named: "hwibari_default")
+            }
+        }
+    }
+
     // MARK: - Event Handling
     
     @objc private func myPageButtonTapped() {
@@ -205,16 +221,16 @@ final class HomeView: UIView, RootView {
             return
         }
         isHwibariImageTapped = true // hwibariImageViewTapped 중복실행 방지 (True/false)
-
+        
         print("'hwibari'가 탭되었습니다.")
-
+        
         // Dispatch Queue - 비동기
         DispatchQueue.global().async {
             let newImageName = "hwibariopen"
             if let newImage = UIImage(named: newImageName) {
                 DispatchQueue.main.async {
                     self.hwibariImage.image = newImage
-
+                    
                     // 변경 전에 짧은 지연 추가
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         let secondImageName = "hwibariopen2"
@@ -227,14 +243,13 @@ final class HomeView: UIView, RootView {
                                     navigationController.pushViewController(detailViewController, animated: true)
                                 }
                                 self.isHwibariImageTapped = false
+                            }
                         }
                     }
                 }
             }
         }
-        }
     }
-
     
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
