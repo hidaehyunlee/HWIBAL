@@ -60,6 +60,10 @@ final class HomeView: UIView, RootView {
     private func createImageView(named: String, contentMode: UIView.ContentMode) -> UIImageView {
         let imageView = UIImageView(image: UIImage(named: named))
         imageView.contentMode = contentMode
+        imageView.snp.makeConstraints { make in
+            make.width.equalTo(289)
+            make.height.equalTo(407)
+        }
         return imageView
     }
     
@@ -212,22 +216,22 @@ final class HomeView: UIView, RootView {
                     self.hwibariImage.image = newImage
 
                     // 변경 전에 짧은 지연 추가
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         let secondImageName = "hwibariopen2"
                         if let secondImage = UIImage(named: secondImageName) {
                             self.hwibariImage.image = secondImage
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                let detailViewController = DetailViewController()
+                                if let navigationController = self.viewController?.navigationController {
+                                    navigationController.pushViewController(detailViewController, animated: true)
+                                }
+                                self.isHwibariImageTapped = false
                         }
                     }
                 }
             }
         }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            let detailViewController = DetailViewController()
-            if let navigationController = self.viewController?.navigationController {
-                navigationController.pushViewController(detailViewController, animated: true)
-            }
-            self.isHwibariImageTapped = false
         }
     }
 
