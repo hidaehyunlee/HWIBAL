@@ -25,6 +25,38 @@ class UserService {
             coreDataManager.saveContext()
         }
     }
+    
+    func updateUser(email: String, autoLoginEnabled: Bool? = nil, autoExpireDays: Int64? = nil) {
+        let context = coreDataManager.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "email == %@", email)
+
+        do {
+            if let userToUpdate = try context.fetch(fetchRequest).first {
+                
+                if let newAutoLoginEnabled = autoLoginEnabled {
+                    userToUpdate.autoLoginEnabled = newAutoLoginEnabled
+                }
+                if let newAutoExpireDays = autoExpireDays {
+                    userToUpdate.autoExpireDays = newAutoExpireDays
+                }
+                
+                coreDataManager.saveContext()
+                print("""
+                      유저 정보가 업데이트되었습니다.
+                      Email: \(userToUpdate.email ?? "No email")
+                      Name: \(userToUpdate.name ?? "No name")
+                      ID: \(userToUpdate.id ?? "No ID")
+                      AutoLoginEnabled: \(userToUpdate.autoLoginEnabled)
+                      AutoExpireDays: \(userToUpdate.autoExpireDays)
+                      """)
+            } else {
+                print("Error fetching users: \(email)")
+            }
+        } catch {
+            print("Error updating user: \(error)")
+        }
+    }
 
     // 이메일에 해당하는 사용자가 있으면 해당 사용자를 반환, 없으면 nil 반환
     func getExistUser(_ email: String) -> User? {
@@ -46,13 +78,9 @@ class UserService {
 
         do {
             let users = try context.fetch(fetchRequest)
-            if users.isEmpty {
-                print("유저 정보 없읍")
-            } else {
-                for user in users {
-                    print("User -")
-                    print("Email: \(user.email ?? "No email"), Name: \(user.name ?? "No name"), ID: \(user.id ?? "No ID"), AutoLoginEnabled: \(user.autoLoginEnabled), AutoExpireDays: \(user.autoExpireDays)")
-                }
+            for user in users {
+                print("User -")
+                print("Email: \(user.email ?? "No email"), Name: \(user.name ?? "No name"), ID: \(user.id ?? "No ID"), AutoLoginEnabled: \(user.autoLoginEnabled), AutoExpireDays: \(user.autoExpireDays)")
             }
         } catch {
             print("Failed to fetch users: \(error)")

@@ -75,7 +75,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         let settingItem = settingsItems[indexPath.row]
-        cell.configure(settingItem)
+        cell.configure(settingItem, SignInService.shared.signedInUser!)
+        cell.selectionStyle = .none
 
         return cell
     }
@@ -90,18 +91,21 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
         switch settingItem.type {
             case .autoLogin:
-                print("🫵 클릭: 자동 로그인")
-                break
+            print("🫵 클릭: 자동 로그인")
+            break
             
             case .autoVolatilizationDate:
+            print("🫵 클릭: 자동 휘발일 설정")
             let volatilizationDateSettingAlert = UIAlertController(title: "", message: "당신의 감정쓰레기를 며칠 후 불태워 드릴까요?", preferredStyle: .actionSheet)
-            let days = ["1일", "3일", "일주일"]
+            let days = [1, 3, 7]
             for day in days {
-                let action = UIAlertAction(title: day, style: .default) { _ in
+                let formattedDay = "\(day)일"
+                let action = UIAlertAction(title: formattedDay, style: .default) { _ in
+                    UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: Int64(day))
                     print("\(day) 후 감정쓰레기를 태워 드립니다.")
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
-                        cell.updateDateLabel(day)
+                        cell.updateDateLabel(formattedDay)
                     }
                 }
                 volatilizationDateSettingAlert.addAction(action)
@@ -109,14 +113,13 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             volatilizationDateSettingAlert.addAction(cancelAction)
             present(volatilizationDateSettingAlert, animated: true)
-            print("🫵 클릭: 자동 휘발일 설정")
-                break
+            break
             
             case .logout:
             print("🫵 클릭: 로그아웃")
             SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
             goToSignInVC()
-                break
+            break
         }
 
         tableView.deselectRow(at: indexPath, animated: true)

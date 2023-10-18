@@ -50,8 +50,14 @@ class SignInService {
     
     func getSignedInUserInfo() {
         print("--------------------------------")
-        print("👤 [로그인 유저 정보]")
-        print("Email: \(signedInUser?.email ?? "No email")\nName: \(signedInUser?.name ?? "No name")\nID: \(signedInUser?.id ?? "No ID")\nAutoLoginEnabled: \(String(describing: signedInUser?.autoLoginEnabled))\nAutoExpireDays: \(String(describing: signedInUser?.autoExpireDays))")
+        print("""
+              👤 [로그인 유저 정보]
+              Email: \(signedInUser?.email ?? "No email")
+              Name: \(signedInUser?.name ?? "No name")
+              ID: \(signedInUser?.id ?? "No ID")
+              자동 로그인: \(String(describing: signedInUser?.autoLoginEnabled))
+              자동 휘발일: \(String(describing: signedInUser?.autoExpireDays))
+              """)
         print("--------------------------------")
     }
 }
