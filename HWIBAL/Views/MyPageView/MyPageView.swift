@@ -86,7 +86,7 @@ final class MyPageView: UIView, RootView {
         return tableView
     }()
     
-    let cancelButton = MainButton(type: .withdrawal)
+    let withdrawalButton = MainButton(type: .withdrawal)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -135,8 +135,8 @@ final class MyPageView: UIView, RootView {
             make.height.equalTo(200)
         }
         
-        addSubview(cancelButton)
-        cancelButton.snp.makeConstraints { make in
+        addSubview(withdrawalButton)
+        withdrawalButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(30)
             make.trailing.equalToSuperview().offset(-30)

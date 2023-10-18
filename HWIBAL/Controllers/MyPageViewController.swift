@@ -35,16 +35,16 @@ private extension MyPageViewController {
         settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
         // MARK: - Action
-        rootView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        rootView.withdrawalButton.addTarget(self, action: #selector(withdrawalButtonTapped), for: .touchUpInside)
         rootView.reportSummaryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
     }
 }
 
 private extension MyPageViewController {
-    @objc func cancelButtonTapped() {
+    @objc func withdrawalButtonTapped() {
         print("🫵 클릭: 회원탈퇴")
-        UserDefaults.standard.set(false, forKey: "isLoggedIn")
-        UserService.shared.deleteUser((UserService.loginedUser?.email)!)
+        SignInService.shared.setWithdrawal()
+        UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
         goToSignInVC()
     }
     
@@ -114,13 +114,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             
             case .logout:
             print("🫵 클릭: 로그아웃")
-            UserDefaults.standard.set(false, forKey: "isLoggedIn")
-            
-            print(UserDefaults.standard.bool(forKey: "isLoggedIn"))
-            print(UserDefaults.standard.string(forKey: "LoggedInUserEmail") as Any)
-            
+            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
             goToSignInVC()
-            
                 break
         }
 

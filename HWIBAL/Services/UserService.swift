@@ -10,7 +10,6 @@ import Foundation
 
 class UserService {
     static let shared = UserService()
-    static var loginedUser: User?
     let coreDataManager = CoreDataManager.shared
 
     func createUser(email: String, name: String, id: String, autoLoginEnabled: Bool, autoExpireDays: Int64) {

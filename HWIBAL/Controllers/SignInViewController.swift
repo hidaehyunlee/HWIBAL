@@ -29,16 +29,7 @@ final class SignInViewController: RootViewController<SignInView> {
             let autoLoginEnabled = true
             let autoExpireDays: Int64 = 7
 
-            if let existUser = UserService.shared.getExistUser(email) {
-                print("이미 가입한 회원")
-                UserService.loginedUser = existUser
-                self.setUserDefaults(existUser.email!)
-            } else {
-                UserService.shared.createUser(email: email, name: name, id: id, autoLoginEnabled: autoLoginEnabled, autoExpireDays: autoExpireDays)
-                UserService.loginedUser = UserService.shared.getExistUser(email)
-                self.setUserDefaults(email)
-                UserService.shared.printAllUsers()
-            }
+            SignInService.shared.signIn(email, name, id, autoLoginEnabled, autoExpireDays)
 
             // 로그인 완료 후 MainViewController로 이동
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -48,10 +39,5 @@ final class SignInViewController: RootViewController<SignInView> {
                 sceneDelegate.window?.rootViewController = mainViewController
             }
         }
-    }
-    
-    private func setUserDefaults(_ email: String) {
-        UserDefaults.standard.set(email, forKey: "LoggedInUserEmail")
-        UserDefaults.standard.set(true, forKey: "isLoggedIn")
     }
 }

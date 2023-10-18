@@ -15,31 +15,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = .init(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
-        if isLoggedIn() {
-            if let loggedInUserEmail = loadLoggedInUserEmail(),
-               let user = UserService.shared.getExistUser(loggedInUserEmail) {
-                UserService.loginedUser = user
+        if SignInService.shared.isSignedIn() {
+            if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
+               let user = UserService.shared.getExistUser(signedInUserEmail) {
+                SignInService.shared.signedInUser = user
                 window?.rootViewController = MainViewController()
-                getUserInfo()
+                SignInService.shared.getSignedInUserInfo()
             }
         } else {
             window?.rootViewController = SignInViewController()
         }
-    }
-    
-    private func isLoggedIn() -> Bool {
-        return UserDefaults.standard.bool(forKey: "isLoggedIn")
-    }
-
-    private func loadLoggedInUserEmail() -> String? {
-        return UserDefaults.standard.string(forKey: "LoggedInUserEmail")
-    }
-    
-    private func getUserInfo() {
-        print("--------------------------------")
-        print("👤 [로그인 유저 정보]")
-        print("Email: \(UserService.loginedUser?.email ?? "No email")\nName: \(UserService.loginedUser?.name ?? "No name")\nID: \(UserService.loginedUser?.id ?? "No ID")\nAutoLoginEnabled: \(String(describing: UserService.loginedUser?.autoLoginEnabled))\nAutoExpireDays: \(String(describing: UserService.loginedUser?.autoExpireDays))")
-        print("--------------------------------")
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}
