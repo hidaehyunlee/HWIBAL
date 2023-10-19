@@ -38,10 +38,13 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
     private lazy var textContent: UILabel = {
         let label = UILabel()
         
-        label.text = "self.content"
+        label.text = """
+                     아니
+                     """
         label.font = FontGuide.size14
         label.textColor = .white
         label.numberOfLines = 0
+        label.sizeToFit()
         
         return label
     }()
@@ -77,7 +80,7 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
             make.top.equalToSuperview().offset(65)
             make.left.equalToSuperview().offset(21)
             make.right.equalToSuperview().offset(-21)
-            make.bottom.equalToSuperview().offset(-21)
+            // bottom을 잡으면 label text가 아래로 내려옴. 어차피 글자수 제한 있으니 동적으로 안만들고 constraint 안잡아둘게요.
         }
     }
 }
