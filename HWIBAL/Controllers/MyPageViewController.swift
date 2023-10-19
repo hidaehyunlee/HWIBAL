@@ -34,14 +34,17 @@ private extension MyPageViewController {
         settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
         // MARK: - Action
-        rootView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        rootView.withdrawalButton.addTarget(self, action: #selector(withdrawalButtonTapped), for: .touchUpInside)
         rootView.reportSummaryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
     }
 }
 
 private extension MyPageViewController {
-    @objc func cancelButtonTapped() {
+    @objc func withdrawalButtonTapped() {
         print("🫵 클릭: 회원탈퇴")
+        SignInService.shared.setWithdrawal()
+        UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
+        goToSignInVC()
     }
     
     @objc func myPageToReport() {
@@ -49,6 +52,14 @@ private extension MyPageViewController {
         reportVC.modalPresentationStyle = .fullScreen
         present(reportVC, animated: true, completion: nil)
         print("🫵 클릭: 리포트 더보기")
+    }
+    
+    func goToSignInVC() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let sceneDelegate = windowScene.delegate as? SceneDelegate {
+            let signInViewController = SignInViewController()
+            sceneDelegate.window?.rootViewController = signInViewController
+        }
     }
 }
 
@@ -63,7 +74,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         let settingItem = settingsItems[indexPath.row]
-        cell.configure(settingItem)
+        cell.configure(settingItem, SignInService.shared.signedInUser!)
+        cell.selectionStyle = .none
 
         return cell
     }
@@ -78,18 +90,21 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
         switch settingItem.type {
             case .autoLogin:
-                print("🫵 클릭: 자동 로그인")
-                break
+            print("🫵 클릭: 자동 로그인")
+            break
             
             case .autoVolatilizationDate:
-            let volatilizationDateSettingAlert = UIAlertController(title: "당신의 감쓰를 며칠 후 불태워 드릴까요?", message: "", preferredStyle: .actionSheet)
-            let days = ["1일", "2일", "3일", "4일", "5일", "6일", "일주일"]
+            print("🫵 클릭: 자동 휘발일 설정")
+            let volatilizationDateSettingAlert = UIAlertController(title: "", message: "당신의 감정쓰레기를 며칠 후 불태워 드릴까요?", preferredStyle: .actionSheet)
+            let days = [1, 3, 7]
             for day in days {
-                let action = UIAlertAction(title: day, style: .default) { _ in
-                    print("\(day) 후 감쓰를 태워 드립니다.")
+                let formattedDay = "\(day)일"
+                let action = UIAlertAction(title: formattedDay, style: .default) { _ in
+                    UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: Int64(day))
+                    print("\(day) 후 감정쓰레기를 태워 드립니다.")
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
-                        cell.updateDateLabel(day)
+                        cell.updateDateLabel(formattedDay)
                     }
                 }
                 volatilizationDateSettingAlert.addAction(action)
@@ -97,12 +112,13 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             volatilizationDateSettingAlert.addAction(cancelAction)
             present(volatilizationDateSettingAlert, animated: true)
-            print("🫵 클릭: 자동 휘발일 설정")
-                break
+            break
             
             case .logout:
             print("🫵 클릭: 로그아웃")
-                break
+            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
+            goToSignInVC()
+            break
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
