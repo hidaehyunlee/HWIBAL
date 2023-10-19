@@ -13,6 +13,16 @@ final class HomeView: UIView, RootView {
     
     private var emotionCount = 1
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        initializeUI()
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        initializeUI()
+    }
+
     private var isHwibariImageTapped = false
     
     // MARK: - UI Elements
@@ -38,7 +48,6 @@ final class HomeView: UIView, RootView {
         backgroundColor = .systemBackground
         addSubviews()
         setupConstraints()
-        
         myPageButton()
         setupHwibariImageView()
         setupRemove()
@@ -242,10 +251,19 @@ final class HomeView: UIView, RootView {
     
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
+        
+        let alertController = AlertViewController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?")
+
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        viewController?.present(alertController, animated: true, completion: nil)
     }
     
     @objc private func createButtonTapped() {
         print("'작성하기'가 탭되었습니다.")
+        EventBus.shared.emit(PushToCreatePageScreenEvent())
     }
 }
 
