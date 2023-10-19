@@ -20,7 +20,6 @@ final class MyPageViewController: RootViewController<MyPageView> {
 
 private extension MyPageViewController {
     func initializeUI() {
-        view = rootView
         rootView.tableView.dataSource = self
         rootView.tableView.delegate = self
         
