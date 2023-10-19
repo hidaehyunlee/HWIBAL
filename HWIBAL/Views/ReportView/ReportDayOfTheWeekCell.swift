@@ -27,9 +27,6 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2
-        label.snp.makeConstraints { make in
-            make.width.equalTo(180)
-        }
         return label
     }()
     
@@ -39,9 +36,6 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2
-        label.snp.makeConstraints { make in
-            make.width.equalTo(250)
-        }
         return label
     }()
     
@@ -75,13 +69,10 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
     
     private let rankTitle: UILabel = {
         let label = UILabel()
-        label.text = "평균 감쓰 개수 TOP3"
+        label.text = "평균 감정쓰레기 개수 TOP3"
         label.font = FontGuide.size14
         label.textColor = .black
         label.textAlignment = .left
-        label.snp.makeConstraints { make in
-            make.width.equalTo(200)
-        }
         return label
     }()
     
@@ -207,9 +198,9 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         
         title.text = """
                      \(maxDay)요일만 되면
-                     바빠지는 내 감쓰
+                     바빠지는 내 감정쓰레기
                      """
-        subTitle.text = "다른 요일보다 평균 감쓰 개수가 많아요"
+        subTitle.text = "다른 요일보다 평균 감정쓰레기 개수가 많아요"
         
         // MARK: - Day of The Week
         generateChartForDayOfWeek()

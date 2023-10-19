@@ -87,7 +87,7 @@ class ReportSummaryCell: UICollectionViewCell {
         // MARK: - Title, SubTitle
         title.text = """
                      가입 이후 작성한
-                     감쓰 \(totalEmotionTrashCount)개
+                     감정쓰레기 \(totalEmotionTrashCount)개
                      """
         
         switch totalEmotionTrashCount {
@@ -103,7 +103,7 @@ class ReportSummaryCell: UICollectionViewCell {
         let totalEntry = BarChartDataEntry(x: 0, y: Double(totalEmotionTrashCount))
         let averageEntry = BarChartDataEntry(x: 1, y: Double(averageEmotionTrashCount))
         
-        let dataSet = BarChartDataSet(entries: [totalEntry, averageEntry], label: "감쓰 개수")
+        let dataSet = BarChartDataSet(entries: [totalEntry, averageEntry], label: "감정쓰레기 개수")
         dataSet.colors = [ColorGuide.main, ColorGuide.textHint]
         dataSet.valueColors = [ColorGuide.main, ColorGuide.textHint]
 

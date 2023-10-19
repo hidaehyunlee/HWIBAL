@@ -27,9 +27,6 @@ class ReportTimeZoneCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2
-        label.snp.makeConstraints { make in
-            make.width.equalTo(180)
-        }
         return label
     }()
     
@@ -39,9 +36,6 @@ class ReportTimeZoneCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2
-        label.snp.makeConstraints { make in
-            make.width.equalTo(250)
-        }
         return label
     }()
     
@@ -131,11 +125,11 @@ class ReportTimeZoneCell: UICollectionViewCell {
         
         title.text = """
                      \(generateGreetingForHour(maxTimeZone))에
-                     분주한 내 감쓰
+                     분주한 내 감정쓰레기
                      """
         subTitle.text = """
-                        평균 감쓰 개수 \(averageEmotionTrashCount())개
-                        다른 시간대보다 감쓰 개수가 많아요
+                        감정쓰레기 개수 \(maxCount)개
+                        다른 시간대보다 감정쓰레기 개수가 많아요
                         """
         
         // MARK: - TimeZone
