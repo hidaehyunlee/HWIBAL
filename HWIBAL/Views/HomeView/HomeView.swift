@@ -76,11 +76,11 @@ final class HomeView: UIView, RootView {
     private func setupConstraints() {
         titleLabel1.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(107)
-            make.left.equalTo(40)
+            make.left.equalTo(24)
         }
         titleLabel2.snp.makeConstraints { make in
             make.top.equalTo(titleLabel1.snp.bottom)
-            make.left.equalTo(40)
+            make.left.equalTo(24)
         }
         hwibariImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -123,9 +123,9 @@ final class HomeView: UIView, RootView {
         
         coloredBar.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.width.equalTo(242)
-            make.leading.equalTo(self).offset(40)
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-50)
+            make.width.equalTo(279)
+            make.leading.equalTo(self).offset(24)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-40)
         }
         
         let removeButton = removeTitle()
@@ -163,8 +163,8 @@ final class HomeView: UIView, RootView {
         squareView.snp.makeConstraints { make in
             make.width.equalTo(56)
             make.height.equalTo(56)
-            make.trailing.equalToSuperview().offset(-40)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-50)
+            make.trailing.equalToSuperview().offset(-24)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-40)
         }
         
         let penImage = createPenImage()
@@ -189,23 +189,18 @@ final class HomeView: UIView, RootView {
         return penImage
     }
     
-    func resetHwibariImage() {
-        hwibariImage.image = UIImage(named: "hwibari_default")
-    }
-    
     func returnHwibari() {
         if hwibariImage.image == UIImage(named: "hwibariopen2") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.hwibariImage.image = UIImage(named: "hwibariopen2")
-            }
+            hwibariImage.animationImages = [
+                UIImage(named: "hwibariopen2")!,
+                UIImage(named: "hwibariopen")!,
+                UIImage(named: "hwibari_default")!
+            ]
+            hwibariImage.animationDuration = 0.6
+            hwibariImage.animationRepeatCount = 1
+            hwibariImage.startAnimating()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.hwibariImage.image = UIImage(named: "hwibariopen")
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.hwibariImage.image = UIImage(named: "hwibari_default")
-            }
+            hwibariImage.image = UIImage(named: "hwibari_default")
         }
     }
 
@@ -224,30 +219,24 @@ final class HomeView: UIView, RootView {
         
         print("'hwibari'가 탭되었습니다.")
         
-        // Dispatch Queue - 비동기
-        DispatchQueue.global().async {
-            let newImageName = "hwibariopen"
-            if let newImage = UIImage(named: newImageName) {
-                DispatchQueue.main.async {
-                    self.hwibariImage.image = newImage
-                    
-                    // 변경 전에 짧은 지연 추가
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        let secondImageName = "hwibariopen2"
-                        if let secondImage = UIImage(named: secondImageName) {
-                            self.hwibariImage.image = secondImage
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                let detailViewController = DetailViewController()
-                                if let navigationController = self.viewController?.navigationController {
-                                    navigationController.pushViewController(detailViewController, animated: true)
-                                }
-                                self.isHwibariImageTapped = false
-                            }
-                        }
-                    }
-                }
+        hwibariImage.animationImages = [
+            UIImage(named: "hwibari_default")!,
+            UIImage(named: "hwibariopen")!,
+            UIImage(named: "hwibariopen2")!,
+        ]
+        hwibariImage.animationDuration = 0.6
+        hwibariImage.animationRepeatCount = 1
+        hwibariImage.startAnimating()
+        
+//        Thread.sleep(forTimeInterval: 2.0)
+        hwibariImage.image = UIImage(named: "hwibariopen2")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            let detailViewController = DetailViewController()
+            if let navigationController = self.viewController?.navigationController {
+                navigationController.pushViewController(detailViewController, animated: true)
             }
+            self.isHwibariImageTapped = false
         }
     }
     
