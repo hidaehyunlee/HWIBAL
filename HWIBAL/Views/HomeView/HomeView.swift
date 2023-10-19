@@ -113,7 +113,7 @@ final class HomeView: UIView, RootView {
     
     private func setupRemove() {
         let coloredBar = UIView()
-        coloredBar.backgroundColor = UIColor(red: 0.451, green: 0.306, blue: 0.969, alpha: 1)
+        coloredBar.backgroundColor = ColorGuide.main
         coloredBar.layer.cornerRadius = 4
         coloredBar.translatesAutoresizingMaskIntoConstraints = false
         let removeTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeButtonTapped))
@@ -199,11 +199,11 @@ final class HomeView: UIView, RootView {
                 self.hwibariImage.image = UIImage(named: "hwibariopen2")
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 self.hwibariImage.image = UIImage(named: "hwibariopen")
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 self.hwibariImage.image = UIImage(named: "hwibari_default")
             }
         }
