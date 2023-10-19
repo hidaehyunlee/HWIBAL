@@ -4,9 +4,9 @@
 //
 //  Created by 김도윤 on 2023/10/16.
 //
+import AVFoundation
 import EventBus
 import UIKit
-import AVFoundation
 
 class CreatePageView: UIView, RootView, UITextViewDelegate {
     let bgView = UIView()
@@ -62,7 +62,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         counterLabel.attributedText = NSMutableAttributedString(string: "0 / 300", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle2])
         addSubview(counterLabel)
         
-        if let image = UIImage(named: "휘발이create.svg") {
+        if let image = UIImage(named: "hwibari_create.svg") {
             firstImageView.image = image
             firstImageView.contentMode = .scaleAspectFit
             
@@ -80,8 +80,8 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         addSubview(textView)
         
-        soundWaveView.backgroundColor = .systemGray 
-        soundWaveView.isHidden = true 
+        soundWaveView.backgroundColor = .systemGray
+        soundWaveView.isHidden = true
         addSubview(soundWaveView)
     }
     
