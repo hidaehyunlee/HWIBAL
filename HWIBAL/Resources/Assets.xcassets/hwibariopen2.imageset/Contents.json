@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "hwibari_open02.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "hwibari_02@2x.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
