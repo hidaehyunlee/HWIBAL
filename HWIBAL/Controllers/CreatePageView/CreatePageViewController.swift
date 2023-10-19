@@ -105,8 +105,8 @@ class CreatePageViewController: UIViewController {
         present(alertVC, animated: true, completion: nil)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             alertVC.dismiss(animated: true) {
-                EmotionTrashCount.incrementCount()
-                print("감쓰 갯수 total : ", EmotionTrashCount.totalCount)
+//                EmotionTrashCount.incrementCount()
+//                print("감쓰 갯수 total : ", EmotionTrashCount.totalCount)
                 let homeVC = HomeViewController()
                 let navigationController = UINavigationController(rootViewController: homeVC)
                 navigationController.modalPresentationStyle = .fullScreen

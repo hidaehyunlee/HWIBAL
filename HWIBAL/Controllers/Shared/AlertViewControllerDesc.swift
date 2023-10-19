@@ -25,7 +25,7 @@ class AlertViewControllerDesc: UIViewController {
 
         setupViews()
 
-        dismissAfter(seconds: 2.0)
+        dismissAfter(seconds: 1.0)
     }
 
     private func dismissAfter(seconds: TimeInterval) {
