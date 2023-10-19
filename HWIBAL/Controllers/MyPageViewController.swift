@@ -14,7 +14,6 @@ final class MyPageViewController: RootViewController<MyPageView> {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initializeUI()
     }
 }

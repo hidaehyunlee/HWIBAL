@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */; };
+		0791B34B2AE10B59004B8740 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0791B3492AE10A7F004B8740 /* AVFoundation.framework */; };
+		0791B34F2AE11846004B8740 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791B34E2AE11846004B8740 /* RecordingViewController.swift */; };
+		07CBDAA82ADE367300313D15 /* AlertViewDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */; };
+		07CBDAAA2ADE368400313D15 /* AlertViewControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */; };
+		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
+		07D18F7A2AD9482C0080FACA /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F792AD9482C0080FACA /* AlertView.swift */; };
+		07D18F7C2AD948450080FACA /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F7B2AD948450080FACA /* AlertViewController.swift */; };
 		3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F14EA8D2AD55E6C0047CE34 /* SnapKit */; };
 		3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */; };
 		3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */; };
@@ -50,6 +58,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageView.swift; sourceTree = "<group>"; };
+		0791B3492AE10A7F004B8740 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0791B34E2AE11846004B8740 /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
+		07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewDesc.swift; sourceTree = "<group>"; };
+		07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewControllerDesc.swift; sourceTree = "<group>"; };
+		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
+		07D18F792AD9482C0080FACA /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		07D18F7B2AD948450080FACA /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		3F783A092AD7DC1A0024D692 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -96,6 +112,7 @@
 			files = (
 				DEFE3A222AD541250076FE11 /* EventBus in Frameworks */,
 				3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */,
+				0791B34B2AE10B59004B8740 /* AVFoundation.framework in Frameworks */,
 				3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */,
 				DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */,
 				DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */,
@@ -105,6 +122,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0791B3442AE0F721004B8740 /* CreatePageView */ = {
+			isa = PBXGroup;
+			children = (
+				076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */,
+			);
+			path = CreatePageView;
+			sourceTree = "<group>";
+		};
+		0791B3482AE10A7F004B8740 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0791B3492AE10A7F004B8740 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3F783A2B2AD8C4210024D692 /* ReportView */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +182,7 @@
 				3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */,
 				DEFE39FE2AD53C3A0076FE11 /* HWIBAL */,
 				DEFE39FD2AD53C3A0076FE11 /* Products */,
+				0791B3482AE10A7F004B8740 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,6 +223,7 @@
 		DEFE3A142AD53EB30076FE11 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0791B3442AE0F721004B8740 /* CreatePageView */,
 				DE434E0C2ADE4F1300C77FE4 /* DetailView */,
 				DE434DFE2ADCCE3E00C77FE4 /* SignInView */,
 				3F783A2B2AD8C4210024D692 /* ReportView */,
@@ -204,9 +239,11 @@
 			isa = PBXGroup;
 			children = (
 				DEFE3A162AD53F3C0076FE11 /* RootView.swift */,
+				07D18F792AD9482C0080FACA /* AlertView.swift */,
 				3F783A2E2AD8C81D0024D692 /* MainButton.swift */,
 				3F783A322AD8EA7E0024D692 /* CircleButton.swift */,
 				3F783A302AD8E76B0024D692 /* CloseButton.swift */,
+				07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -233,10 +270,12 @@
 			children = (
 				DEFE3A292AD5420A0076FE11 /* Shared */,
 				DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */,
-				3F783A2C2AD8C4750024D692 /* ReportViewController.swift */,
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
+				07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */,
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
+				3F783A2C2AD8C4750024D692 /* ReportViewController.swift */,
+				0791B34E2AE11846004B8740 /* RecordingViewController.swift */,
 				DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */,
 			);
 			path = Controllers;
@@ -246,6 +285,8 @@
 			isa = PBXGroup;
 			children = (
 				DEFE3A272AD541FB0076FE11 /* RootViewController.swift */,
+				07D18F7B2AD948450080FACA /* AlertViewController.swift */,
+				07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -364,18 +405,25 @@
 				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
+				07D18F7C2AD948450080FACA /* AlertViewController.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
+				07CBDAAA2ADE368400313D15 /* AlertViewControllerDesc.swift in Sources */,
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
 				DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */,
 				DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */,
+				0791B34F2AE11846004B8740 /* RecordingViewController.swift in Sources */,
+				076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */,
 				3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */,
 				3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */,
 				DE434DFB2ADCCE0F00C77FE4 /* SignInViewController.swift in Sources */,
+				07CBDAA82ADE367300313D15 /* AlertViewDesc.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
 				3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */,
 				3F783A212AD7DFBB0024D692 /* User+CoreDataClass.swift in Sources */,
+				07D18F7A2AD9482C0080FACA /* AlertView.swift in Sources */,
+				07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

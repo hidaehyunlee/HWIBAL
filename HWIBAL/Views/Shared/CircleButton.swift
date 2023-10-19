@@ -69,3 +69,8 @@ class CircleButton: UIButton {
         }
     }
 }
+extension CircleButton {
+    var buttonSize: CGFloat {
+        return CGFloat(self.customButtonType.size)
+    }
+}
