@@ -18,7 +18,7 @@ class ReportService {
     private func convertToKoreanTime(_ date: Date) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        dateFormatter.locale = Locale(identifier: "ko_KR")
 
         let koreanDateString = dateFormatter.string(from: date)
         return dateFormatter.date(from: koreanDateString)

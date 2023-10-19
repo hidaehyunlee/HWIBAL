@@ -21,7 +21,6 @@ final class ReportViewController: RootViewController<ReportView> {
 
 private extension ReportViewController {
     func initializeUI() {
-        view = rootView
         rootView.collectionView.dataSource = self
         rootView.collectionView.delegate = self
         
