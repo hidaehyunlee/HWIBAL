@@ -48,7 +48,6 @@ final class HomeView: UIView, RootView {
         backgroundColor = .systemBackground
         addSubviews()
         setupConstraints()
-        
         myPageButton()
         setupHwibariImageView()
         setupRemove()
@@ -212,7 +211,7 @@ final class HomeView: UIView, RootView {
         if isHwibariImageTapped {
             return
         }
-        isHwibariImageTapped = true  // hwibariImageViewTapped 중복실행방지 (True/false)
+        isHwibariImageTapped = true // hwibariImageViewTapped 중복실행방지 (True/false)
         
         print("'hwibari'가 탭되었습니다.")
         
@@ -240,12 +239,9 @@ final class HomeView: UIView, RootView {
         
         let alertController = AlertViewController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?")
 
-        
         let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-           
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
         
         viewController?.present(alertController, animated: true, completion: nil)
     }

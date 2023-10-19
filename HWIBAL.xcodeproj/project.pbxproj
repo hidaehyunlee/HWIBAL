@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */; };
+		0791B34B2AE10B59004B8740 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0791B3492AE10A7F004B8740 /* AVFoundation.framework */; };
+		0791B34F2AE11846004B8740 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791B34E2AE11846004B8740 /* RecordingViewController.swift */; };
 		07CBDAA82ADE367300313D15 /* AlertViewDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */; };
 		07CBDAAA2ADE368400313D15 /* AlertViewControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */; };
 		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
@@ -53,6 +55,8 @@
 
 /* Begin PBXFileReference section */
 		076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageView.swift; sourceTree = "<group>"; };
+		0791B3492AE10A7F004B8740 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0791B34E2AE11846004B8740 /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
 		07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewDesc.swift; sourceTree = "<group>"; };
 		07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewControllerDesc.swift; sourceTree = "<group>"; };
 		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 			files = (
 				DEFE3A222AD541250076FE11 /* EventBus in Frameworks */,
 				3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */,
+				0791B34B2AE10B59004B8740 /* AVFoundation.framework in Frameworks */,
 				3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */,
 				DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */,
 				DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */,
@@ -109,7 +114,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		076638FC2ADD228600A38FF5 /* CreatePageView */ = {
+		0791B3442AE0F721004B8740 /* CreatePageView */ = {
 			isa = PBXGroup;
 			children = (
 				076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */,
@@ -117,12 +122,12 @@
 			path = CreatePageView;
 			sourceTree = "<group>";
 		};
-		07D18F732AD83E9D0080FACA /* CreatePageView */ = {
+		0791B3482AE10A7F004B8740 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */,
+				0791B3492AE10A7F004B8740 /* AVFoundation.framework */,
 			);
-			path = CreatePageView;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		3F783A2B2AD8C4210024D692 /* ReportView */ = {
@@ -159,6 +164,7 @@
 				3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */,
 				DEFE39FE2AD53C3A0076FE11 /* HWIBAL */,
 				DEFE39FD2AD53C3A0076FE11 /* Products */,
+				0791B3482AE10A7F004B8740 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -198,7 +204,7 @@
 		DEFE3A142AD53EB30076FE11 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				076638FC2ADD228600A38FF5 /* CreatePageView */,
+				0791B3442AE0F721004B8740 /* CreatePageView */,
 				DE434DFE2ADCCE3E00C77FE4 /* SignInView */,
 				3F783A2B2AD8C4210024D692 /* ReportView */,
 				DEFE3A232AD5415F0076FE11 /* MyPageView */,
@@ -242,14 +248,15 @@
 		DEFE3A262AD541D50076FE11 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				07D18F732AD83E9D0080FACA /* CreatePageView */,
 				DEFE3A292AD5420A0076FE11 /* Shared */,
 				DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */,
-				3F783A2C2AD8C4750024D692 /* ReportViewController.swift */,
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
+				07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */,
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
+				3F783A2C2AD8C4750024D692 /* ReportViewController.swift */,
 				6AC073BF2ADE696F00277862 /* DetailViewController.swift */,
+				0791B34E2AE11846004B8740 /* RecordingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -382,6 +389,7 @@
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */,
+				0791B34F2AE11846004B8740 /* RecordingViewController.swift in Sources */,
 				076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */,
 				3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */,
 				3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */,

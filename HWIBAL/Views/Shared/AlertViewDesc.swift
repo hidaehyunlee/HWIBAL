@@ -27,7 +27,7 @@ class AlertViewDesc: UIView {
 
     private func setupViews() {
         layer.cornerRadius = 14
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         frame.size = CGSize(width: 273, height: 250)
 
         titleLabel.textColor = ColorGuide.main

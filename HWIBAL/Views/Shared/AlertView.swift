@@ -26,11 +26,11 @@ class AlertView: UIView {
 
         cancelButton.setTitle("취소", for: .normal)
         cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
-        cancelButton.tintColor = ColorGuide.black
+        cancelButton.tintColor = .black
 
         confirmButton.setTitle("확인", for: .normal)
         confirmButton.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
-        confirmButton.tintColor = ColorGuide.black
+        confirmButton.tintColor = .black
 
         setupViews()
     }
@@ -42,14 +42,14 @@ class AlertView: UIView {
 
     private func setupViews() {
         layer.cornerRadius = 14
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         frame.size = CGSize(width: 273, height: 250)
 
         titleLabel.textColor = ColorGuide.main
         titleLabel.font = FontGuide.size16Bold
         titleLabel.textAlignment = .center
         titleLabel.frame = CGRect(x: 0, y: 20, width: frame.width, height: 22)
-        messageLabel.textColor = ColorGuide.black
+        messageLabel.textColor = .black
         messageLabel.font = FontGuide.size14
         messageLabel.textAlignment = .center
         messageLabel.frame = CGRect(x: 0, y: titleLabel.frame.maxY + 20, width: frame.width, height: 36)

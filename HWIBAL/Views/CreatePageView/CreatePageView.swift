@@ -6,20 +6,30 @@
 //
 import EventBus
 import UIKit
+import AVFoundation
 
-class CreatePageView: UIView, UITextViewDelegate {
+class CreatePageView: UIView, RootView, UITextViewDelegate {
     let bgView = UIView()
     let dateLabel = UILabel()
     let counterLabel = UILabel()
     let firstImageView = UIImageView()
     let secondImageView = UIImageView()
     let thirdImageView = UIImageView()
+    let soundWaveView = UIView()
     
     let textView = UITextView()
     let paragraphStyle2 = NSMutableParagraphStyle()
     
-    let soundButton = CircleButton(type: .record)
+    let soundButton: CircleButton = {
+        let button = CircleButton(type: .record)
+        return button
+    }()
+    
     let cameraButton = CircleButton(type: .photo)
+    
+    func initializeUI() {
+        setupViews()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,11 +74,15 @@ class CreatePageView: UIView, UITextViewDelegate {
         }
         
         textView.delegate = self
-        textView.backgroundColor = .white
+        textView.backgroundColor = .systemBackground
         textView.layer.cornerRadius = 5
         textView.font = FontGuide.size14
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         addSubview(textView)
+        
+        soundWaveView.backgroundColor = .systemGray 
+        soundWaveView.isHidden = true 
+        addSubview(soundWaveView)
     }
     
     @objc func textViewDidChange(_ textView: UITextView) {
@@ -93,14 +107,14 @@ class CreatePageView: UIView, UITextViewDelegate {
         super.layoutSubviews()
         
         bgView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 168)
-        bgView.backgroundColor = UIColor(red: 60/60, green: 60/60, blue: 67/67, alpha: 0.36) // bgView크기 줄여서 datalable있는곳은 흰색으로 만들기
+        bgView.backgroundColor = UIColor(red: 60/60, green: 60/60, blue: 67/67, alpha: 0.36)
         
         dateLabel.frame = CGRect(x: 120, y: bgView.frame.maxY - 25 - 20, width: 153, height: 20)
         
         let imageViewWidth: CGFloat = 241
         let imageViewHeight: CGFloat = 150.02
         let imageViewX: CGFloat = 127
-        let imageViewY: CGFloat = bounds.height - imageViewHeight - 31.98
+        let imageViewY: CGFloat = bounds.height - imageViewHeight - 40
         firstImageView.frame = CGRect(x: imageViewX, y: imageViewY, width: imageViewWidth, height: imageViewHeight)
         
         textView.frame = CGRect(x: dateLabel.frame.origin.x, y: dateLabel.frame.maxY + 10, width: bounds.width - 40, height: 30)
@@ -125,19 +139,23 @@ class CreatePageView: UIView, UITextViewDelegate {
         
         let counterLabelWidth: CGFloat = bounds.width - 293 - 45
         let counterLabelHeight: CGFloat = 20
-        let counterLabelX: CGFloat = 293
-        let counterLabelY: CGFloat = bounds.height - counterLabelHeight - 197
+        let counterLabelX: CGFloat = 314
+        let counterLabelY: CGFloat = bounds.height - counterLabelHeight - 205
         counterLabel.frame = CGRect(x: counterLabelX, y: counterLabelY, width: counterLabelWidth, height: counterLabelHeight)
         counterLabel.alpha = 1.0
         
-        let cameraButtonX: CGFloat = 33
+        let cameraButtonX: CGFloat = 24
         let cameraButtonSize: CGFloat = cameraButton.buttonSize
         let cameraButtonY = bounds.height - cameraButtonSize - 40
         cameraButton.frame = CGRect(x: cameraButtonX, y: cameraButtonY, width: cameraButtonSize, height: cameraButtonSize)
         
-        let soundButtonX: CGFloat = 83
+        let soundButtonX: CGFloat = 73
         let soundButtonSize: CGFloat = soundButton.buttonSize
         let soundButtonY = bounds.height - soundButtonSize - 40
         soundButton.frame = CGRect(x: soundButtonX, y: soundButtonY, width: soundButtonSize, height: soundButtonSize)
+        
+        let soundWaveX: CGFloat = soundButton.frame.origin.x + soundButton.frame.width + 10
+        let soundWaveY: CGFloat = soundButton.frame.origin.y
+        soundWaveView.frame = CGRect(x: soundWaveX, y: soundWaveY, width: 50, height: soundButton.frame.height) // 사이즈와 위치는 적절하게 조절 필요
     }
 }
