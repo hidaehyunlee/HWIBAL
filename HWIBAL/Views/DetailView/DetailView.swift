@@ -44,17 +44,33 @@ final class DetailView: UIView, RootView {
         return label
     }()
 
-    lazy var collectionView: UICollectionView = {
+    private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
+
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 307, height: 373)
+        layout.itemSize = CarouselConst.itemSize
+        layout.minimumLineSpacing = CarouselConst.itemSpacing
+        layout.minimumInteritemSpacing = 0
 
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(EmotionTrashCell.self, forCellWithReuseIdentifier: "EmotionTrashCell")
+        return layout
+    }()
 
-        return collectionView
+    lazy var collectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewFlowLayout)
+
+        view.isScrollEnabled = true
+        view.showsHorizontalScrollIndicator = false
+        view.showsVerticalScrollIndicator = true
+        view.backgroundColor = .clear
+        view.clipsToBounds = true
+        view.register(EmotionTrashCell.self, forCellWithReuseIdentifier: EmotionTrashCell.identifier)
+        view.isPagingEnabled = false // 한 페이지의 넓이를 조절 할 수 없기 때문에 scrollViewWillEndDragging을 사용하여 구현
+        view.contentInsetAdjustmentBehavior = .never // 내부적으로 safe area에 의해 가려지는 것을 방지하기 위해서 자동으로 inset조정해 주는 것을 비활성화
+        view.contentInset = CarouselConst.collectionViewContentInset
+        view.decelerationRate = .fast // 스크롤이 빠르게 되도록 (페이징 애니메이션같이 보이게하기 위함)
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
     }()
 
     private lazy var audioView: UIView = {
@@ -87,7 +103,7 @@ final class DetailView: UIView, RootView {
         }
 
         collectionView.snp.makeConstraints { make in
-            make.height.equalTo(373)
+            make.height.equalTo(CarouselConst.itemSize.height)
             make.top.equalTo(numberOfPage.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview()
         }
@@ -102,6 +118,22 @@ final class DetailView: UIView, RootView {
         deleteButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-50)
+        }
+    }
+}
+
+// Carousel 애니메이션: itemSize, itemSpacing, insetX 정의
+extension DetailView {
+    enum CarouselConst {
+        static let itemSize = CGSize(width: 307, height: 373)
+        static let itemSpacing = 24.0
+
+        static var insetX: CGFloat {
+            (UIScreen.main.bounds.width - itemSize.width) / 2.0
+        }
+
+        static var collectionViewContentInset: UIEdgeInsets {
+            UIEdgeInsets(top: 0, left: insetX, bottom: 0, right: insetX)
         }
     }
 }
