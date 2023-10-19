@@ -28,7 +28,7 @@ final class HomeView: UIView, RootView {
     }()
     
     private lazy var hwibariImage: UIImageView = {
-        let imageView = createImageView(named: "hwibari", contentMode: .scaleAspectFit)
+        let imageView = createImageView(named: "hwibari_default", contentMode: .scaleAspectFit)
         return imageView
     }()
     
@@ -60,6 +60,10 @@ final class HomeView: UIView, RootView {
     private func createImageView(named: String, contentMode: UIView.ContentMode) -> UIImageView {
         let imageView = UIImageView(image: UIImage(named: named))
         imageView.contentMode = contentMode
+        imageView.snp.makeConstraints { make in
+            make.width.equalTo(289)
+            make.height.equalTo(407)
+        }
         return imageView
     }
     
@@ -70,19 +74,17 @@ final class HomeView: UIView, RootView {
     }
     
     private func setupConstraints() {
-        if let safeAreaLayoutGuide = viewController?.view.safeAreaLayoutGuide {
-            titleLabel1.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(107)
-                make.left.equalTo(40)
-            }
-            titleLabel2.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel1.snp.bottom)
-                make.left.equalTo(40)
-            }
-            hwibariImage.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(titleLabel2.snp.bottom).offset(60)
-            }
+        titleLabel1.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(107)
+            make.left.equalTo(24)
+        }
+        titleLabel2.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel1.snp.bottom)
+            make.left.equalTo(24)
+        }
+        hwibariImage.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(titleLabel2.snp.bottom).offset(60)
         }
     }
     
@@ -111,7 +113,7 @@ final class HomeView: UIView, RootView {
     
     private func setupRemove() {
         let coloredBar = UIView()
-        coloredBar.backgroundColor = UIColor(red: 0.451, green: 0.306, blue: 0.969, alpha: 1)
+        coloredBar.backgroundColor = ColorGuide.main
         coloredBar.layer.cornerRadius = 4
         coloredBar.translatesAutoresizingMaskIntoConstraints = false
         let removeTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeButtonTapped))
@@ -121,9 +123,9 @@ final class HomeView: UIView, RootView {
         
         coloredBar.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.width.equalTo(242)
-            make.leading.equalTo(self).offset(40)
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-50)
+            make.width.equalTo(279)
+            make.leading.equalTo(self).offset(24)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-40)
         }
         
         let removeButton = removeTitle()
@@ -143,7 +145,7 @@ final class HomeView: UIView, RootView {
         removeButton.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.04
-        removeButton.attributedText = NSMutableAttributedString(string: "아, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        removeButton.attributedText = NSMutableAttributedString(string: "다, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         return removeButton
     }
     
@@ -161,8 +163,8 @@ final class HomeView: UIView, RootView {
         squareView.snp.makeConstraints { make in
             make.width.equalTo(56)
             make.height.equalTo(56)
-            make.trailing.equalToSuperview().offset(-40)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-50)
+            make.trailing.equalToSuperview().offset(-24)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-40)
         }
         
         let penImage = createPenImage()
@@ -187,10 +189,21 @@ final class HomeView: UIView, RootView {
         return penImage
     }
     
-    func resetHwibariImage() {
-        hwibariImage.image = UIImage(named: "hwibari")
+    func returnHwibari() {
+        if hwibariImage.image == UIImage(named: "hwibariopen2") {
+            hwibariImage.animationImages = [
+                UIImage(named: "hwibariopen2")!,
+                UIImage(named: "hwibariopen")!,
+                UIImage(named: "hwibari_default")!
+            ]
+            hwibariImage.animationDuration = 0.6
+            hwibariImage.animationRepeatCount = 1
+            hwibariImage.startAnimating()
+            
+            hwibariImage.image = UIImage(named: "hwibari_default")
+        }
     }
-    
+
     // MARK: - Event Handling
     
     @objc private func myPageButtonTapped() {
@@ -202,21 +215,23 @@ final class HomeView: UIView, RootView {
         if isHwibariImageTapped {
             return
         }
-        isHwibariImageTapped = true  // hwibariImageViewTapped 중복실행방지 (True/false)
+        isHwibariImageTapped = true // hwibariImageViewTapped 중복실행 방지 (True/false)
         
         print("'hwibari'가 탭되었습니다.")
         
-        // Dispatch Queue - 비동기
-        DispatchQueue.global().async {
-            let newImageName = "hwibariopen"
-            if let newImage = UIImage(named: newImageName) {
-                DispatchQueue.main.async {
-                    self.hwibariImage.image = newImage
-                }
-            }
-        }
+        hwibariImage.animationImages = [
+            UIImage(named: "hwibari_default")!,
+            UIImage(named: "hwibariopen")!,
+            UIImage(named: "hwibariopen2")!,
+        ]
+        hwibariImage.animationDuration = 0.6
+        hwibariImage.animationRepeatCount = 1
+        hwibariImage.startAnimating()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//        Thread.sleep(forTimeInterval: 2.0)
+        hwibariImage.image = UIImage(named: "hwibariopen2")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
             let detailViewController = DetailViewController()
             if let navigationController = self.viewController?.navigationController {
                 navigationController.pushViewController(detailViewController, animated: true)
