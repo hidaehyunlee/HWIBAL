@@ -117,7 +117,7 @@ final class DetailView: UIView, RootView {
 
         deleteButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-50)
+            make.bottom.equalToSuperview().offset(-40)
         }
     }
 }
