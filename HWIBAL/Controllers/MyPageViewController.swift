@@ -41,9 +41,16 @@ private extension MyPageViewController {
 private extension MyPageViewController {
     @objc func withdrawalButtonTapped() {
         print("🫵 클릭: 회원탈퇴")
-        SignInService.shared.setWithdrawal()
-        UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
-        goToSignInVC()
+        let witdrawalAlert = UIAlertController(title: "", message: "계정을 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다.", preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "회원탈퇴", style: .destructive) { _ in
+            SignInService.shared.setWithdrawal()
+            UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
+            self.goToSignInVC()
+        }
+        witdrawalAlert.addAction(action)
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        witdrawalAlert.addAction(cancel)
+        present(witdrawalAlert, animated: true)
     }
     
     @objc func myPageToReport() {
