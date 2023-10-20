@@ -81,6 +81,5 @@ extension CreatePageCameraViewController: AVCapturePhotoCaptureDelegate {
         guard let imageData = photo.fileDataRepresentation() else { return }
         
         let image = UIImage(data: imageData)
-        // Handle the captured image - e.g., save it to an album, display in a UIImageView, etc.
     }
 }
