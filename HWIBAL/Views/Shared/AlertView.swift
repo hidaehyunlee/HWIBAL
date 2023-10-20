@@ -5,9 +5,18 @@
 //  Created by 김도윤 on 2023/10/13.
 //
 
+//
+//  AlertView.swift
+//  HWIBAL
+//
+//  Created by 김도윤 on 2023/10/13.
+//
+
 import UIKit
 
 class AlertView: UIView {
+    var confirmAction: (() -> Void)?
+    
     private let titleLabel = UILabel()
     private let messageLabel = UILabel()
     private let cancelButton = UIButton(type: .system)
@@ -16,7 +25,6 @@ class AlertView: UIView {
     private let bottomSeparatorLine = UIView()
 
     var cancelAction: (() -> Void)?
-    var confirmAction: (() -> Void)?
 
     init(title: String, message: String) {
         super.init(frame: .zero)
