@@ -8,11 +8,12 @@
 import UIKit
 import SnapKit
 import DGCharts
+import Charts
 
 class ReportSummaryCell: UICollectionViewCell {
     static let identifier = "summaryCell"
-    var totalEmotionTrashCount = 234
-    var averageEmotionTrashCount = 134
+    var totalEmotionTrashCount = ReportService.shared.calculateEmotionTrashCount()
+    var averageEmotionTrashCount = ReportService.shared.calculateAverageEmotionTrashCount()
     
     private let view: UIView = {
         let view = UIView()
@@ -55,6 +56,7 @@ class ReportSummaryCell: UICollectionViewCell {
         chartView.xAxis.labelFont = FontGuide.size16Bold
         chartView.xAxis.labelTextColor = ColorGuide.subButton
         
+        chartView.leftAxis.valueFormatter = IntValueFormatter()
         chartView.leftAxis.enabled = false
         chartView.leftAxis.drawGridLinesEnabled = false
         chartView.leftAxis.axisMinimum = 0
@@ -106,12 +108,12 @@ class ReportSummaryCell: UICollectionViewCell {
         let dataSet = BarChartDataSet(entries: [totalEntry, averageEntry], label: "감정쓰레기 개수")
         dataSet.colors = [ColorGuide.main, ColorGuide.textHint]
         dataSet.valueColors = [ColorGuide.main, ColorGuide.textHint]
-
+        
         let data = BarChartData(dataSet: dataSet)
         data.setValueFont(FontGuide.size32Heavy)
+        
         chartView.data = data
         chartView.barData?.barWidth = 0.3
-        
     }
     
     func initializeUI() {
@@ -147,5 +149,12 @@ class ReportSummaryCell: UICollectionViewCell {
             make.trailing.equalToSuperview().offset(-13)
             make.bottom.equalToSuperview().offset(-13)
         }
+    }
+}
+
+// ⚠️ 정수형 출력 포맷 적용 안되고 있음..
+class IntValueFormatter: NSObject, AxisValueFormatter {
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        return String(Int(value))
     }
 }

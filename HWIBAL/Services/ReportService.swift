@@ -9,11 +9,6 @@ import Foundation
 
 class ReportService {
     static let shared = ReportService()
-    var allUsers = UserService.shared.fetchAllUsers()
-    // 로그인 유저의 감정쓰레기를 return하는 함수 만들어야 함
-    var totalEmotionTrashes = [EmotionTrash]() //EmotionTrashService.shared.fetchtotalEmotionTrashes()
-    // 모든 유저의 감정쓰레기를 return하는 함수 만들어야 함
-    var allEmotionTrashes = [EmotionTrash]() //EmotionTrashService.shared.fetchAllEmotionTrashes()
     
     private func convertToKoreanTime(_ date: Date) -> Date? {
         let dateFormatter = DateFormatter()
@@ -24,17 +19,20 @@ class ReportService {
         return dateFormatter.date(from: koreanDateString)
     }
 
+    // 유저의 감정쓰레기 개수
     func calculateEmotionTrashCount() -> Int {
-        return totalEmotionTrashes.count
+        return EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
     }
 
+    // 모든 유저의 감정쓰레기 개수 평균
     func calculateAverageEmotionTrashCount() -> Int {
-        let totalTrashCount = allEmotionTrashes.count
-        let totalUserCount = allUsers.count
+        let totalTrashCount = EmotionTrashService.shared.fetchAllEmotionTrashes().count
+        let totalUserCount = UserService.shared.fetchAllUsers().count
 
         return totalTrashCount / totalUserCount
     }
 
+    // 로그인 유저와 모든 유저의 감정쓰레기 개수 비교
     func calculateComparison() -> Int {
         let emotionTrashCount = calculateEmotionTrashCount()
         let averageTrashCount = calculateAverageEmotionTrashCount()
@@ -45,10 +43,10 @@ class ReportService {
     func calculateDaysOfWeekCount() -> [String: Int] {
         var daysOfWeekCount: [String: Int] = [:]
 
-        for emotionTrash in totalEmotionTrashes {
+        for emotionTrash in EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!) {
             if let koreanDate = convertToKoreanTime(emotionTrash.timestamp ?? Date()) {
                 let dayOfWeek = Calendar.current.component(.weekday, from: koreanDate)
-                let dayOfWeekString = DateFormatter().weekdaySymbols[dayOfWeek - 1]
+                let dayOfWeekString = DateFormatter().shortWeekdaySymbols[dayOfWeek - 1]
 
                 daysOfWeekCount[dayOfWeekString, default: 0] += 1
             }
@@ -62,7 +60,7 @@ class ReportService {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH"
-        for emotionTrash in totalEmotionTrashes {
+        for emotionTrash in EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!) {
             if let koreanDate = convertToKoreanTime(emotionTrash.timestamp ?? Date()) {
                 let hour = Int(dateFormatter.string(from: koreanDate)) ?? 0
 

@@ -32,9 +32,19 @@ private extension MyPageViewController {
         let logoutItem = SettingItem(type: .logout, title: "로그아웃", icon: UIImage(named: ">"), isSwitchOn: false)
         settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
+        // MARK: - Update Title Label
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTitleLabel), name: NSNotification.Name("EmotionTrashWritten"), object: nil)
+        
         // MARK: - Action
         rootView.withdrawalButton.addTarget(self, action: #selector(withdrawalButtonTapped), for: .touchUpInside)
         rootView.reportSummaryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
+    }
+    
+    @objc func updateTitleLabel() {
+        DispatchQueue.main.async { [weak self] in
+            self?.rootView.updateTitleLabel()
+        }
+        
     }
 }
 

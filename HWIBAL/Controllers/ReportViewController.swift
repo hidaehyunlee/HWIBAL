@@ -79,7 +79,9 @@ extension ReportViewController: UIScrollViewDelegate {
         
         if let indexPath = rootView.collectionView.indexPathForItem(at: visiblePoint) {
             let currentPage = indexPath.item + 1
-            rootView.updateNumberOfPageLabel(currentPage)
+            DispatchQueue.main.async { [weak self] in
+                self?.rootView.updateNumberOfPageLabel(currentPage)
+            }
         }
     }
 }
