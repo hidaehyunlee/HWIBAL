@@ -205,7 +205,7 @@ final class HomeView: UIView, RootView {
                 UIImage(named: "hwibariopen")!,
                 UIImage(named: "hwibari_default")!
             ]
-            hwibariImage.animationDuration = 0.6
+            hwibariImage.animationDuration = 0.3
             hwibariImage.animationRepeatCount = 1
             hwibariImage.startAnimating()
             
@@ -233,7 +233,7 @@ final class HomeView: UIView, RootView {
             UIImage(named: "hwibariopen")!,
             UIImage(named: "hwibariopen2")!,
         ]
-        hwibariImage.animationDuration = 0.6
+        hwibariImage.animationDuration = 0.3
         hwibariImage.animationRepeatCount = 1
         hwibariImage.startAnimating()
         
