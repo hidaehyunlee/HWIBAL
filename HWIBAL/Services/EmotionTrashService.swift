@@ -32,7 +32,7 @@ class EmotionTrashService {
     }
     
     // ⚠️ audioRecording 저장형태에 따라 일부 변경될 수 있음
-    func createEmotionTrash(_ user: User, _ text: String, _ image: UIImage? = nil, _ audioRecording: Data? = nil) {
+    func createEmotionTrash(_ user: User, _ text: String, _ image: UIImage? = nil, _ recording: Recording? = nil) {
         if let entity = NSEntityDescription.entity(forEntityName: "EmotionTrash", in: context) {
             let newEmotionTrash = EmotionTrash(entity: entity, insertInto: context)
             newEmotionTrash.id = UUID()
@@ -52,8 +52,10 @@ class EmotionTrashService {
         }
     }
     
-    func updateEmotionTrash(_ user: User, _ id: UUID, _ text: String, _ image: UIImage? = nil, _ audioRecording: Data? = nil) {
+    func updateEmotionTrash(_ user: User, _ id: UUID, _ text: String, _ image: UIImage? = nil, _ recording: Recording? = nil) {
         fetchRequest.predicate = NSPredicate(format: "id == %@ AND user == %@ ", id as CVarArg, user)
+        
+        do {
             if let emotionTrashToUpdate = try context.fetch(fetchRequest).first {
                 emotionTrashToUpdate.text = text
                 emotionTrashToUpdate.timestamp = Date()
