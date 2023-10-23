@@ -255,6 +255,14 @@ final class HomeView: UIView, RootView {
         let alertController = UIAlertController(title: "알림", message: "정말로 전체를 지우시겠습니까?", preferredStyle: .alert)
 
         let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+
+            let secondAlertController = UIAlertController(title: "다,휘발🔥", message: "전부 지워드렸습니다.", preferredStyle: .alert)
+
+            self.viewController?.present(secondAlertController, animated: true, completion: nil)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                secondAlertController.dismiss(animated: true, completion: nil)
+            }
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
@@ -263,7 +271,7 @@ final class HomeView: UIView, RootView {
 
         viewController?.present(alertController, animated: true, completion: nil)
     }
-    
+
     @objc private func createButtonTapped() {
         print("'작성하기'가 탭되었습니다.")
         EventBus.shared.emit(PushToCreatePageScreenEvent())
