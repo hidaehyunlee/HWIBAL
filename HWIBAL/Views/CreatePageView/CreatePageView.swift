@@ -129,7 +129,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
             width: textViewWidth,
             height: textViewHeight
         )
-        let textViewMaxHeight: CGFloat = bounds.height - textView.frame.origin.y - (cameraButton.buttonSize + 2 * 40) // Ensure there's space for the buttons and counterLabel
+        let textViewMaxHeight: CGFloat = bounds.height - textView.frame.origin.y - (cameraButton.buttonSize + 2 * 40) 
         textView.frame = CGRect(
             x: textViewPaddingHorizontal,
             y: dateLabel.frame.maxY + textViewPaddingVertical,

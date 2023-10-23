@@ -3,13 +3,7 @@
 //  HWIBAL
 //
 //  Created by 김도윤 on 2023/10/12.
-//
-//
-//  CreatePageView.swift
-//  HWIBAL
-//
-//  Created by 김도윤 on 2023/10/12.
-//
+
 import AVFoundation
 import EventBus
 import UIKit
@@ -109,7 +103,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-    
     
     @objc func presentImagePickerOptions() {
         let actionSheet = UIAlertController(title: nil, message: "Choose Image Source", preferredStyle: .actionSheet)
@@ -211,28 +204,36 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func showCancelAlert() {
-        showDimmedBackground()
+        let alertController = UIAlertController(title: "아, 휘발 🔥", message: "정말로 삭제 하시겠습니까?", preferredStyle: .alert)
         
-        let alertVC = AlertViewController(title: "아, 휘발 🔥", message: "정말로 삭제 하시겠습니까?")
-        alertVC.modalPresentationStyle = .overFullScreen
-        present(alertVC, animated: true) {
-            self.removeDimmedBackground()
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let confirmAction = UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        })
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(confirmAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     @objc func showWriteAlert() {
-        showDimmedBackground()
+        let alertController = UIAlertController(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥", preferredStyle: .alert)
         
-        let alertVC = AlertViewControllerDesc(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥")
-        alertVC.modalPresentationStyle = .overFullScreen
-        present(alertVC, animated: true) {
-            self.removeDimmedBackground()
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            alertVC.dismiss(animated: true) {
-                self?.dismiss(animated: true)
+        present(alertController, animated: true) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                alertController.dismiss(animated: true) { [weak self] in
+                    self?.dismiss(animated: true, completion: nil)
+                }
             }
         }
+    }
+
+
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        rootView.frame = view.bounds
     }
     
     private func showDimmedBackground() {
@@ -245,22 +246,16 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         dimmedBackgroundView?.removeFromSuperview()
         dimmedBackgroundView = nil
     }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        rootView.frame = view.bounds
-    }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
+
 extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage {
-            // TODO: 여기에 선택된 이미지를 처리하는 코드를 추가하세요.
-        }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[.originalImage] as? UIImage {}
         picker.dismiss(animated: true)
     }
 

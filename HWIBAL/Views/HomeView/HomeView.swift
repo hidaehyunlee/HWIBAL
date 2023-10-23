@@ -203,7 +203,7 @@ final class HomeView: UIView, RootView {
             hwibariImage.animationImages = [
                 UIImage(named: "hwibariopen2")!,
                 UIImage(named: "hwibariopen")!,
-                UIImage(named: "hwibari_default")!
+                UIImage(named: "hwibari_default")!,
             ]
             hwibariImage.animationDuration = 0.6
             hwibariImage.animationRepeatCount = 1
@@ -251,13 +251,16 @@ final class HomeView: UIView, RootView {
     
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
-        
-        let alertController = AlertViewController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?")
+
+        let alertController = UIAlertController(title: "알림", message: "정말로 전체를 지우시겠습니까?", preferredStyle: .alert)
 
         let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+
         viewController?.present(alertController, animated: true, completion: nil)
     }
     
