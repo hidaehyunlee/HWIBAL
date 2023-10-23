@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0759A4562AE26A18000FFF76 /* CreatePageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759A4552AE26A18000FFF76 /* CreatePageCameraViewController.swift */; };
+		0759A4582AE26A39000FFF76 /* CreatePageCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759A4572AE26A39000FFF76 /* CreatePageCameraView.swift */; };
 		076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */; };
 		0791B34B2AE10B59004B8740 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0791B3492AE10A7F004B8740 /* AVFoundation.framework */; };
-		0791B34F2AE11846004B8740 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791B34E2AE11846004B8740 /* RecordingViewController.swift */; };
+		0791B34F2AE11846004B8740 /* Recording+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */; };
+		07BE50C32AE662060055123F /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE50C12AE662060055123F /* User+CoreDataClass.swift */; };
 		07CBDAA82ADE367300313D15 /* AlertViewDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */; };
 		07CBDAAA2ADE368400313D15 /* AlertViewControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */; };
 		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
@@ -18,8 +21,6 @@
 		3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F14EA8D2AD55E6C0047CE34 /* SnapKit */; };
 		3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */; };
 		3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */; };
-		3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */; };
-		3F783A212AD7DFBB0024D692 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A1B2AD7DFBB0024D692 /* User+CoreDataClass.swift */; };
 		3F783A242AD805330024D692 /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A232AD805330024D692 /* ColorGuide.swift */; };
 		3F783A262AD8053D0024D692 /* FontGiude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A252AD8053D0024D692 /* FontGiude.swift */; };
 		3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A272AD8090E0024D692 /* MyPageCustomCell.swift */; };
@@ -60,9 +61,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0759A4552AE26A18000FFF76 /* CreatePageCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageCameraViewController.swift; sourceTree = "<group>"; };
+		0759A4572AE26A39000FFF76 /* CreatePageCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageCameraView.swift; sourceTree = "<group>"; };
 		076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageView.swift; sourceTree = "<group>"; };
 		0791B3492AE10A7F004B8740 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		0791B34E2AE11846004B8740 /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
+		0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recording+CoreDataClass.swift"; sourceTree = "<group>"; };
+		07BE50C12AE662060055123F /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewDesc.swift; sourceTree = "<group>"; };
 		07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewControllerDesc.swift; sourceTree = "<group>"; };
 		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
@@ -70,8 +74,6 @@
 		07D18F7B2AD948450080FACA /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		3F783A092AD7DC1A0024D692 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3F783A1B2AD7DFBB0024D692 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A232AD805330024D692 /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		3F783A252AD8053D0024D692 /* FontGiude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGiude.swift; sourceTree = "<group>"; };
 		3F783A272AD8090E0024D692 /* MyPageCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCustomCell.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */,
+				0759A4572AE26A39000FFF76 /* CreatePageCameraView.swift */,
 			);
 			path = CreatePageView;
 			sourceTree = "<group>";
@@ -276,12 +279,12 @@
 			children = (
 				DEFE3A292AD5420A0076FE11 /* Shared */,
 				DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */,
+				0759A4552AE26A18000FFF76 /* CreatePageCameraViewController.swift */,
 				DEFE3A2C2AD5429D0076FE11 /* MyPageViewController.swift */,
 				07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */,
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
 				3F783A2C2AD8C4750024D692 /* ReportViewController.swift */,
-				0791B34E2AE11846004B8740 /* RecordingViewController.swift */,
 				DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */,
 			);
 			path = Controllers;
@@ -301,8 +304,8 @@
 			isa = PBXGroup;
 			children = (
 				3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */,
-				3F783A192AD7DFBB0024D692 /* Report+CoreDataClass.swift */,
-				3F783A1B2AD7DFBB0024D692 /* User+CoreDataClass.swift */,
+				07BE50C12AE662060055123F /* User+CoreDataClass.swift */,
+				0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0759A4562AE26A18000FFF76 /* CreatePageCameraViewController.swift in Sources */,
 				3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */,
 				DEFE3A172AD53F3C0076FE11 /* RootView.swift in Sources */,
 				DEFE3A2D2AD5429D0076FE11 /* MyPageViewController.swift in Sources */,
@@ -409,27 +413,27 @@
 				DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */,
 				DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */,
 				3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */,
-				3F783A1F2AD7DFBB0024D692 /* Report+CoreDataClass.swift in Sources */,
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
 				07D18F7C2AD948450080FACA /* AlertViewController.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				07CBDAAA2ADE368400313D15 /* AlertViewControllerDesc.swift in Sources */,
+				07BE50C32AE662060055123F /* User+CoreDataClass.swift in Sources */,
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
 				DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */,
 				DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */,
-				0791B34F2AE11846004B8740 /* RecordingViewController.swift in Sources */,
+				0791B34F2AE11846004B8740 /* Recording+CoreDataClass.swift in Sources */,
 				076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */,
 				3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */,
 				3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */,
 				3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */,
 				DE434DFB2ADCCE0F00C77FE4 /* SignInViewController.swift in Sources */,
 				07CBDAA82ADE367300313D15 /* AlertViewDesc.swift in Sources */,
+				0759A4582AE26A39000FFF76 /* CreatePageCameraView.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
 				3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */,
-				3F783A212AD7DFBB0024D692 /* User+CoreDataClass.swift in Sources */,
 				07D18F7A2AD9482C0080FACA /* AlertView.swift in Sources */,
 				07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */,
 			);

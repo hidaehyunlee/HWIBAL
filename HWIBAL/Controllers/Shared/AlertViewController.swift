@@ -5,15 +5,27 @@
 //  Created by 김도윤 on 2023/10/13.
 //
 
+//
+//  AlertViewController.swift
+//  HWIBAL
+//
+//  Created by 김도윤 on 2023/10/13.
+//
+
 import UIKit
 
 class AlertViewController: UIViewController {
+    
     private let alertView: AlertView
+    private let backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        return view
+    }()
 
     init(title: String, message: String) {
         self.alertView = AlertView(title: title, message: message)
         super.init(nibName: nil, bundle: nil)
-
         setupAlertActions()
     }
 
@@ -24,19 +36,28 @@ class AlertViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .clear
         setupViews()
     }
 
     private func setupViews() {
+        view.addSubview(backgroundView)
         view.addSubview(alertView)
+
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
         alertView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             alertView.widthAnchor.constraint(equalToConstant: 273),
-            alertView.heightAnchor.constraint(equalToConstant: 167)
+            alertView.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
 
