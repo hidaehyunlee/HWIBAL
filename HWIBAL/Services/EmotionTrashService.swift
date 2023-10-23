@@ -14,7 +14,7 @@ class EmotionTrashService {
     let coreDataManager = CoreDataManager.shared
     
     // ⚠️ audioRecording 저장형태에 따라 일부 변경될 수 있음
-    func createEmotionTrash(_ text: String, _ image: UIImage? = nil, _ audioRecording: Data? = nil) {
+    func createEmotionTrash(_ text: String, _ image: UIImage? = nil, _ recording: Recording? = nil) {
         let context = coreDataManager.persistentContainer.viewContext
         if let entity = NSEntityDescription.entity(forEntityName: "EmotionTrash", in: context) {
             let newEmotionTrash = EmotionTrash(entity: entity, insertInto: context)
@@ -26,15 +26,15 @@ class EmotionTrashService {
                 newEmotionTrash.image = image.pngData()
             }
             
-            if let audioRecording = audioRecording {
-                newEmotionTrash.audioRecording = audioRecording
+            if let recording = recording {
+                newEmotionTrash.recording = recording
             }
 
             coreDataManager.saveContext()
         }
     }
     
-    func updateEmotionTrash(_ id: UUID, _ text: String, _ image: UIImage? = nil, _ audioRecording: Data? = nil) {
+    func updateEmotionTrash(_ id: UUID, _ text: String, _ image: UIImage? = nil, _ recording: Recording? = nil) {
         let context = coreDataManager.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
@@ -48,8 +48,8 @@ class EmotionTrashService {
                     emotionTrashToUpdate.image = image.pngData()
                 }
                 
-                if let audioRecording = audioRecording {
-                    emotionTrashToUpdate.audioRecording = audioRecording
+                if let recording = recording {
+                    emotionTrashToUpdate.recording = recording
                 }
                 coreDataManager.saveContext()
             }
