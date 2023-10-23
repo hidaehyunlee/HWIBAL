@@ -51,8 +51,8 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
 
     // MARK: - UI를 데이터에 맞에 업데이트
     public func configure() {
-        initializeUI()
-        print(testData[0])
+        //initializeUI()
+        //print(testData[0])
         // MARK: - Title, SubTitle
     }
 

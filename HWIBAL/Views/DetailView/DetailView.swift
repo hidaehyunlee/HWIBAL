@@ -103,7 +103,7 @@ final class DetailView: UIView, RootView {
         }
 
         collectionView.snp.makeConstraints { make in
-            make.height.equalTo(CarouselConst.itemSize.height)
+            make.height.equalTo(CarouselConst.itemSize.height * 1.5)
             make.top.equalTo(numberOfPage.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview()
         }
@@ -125,7 +125,7 @@ final class DetailView: UIView, RootView {
 // Carousel 애니메이션: itemSize, itemSpacing, insetX 정의
 extension DetailView {
     enum CarouselConst {
-        static let itemSize = CGSize(width: 307, height: 373)
+        static let itemSize = CGSize(width: 200, height: 300)
         static let itemSpacing = 24.0
 
         static var insetX: CGFloat {
