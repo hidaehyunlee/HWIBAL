@@ -261,7 +261,10 @@ final class HomeView: UIView, RootView {
         let alertController = AlertViewController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?")
 
         let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-            EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
+            // 현재 작동 안됨
+            print("작동")
+            EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+            NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         

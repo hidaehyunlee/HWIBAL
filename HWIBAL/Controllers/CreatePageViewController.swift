@@ -184,7 +184,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         let text = rootView.textView.text ?? ""
         EmotionTrashService.shared.createEmotionTrash(signedInUser, text)
         EmotionTrashService.shared.printTotalEmotionTrashes(signedInUser)
-        NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashWritten"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
         let alertVC = AlertViewControllerDesc(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥")
         present(alertVC, animated: true, completion: nil)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in

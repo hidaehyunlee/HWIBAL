@@ -46,8 +46,10 @@ class ReportService {
         for emotionTrash in EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!) {
             if let koreanDate = convertToKoreanTime(emotionTrash.timestamp ?? Date()) {
                 let dayOfWeek = Calendar.current.component(.weekday, from: koreanDate)
-                let dayOfWeekString = DateFormatter().shortWeekdaySymbols[dayOfWeek - 1]
-
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "ko_KR")
+                let dayOfWeekString = dateFormatter.shortWeekdaySymbols[dayOfWeek - 1]
+                
                 daysOfWeekCount[dayOfWeekString, default: 0] += 1
             }
         }
