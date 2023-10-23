@@ -49,11 +49,11 @@ class MyPageCustomCell: UITableViewCell {
     @objc func didTapSwitch(sender: UISwitch) {
         if sender.isOn {
             SignInService.shared.setSignedInUser((SignInService.shared.signedInUser?.email)!)
-            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoLoginEnabled: true)
+            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!)
             print(SignInService.shared.isSignedIn())
         } else {
             SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
-            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoLoginEnabled: false)
+            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!)
             print(SignInService.shared.isSignedIn())
         }
     }
@@ -67,7 +67,7 @@ class MyPageCustomCell: UITableViewCell {
             switchControl.isHidden = false
             iconImageView.isHidden = true
             dateLabel.isHidden = true
-            switchControl.isOn = user.autoLoginEnabled
+            switchControl.isOn = UserDefaults.standard.bool(forKey: "isSignedIn")
         case .autoVolatilizationDate:
             switchControl.isHidden = true
             iconImageView.isHidden = false

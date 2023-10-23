@@ -15,6 +15,7 @@
 import UIKit
 
 class AlertViewController: UIViewController {
+    
     private let alertView: AlertView
     private let backgroundView: UIView = {
         let view = UIView()
@@ -25,7 +26,6 @@ class AlertViewController: UIViewController {
     init(title: String, message: String) {
         self.alertView = AlertView(title: title, message: message)
         super.init(nibName: nil, bundle: nil)
-
         setupAlertActions()
     }
 
@@ -39,11 +39,6 @@ class AlertViewController: UIViewController {
         view.backgroundColor = .clear
         setupViews()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
 
     private func setupViews() {
         view.addSubview(backgroundView)
@@ -55,6 +50,14 @@ class AlertViewController: UIViewController {
             backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        alertView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            alertView.widthAnchor.constraint(equalToConstant: 273),
+            alertView.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
 

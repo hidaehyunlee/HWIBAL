@@ -12,13 +12,13 @@ class SignInService {
     
     var signedInUser: User?
     
-    func signIn(_ email: String, _ name: String, _ id: String, _ autoLoginEnabled: Bool, _ autoExpireDays: Int64) {
+    func signIn(_ email: String, _ name: String, _ id: String, _ autoExpireDays: Int64) {
         if let existUser = UserService.shared.getExistUser(email) {
             print("이미 가입한 회원")
             signedInUser = existUser
             setSignedInUser(existUser.email!)
         } else {
-            UserService.shared.createUser(email: email, name: name, id: id, autoLoginEnabled: autoLoginEnabled, autoExpireDays: autoExpireDays)
+            UserService.shared.createUser(email: email, name: name, id: id, autoExpireDays: autoExpireDays)
             signedInUser = UserService.shared.getExistUser(email)
             setSignedInUser(email)
             UserService.shared.printAllUsers()
@@ -55,7 +55,6 @@ class SignInService {
               Email: \(signedInUser?.email ?? "No email")
               Name: \(signedInUser?.name ?? "No name")
               ID: \(signedInUser?.id ?? "No ID")
-              자동 로그인: \(String(describing: signedInUser?.autoLoginEnabled))
               자동 휘발일: \(String(describing: signedInUser?.autoExpireDays))
               """)
         print("--------------------------------")
