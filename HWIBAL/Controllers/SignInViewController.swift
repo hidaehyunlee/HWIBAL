@@ -29,7 +29,7 @@ final class SignInViewController: RootViewController<SignInView> {
             let autoLoginEnabled = true
             let autoExpireDays: Int64 = 7
 
-            SignInService.shared.signIn(email, name, id, autoLoginEnabled, autoExpireDays)
+            SignInService.shared.signIn(email, name, id, autoExpireDays)
 
             // 로그인 완료 후 MainViewController로 이동
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

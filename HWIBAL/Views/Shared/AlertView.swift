@@ -5,33 +5,35 @@
 //  Created by 김도윤 on 2023/10/13.
 //
 
+//
+//  AlertView.swift
+//  HWIBAL
+//
+//  Created by 김도윤 on 2023/10/13.
+//
+
 import UIKit
 
 class AlertView: UIView {
-    private let titleLabel = UILabel()
+    var confirmAction: (() -> Void)?
+    var cancelAction: (() -> Void)?
+
+    let titleLabel = UILabel()
     private let messageLabel = UILabel()
     private let cancelButton = UIButton(type: .system)
     private let confirmButton = UIButton(type: .system)
     private let separatorLine = UIView()
     private let bottomSeparatorLine = UIView()
 
-    var cancelAction: (() -> Void)?
-    var confirmAction: (() -> Void)?
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
 
     init(title: String, message: String) {
         super.init(frame: .zero)
-
         titleLabel.text = title
         messageLabel.text = message
-
-        cancelButton.setTitle("취소", for: .normal)
-        cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
-        cancelButton.tintColor = .black
-
-        confirmButton.setTitle("확인", for: .normal)
-        confirmButton.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
-        confirmButton.tintColor = .black
-
         setupViews()
     }
 
@@ -41,27 +43,19 @@ class AlertView: UIView {
     }
 
     private func setupViews() {
-        layer.cornerRadius = 14
-        backgroundColor = .systemBackground
-        frame.size = CGSize(width: 273, height: 250)
+        backgroundColor = .white
+        layer.cornerRadius = 12
 
-        titleLabel.textColor = ColorGuide.main
-        titleLabel.font = FontGuide.size16Bold
         titleLabel.textAlignment = .center
-        titleLabel.frame = CGRect(x: 0, y: 20, width: frame.width, height: 22)
-        messageLabel.textColor = .black
-        messageLabel.font = FontGuide.size14
         messageLabel.textAlignment = .center
-        messageLabel.frame = CGRect(x: 0, y: titleLabel.frame.maxY + 20, width: frame.width, height: 36)
+        cancelButton.setTitle("Cancel", for: .normal)
+        confirmButton.setTitle("Confirm", for: .normal)
 
-        cancelButton.frame = CGRect(x: 0, y: messageLabel.frame.maxY + 30, width: frame.width / 2, height: 40)
-        confirmButton.frame = CGRect(x: cancelButton.frame.maxX, y: messageLabel.frame.maxY + 30, width: frame.width / 2, height: 40)
+        cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
+        confirmButton.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
 
-        separatorLine.backgroundColor = .systemGray
-        separatorLine.frame = CGRect(x: frame.width / 2, y: messageLabel.frame.maxY + 30, width: 1, height: 40)
-
-        bottomSeparatorLine.backgroundColor = .systemGray
-        bottomSeparatorLine.frame = CGRect(x: 0, y: cancelButton.frame.minY - 1, width: frame.width, height: 1)
+        separatorLine.backgroundColor = .gray
+        bottomSeparatorLine.backgroundColor = .gray
 
         addSubview(titleLabel)
         addSubview(messageLabel)
@@ -69,7 +63,44 @@ class AlertView: UIView {
         addSubview(confirmButton)
         addSubview(separatorLine)
         addSubview(bottomSeparatorLine)
-    }
+
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        confirmButton.translatesAutoresizingMaskIntoConstraints = false
+        separatorLine.translatesAutoresizingMaskIntoConstraints = false
+        bottomSeparatorLine.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+                titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+                titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+                titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+
+                messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+                messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+                messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+                
+                separatorLine.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 20),
+                separatorLine.leadingAnchor.constraint(equalTo: leadingAnchor),
+                separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
+                separatorLine.heightAnchor.constraint(equalToConstant: 1),
+                
+                cancelButton.topAnchor.constraint(equalTo: separatorLine.bottomAnchor),
+                cancelButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+                cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+                cancelButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
+
+                confirmButton.topAnchor.constraint(equalTo: separatorLine.bottomAnchor),
+                confirmButton.leadingAnchor.constraint(equalTo: cancelButton.trailingAnchor),
+                confirmButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+                confirmButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+                
+                bottomSeparatorLine.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor),
+                bottomSeparatorLine.leadingAnchor.constraint(equalTo: cancelButton.trailingAnchor),
+                bottomSeparatorLine.trailingAnchor.constraint(equalTo: confirmButton.leadingAnchor),
+                bottomSeparatorLine.widthAnchor.constraint(equalToConstant: 1)
+            ])
+        }
 
     @objc private func didTapCancelButton() {
         cancelAction?()

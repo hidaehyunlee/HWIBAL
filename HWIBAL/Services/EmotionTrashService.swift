@@ -43,8 +43,8 @@ class EmotionTrashService {
                 newEmotionTrash.image = image.pngData()
             }
             
-            if let audioRecording = audioRecording {
-                newEmotionTrash.audioRecording = audioRecording
+            if let recording = recording {
+                newEmotionTrash.recording = recording
             }
             
             newEmotionTrash.user = user
@@ -54,8 +54,6 @@ class EmotionTrashService {
     
     func updateEmotionTrash(_ user: User, _ id: UUID, _ text: String, _ image: UIImage? = nil, _ audioRecording: Data? = nil) {
         fetchRequest.predicate = NSPredicate(format: "id == %@ AND user == %@ ", id as CVarArg, user)
-        
-        do {
             if let emotionTrashToUpdate = try context.fetch(fetchRequest).first {
                 emotionTrashToUpdate.text = text
                 emotionTrashToUpdate.timestamp = Date()
@@ -64,8 +62,8 @@ class EmotionTrashService {
                     emotionTrashToUpdate.image = image.pngData()
                 }
                 
-                if let audioRecording = audioRecording {
-                    emotionTrashToUpdate.audioRecording = audioRecording
+                if let recording = recording {
+                    emotionTrashToUpdate.recording = recording
                 }
                 coreDataManager.saveContext()
             }
