@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 import DGCharts
-import Charts
 
 class ReportSummaryCell: UICollectionViewCell {
     static let identifier = "summaryCell"
@@ -56,7 +55,6 @@ class ReportSummaryCell: UICollectionViewCell {
         chartView.xAxis.labelFont = FontGuide.size16Bold
         chartView.xAxis.labelTextColor = ColorGuide.subButton
         
-        chartView.leftAxis.valueFormatter = IntValueFormatter()
         chartView.leftAxis.enabled = false
         chartView.leftAxis.drawGridLinesEnabled = false
         chartView.leftAxis.axisMinimum = 0
@@ -114,6 +112,10 @@ class ReportSummaryCell: UICollectionViewCell {
         
         chartView.data = data
         chartView.barData?.barWidth = 0.3
+        
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        data.setValueFormatter(DefaultValueFormatter(formatter:formatter))
     }
     
     func initializeUI() {
@@ -149,12 +151,5 @@ class ReportSummaryCell: UICollectionViewCell {
             make.trailing.equalToSuperview().offset(-13)
             make.bottom.equalToSuperview().offset(-13)
         }
-    }
-}
-
-// ⚠️ 정수형 출력 포맷 적용 안되고 있음..
-class IntValueFormatter: NSObject, AxisValueFormatter {
-    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return String(Int(value))
     }
 }

@@ -117,7 +117,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 let formattedDay = "\(day)일"
                 let action = UIAlertAction(title: formattedDay, style: .default) { _ in
                     UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: Int64(day))
-                    EmotionTrashService.shared.autoDeleteEmotionTrash(SignInService.shared.signedInUser!, Int64(day))
+                    EmotionTrashService.shared.autoDeleteEmotionTrash(SignInService.shared.signedInUser!, Int(day))
                     print("\(day) 후 감정쓰레기를 태워 드립니다.")
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
