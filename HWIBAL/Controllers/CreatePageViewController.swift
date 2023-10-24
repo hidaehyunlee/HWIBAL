@@ -11,8 +11,8 @@ import UIKit
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
     var keyboardHeight: CGFloat = 0
     var audioRecorder: AVAudioRecorder?
-    private var dimmedBackgroundView: UIView?
-    
+    private var attachedImageView: UIImageView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -229,22 +229,9 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         }
     }
 
-
-
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         rootView.frame = view.bounds
-    }
-    
-    private func showDimmedBackground() {
-        dimmedBackgroundView = UIView(frame: view.bounds)
-        dimmedBackgroundView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        view.addSubview(dimmedBackgroundView!)
-    }
-    
-    private func removeDimmedBackground() {
-        dimmedBackgroundView?.removeFromSuperview()
-        dimmedBackgroundView = nil
     }
 
     deinit {
@@ -255,11 +242,32 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 
 extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let image = info[.originalImage] as? UIImage {}
+        if let image = info[.originalImage] as? UIImage {
+            addAndLayoutAttachedImageView(with: image)
+        }
         picker.dismiss(animated: true)
     }
+    
+    private func addAndLayoutAttachedImageView(with image: UIImage) {
+       
+         attachedImageView?.removeFromSuperview()
 
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true)
+         let imageView = UIImageView(image: image)
+         imageView.contentMode = .scaleAspectFit
+
+         let imageViewWidth = rootView.textView.bounds.width
+         let imageViewHeight = rootView.textView.bounds.height / 2
+
+         let spaceBetweenTextViewAndCounterLabel: CGFloat = 10
+         let imageViewY = rootView.textView.frame.origin.y + rootView.textView.frame.height - imageViewHeight
+
+         imageView.frame = CGRect(x: rootView.textView.frame.origin.x, y: imageViewY, width: imageViewWidth, height: imageViewHeight)
+
+         rootView.addSubview(imageView)
+
+         let textViewNewHeight = rootView.textView.frame.height / 2
+         rootView.textView.frame = CGRect(x: rootView.textView.frame.origin.x, y: rootView.textView.frame.origin.y, width: rootView.textView.frame.width, height: textViewNewHeight)
+
+         attachedImageView = imageView
     }
 }
