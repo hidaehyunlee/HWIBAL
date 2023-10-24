@@ -72,13 +72,17 @@ extension ReportViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
-extension ReportViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 343, height: 538)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 65
+extension ReportViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let visibleRect = CGRect(origin: rootView.collectionView.contentOffset, size: rootView.collectionView.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        
+        if let indexPath = rootView.collectionView.indexPathForItem(at: visiblePoint) {
+            let currentPage = indexPath.item + 1
+            DispatchQueue.main.async { [weak self] in
+                self?.rootView.updateNumberOfPageLabel(currentPage)
+            }
+        }
     }
 }
 

@@ -11,7 +11,7 @@ import DGCharts
 
 class ReportDayOfTheWeekCell: UICollectionViewCell {
     static let identifier = "dayOfTheWeekCell"
-    var daysOfWeekCount = ["일":15, "월":30, "화":8, "수":10, "목":7, "금":5, "토":2]
+    var daysOfWeekCount = ReportService.shared.calculateDaysOfWeekCount()
     var maxDay = ""
     var maxCount = 0
     
@@ -208,12 +208,18 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         // MARK: - Rank
         let sortedDaysOfWeekCount = daysOfWeekCount.sorted { $0.value > $1.value }
 
-        if sortedDaysOfWeekCount.count >= 3 {
+        if sortedDaysOfWeekCount.count >= 1 {
             firstRankingDayOfTheWeek.text = "1. \(sortedDaysOfWeekCount[0].key)요일"
-            secondRankingDayOfTheWeek.text = "2. \(sortedDaysOfWeekCount[1].key)요일"
-            thirdRankingDayOfTheWeek.text = "3. \(sortedDaysOfWeekCount[2].key)요일"
             firstRankingCount.text = "\(sortedDaysOfWeekCount[0].value)개"
+        }
+
+        if sortedDaysOfWeekCount.count >= 2 {
+            secondRankingDayOfTheWeek.text = "2. \(sortedDaysOfWeekCount[1].key)요일"
             secondRankingCount.text = "\(sortedDaysOfWeekCount[1].value)개"
+        }
+
+        if sortedDaysOfWeekCount.count >= 3 {
+            thirdRankingDayOfTheWeek.text = "3. \(sortedDaysOfWeekCount[2].key)요일"
             thirdRankingCount.text = "\(sortedDaysOfWeekCount[2].value)개"
         }
     }

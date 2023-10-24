@@ -12,10 +12,11 @@ import UIKit
 class EmotionTrashService {
     static let shared = EmotionTrashService()
     let coreDataManager = CoreDataManager.shared
+    let context = CoreDataManager.shared.persistentContainer.viewContext
+    let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
     
     // ⚠️ audioRecording 저장형태에 따라 일부 변경될 수 있음
-    func createEmotionTrash(_ text: String, _ image: UIImage? = nil, _ recording: Recording? = nil) {
-        let context = coreDataManager.persistentContainer.viewContext
+    func createEmotionTrash(_ user: User, _ text: String, _ image: UIImage? = nil, _ recordingFilePath: String? = nil) {
         if let entity = NSEntityDescription.entity(forEntityName: "EmotionTrash", in: context) {
             let newEmotionTrash = EmotionTrash(entity: entity, insertInto: context)
             newEmotionTrash.id = UUID()
@@ -26,18 +27,17 @@ class EmotionTrashService {
                 newEmotionTrash.image = image.pngData()
             }
             
-            if let recording = recording {
-                newEmotionTrash.recording = recording
+            if let recordingFilePath = recordingFilePath {
+                newEmotionTrash.recording?.filePath = recordingFilePath
             }
-
+            
+            newEmotionTrash.user = user
             coreDataManager.saveContext()
         }
     }
     
-    func updateEmotionTrash(_ id: UUID, _ text: String, _ image: UIImage? = nil, _ recording: Recording? = nil) {
-        let context = coreDataManager.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+    func updateEmotionTrash(_ user: User, _ id: UUID, _ text: String, _ image: UIImage? = nil, _ recordingFilePath: String? = nil) {
+        fetchRequest.predicate = NSPredicate(format: "id == %@ AND user == %@ ", id as CVarArg, user)
         
         do {
             if let emotionTrashToUpdate = try context.fetch(fetchRequest).first {
@@ -48,8 +48,8 @@ class EmotionTrashService {
                     emotionTrashToUpdate.image = image.pngData()
                 }
                 
-                if let recording = recording {
-                    emotionTrashToUpdate.recording = recording
+                if let recordingFilePath = recordingFilePath {
+                    emotionTrashToUpdate.recording?.filePath = recordingFilePath
                 }
                 coreDataManager.saveContext()
             }
@@ -58,22 +58,9 @@ class EmotionTrashService {
         }
     }
     
-    func fetchAllEmotionTrashes() -> [EmotionTrash] {
-        let context = coreDataManager.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
-
-        do {
-            return try context.fetch(fetchRequest)
-        } catch {
-            print("Error fetching emotionTrashes: \(error)")
-            return []
-        }
-    }
-    
-    func deleteEmotionTrash(_ id: UUID) {
-        let context = coreDataManager.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+    // delete: 유저의 감정쓰레기 개별 삭제
+    func deleteEmotionTrash(_ user: User, _ id: UUID) {
+        fetchRequest.predicate = NSPredicate(format: "id == %@ AND user == %@", id as CVarArg, user)
         
         do {
             if let deleteEmotionTrash = try context.fetch(fetchRequest).first {
@@ -85,10 +72,74 @@ class EmotionTrashService {
         }
     }
     
-    func deleteAllEmotionTrash() {
-        let context = coreDataManager.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
+    // delete: 유저의 감정쓰레기 전체 삭제
+    func deleteTotalEmotionTrash(_ user: User) {
+        fetchRequest.predicate = NSPredicate(format: "user == %@", user)
+        
+        do {
+            let emotionTrashes = try context.fetch(fetchRequest)
+            for emotionTrash in emotionTrashes {
+                context.delete(emotionTrash)
+            }
+            coreDataManager.saveContext()
+        } catch {
+            print("Error deleting all emotionTrashes: \(error)")
+        }
+    }
+    
+    // auto delete: 유저의 감정쓰레기 자동 삭제
+    func autoDeleteEmotionTrash(_ user: User, _ day: Int) {
+        let totalEmotionTrashes = fetchTotalEmotionTrashes(user)
+        let calendar = Calendar.current
+        
+        for emotionTrash in totalEmotionTrashes {
+            if let trashDate = emotionTrash.timestamp {
+                if calendar.isDate(trashDate, inSameDayAs: calendar.date(byAdding: .day, value: -day, to: Date())!) {
+                    deleteEmotionTrash(user, emotionTrash.id!)
+                }
+            }
+        }
+        NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+    }
+    
+    // fetch: 유저의 전체 감정쓰레기 가져오기
+    func fetchTotalEmotionTrashes(_ user: User) -> [EmotionTrash] {
+        fetchRequest.predicate = NSPredicate(format: "user == %@", user)
+        
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Error fetching emotionTrashes: \(error)")
+            return []
+        }
+    }
+    
+    // fetch: 모든 유저의 전체 감정쓰레기 가져오기
+    func fetchAllEmotionTrashes() -> [EmotionTrash] {
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Error fetching emotionTrashes: \(error)")
+            return []
+        }
+    }
+    
+    // print: 유저의 전체 감정쓰레기 출력
+    func printTotalEmotionTrashes(_ user: User) {
+        let emotionTrashes = fetchTotalEmotionTrashes(user)
+        for emotionTrash in emotionTrashes {
+            print("EmotionTrashes -")
+            print("""
+            text: \(emotionTrash.text ?? "")
+            timestamp: \(emotionTrash.timestamp ?? Date())
+            """)
+        }
+    }
+    
+    // MARK: - ⚠️ 관리자용
 
+    // delete: 모든 유저의 감정쓰레기 전체 삭제
+    func deleteAllEmotionTrash() {
         do {
             let emotionTrashes = try context.fetch(fetchRequest)
             for emotionTrash in emotionTrashes {
