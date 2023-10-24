@@ -24,6 +24,8 @@ final class HomeViewController: RootViewController<HomeView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEmotionTrashUpdateNotification), name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
 
         EventBus.shared.on(PushToMyPageScreenEvent.self, by: self) { listener, _ in
             listener.navigationController?.pushViewController(MyPageViewController(), animated: true)
@@ -56,5 +58,10 @@ private extension HomeViewController {
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         backBarButtonItem.tintColor = ColorGuide.main
         self.navigationItem.backBarButtonItem = backBarButtonItem
+    }
+    
+    @objc func handleEmotionTrashUpdateNotification() {
+        rootView.emotionCount = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
+        rootView.updateEmotionTrashesCountLabel(rootView.emotionCount)
     }
 }

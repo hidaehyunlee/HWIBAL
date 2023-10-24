@@ -9,9 +9,6 @@ import SnapKit
 import UIKit
 
 final class MyPageView: UIView, RootView {
-    var totalEmotionTrashCount = 234
-    var averageEmotionTrashCount = 134
-    
     let reportSummaryView: UIView = {
         let view = UIView()
         view.backgroundColor = ColorGuide.main
@@ -23,10 +20,6 @@ final class MyPageView: UIView, RootView {
     
     private lazy var reportSummaryTitle: UILabel = {
         let label = UILabel()
-        label.text = """
-                     가입 이후 작성한
-                     감정쓰레기 \(self.totalEmotionTrashCount)개
-                     """
         label.font = FontGuide.size24Bold
         label.textColor = .white
         label.textAlignment = .left
@@ -39,7 +32,6 @@ final class MyPageView: UIView, RootView {
     
     private lazy var reportSummarySubTitle: UILabel = {
         let label = UILabel()
-        label.text = "평균보다 \(self.totalEmotionTrashCount - self.averageEmotionTrashCount)개 더 썼어요"
         label.font = FontGuide.size14
         label.textColor = .white
         label.textAlignment = .left
@@ -86,12 +78,27 @@ final class MyPageView: UIView, RootView {
         return tableView
     }()
     
-    let withdrawalButton = MainButton(type: .withdrawal)
+//    let withdrawalButton = MainButton(type: .withdrawal)
+    
+    let withdrawalButton: UIButton = {
+        let button = UIButton()
+        let attributedText = NSAttributedString(string: "회원탈퇴", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        button.setAttributedTitle(attributedText, for: .normal)
+        button.titleLabel?.font = FontGuide.size14
+        button.setTitleColor(ColorGuide.subButton, for: .normal)
+        button.backgroundColor = .white
+        button.snp.makeConstraints { make in
+            make.width.equalTo(58)
+            make.height.equalTo(24)
+        }
+        return button
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         initializeUI()
+        updateTitleLabel()
     }
 
     required init?(coder: NSCoder) {
@@ -138,9 +145,23 @@ final class MyPageView: UIView, RootView {
         addSubview(withdrawalButton)
         withdrawalButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().offset(30)
-            make.trailing.equalToSuperview().offset(-30)
-            make.bottom.equalToSuperview().offset(-40)
+            make.bottom.equalToSuperview().offset(-50)
+        }
+    }
+    
+    func updateTitleLabel() {
+        reportSummaryTitle.text = """
+                     가입 이후 작성한
+                     감정쓰레기 \(ReportService.shared.calculateEmotionTrashCount())개
+                     """
+        
+        switch ReportService.shared.calculateEmotionTrashCount() {
+        case let difference where difference > ReportService.shared.calculateComparison():
+            reportSummarySubTitle.text = "평균보다 \(difference - ReportService.shared.calculateComparison())개 더 썼어요"
+        case let difference where difference < ReportService.shared.calculateComparison():
+            reportSummarySubTitle.text = "평균보다 \(ReportService.shared.calculateComparison() - difference)개 적게 썼어요"
+        default:
+            reportSummarySubTitle.text = "평균과 같아요"
         }
     }
 }

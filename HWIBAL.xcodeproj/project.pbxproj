@@ -36,6 +36,8 @@
 		3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445612ADF79D80003DCD4 /* SignInService.swift */; };
 		3F9445662ADFD5EA0003DCD4 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445652ADFD5EA0003DCD4 /* ReportService.swift */; };
 		3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */; };
+		3FF18E6E2AE76B9500CC70D2 /* exampleAudio_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E6D2AE76B9500CC70D2 /* exampleAudio_1.mp3 */; };
+		3FF18E762AE76BEE00CC70D2 /* exampleAudio_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E752AE76BEE00CC70D2 /* exampleAudio_2.mp3 */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
 		DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */; };
 		DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */; };
@@ -88,6 +90,8 @@
 		3F9445612ADF79D80003DCD4 /* SignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInService.swift; sourceTree = "<group>"; };
 		3F9445652ADFD5EA0003DCD4 /* ReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportService.swift; sourceTree = "<group>"; };
 		3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashService.swift; sourceTree = "<group>"; };
+		3FF18E6D2AE76B9500CC70D2 /* exampleAudio_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = exampleAudio_1.mp3; sourceTree = "<group>"; };
+		3FF18E752AE76BEE00CC70D2 /* exampleAudio_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = exampleAudio_2.mp3; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +229,8 @@
 				3F783A232AD805330024D692 /* ColorGuide.swift */,
 				3F783A252AD8053D0024D692 /* FontGiude.swift */,
 				DE434E0F2ADE75D900C77FE4 /* DummyData.swift */,
+				3FF18E6D2AE76B9500CC70D2 /* exampleAudio_1.mp3 */,
+				3FF18E752AE76BEE00CC70D2 /* exampleAudio_2.mp3 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -382,6 +388,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEFE3A0C2AD53C3B0076FE11 /* LaunchScreen.storyboard in Resources */,
+				3FF18E6E2AE76B9500CC70D2 /* exampleAudio_1.mp3 in Resources */,
+				3FF18E762AE76BEE00CC70D2 /* exampleAudio_2.mp3 in Resources */,
 				DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

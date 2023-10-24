@@ -11,8 +11,8 @@ import DGCharts
 
 class ReportSummaryCell: UICollectionViewCell {
     static let identifier = "summaryCell"
-    var totalEmotionTrashCount = 234
-    var averageEmotionTrashCount = 134
+    var totalEmotionTrashCount = ReportService.shared.calculateEmotionTrashCount()
+    var averageEmotionTrashCount = ReportService.shared.calculateAverageEmotionTrashCount()
     
     private let view: UIView = {
         let view = UIView()
@@ -106,12 +106,16 @@ class ReportSummaryCell: UICollectionViewCell {
         let dataSet = BarChartDataSet(entries: [totalEntry, averageEntry], label: "감정쓰레기 개수")
         dataSet.colors = [ColorGuide.main, ColorGuide.textHint]
         dataSet.valueColors = [ColorGuide.main, ColorGuide.textHint]
-
+        
         let data = BarChartData(dataSet: dataSet)
         data.setValueFont(FontGuide.size32Heavy)
+        
         chartView.data = data
         chartView.barData?.barWidth = 0.3
         
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        data.setValueFormatter(DefaultValueFormatter(formatter:formatter))
     }
     
     func initializeUI() {

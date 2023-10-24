@@ -42,17 +42,17 @@ final class ReportView: UIView, RootView {
         
         let currentPageText = "\(currentPage) "
         let totalPageText = "/ 3"
-        
+
         let attributedString = NSMutableAttributedString(string: currentPageText, attributes: [
             .font: FontGuide.size16Bold,
             .foregroundColor: UIColor.white
         ])
-        
+
         let totalPageAttributedString = NSAttributedString(string: totalPageText, attributes: [
             .font: FontGuide.size16Bold,
             .foregroundColor: ColorGuide.textHint
         ])
-        
+
         attributedString.append(totalPageAttributedString)
         
         label.attributedText = attributedString
@@ -63,12 +63,13 @@ final class ReportView: UIView, RootView {
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(538))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(538))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .none
+//            section.interGroupSpacing = 65
                 
             return section
         }
@@ -131,4 +132,24 @@ final class ReportView: UIView, RootView {
             make.bottom.equalToSuperview()
         }
     }
+    
+    func updateNumberOfPageLabel(_ currentPage: Int) {
+        let currentPageText = "\(currentPage) "
+        let totalPageText = "/ 3"
+        
+        let attributedString = NSMutableAttributedString(string: currentPageText, attributes: [
+            .font: FontGuide.size16Bold,
+            .foregroundColor: UIColor.white
+        ])
+        
+        let totalPageAttributedString = NSAttributedString(string: totalPageText, attributes: [
+            .font: FontGuide.size16Bold,
+            .foregroundColor: ColorGuide.textHint
+        ])
+        
+        attributedString.append(totalPageAttributedString)
+        
+        numberOfPage.attributedText = attributedString
+    }
+
 }
