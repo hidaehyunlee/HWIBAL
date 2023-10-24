@@ -22,33 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let setting = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(setting)
         }
-        autoDeleteNotification()
         return true
-    }
-    
-    func autoDeleteNotification() {
-        // 일일 알림 설정
-        let content = UNMutableNotificationContent()
-        content.badge = 1
-        content.title = "휘발이가 모든 감정쓰레기를 비웠어요!"
-        content.body = "지금 눌러서 확인하기"
-        content.sound = .default
-
-        var dateComponents = DateComponents()
-        dateComponents.hour = 6 // 시간 설정 (24시간 형식)
-        dateComponents.minute = 7 // 분 설정
-
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        let request = UNNotificationRequest(identifier: "dailyNotification", content: content, trigger: trigger)
-
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
-            if let error = error {
-                print("Error adding notification request: \(error)")
-            } else {
-                print("Daily notification scheduled successfully!")
-            }
-        })
     }
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
