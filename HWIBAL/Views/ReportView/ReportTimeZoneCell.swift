@@ -10,7 +10,7 @@ import SnapKit
 
 class ReportTimeZoneCell: UICollectionViewCell {
     static let identifier = "timeZoneCell"
-    var timeZoneCount = ["8To11":15, "11To15":13, "15To19":8, "19To22":10, "22To2":7, "2To8":5]
+    var timeZoneCount = ReportService.shared.calculateTimeZoneCount()
     var maxTimeZone = ""
     var maxCount = 0
     var averageCount = 0

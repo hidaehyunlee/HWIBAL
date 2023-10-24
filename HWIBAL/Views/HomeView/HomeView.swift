@@ -9,9 +9,10 @@ import SnapKit
 import UIKit
 
 final class HomeView: UIView, RootView {
+    
     // MARK: - Properties
     
-    private var emotionCount = 1
+    var emotionCount = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -41,6 +42,11 @@ final class HomeView: UIView, RootView {
         let imageView = createImageView(named: "hwibari_default", contentMode: .scaleAspectFit)
         return imageView
     }()
+    
+    // MARK: - Label Title Update Function
+    func updateEmotionTrashesCountLabel(_ emotionCount: Int) {
+        titleLabel2.text = "감정쓰레기 \(emotionCount)개"
+    }
     
     // MARK: - Initialization
     
@@ -254,60 +260,37 @@ final class HomeView: UIView, RootView {
         
         let alertController = UIAlertController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?", preferredStyle: .alert)
         
-        //        let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-        //            if let self = self {
-        //                        self.hwibariImage.image = UIImage(named: "burningImage")
-        //                        let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation")
-        //                        shakeAnimation.values = [-0.1, 0.1, -0.1, 0.1, 0] // 각 프레임별 회전 값 (왼쪽-오른쪽 흔들림)
-        //                        shakeAnimation.duration = 0.5
-        //                        shakeAnimation.repeatCount = 2 // 몇 번 반복할 지 설정 (짝수로 설정하면 초기 위치로 돌아옴)
-        //                        self.hwibariImage.layer.add(shakeAnimation, forKey: "shake")
-        //                        UIView.transition(with: self.hwibariImage, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
-        //                    }
-        //
-        //            if let viewController = self?.viewController {
-        //                let burningLayer = CALayer()
-        //                burningLayer.backgroundColor = ColorGuide.main.cgColor
-        //                burningLayer.frame = viewController.view.bounds
-        //                viewController.view.layer.addSublayer(burningLayer)
-        //
-        //                let burnAnimation = CABasicAnimation(keyPath: "opacity")
-        //                burnAnimation.fromValue = 1.0 // 시작 채도
-        //                burnAnimation.toValue = 0.0 // 종료 채도
-        //                burnAnimation.duration = 0.5
-        //                burningLayer.add(burnAnimation, forKey: "burnAnimation")
-        //
-        //                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-        //                    burningLayer.removeFromSuperlayer()
-        //                }
-        //            }
-        //            print("다태웠어요")
-        //        }
-        
         let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             if let self = self {
-                self.hwibariImage.image = UIImage(named: "burningImage")
+                self.hwibariImage.image = UIImage(named: "hwibari_ing02_fire")
                 let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation")
-                shakeAnimation.values = [-0.1, 0.1, -0.1, 0.1, 0] // 각 프레임별 회전 값 (왼쪽-오른쪽 흔들림)
+                shakeAnimation.values = [-0.1, 0.1, -0.1, 0.1, 0] // 왼쪽-오른쪽 흔들림
                 shakeAnimation.duration = 0.5
                 shakeAnimation.repeatCount = 2 // 몇 번 반복할 지 설정 (짝수로 설정하면 초기 위치로 돌아옴)
                 self.hwibariImage.layer.add(shakeAnimation, forKey: "shake")
+                
                 UIView.transition(with: self.hwibariImage, duration: 0.2, options: .transitionCrossDissolve, animations: nil, completion: nil)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    self.hwibariImage.image = UIImage(named: "hwibariopen01")
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    self.hwibariImage.image = UIImage(named: "hwibariopen02")
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    self.hwibariImage.image = UIImage(named: "hwibari_default")
-                }
+                // 이미지뷰가 부드럽게 서로 변경될 때 사용되는 전환 효과
+                // duration - 흔들 때, 잔상 유지 시간
+                
+                        hwibariImage.animationImages = [
+                            UIImage(named: "hwibari_ing02_fire")!,
+                            UIImage(named: "burningImage")!,
+                            UIImage(named: "hwibari_ing01_fire")!,
+                            UIImage(named: "hwibari_default")!
+                        ]
+                hwibariImage.image = UIImage(named: "hwibari_default")
+                
+                hwibariImage.animationDuration = 1.0 // 애니메이션 한 번의 지속 시간을 설정
+                        hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
+                        hwibariImage.startAnimating()
             }
             
+            // self의 viewController 속성을 가져온후, 뷰를 추가
             if let viewController = self?.viewController {
                 let burningView = UIView(frame: viewController.view.bounds)
-                burningView.backgroundColor = ColorGuide.main
-                burningView.alpha = 0.7 // 불투명도를 0.7로 설정
+                burningView.backgroundColor = UIColor(red: 247/255, green: 142/255, blue: 0/255, alpha: 1)
+                burningView.alpha = 0.9 // 그라디언트 효과의 불투명도 설정
                 viewController.view.addSubview(burningView)
                 
                 // 그라디언트 마스크 레이어를 생성
@@ -320,8 +303,10 @@ final class HomeView: UIView, RootView {
                 // 불타는 애니메이션
                 let animation = CABasicAnimation(keyPath: "locations")
                 animation.fromValue = [0.75, 1, 1.5] // 아래에서 위로 이동하도록
-                animation.toValue = [0, 0, 0.2] // 그라디언트 위치의 끝 값
-                animation.duration = 0.7
+                animation.toValue = [0, 0, 0.2]
+                // 그라디언트 위치가 어두운 부분으로 이동하도록 끝 위치를 나타냅니다
+                // maskLayer.colors에서 clear = 0, clear = 0, black = 0.2
+                animation.duration = 0.8
                 maskLayer.add(animation, forKey: "burningAnimation")
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
@@ -330,93 +315,6 @@ final class HomeView: UIView, RootView {
             }
             print("다태웠어요")
         }
-        
-        //        let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-        //            if let self = self {
-        //                        self.hwibariImage.image = UIImage(named: "burningImage")
-        //                let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation")
-        //                shakeAnimation.values = [-0.1, 0.1, -0.1, 0.1, 0] // 각 프레임별 회전 값 (왼쪽-오른쪽 흔들림)
-        //                shakeAnimation.duration = 0.5
-        //                shakeAnimation.repeatCount = 2 // 몇 번 반복할 지 설정 (짝수로 설정하면 초기 위치로 돌아옴)
-        //                self.hwibariImage.layer.add(shakeAnimation, forKey: "shake")
-        //                UIView.transition(with: self.hwibariImage, duration: 1.0, options: .transitionCrossDissolve, animations: nil, completion: nil)
-        //                    }
-        //
-        //                if let viewController = self?.viewController {
-        //                    let burstContainerView = UIView(frame: CGRect(x: 0, y: 0, width: viewController.view.bounds.width, height: viewController.view.bounds.height))
-        //                    burstContainerView.backgroundColor = UIColor.clear
-        //                    viewController.view.addSubview(burstContainerView)
-        //
-        //                    for _ in 0..<20 {
-        //                        let burstView = UIView(frame: CGRect(x: viewController.view.center.x, y: viewController.view.center.y, width: 100, height: 100))
-        //                        burstView.backgroundColor = ColorGuide.main
-        //                        burstView.layer.cornerRadius = burstView.frame.width / 2.0
-        //                        burstContainerView.addSubview(burstView)
-        //
-        //                        // 각 원마다 랜덤한 크기와 속도로 터지는 애니메이션 적용
-        //                        let randomScale = CGFloat(arc4random_uniform(16) + 3) // 크기 범위를 3에서 16 사이로 조절
-        //                        let randomSpeed = Double(arc4random_uniform(1) + 1) // 속도 범위
-        //                        UIView.animate(withDuration: randomSpeed, delay: 0, options: .curveEaseOut, animations: {
-        //                            burstView.transform = CGAffineTransform(scaleX: randomScale, y: randomScale)
-        //                            burstView.alpha = 0
-        //                        }, completion: { _ in
-        //                            burstView.removeFromSuperview()
-        //                        })
-        //                    }
-        //
-        //                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-        //                        burstContainerView.removeFromSuperview()
-        //                                    }
-        //                }
-        //                print("다터졌어요")
-        //            }
-        
-        //        let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-        //            if let self = self {
-        //                    self.hwibariImage.image = UIImage(named: "burningImage")
-        //                let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation")
-        //                shakeAnimation.values = [-0.1, 0.1, -0.1, 0.1, 0] // 각 프레임별 회전 값 (왼쪽-오른쪽 흔들림)
-        //                shakeAnimation.duration = 0.5
-        //                shakeAnimation.repeatCount = 2 // 몇 번 반복할 지 설정 (짝수로 설정하면 초기 위치로 돌아옴)
-        //                self.hwibariImage.layer.add(shakeAnimation, forKey: "shake")
-        //                UIView.transition(with: self.hwibariImage, duration: 1.0, options: .transitionCrossDissolve, animations: nil, completion: nil)
-        //                    startBurstAnimation()
-        //                }
-        //            }
-        //        func startBurstAnimation() {
-        //            if let viewController = self.viewController {
-        //                let burstContainerView = UIView(frame: CGRect(x: 0, y: 0, width: viewController.view.bounds.width, height: viewController.view.bounds.height))
-        //                burstContainerView.backgroundColor = UIColor.clear
-        //                viewController.view.addSubview(burstContainerView)
-        //
-        //                for _ in 0..<20 { // 원의 개수를 변경할 수 있음
-        //                    // 원의 위치를 무작위로 설정
-        //                    let randomX = CGFloat(arc4random_uniform(UInt32(viewController.view.bounds.width)))
-        //                    let randomY = CGFloat(arc4random_uniform(UInt32(viewController.view.bounds.height)))
-        //
-        //                    // 터지는 원을 생성하고 설정
-        //                    let burstView = UIView(frame: CGRect(x: randomX, y: randomY, width: 60, height: 60))
-        //                    burstView.backgroundColor = ColorGuide.main
-        //                    burstView.layer.cornerRadius = burstView.frame.width / 2.0
-        //                    burstContainerView.addSubview(burstView)
-        //
-        //                    // 각 원마다 랜덤한 크기와 속도로 터지는 애니메이션 적용
-        //                    let randomScale = CGFloat(arc4random_uniform(16) + 3) // 크기 범위를 3에서 16 사이로 조절
-        //                    let randomSpeed = Double(arc4random_uniform(2) + 1) // 속도 범위
-        //                    UIView.animate(withDuration: randomSpeed, delay: 0, options: .curveEaseOut, animations: {
-        //                        burstView.transform = CGAffineTransform(scaleX: randomScale, y: randomScale) // 원을 확대
-        //                        burstView.alpha = 0 // 투명하게 만들어서 사라지도록
-        //                    }, completion: { _ in
-        //                        burstView.removeFromSuperview() // 애니메이션이 완료되면 원 제거
-        //                    })
-        //                }
-        //                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-        //                    burstContainerView.removeFromSuperview()
-        //                }
-        //            }
-        //            print("다터졌어요")
-        //        }
-        
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         

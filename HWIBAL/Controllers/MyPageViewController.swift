@@ -32,18 +32,35 @@ private extension MyPageViewController {
         let logoutItem = SettingItem(type: .logout, title: "로그아웃", icon: UIImage(named: ">"), isSwitchOn: false)
         settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
+        // MARK: - Update Title Label
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTitleLabel), name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+        
         // MARK: - Action
         rootView.withdrawalButton.addTarget(self, action: #selector(withdrawalButtonTapped), for: .touchUpInside)
         rootView.reportSummaryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
+    }
+    
+    @objc func updateTitleLabel() {
+        DispatchQueue.main.async { [weak self] in
+            self?.rootView.updateTitleLabel()
+        }
+        
     }
 }
 
 private extension MyPageViewController {
     @objc func withdrawalButtonTapped() {
         print("🫵 클릭: 회원탈퇴")
-        SignInService.shared.setWithdrawal()
-        UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
-        goToSignInVC()
+        let witdrawalAlert = UIAlertController(title: "", message: "계정을 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다.", preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "회원탈퇴", style: .destructive) { _ in
+            SignInService.shared.setWithdrawal()
+            UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
+            self.goToSignInVC()
+        }
+        witdrawalAlert.addAction(action)
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        witdrawalAlert.addAction(cancel)
+        present(witdrawalAlert, animated: true)
     }
     
     @objc func myPageToReport() {
@@ -100,6 +117,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 let formattedDay = "\(day)일"
                 let action = UIAlertAction(title: formattedDay, style: .default) { _ in
                     UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: Int64(day))
+                    EmotionTrashService.shared.autoDeleteEmotionTrash(SignInService.shared.signedInUser!, Int(day))
                     print("\(day) 후 감정쓰레기를 태워 드립니다.")
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
