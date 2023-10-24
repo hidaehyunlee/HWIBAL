@@ -38,6 +38,7 @@
 		3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */; };
 		3FF18E6E2AE76B9500CC70D2 /* exampleAudio_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E6D2AE76B9500CC70D2 /* exampleAudio_1.mp3 */; };
 		3FF18E762AE76BEE00CC70D2 /* exampleAudio_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E752AE76BEE00CC70D2 /* exampleAudio_2.mp3 */; };
+		DE01F2A82AE819DA004663F7 /* EmotionTrashBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
 		DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */; };
 		DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */; };
@@ -92,6 +93,7 @@
 		3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashService.swift; sourceTree = "<group>"; };
 		3FF18E6D2AE76B9500CC70D2 /* exampleAudio_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = exampleAudio_1.mp3; sourceTree = "<group>"; };
 		3FF18E752AE76BEE00CC70D2 /* exampleAudio_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = exampleAudio_2.mp3; sourceTree = "<group>"; };
+		DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashBackView.swift; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			children = (
 				DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */,
 				DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */,
+				DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */,
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
+				DE01F2A82AE819DA004663F7 /* EmotionTrashBackView.swift in Sources */,
 				07D18F7C2AD948450080FACA /* AlertViewController.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				07CBDAAA2ADE368400313D15 /* AlertViewControllerDesc.swift in Sources */,
