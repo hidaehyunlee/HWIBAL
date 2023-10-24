@@ -19,14 +19,20 @@ final class DetailViewController: RootViewController<DetailView> {
 
         rootView.collectionView.delegate = self
         rootView.collectionView.dataSource = self
+        
+        bindDetailViewEvents()
+    }
+
+    func bindDetailViewEvents() {
+        rootView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
     }
 
     @objc func buttonTapped() {
         print("휘발 되었습니다.")
     }
 
-    @objc func returnViewTapped() {
-        print("Return 버튼이 탭되었습니다.")
+    @objc func goToFirstButtonTapped() {
+        rootView.collectionView.setContentOffset(CGPoint(x: -DetailView.CarouselConst.insetX, y: 0), animated: true)
     }
 }
 
@@ -48,7 +54,7 @@ extension DetailViewController: UICollectionViewDataSource {
         }
         cell.layer.cornerRadius = 12
         cell.layer.masksToBounds = true
-        //transform(cell: cell, isFocus: true)
+        // transform(cell: cell, isFocus: true)
         return cell
     }
 }

@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 final class DetailView: UIView, RootView {
-    private lazy var goToFirstButton: UIButton = {
+    lazy var goToFirstButton: UIButton = {
         let button = UIButton()
 
         button.setTitle(" 맨 처음으로", for: .normal)
