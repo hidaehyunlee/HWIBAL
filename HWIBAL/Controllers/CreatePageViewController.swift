@@ -17,7 +17,6 @@ import UIKit
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
     var keyboardHeight: CGFloat = 0
     var audioRecorder: AVAudioRecorder?
-    var signedInUser = SignInService.shared.signedInUser!
     private var dimmedBackgroundView: UIView?
 
     override func viewDidLoad() {
@@ -224,8 +223,8 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     @objc func showWriteAlert() {
         showDimmedBackground()
         let text = rootView.textView.text ?? ""
-        EmotionTrashService.shared.createEmotionTrash(signedInUser, text)
-        EmotionTrashService.shared.printTotalEmotionTrashes(signedInUser)
+        EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
+        EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
         NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
         let alertVC = AlertViewControllerDesc(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥")
         alertVC.modalPresentationStyle = .overFullScreen

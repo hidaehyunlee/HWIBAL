@@ -78,8 +78,6 @@ final class MyPageView: UIView, RootView {
         return tableView
     }()
     
-//    let withdrawalButton = MainButton(type: .withdrawal)
-    
     let withdrawalButton: UIButton = {
         let button = UIButton()
         let attributedText = NSAttributedString(string: "회원탈퇴", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
@@ -156,10 +154,10 @@ final class MyPageView: UIView, RootView {
                      """
         
         switch ReportService.shared.calculateEmotionTrashCount() {
-        case let difference where difference > ReportService.shared.calculateComparison():
-            reportSummarySubTitle.text = "평균보다 \(difference - ReportService.shared.calculateComparison())개 더 썼어요"
-        case let difference where difference < ReportService.shared.calculateComparison():
-            reportSummarySubTitle.text = "평균보다 \(ReportService.shared.calculateComparison() - difference)개 적게 썼어요"
+        case let difference where difference > ReportService.shared.calculateAverageEmotionTrashCount():
+            reportSummarySubTitle.text = "평균보다 \(difference - ReportService.shared.calculateAverageEmotionTrashCount())개 더 썼어요"
+        case let difference where difference < ReportService.shared.calculateAverageEmotionTrashCount():
+            reportSummarySubTitle.text = "평균보다 \(ReportService.shared.calculateAverageEmotionTrashCount() - difference)개 적게 썼어요"
         default:
             reportSummarySubTitle.text = "평균과 같아요"
         }

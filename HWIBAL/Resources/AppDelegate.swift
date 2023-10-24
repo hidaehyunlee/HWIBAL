@@ -55,7 +55,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-    [.list, .banner, .sound, .badge]
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        [.list, .banner, .sound, .badge]
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+      EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+      NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+      completionHandler()
   }
 }

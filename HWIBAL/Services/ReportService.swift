@@ -6,9 +6,52 @@
 //
 
 import Foundation
+import CoreData
 
 class ReportService {
     static let shared = ReportService()
+    let coreDataManager = CoreDataManager.shared
+    let context = CoreDataManager.shared.persistentContainer.viewContext
+    
+    // fetch: 유저의 전체 감정쓰레기 가져오기
+    func fetchTotalEmotionTrashes(_ user: User) -> [Report] {
+        let fetchRequest: NSFetchRequest<Report> = Report.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "user == %@", user)
+        
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Error fetching emotionTrashes: \(error)")
+            return []
+        }
+    }
+    
+    // fetch: 모든 유저의 전체 감정쓰레기 가져오기
+    func fetchAllUsersEmotionTrashes() -> [Report] {
+        let fetchRequest: NSFetchRequest<Report> = Report.fetchRequest()
+        
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Error fetching emotionTrashes: \(error)")
+            return []
+        }
+    }
+    
+    // delete: 모든 유저의 감정쓰레기 전체 삭제
+    func deleteAllUsersEmotionTrash() {
+        let fetchRequest: NSFetchRequest<Report> = Report.fetchRequest()
+        
+        do {
+            let emotionTrashes = try context.fetch(fetchRequest)
+            for emotionTrash in emotionTrashes {
+                context.delete(emotionTrash)
+            }
+            coreDataManager.saveContext()
+        } catch {
+            print("Error deleting all emotionTrashes: \(error)")
+        }
+    }
     
     private func convertToKoreanTime(_ date: Date) -> Date? {
         let dateFormatter = DateFormatter()
@@ -21,12 +64,12 @@ class ReportService {
 
     // 유저의 감정쓰레기 개수
     func calculateEmotionTrashCount() -> Int {
-        return EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
+        return fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
     }
 
     // 모든 유저의 감정쓰레기 개수 평균
     func calculateAverageEmotionTrashCount() -> Int {
-        let totalTrashCount = EmotionTrashService.shared.fetchAllEmotionTrashes().count
+        let totalTrashCount = fetchAllUsersEmotionTrashes().count
         let totalUserCount = UserService.shared.fetchAllUsers().count
 
         return totalTrashCount / totalUserCount
@@ -43,7 +86,7 @@ class ReportService {
     func calculateDaysOfWeekCount() -> [String: Int] {
         var daysOfWeekCount: [String: Int] = [:]
 
-        for emotionTrash in EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!) {
+        for emotionTrash in fetchTotalEmotionTrashes(SignInService.shared.signedInUser!) {
             if let koreanDate = convertToKoreanTime(emotionTrash.timestamp ?? Date()) {
                 let dayOfWeek = Calendar.current.component(.weekday, from: koreanDate)
                 let dateFormatter = DateFormatter()
@@ -62,7 +105,7 @@ class ReportService {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH"
-        for emotionTrash in EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!) {
+        for emotionTrash in fetchTotalEmotionTrashes(SignInService.shared.signedInUser!) {
             if let koreanDate = convertToKoreanTime(emotionTrash.timestamp ?? Date()) {
                 let hour = Int(dateFormatter.string(from: koreanDate)) ?? 0
 

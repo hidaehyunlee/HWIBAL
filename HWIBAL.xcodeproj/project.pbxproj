@@ -12,7 +12,6 @@
 		076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */; };
 		0791B34B2AE10B59004B8740 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0791B3492AE10A7F004B8740 /* AVFoundation.framework */; };
 		0791B34F2AE11846004B8740 /* Recording+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */; };
-		07BE50C32AE662060055123F /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE50C12AE662060055123F /* User+CoreDataClass.swift */; };
 		07CBDAA82ADE367300313D15 /* AlertViewDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */; };
 		07CBDAAA2ADE368400313D15 /* AlertViewControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */; };
 		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
@@ -39,6 +38,8 @@
 		3FF18E6E2AE76B9500CC70D2 /* exampleAudio_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E6D2AE76B9500CC70D2 /* exampleAudio_1.mp3 */; };
 		3FF18E762AE76BEE00CC70D2 /* exampleAudio_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E752AE76BEE00CC70D2 /* exampleAudio_2.mp3 */; };
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
+		3FF18E852AE7B12F00CC70D2 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E812AE7B12F00CC70D2 /* User+CoreDataClass.swift */; };
+		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
 		DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */; };
 		DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */; };
@@ -69,7 +70,6 @@
 		076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageView.swift; sourceTree = "<group>"; };
 		0791B3492AE10A7F004B8740 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recording+CoreDataClass.swift"; sourceTree = "<group>"; };
-		07BE50C12AE662060055123F /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		07CBDAA72ADE367300313D15 /* AlertViewDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewDesc.swift; sourceTree = "<group>"; };
 		07CBDAA92ADE368400313D15 /* AlertViewControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewControllerDesc.swift; sourceTree = "<group>"; };
 		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +94,8 @@
 		3FF18E6D2AE76B9500CC70D2 /* exampleAudio_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = exampleAudio_1.mp3; sourceTree = "<group>"; };
 		3FF18E752AE76BEE00CC70D2 /* exampleAudio_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = exampleAudio_2.mp3; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		3FF18E812AE7B12F00CC70D2 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -313,7 +315,8 @@
 			isa = PBXGroup;
 			children = (
 				3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */,
-				07BE50C12AE662060055123F /* User+CoreDataClass.swift */,
+				3FF18E812AE7B12F00CC70D2 /* User+CoreDataClass.swift */,
+				3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */,
 				0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */,
 			);
 			path = Models;
@@ -416,6 +419,7 @@
 				DE434DF92ADCCDF500C77FE4 /* UserService.swift in Sources */,
 				DEFE3A1F2AD5402C0076FE11 /* HomeView.swift in Sources */,
 				3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */,
+				3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */,
 				3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */,
 				3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */,
 				DE434E002ADCCE5200C77FE4 /* SignInView.swift in Sources */,
@@ -430,11 +434,11 @@
 				07D18F7C2AD948450080FACA /* AlertViewController.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				07CBDAAA2ADE368400313D15 /* AlertViewControllerDesc.swift in Sources */,
-				07BE50C32AE662060055123F /* User+CoreDataClass.swift in Sources */,
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
 				DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */,
 				DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
+				3FF18E852AE7B12F00CC70D2 /* User+CoreDataClass.swift in Sources */,
 				3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */,
 				0791B34F2AE11846004B8740 /* Recording+CoreDataClass.swift in Sources */,
 				076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */,
