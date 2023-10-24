@@ -258,9 +258,9 @@ final class HomeView: UIView, RootView {
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
 
-        let alertController = UIAlertController(title: "알림", message: "정말로 전체를 지우시겠습니까?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "다,휘발🔥", message: "정말로 전체를 지우시겠습니까?", preferredStyle: .alert)
 
-        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+        let confirmAction = UIAlertAction(title: "휘발🔥", style: .default) { _ in
 
             let secondAlertController = UIAlertController(title: "다,휘발🔥", message: "전부 지워드렸습니다.", preferredStyle: .alert)
 

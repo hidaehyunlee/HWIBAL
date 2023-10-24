@@ -8,8 +8,6 @@
 import UIKit
 
 class AlertManager {
-    
-    // 싱글톤 인스턴스
     static let shared = AlertManager()
     
     private init() {}
@@ -20,14 +18,11 @@ class AlertManager {
     let messageColor: UIColor = ColorGuide.textHint
     
     func showAlert(on viewController: UIViewController, title: String, message: String, completion: ((UIAlertAction) -> Void)? = nil) {
-        
-        // title에 NSAttributedString 적용
         let titleString = NSAttributedString(string: title, attributes: [
             NSAttributedString.Key.font: titleFont,
             NSAttributedString.Key.foregroundColor: titleColor
         ])
-        
-        // message에 NSAttributedString 적용
+
         let messageString = NSAttributedString(string: message, attributes: [
             NSAttributedString.Key.font: messageFont,
             NSAttributedString.Key.foregroundColor: messageColor
@@ -42,4 +37,3 @@ class AlertManager {
         viewController.present(alertController, animated: true, completion: nil)
     }
 }
-

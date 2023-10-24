@@ -7,14 +7,12 @@
 import AVFoundation
 import EventBus
 import UIKit
-import PhotosUI
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
     var keyboardHeight: CGFloat = 0
     var audioRecorder: AVAudioRecorder?
     private var attachedImageView: UIImageView?
     var signedInUser = SignInService.shared.signedInUser!
-    private var dimmedBackgroundView: UIView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,18 +205,35 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func showCancelAlert() {
-        let alertController = UIAlertController(title: "아, 휘발 🔥", message: "정말로 삭제 하시겠습니까?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "아,휘발 🔥", message: "정말로 삭제 하시겠습니까?", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let confirmAction = UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        })
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
+            if self?.rootView.textView.text.isEmpty ?? true {
+                self?.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        let confirmAction = UIAlertAction(title: "휘발🔥", style: .default) { [weak self] _ in
+            if self?.rootView.textView.text.isEmpty ?? true {
+                let secondaryAlert = UIAlertController(title: "휘발🔥", message: "작성하시던 페이지가 삭제됩니다", preferredStyle: .alert)
+                let confirmSecondaryAction = UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    self?.dismiss(animated: true, completion: nil)
+                })
+                let cancelSecondaryAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                secondaryAlert.addAction(confirmSecondaryAction)
+                secondaryAlert.addAction(cancelSecondaryAction)
+                self?.present(secondaryAlert, animated: true, completion: nil)
+            } else {
+                self?.dismiss(animated: true, completion: nil)
+            }
+        }
         
         alertController.addAction(cancelAction)
         alertController.addAction(confirmAction)
         
         present(alertController, animated: true, completion: nil)
     }
+
     
     @objc func showWriteAlert() {
         let alertController = UIAlertController(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥", preferredStyle: .alert)
@@ -233,9 +248,8 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         let text = rootView.textView.text ?? ""
         EmotionTrashService.shared.createEmotionTrash(signedInUser, text)
         EmotionTrashService.shared.printTotalEmotionTrashes(signedInUser)
-        NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)   
+        NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
     }
-
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -257,25 +271,29 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
     }
     
     private func addAndLayoutAttachedImageView(with image: UIImage) {
-       
-         attachedImageView?.removeFromSuperview()
-
-         let imageView = UIImageView(image: image)
-         imageView.contentMode = .scaleAspectFit
-
-         let imageViewWidth = rootView.textView.bounds.width
-         let imageViewHeight = rootView.textView.bounds.height / 2
-
-         let spaceBetweenTextViewAndCounterLabel: CGFloat = 10
-         let imageViewY = rootView.textView.frame.origin.y + rootView.textView.frame.height - imageViewHeight
-
-         imageView.frame = CGRect(x: rootView.textView.frame.origin.x, y: imageViewY, width: imageViewWidth, height: imageViewHeight)
-
-         rootView.addSubview(imageView)
-
-         let textViewNewHeight = rootView.textView.frame.height / 2
-         rootView.textView.frame = CGRect(x: rootView.textView.frame.origin.x, y: rootView.textView.frame.origin.y, width: rootView.textView.frame.width, height: textViewNewHeight)
-
-         attachedImageView = imageView
+        if let existingImageView = attachedImageView {
+            existingImageView.image = image
+            return
+        }
+        
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill //scaleAspectFill이 최선인건가..?,scaleAspectFit하면 세로 사진은 가로로 표현이 불가..그리고 가로폭이 짧음..
+        imageView.clipsToBounds = true
+        
+        let imageViewWidth = rootView.textView.bounds.width
+        let imageViewHeight = rootView.textView.bounds.height / 2
+        
+        let imageViewY = rootView.textView.frame.origin.y + rootView.textView.frame.height - imageViewHeight
+        
+        imageView.frame = CGRect(x: rootView.textView.frame.origin.x, y: imageViewY, width: imageViewWidth, height: imageViewHeight)
+        
+        rootView.addSubview(imageView)
+        
+        let textViewNewHeight = rootView.textView.frame.height / 2
+        rootView.textView.frame = CGRect(x: rootView.textView.frame.origin.x, y: rootView.textView.frame.origin.y, width: rootView.textView.frame.width, height: textViewNewHeight)
+        
+        attachedImageView = imageView
+        rootView.isImageViewAttached = true
+        rootView.setNeedsLayout()
     }
 }

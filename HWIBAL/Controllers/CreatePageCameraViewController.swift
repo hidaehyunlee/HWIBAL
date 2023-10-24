@@ -7,14 +7,19 @@
 
 import AVFoundation
 import EventBus
-import PhotosUI
 import UIKit
+
+protocol CreatePageCameraViewControllerDelegate: AnyObject {
+    func didCapture(image: UIImage)
+}
 
 class CreatePageCameraViewController: UIViewController {
     private var cameraView: CreatePageCameraView!
     private var captureSession: AVCaptureSession?
     private var stillImageOutput: AVCapturePhotoOutput?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    
+    weak var delegate: CreatePageCameraViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

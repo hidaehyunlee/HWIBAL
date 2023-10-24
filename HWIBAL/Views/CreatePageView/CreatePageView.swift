@@ -160,6 +160,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         let soundWaveY: CGFloat = soundButton.frame.origin.y
         soundWaveView.frame = CGRect(x: soundWaveX, y: soundWaveY, width: 50, height: soundButton.frame.height)
         
+        
         if isImageViewAttached {
             let textViewNewHeight = textView.frame.height / 2
             textView.frame = CGRect(
