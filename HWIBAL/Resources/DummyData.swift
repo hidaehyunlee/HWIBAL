@@ -33,10 +33,10 @@ class DummyData {
         // 오디오와 이미지가 있는 EmotionTrash
         if let image = UIImage(named: "exampleImage"),
            let imageData = image.pngData(),
-           let audioURL = Bundle.main.url(forResource: "exampleAudio", withExtension: "mp3") {
+           let audioURL = Bundle.main.url(forResource: "exampleAudio_1", withExtension: "mp3") {
             do {
                 let documentsURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                let destinationURL = documentsURL.appendingPathComponent("exampleAudio.mp3")
+                let destinationURL = documentsURL.appendingPathComponent("exampleAudio_1.mp3")
                 try FileManager.default.copyItem(at: audioURL, to: destinationURL)
                 
                 let trash1 = EmotionTrashDummy(id: UUID(), image: imageData, recordingFilePath: destinationURL.path, text: "EmotionTrash with Audio and Image", timestamp: Date())
@@ -47,10 +47,10 @@ class DummyData {
         }
             
         // 오디오만 있는 EmotionTrash
-        if let audioURL = Bundle.main.url(forResource: "exampleAudio", withExtension: "mp3") {
+        if let audioURL = Bundle.main.url(forResource: "exampleAudio_2", withExtension: "mp3") {
             do {
                 let documentsURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                let destinationURL = documentsURL.appendingPathComponent("exampleAudio.mp3")
+                let destinationURL = documentsURL.appendingPathComponent("exampleAudio_2.mp3")
                 try FileManager.default.copyItem(at: audioURL, to: destinationURL)
                 
                 let trash2 = EmotionTrashDummy(id: UUID(), image: nil, recordingFilePath: destinationURL.path, text: "EmotionTrash with only Audio", timestamp: Date())
