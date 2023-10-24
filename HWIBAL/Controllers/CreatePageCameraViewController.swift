@@ -5,12 +5,12 @@
 //  Created by 김도윤 on 2023/10/20.
 //
 
-import UIKit
 import AVFoundation
 import EventBus
+import PhotosUI
+import UIKit
 
 class CreatePageCameraViewController: UIViewController {
-    
     private var cameraView: CreatePageCameraView!
     private var captureSession: AVCaptureSession?
     private var stillImageOutput: AVCapturePhotoOutput?
@@ -47,8 +47,7 @@ class CreatePageCameraViewController: UIViewController {
                 setupLivePreview()
             }
         }
-        catch let error  {
-        }
+        catch {}
     }
     
     private func setupLivePreview() {
@@ -72,7 +71,7 @@ class CreatePageCameraViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.captureSession?.stopRunning()
+        captureSession?.stopRunning()
     }
 }
 

@@ -7,6 +7,7 @@
 import AVFoundation
 import EventBus
 import UIKit
+import PhotosUI
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
     var keyboardHeight: CGFloat = 0
