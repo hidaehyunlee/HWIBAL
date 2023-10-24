@@ -12,44 +12,38 @@ class UserService {
     static let shared = UserService()
     let coreDataManager = CoreDataManager.shared
 
-    func createUser(email: String, name: String, id: String, autoLoginEnabled: Bool, autoExpireDays: Int64) {
+    func createUser(email: String, name: String, id: String, autoExpireDays: Int64) {
         let context = coreDataManager.persistentContainer.viewContext
         if let entity = NSEntityDescription.entity(forEntityName: "User", in: context) {
             let user = User(entity: entity, insertInto: context)
             user.email = email
             user.name = name
             user.id = id
-            user.autoLoginEnabled = autoLoginEnabled
             user.autoExpireDays = autoExpireDays
 
             coreDataManager.saveContext()
         }
     }
-    
-    func updateUser(email: String, autoLoginEnabled: Bool? = nil, autoExpireDays: Int64? = nil) {
+
+    func updateUser(email: String, autoExpireDays: Int64? = nil) {
         let context = coreDataManager.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "email == %@", email)
 
         do {
             if let userToUpdate = try context.fetch(fetchRequest).first {
-                
-                if let newAutoLoginEnabled = autoLoginEnabled {
-                    userToUpdate.autoLoginEnabled = newAutoLoginEnabled
-                }
                 if let newAutoExpireDays = autoExpireDays {
                     userToUpdate.autoExpireDays = newAutoExpireDays
                 }
-                
+
                 coreDataManager.saveContext()
                 print("""
-                      유저 정보가 업데이트되었습니다.
-                      Email: \(userToUpdate.email ?? "No email")
-                      Name: \(userToUpdate.name ?? "No name")
-                      ID: \(userToUpdate.id ?? "No ID")
-                      AutoLoginEnabled: \(userToUpdate.autoLoginEnabled)
-                      AutoExpireDays: \(userToUpdate.autoExpireDays)
-                      """)
+                유저 정보가 업데이트되었습니다.
+                Email: \(userToUpdate.email ?? "No email")
+                Name: \(userToUpdate.name ?? "No name")
+                ID: \(userToUpdate.id ?? "No ID")
+                AutoExpireDays: \(userToUpdate.autoExpireDays)
+                """)
             } else {
                 print("Error fetching users: \(email)")
             }
@@ -71,7 +65,7 @@ class UserService {
             return nil
         }
     }
-    
+
     func fetchAllUsers() -> [User] {
         let context = coreDataManager.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
@@ -81,7 +75,7 @@ class UserService {
         } catch {
             print("Error fetching users: \(error)")
             return []
-        }        
+        }
     }
 
     func printAllUsers() {
@@ -92,13 +86,13 @@ class UserService {
             let users = try context.fetch(fetchRequest)
             for user in users {
                 print("User -")
-                print("Email: \(user.email ?? "No email"), Name: \(user.name ?? "No name"), ID: \(user.id ?? "No ID"), AutoLoginEnabled: \(user.autoLoginEnabled), AutoExpireDays: \(user.autoExpireDays)")
+                print("Email: \(user.email ?? "No email"), Name: \(user.name ?? "No name"), ID: \(user.id ?? "No ID"), AutoExpireDays: \(user.autoExpireDays)")
             }
         } catch {
             print("Failed to fetch users: \(error)")
         }
     }
-    
+
     func deleteUser(_ email: String) {
         let context = coreDataManager.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
