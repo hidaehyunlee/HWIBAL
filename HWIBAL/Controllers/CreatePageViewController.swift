@@ -13,6 +13,8 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     var keyboardHeight: CGFloat = 0
     var audioRecorder: AVAudioRecorder?
     private var attachedImageView: UIImageView?
+    var signedInUser = SignInService.shared.signedInUser!
+    private var dimmedBackgroundView: UIView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -228,7 +230,12 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
                 }
             }
         }
+        let text = rootView.textView.text ?? ""
+        EmotionTrashService.shared.createEmotionTrash(signedInUser, text)
+        EmotionTrashService.shared.printTotalEmotionTrashes(signedInUser)
+        NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)   
     }
+
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

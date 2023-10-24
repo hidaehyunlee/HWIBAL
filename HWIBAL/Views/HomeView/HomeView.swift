@@ -9,9 +9,10 @@ import SnapKit
 import UIKit
 
 final class HomeView: UIView, RootView {
+    
     // MARK: - Properties
     
-    private var emotionCount = 1
+    var emotionCount = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -41,6 +42,11 @@ final class HomeView: UIView, RootView {
         let imageView = createImageView(named: "hwibari_default", contentMode: .scaleAspectFit)
         return imageView
     }()
+    
+    // MARK: - Label Title Update Function
+    func updateEmotionTrashesCountLabel(_ emotionCount: Int) {
+        titleLabel2.text = "감정쓰레기 \(emotionCount)개"
+    }
     
     // MARK: - Initialization
     
@@ -263,6 +269,10 @@ final class HomeView: UIView, RootView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 secondAlertController.dismiss(animated: true, completion: nil)
             }
+            // 현재 작동 안됨
+            print("작동")
+            EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+            NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
