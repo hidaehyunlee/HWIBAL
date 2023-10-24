@@ -16,7 +16,7 @@ class EmotionTrashService {
     let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
     
     // ⚠️ audioRecording 저장형태에 따라 일부 변경될 수 있음
-    func createEmotionTrash(_ user: User, _ text: String, _ image: UIImage? = nil, _ recording: Recording? = nil) {
+    func createEmotionTrash(_ user: User, _ text: String, _ image: UIImage? = nil, _ recordingFilePath: String? = nil) {
         if let entity = NSEntityDescription.entity(forEntityName: "EmotionTrash", in: context) {
             let newEmotionTrash = EmotionTrash(entity: entity, insertInto: context)
             newEmotionTrash.id = UUID()
@@ -27,8 +27,8 @@ class EmotionTrashService {
                 newEmotionTrash.image = image.pngData()
             }
             
-            if let recording = recording {
-                newEmotionTrash.recording = recording
+            if let recordingFilePath = recordingFilePath {
+                newEmotionTrash.recording?.filePath = recordingFilePath
             }
             
             newEmotionTrash.user = user
@@ -36,7 +36,7 @@ class EmotionTrashService {
         }
     }
     
-    func updateEmotionTrash(_ user: User, _ id: UUID, _ text: String, _ image: UIImage? = nil, _ recording: Recording? = nil) {
+    func updateEmotionTrash(_ user: User, _ id: UUID, _ text: String, _ image: UIImage? = nil, _ recordingFilePath: String? = nil) {
         fetchRequest.predicate = NSPredicate(format: "id == %@ AND user == %@ ", id as CVarArg, user)
         
         do {
@@ -48,8 +48,8 @@ class EmotionTrashService {
                     emotionTrashToUpdate.image = image.pngData()
                 }
                 
-                if let recording = recording {
-                    emotionTrashToUpdate.recording = recording
+                if let recordingFilePath = recordingFilePath {
+                    emotionTrashToUpdate.recording?.filePath = recordingFilePath
                 }
                 coreDataManager.saveContext()
             }

@@ -78,7 +78,21 @@ final class MyPageView: UIView, RootView {
         return tableView
     }()
     
-    let withdrawalButton = MainButton(type: .withdrawal)
+//    let withdrawalButton = MainButton(type: .withdrawal)
+    
+    let withdrawalButton: UIButton = {
+        let button = UIButton()
+        let attributedText = NSAttributedString(string: "회원탈퇴", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        button.setAttributedTitle(attributedText, for: .normal)
+        button.titleLabel?.font = FontGuide.size14
+        button.setTitleColor(ColorGuide.subButton, for: .normal)
+        button.backgroundColor = .white
+        button.snp.makeConstraints { make in
+            make.width.equalTo(58)
+            make.height.equalTo(24)
+        }
+        return button
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -131,9 +145,7 @@ final class MyPageView: UIView, RootView {
         addSubview(withdrawalButton)
         withdrawalButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().offset(30)
-            make.trailing.equalToSuperview().offset(-30)
-            make.bottom.equalToSuperview().offset(-40)
+            make.bottom.equalToSuperview().offset(-50)
         }
     }
     
