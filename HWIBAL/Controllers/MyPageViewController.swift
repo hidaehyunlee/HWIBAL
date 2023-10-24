@@ -28,7 +28,7 @@ private extension MyPageViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let autoLoginItem = SettingItem(type: .autoLogin, title: "자동 로그인",isSwitchOn: true)
-        let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발일 설정", icon: UIImage(named: ">"), isSwitchOn: false)
+        let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발 주기 설정", icon: UIImage(named: ">"), isSwitchOn: false)
         let logoutItem = SettingItem(type: .logout, title: "로그아웃", icon: UIImage(named: ">"), isSwitchOn: false)
         settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
