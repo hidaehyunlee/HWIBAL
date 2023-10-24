@@ -67,36 +67,36 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
         targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
     }
 
-    // 셀 줌 인/아웃을 위한 스크롤 이벤트 처리
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let collectionView = rootView.collectionView
-        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        let cellWidthIncludeSpacing = layout.itemSize.width + layout.minimumLineSpacing
-        let offsetX = collectionView.contentOffset.x
-        let index = (offsetX + collectionView.contentInset.left) / cellWidthIncludeSpacing
-        let roundedIndex = round(index)
+//    // 셀 줌 인/아웃을 위한 스크롤 이벤트 처리
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let collectionView = rootView.collectionView
+//        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+//        let cellWidthIncludeSpacing = layout.itemSize.width + layout.minimumLineSpacing
+//        let offsetX = collectionView.contentOffset.x
+//        let index = (offsetX + collectionView.contentInset.left) / cellWidthIncludeSpacing
+//        let roundedIndex = round(index)
+//
+//        if Int(roundedIndex) != prevIndex {
+//            if let preCell = collectionView.cellForItem(at: IndexPath(item: prevIndex, section: 0)) {
+//                transform(cell: preCell, isFocus: false)
+//            }
+//            if let currentCell = collectionView.cellForItem(at: IndexPath(item: Int(roundedIndex), section: 0)) {
+//                transform(cell: currentCell, isFocus: true)
+//            }
+//            prevIndex = Int(roundedIndex)
+//        }
+//    }
 
-        if Int(roundedIndex) != prevIndex {
-            if let preCell = collectionView.cellForItem(at: IndexPath(item: prevIndex, section: 0)) {
-                transform(cell: preCell, isFocus: false)
-            }
-            if let currentCell = collectionView.cellForItem(at: IndexPath(item: Int(roundedIndex), section: 0)) {
-                transform(cell: currentCell, isFocus: true)
-            }
-            prevIndex = Int(roundedIndex)
-        }
-    }
-
-    // 셀 확대/축소
-    private func transform(cell: UICollectionViewCell, isFocus: Bool) {
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-            if isFocus {
-                cell.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-                // 셀 내부 하위 뷰도 같이 커지는 문제 해결해야함
-                // 양 옆 inset 해결해야함
-            } else {
-                cell.transform = .identity
-            }
-        }, completion: nil)
-    }
+//    // 셀 확대/축소
+//    private func transform(cell: UICollectionViewCell, isFocus: Bool) {
+//        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+//            if isFocus {
+//                cell.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+//                // 셀 내부 하위 뷰도 같이 커지는 문제 해결해야함
+//                // 양 옆 inset 해결해야함
+//            } else {
+//                cell.transform = .identity
+//            }
+//        }, completion: nil)
+//    }
 }

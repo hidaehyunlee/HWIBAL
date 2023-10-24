@@ -18,7 +18,7 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
         button.setTitle("사진보기", for: .normal)
         button.titleLabel?.font = FontGuide.size14Bold
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = ColorGuide.subButton
+        button.backgroundColor = ColorGuide.subButton.withAlphaComponent(0.5)
         button.layer.cornerRadius = 14
         button.layer.masksToBounds = true
 
@@ -67,19 +67,19 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
         showImageButton.snp.makeConstraints { make in
             make.width.equalTo(77)
             make.height.equalTo(28)
-            make.leading.equalToSuperview().offset(21)
-            make.top.equalToSuperview().offset(21)
+            make.trailing.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-20)
         }
         
         dateLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(25)
-            make.right.equalToSuperview().offset(-21)
+            make.top.equalTo(showImageButton.snp.topMargin)
+            make.leading.equalToSuperview().offset(20)
         }
         
         textContent.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(65)
-            make.left.equalToSuperview().offset(21)
-            make.right.equalToSuperview().offset(-21)
+            make.top.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
             // bottom을 잡으면 label text가 아래로 내려옴. 어차피 글자수 제한 있으니 동적으로 안만들고 constraint 안잡아둘게요.
         }
     }

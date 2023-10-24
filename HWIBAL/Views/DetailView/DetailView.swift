@@ -12,22 +12,24 @@ final class DetailView: UIView, RootView {
     private lazy var goToFirstButton: UIButton = {
         let button = UIButton()
 
-        button.setTitle("맨 처음으로 ", for: .normal)
+        button.setTitle(" 맨 처음으로", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = FontGuide.size14Bold
-        button.setTitleColor(.white, for: .normal)
-        button.setImage(UIImage(named: "<-"), for: .normal)
-        button.semanticContentAttribute = .forceRightToLeft
-        button.backgroundColor = ColorGuide.subButton
-        button.layer.cornerRadius = 14
-        button.layer.masksToBounds = true
+        
+        if let image = UIImage(named: "<-") {
+            let blackImage = image.withRenderingMode(.alwaysTemplate)
+            button.setImage(blackImage, for: .normal)
+            button.tintColor = UIColor.black
+        }
+        button.semanticContentAttribute = .forceLeftToRight
 
         return button
     }()
 
     private lazy var numberOfPage: UILabel = {
         let label = UILabel()
-        let currentPageText = "(1 "
-        let totalPageText = "/ 5)"
+        let currentPageText = "1"
+        let totalPageText = "/5"
         let attributedString = NSMutableAttributedString(string: currentPageText, attributes: [
             .font: FontGuide.size16Bold,
             .foregroundColor: UIColor.black
@@ -89,30 +91,29 @@ final class DetailView: UIView, RootView {
         addSubview(collectionView)
         addSubview(audioView)
         addSubview(deleteButton)
-
-        goToFirstButton.snp.makeConstraints { make in
-            make.width.equalTo(112)
-            make.height.equalTo(28)
-            make.leading.equalToSuperview().offset(256)
-            make.top.equalToSuperview().offset(115)
-        }
-
-        numberOfPage.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(303)
-            make.top.equalTo(goToFirstButton.snp.bottom).offset(25)
-        }
-
+        
         collectionView.snp.makeConstraints { make in
-            make.height.equalTo(CarouselConst.itemSize.height * 1.5)
-            make.top.equalTo(numberOfPage.snp.bottom).offset(20)
+            make.height.equalTo(CarouselConst.itemSize.height)
+            make.top.equalToSuperview().offset(196) // 오토레이아웃 고민하기
             make.leading.trailing.equalToSuperview()
         }
 
+        goToFirstButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(54)
+            make.bottom.equalTo(collectionView.snp.top).offset(-15)
+        }
+
+        numberOfPage.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-54)
+            make.bottom.equalTo(collectionView.snp.top).offset(-15)
+        }
+
         audioView.snp.makeConstraints { make in
-            make.width.equalTo(304)
-            make.height.equalTo(81)
-            make.leading.equalToSuperview().offset(45)
-            make.top.equalTo(collectionView.snp.bottom).offset(34)
+            make.width.equalTo(307)
+            make.height.equalTo(40)
+            make.leading.equalToSuperview().offset(43)
+            make.trailing.equalToSuperview().offset(-43)
+            make.top.equalTo(collectionView.snp.bottom).offset(20)
         }
 
         deleteButton.snp.makeConstraints { make in
@@ -125,7 +126,7 @@ final class DetailView: UIView, RootView {
 // Carousel 애니메이션: itemSize, itemSpacing, insetX 정의
 extension DetailView {
     enum CarouselConst {
-        static let itemSize = CGSize(width: 200, height: 300)
+        static let itemSize = CGSize(width: 307, height: 440)
         static let itemSpacing = 24.0
 
         static var insetX: CGFloat {
