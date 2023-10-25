@@ -3,13 +3,7 @@
 //  HWIBAL
 //
 //  Created by 김도윤 on 2023/10/12.
-//
-//
-//  CreatePageView.swift
-//  HWIBAL
-//
-//  Created by 김도윤 on 2023/10/12.
-//
+
 import AVFoundation
 import EventBus
 import UIKit
@@ -17,7 +11,7 @@ import UIKit
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
     var keyboardHeight: CGFloat = 0
     var audioRecorder: AVAudioRecorder?
-    private var dimmedBackgroundView: UIView?
+    private var attachedImageView: UIImageView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +103,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-    
     
     @objc func presentImagePickerOptions() {
         let actionSheet = UIAlertController(title: nil, message: "Choose Image Source", preferredStyle: .actionSheet)
@@ -211,63 +204,95 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func showCancelAlert() {
-        showDimmedBackground()
+        let alertController = UIAlertController(title: "아,휘발 🔥", message: "정말로 삭제 하시겠습니까?", preferredStyle: .alert)
         
-        let alertVC = AlertViewController(title: "아, 휘발 🔥", message: "정말로 삭제 하시겠습니까?")
-        alertVC.modalPresentationStyle = .overFullScreen
-        present(alertVC, animated: true) {
-            self.removeDimmedBackground()
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
+            if self?.rootView.textView.text.isEmpty ?? true {
+                self?.dismiss(animated: true, completion: nil)
+            }
         }
+        
+        let confirmAction = UIAlertAction(title: "휘발🔥", style: .default) { [weak self] _ in
+            if self?.rootView.textView.text.isEmpty ?? true {
+                let secondaryAlert = UIAlertController(title: "휘발🔥", message: "작성하시던 페이지가 삭제됩니다", preferredStyle: .alert)
+                let confirmSecondaryAction = UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    self?.dismiss(animated: true, completion: nil)
+                })
+                let cancelSecondaryAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                secondaryAlert.addAction(confirmSecondaryAction)
+                secondaryAlert.addAction(cancelSecondaryAction)
+                self?.present(secondaryAlert, animated: true, completion: nil)
+            } else {
+                self?.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(confirmAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
+
     
     @objc func showWriteAlert() {
-        showDimmedBackground()
+        let alertController = UIAlertController(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥", preferredStyle: .alert)
+        
+        present(alertController, animated: true) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                alertController.dismiss(animated: true) { [weak self] in
+                    self?.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
         let text = rootView.textView.text ?? ""
         EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
         EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
         NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
-        let alertVC = AlertViewControllerDesc(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥")
-        alertVC.modalPresentationStyle = .overFullScreen
-        present(alertVC, animated: true) {
-            self.removeDimmedBackground()
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            alertVC.dismiss(animated: true) {
-                self?.dismiss(animated: true)
-            }
-        }
     }
-    
-    private func showDimmedBackground() {
-        dimmedBackgroundView = UIView(frame: view.bounds)
-        dimmedBackgroundView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        view.addSubview(dimmedBackgroundView!)
-    }
-    
-    private func removeDimmedBackground() {
-        dimmedBackgroundView?.removeFromSuperview()
-        dimmedBackgroundView = nil
-    }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         rootView.frame = view.bounds
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
+
 extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
-            // TODO: 여기에 선택된 이미지를 처리하는 코드를 추가하세요.
+            addAndLayoutAttachedImageView(with: image)
         }
         picker.dismiss(animated: true)
     }
-
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true)
+    
+    private func addAndLayoutAttachedImageView(with image: UIImage) {
+        if let existingImageView = attachedImageView {
+            existingImageView.image = image
+            return
+        }
+        
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill //scaleAspectFill이 최선인건가..?,scaleAspectFit하면 세로 사진은 가로로 표현이 불가..그리고 가로폭이 짧음..
+        imageView.clipsToBounds = true
+        
+        let imageViewWidth = rootView.textView.bounds.width
+        let imageViewHeight = rootView.textView.bounds.height / 2
+        
+        let imageViewY = rootView.textView.frame.origin.y + rootView.textView.frame.height - imageViewHeight
+        
+        imageView.frame = CGRect(x: rootView.textView.frame.origin.x, y: imageViewY, width: imageViewWidth, height: imageViewHeight)
+        
+        rootView.addSubview(imageView)
+        
+        let textViewNewHeight = rootView.textView.frame.height / 2
+        rootView.textView.frame = CGRect(x: rootView.textView.frame.origin.x, y: rootView.textView.frame.origin.y, width: rootView.textView.frame.width, height: textViewNewHeight)
+        
+        attachedImageView = imageView
+        rootView.isImageViewAttached = true
+        rootView.setNeedsLayout()
     }
 }
