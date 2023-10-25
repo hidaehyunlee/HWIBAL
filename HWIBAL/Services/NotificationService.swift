@@ -31,7 +31,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
             if let error = error {
                 print("Error adding notification request: \(error)")
             } else {
-                print("Delete notification scheduled successfully!")
+                print("자동 삭제 알림 등록")
             }
         })
     }
@@ -53,6 +53,13 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
             // 알림 확인 시 뱃지 카운트 없애기
             UNUserNotificationCenter.current().removeAllDeliveredNotifications()
             UIApplication.shared.applicationIconBadgeNumber = 0
+            
+            // 삭제
+            DispatchQueue.main.async {
+                print("삭제 로직 실행")
+                EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+                NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+            }
             
             // HomeVC 화면 전환 코드 추가
             
