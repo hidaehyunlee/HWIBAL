@@ -9,11 +9,10 @@ import SnapKit
 import UIKit
 
 class EmotionTrashBackView: UIView {
-    private lazy var imageView: UIImageView = {
+    lazy var backImageView: UIImageView = {
         let imageView = UIImageView()
 
         imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "hwibari_default")
 
         return imageView
     }()
@@ -40,10 +39,10 @@ class EmotionTrashBackView: UIView {
     private func setupViews() {
         backgroundColor = .green
 
-        addSubview(imageView)
+        addSubview(backImageView)
         addSubview(closeButton)
 
-        imageView.snp.makeConstraints { make in
+        backImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 

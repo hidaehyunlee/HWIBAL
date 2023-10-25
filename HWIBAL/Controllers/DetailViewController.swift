@@ -51,8 +51,13 @@ extension DetailViewController: UICollectionViewDataSource {
 
         let data = testData[indexPath.item]
 
+        if let imageData = data.image, let image = UIImage(data: imageData) {
+            cell.emotionTrashBackView.backImageView.image = image
+        } else {
+            cell.emotionTrashBackView.backImageView.image = nil
+        }
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp) // 몇일전인지 구함
-        cell.textContentLabel.text = data.text // 예시로 textContent를 업데이트하는 것으로 가정
+        cell.textContentLabel.text = data.text
 
         cell.layer.cornerRadius = 12
         cell.layer.masksToBounds = true
