@@ -14,7 +14,7 @@ class MyPageCustomCell: UITableViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.font = FontGuide.size16Bold
-        label.textColor = ColorGuide.black
+        label.textColor = .black
         label.snp.makeConstraints { make in
             make.height.equalTo(20)
         }

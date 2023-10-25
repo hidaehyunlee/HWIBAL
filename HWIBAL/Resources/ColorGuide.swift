@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 enum ColorGuide {
-    static let black = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
     static let subButton = UIColor(red: 41/255, green: 41/255, blue: 41/255, alpha: 1.0)
     static let main = UIColor(red: 115/255, green: 78/255, blue: 247/255, alpha: 1.0)
     static let textHint = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1.0)
