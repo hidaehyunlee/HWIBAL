@@ -28,7 +28,7 @@ private extension MyPageViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let autoLoginItem = SettingItem(type: .autoLogin, title: "자동 로그인",isSwitchOn: true)
-        let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발일 설정", icon: UIImage(named: ">"), isSwitchOn: false)
+        let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발 주기 설정", icon: UIImage(named: ">"), isSwitchOn: false)
         let logoutItem = SettingItem(type: .logout, title: "로그아웃", icon: UIImage(named: ">"), isSwitchOn: false)
         settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
@@ -117,7 +117,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 let formattedDay = "\(day)일"
                 let action = UIAlertAction(title: formattedDay, style: .default) { _ in
                     UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: Int64(day))
-                    EmotionTrashService.shared.autoDeleteEmotionTrash(SignInService.shared.signedInUser!, Int(day))
+                    NotificationService.shared.autoDeleteNotification(Int(day))
                     print("\(day) 후 감정쓰레기를 태워 드립니다.")
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {

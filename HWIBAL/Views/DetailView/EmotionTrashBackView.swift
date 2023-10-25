@@ -12,7 +12,7 @@ class EmotionTrashBackView: UIView {
     lazy var backImageView: UIImageView = {
         let imageView = UIImageView()
 
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
 
         return imageView
     }()
@@ -37,7 +37,7 @@ class EmotionTrashBackView: UIView {
     }
 
     private func setupViews() {
-        backgroundColor = .green
+        backgroundColor = ColorGuide.main
 
         addSubview(backImageView)
         addSubview(closeButton)

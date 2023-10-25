@@ -44,7 +44,6 @@ enum DummyData {
 
         dummies.append(trash2)
 
-
         // 이미지만 있는 EmotionTrash
         if let image = UIImage(named: "hwibariopen") {
             if let imageData = image.pngData() {
@@ -54,31 +53,30 @@ enum DummyData {
         }
 
         // 오디오와 이미지가 모두 없는 EmotionTrash
-        let trash4 = EmotionTrashDummy(id: UUID(), image: nil, recordingFilePath: nil, 
+        let trash4 = EmotionTrashDummy(id: UUID(), image: nil, recordingFilePath: nil,
                                        text: """
-                                             오디오와 이미지가 모두 없는 EmotionTrash
-                                             아니 진짜 오늘 개빡치는 일 있었음 니 뭔데? 니 뭔데 나한테 머라하는데;;
-                                             어이없을 무;; 개빡쳐용... 하지만 귀여운 내가 참아야지^^
-                                             진짜 어이없다 이말입니다~~~~~~~
-                                             아니 진짜 오늘 개빡치는 일 있었음 니 뭔데? 니 뭔데 나한테 머라하는데;;
-                                             어이없을 무;; 개빡쳐용... 하지만 귀여운 내가 참아야지^^
-                                             진짜 어이없다 이말입니다~~~~~~~
-                                             아니 진짜 오늘 개빡치는 일 있었음 니 뭔데? 니 뭔데 나한테 머라하는데;;
-                                             어이없을 무;; 개빡쳐용... 하지만 귀여운 내가 참아야지^^
-                                             진짜 어이없다 이말입니다~~~~~~~
-                                             """,
-                                            timestamp: Date())
+                                       오디오와 이미지가 모두 없는 EmotionTrash
+                                       아니 진짜 오늘 개빡치는 일 있었음 니 뭔데? 니 뭔데 나한테 머라하는데;;
+                                       어이없을 무;; 개빡쳐용... 하지만 귀여운 내가 참아야지^^
+                                       진짜 어이없다 이말입니다~~~~~~~
+                                       아니 진짜 오늘 개빡치는 일 있었음 니 뭔데? 니 뭔데 나한테 머라하는데;;
+                                       어이없을 무;; 개빡쳐용... 하지만 귀여운 내가 참아야지^^
+                                       진짜 어이없다 이말입니다~~~~~~~
+                                       아니 진짜 오늘 개빡치는 일 있었음 니 뭔데? 니 뭔데 나한테 머라하는데;;
+                                       어이없을 무;; 개빡쳐용... 하지만 귀여운 내가 참아야지^^
+                                       진짜 어이없다 이말입니다~~~~~~~
+                                       """,
+                                       timestamp: Date())
         dummies.append(trash4)
 
-        for (idx, dummy) in dummies.enumerated() {
-            print("-----------dummy \(idx)-----------------")
-            print("ID: \(dummy.id)")
-            print("imageData: \(String(describing: dummy.image))")
-            print("recordingFilePath: \(String(describing: dummy.recordingFilePath))")
-            print("Text: \(dummy.text)")
-            print("Timestamp: \(dummy.timestamp)")
-            print("------------------------------------")
-        }
+        let dummy = dummies[0]
+        print("-----------dummy----------------")
+        print("ID: \(dummy.id)")
+        print("imageData: \(String(describing: dummy.image))")
+        print("recordingFilePath: \(String(describing: dummy.recordingFilePath))")
+        print("Text: \(dummy.text)")
+        print("Timestamp: \(dummy.timestamp)")
+        print("---------------------------------")
 
         return dummies
     }
