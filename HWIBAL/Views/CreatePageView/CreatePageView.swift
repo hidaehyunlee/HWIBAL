@@ -16,6 +16,8 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
     let secondImageView = UIImageView()
     let thirdImageView = UIImageView()
     let soundWaveView = UIView()
+    var isImageViewAttached: Bool = false
+
     
     let textView = UITextView()
     let paragraphStyle2 = NSMutableParagraphStyle()
@@ -57,7 +59,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         counterLabel.alpha = 1.0
         paragraphStyle2.lineHeightMultiple = 1.03
         counterLabel.textColor = ColorGuide.textHint
-        counterLabel.font = FontGuide.size16Bold
+        counterLabel.font = FontGuide.size14Bold
         counterLabel.textAlignment = .right
         counterLabel.attributedText = NSMutableAttributedString(string: "0 / 300", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle2])
         addSubview(counterLabel)
@@ -129,7 +131,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
             width: textViewWidth,
             height: textViewHeight
         )
-        let textViewMaxHeight: CGFloat = bounds.height - textView.frame.origin.y - (cameraButton.buttonSize + 2 * 40) // Ensure there's space for the buttons and counterLabel
+        let textViewMaxHeight: CGFloat = bounds.height - textView.frame.origin.y - (cameraButton.buttonSize + 2 * 40) 
         textView.frame = CGRect(
             x: textViewPaddingHorizontal,
             y: dateLabel.frame.maxY + textViewPaddingVertical,
@@ -156,6 +158,17 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         
         let soundWaveX: CGFloat = soundButton.frame.origin.x + soundButton.frame.width + 10
         let soundWaveY: CGFloat = soundButton.frame.origin.y
-        soundWaveView.frame = CGRect(x: soundWaveX, y: soundWaveY, width: 50, height: soundButton.frame.height) // 사이즈와 위치는 적절하게 조절 필요
+        soundWaveView.frame = CGRect(x: soundWaveX, y: soundWaveY, width: 50, height: soundButton.frame.height)
+        
+        
+        if isImageViewAttached {
+            let textViewNewHeight = textView.frame.height / 2
+            textView.frame = CGRect(
+                x: textView.frame.origin.x,
+                y: textView.frame.origin.y,
+                width: textView.frame.width,
+                height: textViewNewHeight
+            )
+        }
     }
 }
