@@ -10,7 +10,6 @@ import UIKit
 
 class EmotionTrashCell: UICollectionViewCell, RootView {
     static let identifier = "EmotionTrashCell"
-    var dateCount: Int = 0
 
     private lazy var showImageButton: UIButton = {
         let button = UIButton()
@@ -26,22 +25,20 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
         return button
     }()
 
-    private lazy var dateLabel: UILabel = {
+    lazy var daysAgoLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "\(dateCount)일전"
+        label.text = ""
         label.font = FontGuide.size14
         label.textColor = .white
 
         return label
     }()
 
-    private lazy var textContent: UILabel = {
+    lazy var textContentLabel: UILabel = {
         let label = UILabel()
 
-        label.text = """
-        아니
-        """
+        label.text = ""
         label.font = FontGuide.size14
         label.textColor = .white
         label.numberOfLines = 0
@@ -63,8 +60,8 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
         backgroundColor = ColorGuide.main
 
         addSubview(showImageButton)
-        addSubview(dateLabel)
-        addSubview(textContent)
+        addSubview(daysAgoLabel)
+        addSubview(textContentLabel)
 
         showImageButton.snp.makeConstraints { make in
             make.width.equalTo(77)
@@ -73,12 +70,12 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
             make.bottom.equalToSuperview().offset(-20)
         }
 
-        dateLabel.snp.makeConstraints { make in
+        daysAgoLabel.snp.makeConstraints { make in
             make.top.equalTo(showImageButton.snp.topMargin)
             make.leading.equalToSuperview().offset(20)
         }
 
-        textContent.snp.makeConstraints { make in
+        textContentLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)

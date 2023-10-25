@@ -26,7 +26,7 @@ final class DetailView: UIView, RootView {
         return button
     }()
 
-    private lazy var numberOfPage: UILabel = {
+     lazy var numberOfPageLabel: UILabel = {
         let label = UILabel()
         let currentPageText = "1"
         let totalPageText = "/5"
@@ -87,7 +87,7 @@ final class DetailView: UIView, RootView {
         backgroundColor = .systemBackground
 
         addSubview(goToFirstButton)
-        addSubview(numberOfPage)
+        addSubview(numberOfPageLabel)
         addSubview(collectionView)
         addSubview(audioView)
         addSubview(deleteButton)
@@ -103,7 +103,7 @@ final class DetailView: UIView, RootView {
             make.bottom.equalTo(collectionView.snp.top).offset(-15)
         }
 
-        numberOfPage.snp.makeConstraints { make in
+        numberOfPageLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-54)
             make.bottom.equalTo(collectionView.snp.top).offset(-15)
         }

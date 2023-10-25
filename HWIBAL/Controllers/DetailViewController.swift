@@ -19,7 +19,7 @@ final class DetailViewController: RootViewController<DetailView> {
 
         rootView.collectionView.delegate = self
         rootView.collectionView.dataSource = self
-        
+
         bindDetailViewEvents()
     }
 
@@ -38,30 +38,54 @@ final class DetailViewController: RootViewController<DetailView> {
 
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 21
+        return testData.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmotionTrashCell.identifier, for: indexPath) as! EmotionTrashCell
 
-        // cell.configure()
-        // 이미 초기화된 셀인지 확인
         if cellsInitialized[indexPath] == nil {
-            // EmotionTrashCell의 초기 UI 설정
             cell.initializeUI()
-            // 초기화된 셀로 표시
             cellsInitialized[indexPath] = true
         }
+
+        let data = testData[indexPath.item]
+
+        cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp) // 몇일전인지 구함
+        cell.textContentLabel.text = data.text // 예시로 textContent를 업데이트하는 것으로 가정
+
         cell.layer.cornerRadius = 12
         cell.layer.masksToBounds = true
-        // transform(cell: cell, isFocus: true)
         return cell
+    }
+
+    func getDaysAgo(startDate: Date, endDate: Date) -> String {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: startDate, to: endDate)
+        var daysAgo = ""
+
+        if let days = components.day {
+            if days == 0 {
+                daysAgo = "오늘"
+                return daysAgo
+            } else {
+                daysAgo = String(days) + "일전"
+                return daysAgo
+            }
+        } else {
+            print("Error: getDaysAgo")
+            return daysAgo
+        }
     }
 }
 
-extension DetailViewController: UICollectionViewDelegate {}
+extension DetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 특정 셀이 선택되었을 때 실행할 작업을 정의합니다.
+        let selectedData = testData[indexPath.item] // 선택된 셀에 대한 데이터 가져오기
+        print("Selected cell data: \(selectedData)")
+    }
 
-extension DetailViewController: UICollectionViewDelegateFlowLayout {
     // 스크롤이 멈추면 호출되며, 스크롤이 셀의 중앙에 멈추도록 함
     func scrollViewWillEndDragging(
         _ scrollView: UIScrollView,
@@ -73,6 +97,20 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
         targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
     }
 
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        let visibleRect = CGRect(origin: rootView.collectionView.contentOffset, size: rootView.collectionView.bounds.size)
+//        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+//
+//        if let indexPath = rootView.collectionView.indexPathForItem(at: visiblePoint) {
+//            let currentPage = indexPath.item + 1
+//            DispatchQueue.main.async { [weak self] in
+//                self?.rootView.updateNumberOfPageLabel(currentPage)
+//            }
+//        }
+//    }
+}
+
+extension DetailViewController: UICollectionViewDelegateFlowLayout {
 //    // 셀 줌 인/아웃을 위한 스크롤 이벤트 처리
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        let collectionView = rootView.collectionView
