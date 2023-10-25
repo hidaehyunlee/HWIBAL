@@ -9,13 +9,18 @@ import SnapKit
 import UIKit
 
 final class DetailView: UIView, RootView {
+    var currentPage = 1
+    var totalPage: Int {
+        return testData.count
+    }
+
     lazy var goToFirstButton: UIButton = {
         let button = UIButton()
 
         button.setTitle(" 맨 처음으로", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = FontGuide.size14Bold
-        
+
         if let image = UIImage(named: "<-") {
             let blackImage = image.withRenderingMode(.alwaysTemplate)
             button.setImage(blackImage, for: .normal)
@@ -26,20 +31,24 @@ final class DetailView: UIView, RootView {
         return button
     }()
 
-     lazy var numberOfPageLabel: UILabel = {
+    lazy var numberOfPageLabel: UILabel = {
         let label = UILabel()
-        let currentPageText = "1"
-        let totalPageText = "/5"
+
+        let currentPageText = "\(currentPage) "
+        let totalPageText = "/ \(totalPage)"
+
         let attributedString = NSMutableAttributedString(string: currentPageText, attributes: [
             .font: FontGuide.size16Bold,
             .foregroundColor: UIColor.black
         ])
+
         let totalPageAttributedString = NSAttributedString(string: totalPageText, attributes: [
             .font: FontGuide.size16Bold,
             .foregroundColor: ColorGuide.textHint
         ])
 
         attributedString.append(totalPageAttributedString)
+
         label.attributedText = attributedString
         label.textAlignment = .right
 
@@ -91,7 +100,7 @@ final class DetailView: UIView, RootView {
         addSubview(collectionView)
         addSubview(audioView)
         addSubview(deleteButton)
-        
+
         collectionView.snp.makeConstraints { make in
             make.height.equalTo(CarouselConst.itemSize.height)
             make.top.equalToSuperview().offset(196) // 오토레이아웃 고민하기
@@ -120,6 +129,26 @@ final class DetailView: UIView, RootView {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-40)
         }
+    }
+
+    // ✏️ 이벤트버스로 값 넘겨서 DetailVC로 옮겨야함
+    func updateNumberOfPageLabel(_ currentPage: Int) {
+        let currentPageText = "\(currentPage) "
+        let totalPageText = "/ \(totalPage)"
+
+        let attributedString = NSMutableAttributedString(string: currentPageText, attributes: [
+            .font: FontGuide.size16Bold,
+            .foregroundColor: UIColor.black
+        ])
+
+        let totalPageAttributedString = NSAttributedString(string: totalPageText, attributes: [
+            .font: FontGuide.size16Bold,
+            .foregroundColor: ColorGuide.textHint
+        ])
+
+        attributedString.append(totalPageAttributedString)
+
+        numberOfPageLabel.attributedText = attributedString
     }
 }
 

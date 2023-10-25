@@ -86,9 +86,9 @@ extension DetailViewController: UICollectionViewDataSource {
 
 extension DetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 특정 셀이 선택되었을 때 실행할 작업을 정의합니다.
-        let selectedData = testData[indexPath.item] // 선택된 셀에 대한 데이터 가져오기
-        print("Selected cell data: \(selectedData)")
+        let cellId = testData[indexPath.item].id
+        
+        print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
     }
 
     // 스크롤이 멈추면 호출되며, 스크롤이 셀의 중앙에 멈추도록 함
@@ -102,20 +102,21 @@ extension DetailViewController: UICollectionViewDelegate {
         targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
     }
 
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        let visibleRect = CGRect(origin: rootView.collectionView.contentOffset, size: rootView.collectionView.bounds.size)
-//        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-//
-//        if let indexPath = rootView.collectionView.indexPathForItem(at: visiblePoint) {
-//            let currentPage = indexPath.item + 1
-//            DispatchQueue.main.async { [weak self] in
-//                self?.rootView.updateNumberOfPageLabel(currentPage)
-//            }
-//        }
-//    }
+    // 서온님께 여쭤보기
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let visibleRect = CGRect(origin: rootView.collectionView.contentOffset, size: rootView.collectionView.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+
+        if let indexPath = rootView.collectionView.indexPathForItem(at: visiblePoint) {
+            let currentPage = indexPath.item + 1
+            DispatchQueue.main.async { [weak self] in
+                self?.rootView.updateNumberOfPageLabel(currentPage)
+            }
+        }
+    }
 }
 
-extension DetailViewController: UICollectionViewDelegateFlowLayout {
+// extension DetailViewController: UICollectionViewDelegateFlowLayout {
 //    // 셀 줌 인/아웃을 위한 스크롤 이벤트 처리
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        let collectionView = rootView.collectionView
@@ -148,4 +149,4 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
 //            }
 //        }, completion: nil)
 //    }
-}
+// }
