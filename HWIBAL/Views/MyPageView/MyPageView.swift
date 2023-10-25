@@ -83,8 +83,8 @@ final class MyPageView: UIView, RootView {
         let attributedText = NSAttributedString(string: "회원탈퇴", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
         button.setAttributedTitle(attributedText, for: .normal)
         button.titleLabel?.font = FontGuide.size14
-        button.setTitleColor(ColorGuide.subButton, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(.label, for: .normal)
+        button.backgroundColor = .systemBackground
         button.snp.makeConstraints { make in
             make.width.equalTo(58)
             make.height.equalTo(24)
@@ -137,7 +137,7 @@ final class MyPageView: UIView, RootView {
             make.top.equalTo(reportSummaryView.snp.bottom).offset(50)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(200)
+            make.height.equalTo(300)
         }
         
         addSubview(withdrawalButton)
