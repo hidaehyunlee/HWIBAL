@@ -18,12 +18,12 @@ final class HomeView: UIView, RootView {
         super.init(coder: coder)
         initializeUI()
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         initializeUI()
     }
-
+    
     private var isHwibariImageTapped = false
     
     // MARK: - UI Elements
@@ -211,14 +211,15 @@ final class HomeView: UIView, RootView {
                 UIImage(named: "hwibariopen")!,
                 UIImage(named: "hwibari_default")!
             ]
-            hwibariImage.animationDuration = 0.6
+            hwibariImage.animationDuration = 0.3
             hwibariImage.animationRepeatCount = 1
             hwibariImage.startAnimating()
-            
+            hwibariImage.image = UIImage(named: "hwibari_default")
+        } else if hwibariImage.image == UIImage(named: "burningImage") {
             hwibariImage.image = UIImage(named: "hwibari_default")
         }
     }
-
+    
     // MARK: - Event Handling
     
     @objc private func myPageButtonTapped() {
@@ -239,11 +240,10 @@ final class HomeView: UIView, RootView {
             UIImage(named: "hwibariopen")!,
             UIImage(named: "hwibariopen2")!,
         ]
-        hwibariImage.animationDuration = 0.6
+        hwibariImage.animationDuration = 0.3
         hwibariImage.animationRepeatCount = 1
         hwibariImage.startAnimating()
         
-//        Thread.sleep(forTimeInterval: 2.0)
         hwibariImage.image = UIImage(named: "hwibariopen2")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
@@ -258,15 +258,68 @@ final class HomeView: UIView, RootView {
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
         
-        let alertController = AlertViewController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?")
-
-        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-            // 현재 작동 안됨
-            print("작동")
-            EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
-            NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+        let alertController = UIAlertController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?", preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            if let self = self {
+                self.hwibariImage.image = UIImage(named: "hwibari_ing02_fire")
+                let shakeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation")
+                shakeAnimation.values = [-0.1, 0.1, -0.1, 0.1, 0] // 왼쪽-오른쪽 흔들림
+                shakeAnimation.duration = 0.5
+                shakeAnimation.repeatCount = 2 // 몇 번 반복할 지 설정 (짝수로 설정하면 초기 위치로 돌아옴)
+                self.hwibariImage.layer.add(shakeAnimation, forKey: "shake")
+                
+                UIView.transition(with: self.hwibariImage, duration: 0.2, options: .transitionCrossDissolve, animations: nil, completion: nil)
+                // 이미지뷰가 부드럽게 서로 변경될 때 사용되는 전환 효과
+                // duration - 흔들 때, 잔상 유지 시간
+                
+                        hwibariImage.animationImages = [
+                            UIImage(named: "hwibari_ing02_fire")!,
+                            UIImage(named: "burningImage")!,
+                            UIImage(named: "hwibari_ing01_fire")!,
+                            UIImage(named: "hwibari_default")!
+                        ]
+                hwibariImage.image = UIImage(named: "hwibari_default")
+                
+                hwibariImage.animationDuration = 1.0 // 애니메이션 한 번의 지속 시간을 설정
+                        hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
+                        hwibariImage.startAnimating()
+            }
+            
+            // self의 viewController 속성을 가져온후, 뷰를 추가
+            if let viewController = self?.viewController {
+                let burningView = UIView(frame: viewController.view.bounds)
+                burningView.backgroundColor = UIColor(red: 247/255, green: 142/255, blue: 0/255, alpha: 1)
+                burningView.alpha = 0.9 // 그라디언트 효과의 불투명도 설정
+                viewController.view.addSubview(burningView)
+                
+                // 그라디언트 마스크 레이어를 생성
+                let maskLayer = CAGradientLayer()
+                maskLayer.frame = viewController.view.bounds
+                maskLayer.colors = [UIColor.clear.cgColor, UIColor.clear.cgColor, UIColor.black.cgColor]
+                maskLayer.locations = [0, 1.5, 3.0] // 그라디언트 위치 설정
+                burningView.layer.mask = maskLayer
+                
+                // 불타는 애니메이션
+                let animation = CABasicAnimation(keyPath: "locations")
+                animation.fromValue = [0.75, 1, 1.5] // 아래에서 위로 이동하도록
+                animation.toValue = [0, 0, 0.2]
+                // 그라디언트 위치가 어두운 부분으로 이동하도록 끝 위치를 나타냅니다
+                // maskLayer.colors에서 clear = 0, clear = 0, black = 0.2
+                animation.duration = 0.8
+                maskLayer.add(animation, forKey: "burningAnimation")
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    burningView.removeFromSuperview()
+                }
+            }
+            print("다태웠어요")
         }
+        
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
         
         viewController?.present(alertController, animated: true, completion: nil)
     }
