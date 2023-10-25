@@ -52,7 +52,9 @@ class CreatePageCameraViewController: UIViewController {
                 setupLivePreview()
             }
         }
-        catch {}
+        catch {
+            print("카메라에 접근할 수 없습니다.")
+        }
     }
     
     private func setupLivePreview() {

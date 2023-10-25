@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 final class HomeView: UIView, RootView {
-    
     // MARK: - Properties
     
     var emotionCount = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
@@ -44,6 +43,7 @@ final class HomeView: UIView, RootView {
     }()
     
     // MARK: - Label Title Update Function
+
     func updateEmotionTrashesCountLabel(_ emotionCount: Int) {
         titleLabel2.text = "감정쓰레기 \(emotionCount)개"
     }
@@ -273,17 +273,17 @@ final class HomeView: UIView, RootView {
                 // 이미지뷰가 부드럽게 서로 변경될 때 사용되는 전환 효과
                 // duration - 흔들 때, 잔상 유지 시간
                 
-                        hwibariImage.animationImages = [
-                            UIImage(named: "hwibari_ing02_fire")!,
-                            UIImage(named: "burningImage")!,
-                            UIImage(named: "hwibari_ing01_fire")!,
-                            UIImage(named: "hwibari_default")!
-                        ]
+                hwibariImage.animationImages = [
+                    UIImage(named: "hwibari_ing02_fire")!,
+                    UIImage(named: "burningImage")!,
+                    UIImage(named: "hwibari_ing01_fire")!,
+                    UIImage(named: "hwibari_default")!,
+                ]
                 hwibariImage.image = UIImage(named: "hwibari_default")
                 
                 hwibariImage.animationDuration = 1.0 // 애니메이션 한 번의 지속 시간을 설정
-                        hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
-                        hwibariImage.startAnimating()
+                hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
+                hwibariImage.startAnimating()
             }
             
             // self의 viewController 속성을 가져온후, 뷰를 추가

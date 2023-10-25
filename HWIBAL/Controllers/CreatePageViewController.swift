@@ -7,6 +7,7 @@
 import AVFoundation
 import EventBus
 import UIKit
+import SnapKit
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
     var keyboardHeight: CGFloat = 0
@@ -50,16 +51,12 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
                         if allowed {
                             self?.startRecording()
                         } else {
-                            let alert = UIAlertController(title: "Permission Denied", message: "Please allow access to microphone for recording.", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .default))
-                            self?.present(alert, animated: true)
+                            AlertManager.shared.showAlert(on: self!, title: "Permission Denied", message: "Please allow access to microphone for recording.")
                         }
                     }
                 }
             case .denied:
-                let alert = UIAlertController(title: "Permission Denied", message: "Please allow access to microphone for recording in settings.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                present(alert, animated: true)
+                AlertManager.shared.showAlert(on: self, title: "Permission Denied", message: "Please allow access to microphone for recording in settings.")
             case .granted:
                 startRecording()
             @unknown default:
@@ -69,7 +66,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
             stopRecording()
         }
     }
-    
+
     func startRecording() {
         let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
         let settings = [
@@ -87,9 +84,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
             rootView.soundButton.setTitle("Stop", for: .normal)
         } catch {
             audioRecorder = nil
-            let alert = UIAlertController(title: "Recording Failed", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alert, animated: true)
+            AlertManager.shared.showAlert(on: self, title: "Recording Failed", message: "")
         }
     }
     
@@ -208,20 +203,21 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
             if self?.rootView.textView.text.isEmpty ?? true {
-                self?.dismiss(animated: true, completion: nil)
+                AlertManager.shared.showAlert(on: self!, title: "휘발🔥", message: "작성하시던 페이지가 삭제됩니다",
+                    okCompletion: { _ in
+                        self?.dismiss(animated: true, completion: nil)
+                    },
+                    cancelCompletion: { _ in
+                    })
             }
         }
         
         let confirmAction = UIAlertAction(title: "휘발🔥", style: .default) { [weak self] _ in
             if self?.rootView.textView.text.isEmpty ?? true {
-                let secondaryAlert = UIAlertController(title: "휘발🔥", message: "작성하시던 페이지가 삭제됩니다", preferredStyle: .alert)
-                let confirmSecondaryAction = UIAlertAction(title: "확인", style: .default, handler: { _ in
-                    self?.dismiss(animated: true, completion: nil)
-                })
-                let cancelSecondaryAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-                secondaryAlert.addAction(confirmSecondaryAction)
-                secondaryAlert.addAction(cancelSecondaryAction)
-                self?.present(secondaryAlert, animated: true, completion: nil)
+                AlertManager.shared.showAlert(on: self!, title: "휘발🔥", message: "작성하시던 페이지가 삭제됩니다",
+                    okCompletion: { _ in
+                        self?.dismiss(animated: true, completion: nil)
+                    })
             } else {
                 self?.dismiss(animated: true, completion: nil)
             }
@@ -233,22 +229,25 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         present(alertController, animated: true, completion: nil)
     }
 
-    
+
     @objc func showWriteAlert() {
         let alertController = UIAlertController(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥", preferredStyle: .alert)
-        
-        present(alertController, animated: true) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                alertController.dismiss(animated: true) { [weak self] in
-                    self?.dismiss(animated: true, completion: nil)
-                }
+        present(alertController, animated: true, completion: nil)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            alertController.dismiss(animated: true) { [weak self] in
+                self?.dismiss(animated: true, completion: nil)
             }
         }
+
         let text = rootView.textView.text ?? ""
         EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
         EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
         NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
     }
+
+
+
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -276,23 +275,18 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         }
         
         let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill //scaleAspectFill이 최선인건가..?,scaleAspectFit하면 세로 사진은 가로로 표현이 불가..그리고 가로폭이 짧음..
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        
-        let imageViewWidth = rootView.textView.bounds.width
-        let imageViewHeight = rootView.textView.bounds.height / 2
-        
-        let imageViewY = rootView.textView.frame.origin.y + rootView.textView.frame.height - imageViewHeight
-        
-        imageView.frame = CGRect(x: rootView.textView.frame.origin.x, y: imageViewY, width: imageViewWidth, height: imageViewHeight)
-        
+        imageView.layer.cornerRadius = 10.0
         rootView.addSubview(imageView)
-        
-        let textViewNewHeight = rootView.textView.frame.height / 2
-        rootView.textView.frame = CGRect(x: rootView.textView.frame.origin.x, y: rootView.textView.frame.origin.y, width: rootView.textView.frame.width, height: textViewNewHeight)
-        
         attachedImageView = imageView
+        
+        imageView.snp.makeConstraints { make in
+            make.left.right.equalTo(rootView.textView)
+            make.top.equalTo(rootView.textView.snp.bottom).offset(10)
+            make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10) 
+        }
+        
         rootView.isImageViewAttached = true
-        rootView.setNeedsLayout()
     }
 }

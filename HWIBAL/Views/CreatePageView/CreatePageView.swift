@@ -13,8 +13,6 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
     let dateLabel = UILabel()
     let counterLabel = UILabel()
     let firstImageView = UIImageView()
-    let secondImageView = UIImageView()
-    let thirdImageView = UIImageView()
     let soundWaveView = UIView()
     var isImageViewAttached: Bool = false
 
