@@ -209,7 +209,7 @@ final class HomeView: UIView, RootView {
             hwibariImage.animationImages = [
                 UIImage(named: "hwibariopen2")!,
                 UIImage(named: "hwibariopen")!,
-                UIImage(named: "hwibari_default")!
+                UIImage(named: "hwibari_default")!,
             ]
             hwibariImage.animationDuration = 0.3
             hwibariImage.animationRepeatCount = 1
@@ -257,7 +257,7 @@ final class HomeView: UIView, RootView {
     
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
-        
+
         let alertController = UIAlertController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?", preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
@@ -312,6 +312,8 @@ final class HomeView: UIView, RootView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                     burningView.removeFromSuperview()
                 }
+                EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+                NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
             }
             print("다태웠어요")
         }
@@ -320,10 +322,9 @@ final class HomeView: UIView, RootView {
         
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
-        
         viewController?.present(alertController, animated: true, completion: nil)
     }
-    
+
     @objc private func createButtonTapped() {
         print("'작성하기'가 탭되었습니다.")
         EventBus.shared.emit(PushToCreatePageScreenEvent())

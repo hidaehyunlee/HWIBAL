@@ -5,16 +5,21 @@
 //  Created by 김도윤 on 2023/10/20.
 //
 
-import UIKit
 import AVFoundation
 import EventBus
+import UIKit
+
+protocol CreatePageCameraViewControllerDelegate: AnyObject {
+    func didCapture(image: UIImage)
+}
 
 class CreatePageCameraViewController: UIViewController {
-    
     private var cameraView: CreatePageCameraView!
     private var captureSession: AVCaptureSession?
     private var stillImageOutput: AVCapturePhotoOutput?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    
+    weak var delegate: CreatePageCameraViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +52,7 @@ class CreatePageCameraViewController: UIViewController {
                 setupLivePreview()
             }
         }
-        catch let error  {
-        }
+        catch {}
     }
     
     private func setupLivePreview() {
@@ -72,7 +76,7 @@ class CreatePageCameraViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.captureSession?.stopRunning()
+        captureSession?.stopRunning()
     }
 }
 
