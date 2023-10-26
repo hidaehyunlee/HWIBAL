@@ -5,11 +5,10 @@
 //  Created by 김도윤 on 2023/10/26.
 //
 
-import UIKit
 import AVFoundation
+import UIKit
 
 class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
-    
     var audioRecorder: AVAudioRecorder?
     var startStopButton: UIButton!
     var statusLabel: UILabel!
@@ -17,20 +16,16 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     var waveformView: UIView!
     var recordingTimer: Timer?
     var currentRecordingTime: TimeInterval = 0.0
+    var saveButton: UIButton!
+    var cancelButton: UIButton!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setupUI()
     }
-//        let recordingViewController = RecordingViewController()
-//        recordingViewController.modalPresentationStyle = .custom
-//        recordingViewController.transitioningDelegate = recordingViewController
-//        self.present(recordingViewController, animated: true, completion: nil)
-        //모달 크기 절반(아이폰음성메모처럼..)
  
-    
-    
     func setupUI() {
         startStopButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         startStopButton.center = view.center
@@ -46,14 +41,27 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         statusLabel.textAlignment = .center
         view.addSubview(statusLabel)
         
-        timerLabel = UILabel(frame: CGRect(x: 0, y: 10, width: view.frame.width, height: 40))
+        timerLabel = UILabel(frame: CGRect(x: 0, y: 10 + 90, width: view.frame.width, height: 40))
         timerLabel.text = "00:00"
         timerLabel.textAlignment = .center
         view.addSubview(timerLabel)
-        
-        waveformView = UIView(frame: CGRect(x: 10, y: timerLabel.frame.origin.y + timerLabel.frame.height + 10, width: view.frame.width - 20, height: 100))
+
+        waveformView = UIView(frame: CGRect(x: 10, y: timerLabel.frame.origin.y + 70, width: view.frame.width - 20, height: 100))
         waveformView.backgroundColor = .lightGray
         view.addSubview(waveformView)
+
+        
+        cancelButton = UIButton(frame: CGRect(x: 10, y: 10, width: 80, height: 40))
+        cancelButton.setTitle("취소", for: .normal)
+        cancelButton.setTitleColor(.blue, for: .normal)
+        cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
+        view.addSubview(cancelButton)
+
+        saveButton = UIButton(frame: CGRect(x: view.frame.width - 90, y: 10, width: 80, height: 40))
+        saveButton.setTitle("저장", for: .normal)
+        saveButton.setTitleColor(.blue, for: .normal)
+        saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        view.addSubview(saveButton)
     }
     
     @objc func startOrStopRecording() {
@@ -87,7 +95,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
             print("Recording Failed")
         }
     }
-    
+
     func stopRecording() {
         audioRecorder?.stop()
         audioRecorder = nil
@@ -98,7 +106,6 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func startTimer() {
-        currentRecordingTime = 0.0
         timerLabel.text = timeString(time: currentRecordingTime)
         recordingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
@@ -116,19 +123,29 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     func timeString(time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
-        return String(format:"%02i:%02i", minutes, seconds)
+        return String(format: "%02i:%02i", minutes, seconds)
     }
     
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-}
-extension RecordingViewController: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+    
+    @objc func cancelAction() {
+        //취소 로직 추가 - 녹음한 내용 삭제
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    @objc func saveAction() {
+        // 저장 로직 추가 - 녹음한 파일을 어디에 저장..?할지...그리고 url로 저장해야할지...(대현님이 보내준 블로그 참고)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
-
+extension RecordingViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        let presentationController = BottomSheetPresentationController(presentedViewController: presented, presenting: presenting)
+        return presentationController
+    }
+}
 

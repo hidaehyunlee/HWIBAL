@@ -28,11 +28,12 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func startOrStopRecording() {
-        let recordingViewController = RecordingViewController()
-        recordingViewController.modalPresentationStyle = .custom
-        recordingViewController.transitioningDelegate = recordingViewController
-        present(recordingViewController, animated: true, completion: nil)
+    let recordingVC = RecordingViewController()
+    recordingVC.modalPresentationStyle = .custom
+    recordingVC.transitioningDelegate = recordingVC
+    present(recordingVC, animated: true, completion: nil)
     }
+
 
     @objc func presentImagePickerOptions() {
         let actionSheet = UIAlertController(title: nil, message: "Choose Image Source", preferredStyle: .actionSheet)
