@@ -583,7 +583,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RR4V44S8V9;
+				DEVELOPMENT_TEAM = TMQF6RX33C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "이 앱은 사용자의 음성 입력을 처리하기 위해 마이크에 액세스가 필요합니다.";
@@ -597,7 +597,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.HWIBAL.project;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HWIBALmm.project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -613,7 +613,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RR4V44S8V9;
+				DEVELOPMENT_TEAM = TMQF6RX33C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "이 앱은 사용자의 음성 입력을 처리하기 위해 마이크에 액세스가 필요합니다.";
@@ -627,7 +627,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.HWIBAL.project;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HWIBALmm.project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
