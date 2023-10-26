@@ -33,7 +33,6 @@
 		3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445612ADF79D80003DCD4 /* SignInService.swift */; };
 		3F9445662ADFD5EA0003DCD4 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445652ADFD5EA0003DCD4 /* ReportService.swift */; };
 		3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */; };
-		3FF18E6E2AE76B9500CC70D2 /* hwibalAudio_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E6D2AE76B9500CC70D2 /* hwibalAudio_1.mp3 */; };
 		3FF18E762AE76BEE00CC70D2 /* hwibalAudio_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */; };
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
 		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
@@ -87,7 +86,6 @@
 		3F9445612ADF79D80003DCD4 /* SignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInService.swift; sourceTree = "<group>"; };
 		3F9445652ADFD5EA0003DCD4 /* ReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportService.swift; sourceTree = "<group>"; };
 		3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashService.swift; sourceTree = "<group>"; };
-		3FF18E6D2AE76B9500CC70D2 /* hwibalAudio_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibalAudio_1.mp3; sourceTree = "<group>"; };
 		3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibalAudio_2.mp3; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -198,7 +196,6 @@
 				DEFE39FE2AD53C3A0076FE11 /* HWIBAL */,
 				DEFE39FD2AD53C3A0076FE11 /* Products */,
 				0791B3482AE10A7F004B8740 /* Frameworks */,
-				3F8669BB2AE8B3CE00F58CE3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -213,6 +210,7 @@
 		DEFE39FE2AD53C3A0076FE11 /* HWIBAL */ = {
 			isa = PBXGroup;
 			children = (
+				3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */,
 				DE434DF52ADCCD8800C77FE4 /* Services */,
 				DEFE3A0D2AD53C3B0076FE11 /* Info.plist */,
 				DEFE3A2E2AD542CF0076FE11 /* Models */,
@@ -232,8 +230,6 @@
 				3F783A232AD805330024D692 /* ColorGuide.swift */,
 				3F783A252AD8053D0024D692 /* FontGiude.swift */,
 				DE434E0F2ADE75D900C77FE4 /* DummyData.swift */,
-				3FF18E6D2AE76B9500CC70D2 /* hwibalAudio_1.mp3 */,
-				3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -389,7 +385,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEFE3A0C2AD53C3B0076FE11 /* LaunchScreen.storyboard in Resources */,
-				3FF18E6E2AE76B9500CC70D2 /* hwibalAudio_1.mp3 in Resources */,
 				3FF18E762AE76BEE00CC70D2 /* hwibalAudio_2.mp3 in Resources */,
 				DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */,
 			);

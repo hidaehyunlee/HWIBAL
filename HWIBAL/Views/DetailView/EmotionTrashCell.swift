@@ -11,7 +11,7 @@ import UIKit
 class EmotionTrashCell: UICollectionViewCell, RootView {
     static let identifier = "EmotionTrashCell"
 
-    private lazy var showImageButton: UIButton = {
+     lazy var showImageButton: UIButton = {
         let button = UIButton()
 
         button.setTitle("사진보기", for: .normal)

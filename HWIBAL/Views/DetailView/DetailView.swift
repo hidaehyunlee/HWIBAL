@@ -5,6 +5,7 @@
 //  Created by daelee on 10/17/23.
 //
 
+import AVFAudio
 import SnapKit
 import UIKit
 
@@ -86,8 +87,18 @@ final class DetailView: UIView, RootView {
 
     private lazy var audioView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = .clear
         return view
+    }()
+
+    lazy var playPauseButton: UIButton = {
+        let button = UIButton()
+        
+        let image = UIImage(named: "play")
+        button.setBackgroundImage(image, for: .normal)
+        button.isHidden = true
+
+        return button
     }()
 
     private lazy var deleteButton = MainButton(type: .delete)
@@ -99,6 +110,7 @@ final class DetailView: UIView, RootView {
         addSubview(numberOfPageLabel)
         addSubview(collectionView)
         addSubview(audioView)
+        audioView.addSubview(playPauseButton)
         addSubview(deleteButton)
 
         collectionView.snp.makeConstraints { make in
@@ -123,6 +135,10 @@ final class DetailView: UIView, RootView {
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
             make.top.equalTo(collectionView.snp.bottom).offset(20)
+        }
+        
+        playPauseButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-15)
         }
 
         deleteButton.snp.makeConstraints { make in
