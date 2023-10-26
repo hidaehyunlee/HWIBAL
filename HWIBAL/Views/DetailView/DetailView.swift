@@ -10,11 +10,6 @@ import SnapKit
 import UIKit
 
 final class DetailView: UIView, RootView {
-    var currentPage = 1
-    var totalPage: Int {
-        return testData.count
-    }
-
     lazy var goToFirstButton: UIButton = {
         let button = UIButton()
 
@@ -32,26 +27,31 @@ final class DetailView: UIView, RootView {
         return button
     }()
 
+    var currentPage = 1
+    var totalPage: Int = 0 {
+        didSet {
+            let currentPageText = "\(currentPage) "
+            let totalPageText = "/ \(totalPage)"
+
+            let attributedString = NSMutableAttributedString(string: currentPageText, attributes: [
+                .font: FontGuide.size16Bold,
+                .foregroundColor: UIColor.black
+            ])
+
+            let totalPageAttributedString = NSAttributedString(string: totalPageText, attributes: [
+                .font: FontGuide.size16Bold,
+                .foregroundColor: ColorGuide.textHint
+            ])
+
+            attributedString.append(totalPageAttributedString)
+
+            numberOfPageLabel.attributedText = attributedString
+            numberOfPageLabel.textAlignment = .right
+        }
+    }
+    
     lazy var numberOfPageLabel: UILabel = {
         let label = UILabel()
-
-        let currentPageText = "\(currentPage) "
-        let totalPageText = "/ \(totalPage)"
-
-        let attributedString = NSMutableAttributedString(string: currentPageText, attributes: [
-            .font: FontGuide.size16Bold,
-            .foregroundColor: UIColor.black
-        ])
-
-        let totalPageAttributedString = NSAttributedString(string: totalPageText, attributes: [
-            .font: FontGuide.size16Bold,
-            .foregroundColor: ColorGuide.textHint
-        ])
-
-        attributedString.append(totalPageAttributedString)
-
-        label.attributedText = attributedString
-        label.textAlignment = .right
 
         return label
     }()
@@ -93,7 +93,7 @@ final class DetailView: UIView, RootView {
 
     lazy var playPauseButton: UIButton = {
         let button = UIButton()
-        
+
         let image = UIImage(named: "play")
         button.setBackgroundImage(image, for: .normal)
         button.isHidden = true
@@ -136,7 +136,7 @@ final class DetailView: UIView, RootView {
             make.trailing.equalToSuperview().offset(-43)
             make.top.equalTo(collectionView.snp.bottom).offset(20)
         }
-        
+
         playPauseButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-15)
         }

@@ -15,6 +15,8 @@ var player: AVAudioPlayer?
 final class DetailViewController: RootViewController<DetailView> {
     var cellsInitialized: [IndexPath: Bool] = [:]
     private var prevIndex: Int = 0
+    private var signedInUser = SignInService.shared.signedInUser!
+    private lazy var userEmotionTrashes: [EmotionTrash] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +25,10 @@ final class DetailViewController: RootViewController<DetailView> {
 
         rootView.collectionView.delegate = self
         rootView.collectionView.dataSource = self
-
+        
+        userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(signedInUser)
+        rootView.totalPage = userEmotionTrashes.count
+        
         bindDetailViewEvents()
     }
 
@@ -32,7 +37,7 @@ final class DetailViewController: RootViewController<DetailView> {
         rootView.playPauseButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
     }
 
-    func configureAudioPlayer(for indexPath: IndexPath, withFileName fileName: String) {
+//    func configureAudioPlayer(for indexPath: IndexPath, withFileName fileName: String) {
 //        let urlString = Bundle.main.path(forResource: fileName, ofType: "mp3")
 //        print("urlString: \(String(describing: urlString))") // test
 //
@@ -47,7 +52,7 @@ final class DetailViewController: RootViewController<DetailView> {
 //        } catch {
 //            print("Error creating audio player: \(error)")
 //        }
-    }
+//    }
 
     @objc func buttonTapped() {
         print("휘발 되었습니다.")
@@ -87,7 +92,7 @@ final class DetailViewController: RootViewController<DetailView> {
 
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return testData.count
+        return userEmotionTrashes.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -98,7 +103,8 @@ extension DetailViewController: UICollectionViewDataSource {
             cellsInitialized[indexPath] = true
         }
 
-        let data = testData[indexPath.item]
+        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(signedInUser)
+        let data = userEmotionTrashes[indexPath.item]
 
         if let imageData = data.image, let image = UIImage(data: imageData) {
             cell.emotionTrashBackView.backImageView.image = image
@@ -107,14 +113,14 @@ extension DetailViewController: UICollectionViewDataSource {
             cell.showImageButton.isHidden = true
         }
 
-        if let audioFilePath = data.recordingFilePath {
+        if let audioFilePath = data.recording?.filePath {
             // let audioFileName = URL(fileURLWithPath: audioFilePath)
-            configureAudioPlayer(for: indexPath, withFileName: audioFilePath)
+            // configureAudioPlayer(for: indexPath, withFileName: audioFilePath)
 
             rootView.playPauseButton.isHidden = false
         } else {}
 
-        cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp) // 몇일전인지 구함
+        cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
         cell.textContentLabel.text = data.text
 
         cell.layer.cornerRadius = 12
@@ -145,7 +151,7 @@ extension DetailViewController: UICollectionViewDataSource {
 
 extension DetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cellId = testData[indexPath.item].id
+        let cellId = userEmotionTrashes[indexPath.item].id
         print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
     }
 
