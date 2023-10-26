@@ -28,6 +28,7 @@ class SignInService {
     func setSignedInUser(_ email: String) {
         UserDefaults.standard.set(email, forKey: "loadSignedInUserEmail")
         UserDefaults.standard.set(true, forKey: "isSignedIn")
+        UserDefaults.standard.set(false, forKey: "isDarkMode")
     }
     
     func SetOffAutoSignIn(_ email: String) {

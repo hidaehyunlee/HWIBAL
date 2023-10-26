@@ -283,7 +283,7 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         
         imageView.snp.makeConstraints { make in
             make.left.equalTo(rootView.textView).offset(rootView.textView.textContainerInset.left)
-            make.right.equalTo(rootView.textView).offset(-rootView.textView.textContainerInset.right) 
+            make.right.equalTo(rootView.textView).offset(-rootView.textView.textContainerInset.right)
             make.top.equalTo(rootView.textView.snp.bottom).offset(10)
             make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10)
         }

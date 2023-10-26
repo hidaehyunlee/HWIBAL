@@ -5,7 +5,11 @@
       "scale" : "1x"
     },
     {
+<<<<<<< HEAD
       "filename" : "휘발이create 5.svg",
+=======
+      "filename" : "휘발이create 4.svg",
+>>>>>>> c76ca3da6240dc95a8e90bc0542c109ddfc7955a
       "idiom" : "universal",
       "scale" : "2x"
     },

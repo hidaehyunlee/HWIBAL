@@ -14,7 +14,7 @@ class MyPageCustomCell: UITableViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.font = FontGuide.size16Bold
-        label.textColor = .black
+        label.textColor = .label
         label.snp.makeConstraints { make in
             make.height.equalTo(20)
         }
@@ -39,6 +39,13 @@ class MyPageCustomCell: UITableViewCell {
         switchControl.isOn = true
         return switchControl
     }()
+    
+    let appearanceControl: UISwitch = {
+        let switchControl = UISwitch()
+        switchControl.onTintColor = ColorGuide.main
+        switchControl.isOn = true
+        return switchControl
+    }()
 
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -57,24 +64,50 @@ class MyPageCustomCell: UITableViewCell {
             print(SignInService.shared.isSignedIn())
         }
     }
+    
+    @objc func didTapappearanceSwitch(sender: UISwitch) {
+        if sender.isOn {
+            UserDefaults.standard.set(true, forKey: "isDarkMode")
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first {
+                window.overrideUserInterfaceStyle = .dark
+            }
+        } else {
+            UserDefaults.standard.set(false, forKey: "isDarkMode")
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first {
+                window.overrideUserInterfaceStyle = .light
+            }
+        }
+    }
 
     public func configure(_ settingItem: SettingItem, _ user: User) {
         titleLabel.text = settingItem.title
         switchControl.addTarget(self, action: #selector(didTapSwitch(sender:)), for: .valueChanged)
+        appearanceControl.addTarget(self, action: #selector(didTapappearanceSwitch(sender:)), for: .valueChanged)
         
         switch settingItem.type {
+        case .appearance:
+            appearanceControl.isHidden = false
+            appearanceControl.isOn = UserDefaults.standard.bool(forKey: "isDarkMode")
+            switchControl.isHidden = true
+            iconImageView.isHidden = true
+            dateLabel.isHidden = true
         case .autoLogin:
+            appearanceControl.isHidden = true
             switchControl.isHidden = false
             iconImageView.isHidden = true
             dateLabel.isHidden = true
             switchControl.isOn = UserDefaults.standard.bool(forKey: "isSignedIn")
         case .autoVolatilizationDate:
+            appearanceControl.isHidden = true
             switchControl.isHidden = true
             iconImageView.isHidden = false
             dateLabel.isHidden = false
             dateLabel.text = "\(user.autoExpireDays)일"
             iconImageView.image = settingItem.icon
         case .logout:
+            appearanceControl.isHidden = true
             switchControl.isHidden = true
             iconImageView.isHidden = false
             dateLabel.isHidden = true
@@ -88,6 +121,12 @@ class MyPageCustomCell: UITableViewCell {
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(30)
+        }
+        
+        contentView.addSubview(appearanceControl)
+        appearanceControl.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-30)
         }
 
         contentView.addSubview(switchControl)

@@ -43,7 +43,7 @@ final class HomeView: UIView, RootView {
     }()
     
     // MARK: - Label Title Update Function
-
+    
     func updateEmotionTrashesCountLabel(_ emotionCount: Int) {
         titleLabel2.text = "감정쓰레기 \(emotionCount)개"
     }
@@ -65,7 +65,7 @@ final class HomeView: UIView, RootView {
     private func createLabel(text: String, font: UIFont) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.textColor = .black
+        label.textColor = .label
         label.font = font
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -237,8 +237,7 @@ final class HomeView: UIView, RootView {
         
         hwibariImage.animationImages = [
             UIImage(named: "hwibari_default")!,
-            UIImage(named: "hwibariopen")!,
-            UIImage(named: "hwibariopen2")!,
+            UIImage(named: "hwibariopen")!
         ]
         hwibariImage.animationDuration = 0.3
         hwibariImage.animationRepeatCount = 1
@@ -246,7 +245,7 @@ final class HomeView: UIView, RootView {
         
         hwibariImage.image = UIImage(named: "hwibariopen2")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let detailViewController = DetailViewController()
             if let navigationController = self.viewController?.navigationController {
                 navigationController.pushViewController(detailViewController, animated: true)
@@ -257,8 +256,8 @@ final class HomeView: UIView, RootView {
     
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
-
-        let alertController = UIAlertController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?", preferredStyle: .alert)
+        
+        let alertController = UIAlertController(title: "다, 휘발 🔥", message: "정말로 전체 지우시겠습니까?", preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             if let self = self {
@@ -276,8 +275,7 @@ final class HomeView: UIView, RootView {
                 hwibariImage.animationImages = [
                     UIImage(named: "hwibari_ing02_fire")!,
                     UIImage(named: "burningImage")!,
-                    UIImage(named: "hwibari_ing01_fire")!,
-                    UIImage(named: "hwibari_default")!,
+                    UIImage(named: "hwibari_ing01_fire")!
                 ]
                 hwibariImage.image = UIImage(named: "hwibari_default")
                 
@@ -324,7 +322,7 @@ final class HomeView: UIView, RootView {
         alertController.addAction(cancelAction)
         viewController?.present(alertController, animated: true, completion: nil)
     }
-
+    
     @objc private func createButtonTapped() {
         print("'작성하기'가 탭되었습니다.")
         EventBus.shared.emit(PushToCreatePageScreenEvent())
