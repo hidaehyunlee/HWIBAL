@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 final class HomeView: UIView, RootView {
-    
     // MARK: - Properties
     
     var emotionCount = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
@@ -44,6 +43,7 @@ final class HomeView: UIView, RootView {
     }()
     
     // MARK: - Label Title Update Function
+    
     func updateEmotionTrashesCountLabel(_ emotionCount: Int) {
         titleLabel2.text = "감정쓰레기 \(emotionCount)개"
     }
@@ -65,7 +65,7 @@ final class HomeView: UIView, RootView {
     private func createLabel(text: String, font: UIFont) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.textColor = .black
+        label.textColor = .label
         label.font = font
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -237,8 +237,7 @@ final class HomeView: UIView, RootView {
         
         hwibariImage.animationImages = [
             UIImage(named: "hwibari_default")!,
-            UIImage(named: "hwibariopen")!,
-            UIImage(named: "hwibariopen2")!,
+            UIImage(named: "hwibariopen")!
         ]
         hwibariImage.animationDuration = 0.3
         hwibariImage.animationRepeatCount = 1
@@ -246,7 +245,7 @@ final class HomeView: UIView, RootView {
         
         hwibariImage.image = UIImage(named: "hwibariopen2")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let detailViewController = DetailViewController()
             if let navigationController = self.viewController?.navigationController {
                 navigationController.pushViewController(detailViewController, animated: true)
@@ -257,8 +256,8 @@ final class HomeView: UIView, RootView {
     
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
-
-        let alertController = UIAlertController(title: "아, 휘발 🔥", message: "정말로 전체 지우시겠습니까?", preferredStyle: .alert)
+        
+        let alertController = UIAlertController(title: "다, 휘발 🔥", message: "정말로 전체 지우시겠습니까?", preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             if let self = self {
@@ -273,17 +272,16 @@ final class HomeView: UIView, RootView {
                 // 이미지뷰가 부드럽게 서로 변경될 때 사용되는 전환 효과
                 // duration - 흔들 때, 잔상 유지 시간
                 
-                        hwibariImage.animationImages = [
-                            UIImage(named: "hwibari_ing02_fire")!,
-                            UIImage(named: "burningImage")!,
-                            UIImage(named: "hwibari_ing01_fire")!,
-                            UIImage(named: "hwibari_default")!
-                        ]
+                hwibariImage.animationImages = [
+                    UIImage(named: "hwibari_ing02_fire")!,
+                    UIImage(named: "burningImage")!,
+                    UIImage(named: "hwibari_ing01_fire")!
+                ]
                 hwibariImage.image = UIImage(named: "hwibari_default")
                 
                 hwibariImage.animationDuration = 1.0 // 애니메이션 한 번의 지속 시간을 설정
-                        hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
-                        hwibariImage.startAnimating()
+                hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
+                hwibariImage.startAnimating()
             }
             
             // self의 viewController 속성을 가져온후, 뷰를 추가
@@ -324,7 +322,7 @@ final class HomeView: UIView, RootView {
         alertController.addAction(cancelAction)
         viewController?.present(alertController, animated: true, completion: nil)
     }
-
+    
     @objc private func createButtonTapped() {
         print("'작성하기'가 탭되었습니다.")
         EventBus.shared.emit(PushToCreatePageScreenEvent())
