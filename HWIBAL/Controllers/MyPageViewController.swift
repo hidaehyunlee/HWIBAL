@@ -27,10 +27,11 @@ private extension MyPageViewController {
         navigationItem.title = "내 정보"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        let autoLoginItem = SettingItem(type: .autoLogin, title: "자동 로그인",isSwitchOn: true)
+        let appearanceItem = SettingItem(type: .appearance, title: "다크모드", isSwitchOn: true)
+        let autoLoginItem = SettingItem(type: .autoLogin, title: "자동 로그인", isSwitchOn: true)
         let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발 주기 설정", icon: UIImage(named: ">"), isSwitchOn: false)
         let logoutItem = SettingItem(type: .logout, title: "로그아웃", icon: UIImage(named: ">"), isSwitchOn: false)
-        settingsItems = [autoLoginItem, autoVolatilizationDateItem, logoutItem]
+        settingsItems = [appearanceItem, autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
         // MARK: - Update Title Label
         NotificationCenter.default.addObserver(self, selector: #selector(updateTitleLabel), name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
@@ -105,6 +106,10 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         let settingItem = settingsItems[indexPath.row]
 
         switch settingItem.type {
+            case .appearance:
+            print("🫵 클릭: 화면모드")            
+            break
+                
             case .autoLogin:
             print("🫵 클릭: 자동 로그인")
             break
@@ -117,12 +122,12 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 let formattedDay = "\(day)일"
                 let action = UIAlertAction(title: formattedDay, style: .default) { _ in
                     UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: Int64(day))
-                    NotificationService.shared.autoDeleteNotification(Int(day))
                     print("\(day) 후 감정쓰레기를 태워 드립니다.")
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
                         cell.updateDateLabel(formattedDay)
                     }
+                    NotificationService.shared.autoDeleteNotification(day)
                 }
                 volatilizationDateSettingAlert.addAction(action)
             }
@@ -144,6 +149,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
 struct SettingItem {
     enum ItemType {
+        case appearance
         case autoLogin
         case autoVolatilizationDate
         case logout

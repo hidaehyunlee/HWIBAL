@@ -62,6 +62,8 @@ private extension HomeViewController {
     
     @objc func handleEmotionTrashUpdateNotification() {
         rootView.emotionCount = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
-        rootView.updateEmotionTrashesCountLabel(rootView.emotionCount)
+        DispatchQueue.main.async {
+            self.rootView.updateEmotionTrashesCountLabel(self.rootView.emotionCount)
+        }
     }
 }
