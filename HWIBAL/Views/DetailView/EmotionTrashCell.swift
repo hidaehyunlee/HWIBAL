@@ -11,7 +11,7 @@ import UIKit
 class EmotionTrashCell: UICollectionViewCell, RootView {
     static let identifier = "EmotionTrashCell"
 
-     lazy var showImageButton: UIButton = {
+    lazy var showImageButton: UIButton = {
         let button = UIButton()
 
         button.setTitle("사진보기", for: .normal)
@@ -35,16 +35,17 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
         return label
     }()
 
-    lazy var textContentLabel: UILabel = {
-        let label = UILabel()
+    lazy var textContentLabel: UITextView = {
+        let textView = UITextView()
 
-        label.text = ""
-        label.font = FontGuide.size14
-        label.textColor = .white
-        label.numberOfLines = 0
-        label.sizeToFit()
+        textView.text = ""
+        textView.backgroundColor = ColorGuide.main
+        textView.font = FontGuide.size14
+        textView.textColor = .white
+        textView.isEditable = false
+        textView.isSelectable = false
 
-        return label
+        return textView
     }()
 
     var emotionTrashBackView: EmotionTrashBackView = .init()
@@ -76,10 +77,9 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
         }
 
         textContentLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.left.equalToSuperview().offset(20)
+            make.top.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
-            // bottom을 잡으면 label text가 아래로 내려옴. 어차피 글자수 제한 있으니 동적으로 안만들고 constraint 안잡아둘게요.
+            make.bottom.equalTo(showImageButton.snp.topMargin).offset(-20)
         }
     }
 
