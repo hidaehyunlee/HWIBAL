@@ -275,8 +275,7 @@ final class HomeView: UIView, RootView {
                 hwibariImage.animationImages = [
                     UIImage(named: "hwibari_ing02_fire")!,
                     UIImage(named: "burningImage")!,
-                    UIImage(named: "hwibari_ing01_fire")!,
-                    UIImage(named: "hwibari_default")!,
+                    UIImage(named: "hwibari_ing01_fire")!
                 ]
                 hwibariImage.image = UIImage(named: "hwibari_default")
                 
