@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07264AB82AEA45E10030BAFE /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07264AB72AEA45E10030BAFE /* RecordingViewController.swift */; };
+		07264ABA2AEA52BB0030BAFE /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07264AB92AEA52BB0030BAFE /* HalfSizePresentationController.swift */; };
 		0759A4562AE26A18000FFF76 /* CreatePageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759A4552AE26A18000FFF76 /* CreatePageCameraViewController.swift */; };
 		0759A4582AE26A39000FFF76 /* CreatePageCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759A4572AE26A39000FFF76 /* CreatePageCameraView.swift */; };
 		076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */; };
@@ -62,6 +64,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07264AB72AEA45E10030BAFE /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
+		07264AB92AEA52BB0030BAFE /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
 		0759A4552AE26A18000FFF76 /* CreatePageCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageCameraViewController.swift; sourceTree = "<group>"; };
 		0759A4572AE26A39000FFF76 /* CreatePageCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageCameraView.swift; sourceTree = "<group>"; };
 		076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageView.swift; sourceTree = "<group>"; };
@@ -289,6 +293,8 @@
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
 				3F783A2C2AD8C4750024D692 /* ReportViewController.swift */,
 				DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */,
+				07264AB72AEA45E10030BAFE /* RecordingViewController.swift */,
+				07264AB92AEA52BB0030BAFE /* HalfSizePresentationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -434,9 +440,11 @@
 				076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */,
 				3F783A2D2AD8C4750024D692 /* ReportViewController.swift in Sources */,
 				3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */,
+				07264ABA2AEA52BB0030BAFE /* HalfSizePresentationController.swift in Sources */,
 				3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */,
 				DE434DFB2ADCCE0F00C77FE4 /* SignInViewController.swift in Sources */,
 				0759A4582AE26A39000FFF76 /* CreatePageCameraView.swift in Sources */,
+				07264AB82AEA45E10030BAFE /* RecordingViewController.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
 				3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */,
 				07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */,

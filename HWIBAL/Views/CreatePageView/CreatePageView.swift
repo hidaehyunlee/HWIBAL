@@ -62,7 +62,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         counterLabel.attributedText = NSMutableAttributedString(string: "0 / 300", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle2])
         addSubview(counterLabel)
         
-        if let image = UIImage(named: "hwibari_create.svg") {
+        if let image = UIImage(named: "hwibari_create") {
             firstImageView.image = image
             firstImageView.contentMode = .scaleAspectFit
             

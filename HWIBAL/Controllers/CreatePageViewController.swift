@@ -6,12 +6,11 @@
 
 import AVFoundation
 import EventBus
-import UIKit
 import SnapKit
+import UIKit
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
     var keyboardHeight: CGFloat = 0
-    var audioRecorder: AVAudioRecorder?
     private var attachedImageView: UIImageView?
 
     override func viewDidLoad() {
@@ -22,83 +21,19 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        AVAudioSession.sharedInstance().requestRecordPermission { [weak self] allowed in
-            DispatchQueue.main.async {
-                if !allowed {
-                    let alert = UIAlertController(title: "Permission Denied", message: "Please allow access to microphone for recording.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
-                    self?.present(alert, animated: true)
-                }
-            }
-        }
+    
         rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(stopRecording))
-        rootView.soundWaveView.addGestureRecognizer(tap)
-        rootView.soundWaveView.isUserInteractionEnabled = true
-        
+
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
     }
     
     @objc func startOrStopRecording() {
-        if audioRecorder == nil {
-            let session = AVAudioSession.sharedInstance()
-            switch session.recordPermission {
-            case .undetermined:
-                session.requestRecordPermission { [weak self] allowed in
-                    DispatchQueue.main.async {
-                        if allowed {
-                            self?.startRecording()
-                        } else {
-                            AlertManager.shared.showAlert(on: self!, title: "Permission Denied", message: "Please allow access to microphone for recording.")
-                        }
-                    }
-                }
-            case .denied:
-                AlertManager.shared.showAlert(on: self, title: "Permission Denied", message: "Please allow access to microphone for recording in settings.")
-            case .granted:
-                startRecording()
-            @unknown default:
-                break
-            }
-        } else {
-            stopRecording()
-        }
+        let recordingViewController = RecordingViewController()
+        recordingViewController.modalPresentationStyle = .custom
+        recordingViewController.transitioningDelegate = recordingViewController
+        present(recordingViewController, animated: true, completion: nil)
     }
 
-    func startRecording() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
-        
-        do {
-            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
-            audioRecorder?.delegate = self
-            audioRecorder?.record()
-            
-            rootView.soundButton.setTitle("Stop", for: .normal)
-        } catch {
-            audioRecorder = nil
-            AlertManager.shared.showAlert(on: self, title: "Recording Failed", message: "")
-        }
-    }
-    
-    @objc func stopRecording() {
-        audioRecorder?.stop()
-        audioRecorder = nil
-        rootView.soundButton.setTitle("Record", for: .normal)
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
     @objc func presentImagePickerOptions() {
         let actionSheet = UIAlertController(title: nil, message: "Choose Image Source", preferredStyle: .actionSheet)
         
@@ -199,53 +134,44 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func showCancelAlert() {
-        let alertController = UIAlertController(title: "아,휘발 🔥", message: "정말로 삭제 하시겠습니까?", preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
+        let cancelCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
             if self?.rootView.textView.text.isEmpty ?? true {
-                AlertManager.shared.showAlert(on: self!, title: "휘발🔥", message: "작성하시던 페이지가 삭제됩니다",
-                    okCompletion: { _ in
-                        self?.dismiss(animated: true, completion: nil)
-                    },
-                    cancelCompletion: { _ in
-                    })
-            }
-        }
-        
-        let confirmAction = UIAlertAction(title: "휘발🔥", style: .default) { [weak self] _ in
-            if self?.rootView.textView.text.isEmpty ?? true {
-                AlertManager.shared.showAlert(on: self!, title: "휘발🔥", message: "작성하시던 페이지가 삭제됩니다",
-                    okCompletion: { _ in
-                        self?.dismiss(animated: true, completion: nil)
-                    })
-            } else {
                 self?.dismiss(animated: true, completion: nil)
             }
         }
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(confirmAction)
-        
-        present(alertController, animated: true, completion: nil)
+
+        let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
+            if self?.rootView.textView.text.isEmpty ?? true {
+                AlertManager.shared.showAlert(on: self!, title: "아, 휘발🔥", message: "삭제된 감정쓰레기는 복구할 수 없습니다. \n 삭제하시겠습니까?",
+                                              okCompletion: { _ in
+                                                  self?.dismiss(animated: true, completion: nil)
+                                              })
+            } else {
+                self?.showConfirmationToDeleteText()
+            }
+        }
+
+        AlertManager.shared.showAlert(on: self, title: "아, 휘발 🔥", message: "이 감정쓰레기를 삭제하시겠어요?", okCompletion: okCompletion, cancelCompletion: cancelCompletion)
     }
 
+    private func showConfirmationToDeleteText() {
+        let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        
+        AlertManager.shared.showAlert(on: self, title: "아, 휘발🔥", message: "삭제된 감정쓰레기는 복구할 수 없습니다. \n 삭제하시겠습니까?", okCompletion: okCompletion)
+    }
 
     @objc func showWriteAlert() {
-        let alertController = UIAlertController(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥", preferredStyle: .alert)
-        present(alertController, animated: true, completion: nil)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            alertController.dismiss(animated: true) { [weak self] in
-                self?.dismiss(animated: true, completion: nil)
-            }
+        AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥") {
+            let text = self.rootView.textView.text ?? ""
+            EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
+            EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
+            NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+            
+            self.dismiss(animated: true, completion: nil)
         }
-
-        let text = rootView.textView.text ?? ""
-        EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
-        EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
-        NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
     }
-
 
 
 
