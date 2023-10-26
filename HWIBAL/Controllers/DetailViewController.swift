@@ -21,8 +21,6 @@ final class DetailViewController: RootViewController<DetailView> {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
-
         rootView.collectionView.delegate = self
         rootView.collectionView.dataSource = self
 
@@ -92,6 +90,7 @@ final class DetailViewController: RootViewController<DetailView> {
         AlertManager.shared.showAlert(on: self, title: "아, 휘발 🔥", message: "이 감정쓰레기를 삭제하시겠습니까?") { _ in
             EmotionTrashService.shared.deleteEmotionTrash(self.signedInUser, cellId!)
             self.navigationController?.popViewController(animated: true)
+            NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
         }
     }
 }
