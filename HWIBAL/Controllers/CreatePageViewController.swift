@@ -165,13 +165,21 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     @objc func showWriteAlert() {
         AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥") {
             let text = self.rootView.textView.text ?? ""
-            EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
+            // attachedImageView가 nil인지 & imageView의 image 속성이 nil인지 확인 -> nil아닐 경우 저장
+            if let imageView = self.attachedImageView, let attachedImage = imageView.image{
+                print("attachedImageView 첨부")
+                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text, attachedImage)
+            } else {
+                print("attachedImageView nil")
+                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
+            }
             EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
-            
+
             self.dismiss(animated: true, completion: nil)
         }
     }
+
 
 
 
