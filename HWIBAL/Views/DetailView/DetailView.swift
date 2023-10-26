@@ -14,13 +14,13 @@ final class DetailView: UIView, RootView {
         let button = UIButton()
 
         button.setTitle(" 맨 처음으로", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = FontGuide.size14Bold
 
         if let image = UIImage(named: "<-") {
-            let blackImage = image.withRenderingMode(.alwaysTemplate)
-            button.setImage(blackImage, for: .normal)
-            button.tintColor = UIColor.black
+            let colorImage = image.withRenderingMode(.alwaysTemplate)
+            button.setImage(colorImage, for: .normal)
+            button.tintColor = UIColor.label
         }
         button.semanticContentAttribute = .forceLeftToRight
 
@@ -35,7 +35,7 @@ final class DetailView: UIView, RootView {
 
             let attributedString = NSMutableAttributedString(string: currentPageText, attributes: [
                 .font: FontGuide.size16Bold,
-                .foregroundColor: UIColor.black
+                .foregroundColor: UIColor.label
             ])
 
             let totalPageAttributedString = NSAttributedString(string: totalPageText, attributes: [
@@ -154,7 +154,7 @@ final class DetailView: UIView, RootView {
 
         let attributedString = NSMutableAttributedString(string: currentPageText, attributes: [
             .font: FontGuide.size16Bold,
-            .foregroundColor: UIColor.black
+            .foregroundColor: UIColor.label
         ])
 
         let totalPageAttributedString = NSAttributedString(string: totalPageText, attributes: [
