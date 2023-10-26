@@ -101,7 +101,7 @@ final class DetailView: UIView, RootView {
         return button
     }()
 
-    private lazy var deleteButton = MainButton(type: .delete)
+    lazy var deleteButton = MainButton(type: .delete)
 
     func initializeUI() {
         backgroundColor = .systemBackground
