@@ -35,17 +35,17 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
 
     @objc func presentImagePickerOptions() {
-        let actionSheet = UIAlertController(title: nil, message: "Choose Image Source", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: "이미지 선택", preferredStyle: .actionSheet)
         
-        let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
+        let cameraAction = UIAlertAction(title: "카메라", style: .default) { _ in
             self.presentImagePicker(sourceType: .camera)
         }
         
-        let galleryAction = UIAlertAction(title: "Gallery", style: .default) { _ in
+        let galleryAction = UIAlertAction(title: "앨범", style: .default) { _ in
             self.presentImagePicker(sourceType: .photoLibrary)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: "취소", style: .destructive)
         
         actionSheet.addAction(cameraAction)
         actionSheet.addAction(galleryAction)

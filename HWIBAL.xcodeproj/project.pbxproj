@@ -15,7 +15,7 @@
 		0791B34B2AE10B59004B8740 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0791B3492AE10A7F004B8740 /* AVFoundation.framework */; };
 		0791B34F2AE11846004B8740 /* Recording+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */; };
 		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
-		07D18F7C2AD948450080FACA /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F7B2AD948450080FACA /* AlertViewController.swift */; };
+		07D18F7C2AD948450080FACA /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F7B2AD948450080FACA /* AlertManager.swift */; };
 		3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F14EA8D2AD55E6C0047CE34 /* SnapKit */; };
 		3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */; };
 		3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */; };
@@ -72,7 +72,7 @@
 		0791B3492AE10A7F004B8740 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recording+CoreDataClass.swift"; sourceTree = "<group>"; };
 		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
-		07D18F7B2AD948450080FACA /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		07D18F7B2AD948450080FACA /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		3F783A092AD7DC1A0024D692 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A232AD805330024D692 /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
@@ -170,6 +170,7 @@
 				3F9445612ADF79D80003DCD4 /* SignInService.swift */,
 				3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */,
 				3F9445652ADFD5EA0003DCD4 /* ReportService.swift */,
+				07D18F7B2AD948450080FACA /* AlertManager.swift */,
 				3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */,
 			);
 			path = Services;
@@ -303,7 +304,6 @@
 			isa = PBXGroup;
 			children = (
 				DEFE3A272AD541FB0076FE11 /* RootViewController.swift */,
-				07D18F7B2AD948450080FACA /* AlertViewController.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -428,7 +428,7 @@
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
 				DE01F2A82AE819DA004663F7 /* EmotionTrashBackView.swift in Sources */,
-				07D18F7C2AD948450080FACA /* AlertViewController.swift in Sources */,
+				07D18F7C2AD948450080FACA /* AlertManager.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
 				DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */,
