@@ -15,7 +15,6 @@ var player: AVAudioPlayer?
 final class DetailViewController: RootViewController<DetailView> {
     var cellsInitialized: [IndexPath: Bool] = [:]
     private var prevIndex: Int = 0
-    private var signedInUser = SignInService.shared.signedInUser!
     private lazy var userEmotionTrashes: [EmotionTrash] = []
 
     override func viewDidLoad() {
@@ -24,7 +23,7 @@ final class DetailViewController: RootViewController<DetailView> {
         rootView.collectionView.delegate = self
         rootView.collectionView.dataSource = self
 
-        userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(signedInUser)
+        userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
         rootView.totalPage = userEmotionTrashes.count
 
         bindDetailViewEvents()
@@ -87,11 +86,11 @@ final class DetailViewController: RootViewController<DetailView> {
         let index = sender.tag
         let cellId = userEmotionTrashes[index].id
 
-        AlertManager.shared.showAlert(on: self, title: "감정쓰레기 삭제", message: "당신의 이 감정을 불태워 드릴게요.") { _ in
-            EmotionTrashService.shared.deleteEmotionTrash(self.signedInUser, cellId!)
-            self.navigationController?.popViewController(animated: true)
+        AlertManager.shared.showAlert(on: self, title: "감정쓰레기 삭제", message: "당신의 이 감정을 불태워 드릴게요.", okCompletion:  { _ in
+            EmotionTrashService.shared.deleteEmotionTrash(SignInService.shared.signedInUser!, cellId!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
-        }
+            self.navigationController?.popViewController(animated: true)
+        })
     }
 }
 
@@ -108,7 +107,7 @@ extension DetailViewController: UICollectionViewDataSource {
             cellsInitialized[indexPath] = true
         }
 
-        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(signedInUser)
+        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
         let reversedIndex = userEmotionTrashes.count - 1 - indexPath.item
         let data = userEmotionTrashes[reversedIndex]
 
