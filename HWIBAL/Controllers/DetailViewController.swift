@@ -109,7 +109,8 @@ extension DetailViewController: UICollectionViewDataSource {
         }
 
         let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(signedInUser)
-        let data = userEmotionTrashes[indexPath.item]
+        let reversedIndex = userEmotionTrashes.count - 1 - indexPath.item
+        let data = userEmotionTrashes[reversedIndex]
 
         if let imageData = data.image, let image = UIImage(data: imageData) {
             cell.emotionTrashBackView.backImageView.image = image
