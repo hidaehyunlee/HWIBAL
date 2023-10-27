@@ -87,7 +87,7 @@ final class DetailViewController: RootViewController<DetailView> {
         let index = sender.tag
         let cellId = userEmotionTrashes[index].id
 
-        AlertManager.shared.showAlert(on: self, title: "아, 휘발 🔥", message: "이 감정쓰레기를 삭제하시겠습니까?") { _ in
+        AlertManager.shared.showAlert(on: self, title: "감정쓰레기 삭제", message: "당신의 이 감정을 불태워 드릴게요.") { _ in
             EmotionTrashService.shared.deleteEmotionTrash(self.signedInUser, cellId!)
             self.navigationController?.popViewController(animated: true)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
