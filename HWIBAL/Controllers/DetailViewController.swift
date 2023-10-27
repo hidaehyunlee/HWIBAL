@@ -21,14 +21,12 @@ final class DetailViewController: RootViewController<DetailView> {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
-
         rootView.collectionView.delegate = self
         rootView.collectionView.dataSource = self
-        
+
         userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(signedInUser)
         rootView.totalPage = userEmotionTrashes.count
-        
+
         bindDetailViewEvents()
     }
 
@@ -53,10 +51,6 @@ final class DetailViewController: RootViewController<DetailView> {
 //            print("Error creating audio player: \(error)")
 //        }
 //    }
-
-    @objc func buttonTapped() {
-        print("휘발 되었습니다.")
-    }
 
     @objc func goToFirstButtonTapped() {
         rootView.collectionView.setContentOffset(CGPoint(x: -DetailView.CarouselConst.insetX, y: 0), animated: true)
@@ -88,6 +82,17 @@ final class DetailViewController: RootViewController<DetailView> {
             rootView.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
         }
     }
+
+    @objc func deleteButtonTapped(sender: UIButton) {
+        let index = sender.tag
+        let cellId = userEmotionTrashes[index].id
+
+        AlertManager.shared.showAlert(on: self, title: "감정쓰레기 삭제", message: "당신의 이 감정을 불태워 드릴게요.") { _ in
+            EmotionTrashService.shared.deleteEmotionTrash(self.signedInUser, cellId!)
+            self.navigationController?.popViewController(animated: true)
+            NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+        }
+    }
 }
 
 extension DetailViewController: UICollectionViewDataSource {
@@ -113,15 +118,18 @@ extension DetailViewController: UICollectionViewDataSource {
             cell.showImageButton.isHidden = true
         }
 
-        if let audioFilePath = data.recording?.filePath {
-            // let audioFileName = URL(fileURLWithPath: audioFilePath)
-            // configureAudioPlayer(for: indexPath, withFileName: audioFilePath)
+        // if let audioFilePath = data.recording?.filePath {
+        // let audioFileName = URL(fileURLWithPath: audioFilePath)
+        // configureAudioPlayer(for: indexPath, withFileName: audioFilePath)
 
-            rootView.playPauseButton.isHidden = false
-        } else {}
+        // rootView.playPauseButton.isHidden = false
+        // } else {}
 
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
         cell.textContentLabel.text = data.text
+
+        rootView.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        rootView.deleteButton.tag = indexPath.item
 
         cell.layer.cornerRadius = 12
         cell.layer.masksToBounds = true
@@ -151,8 +159,8 @@ extension DetailViewController: UICollectionViewDataSource {
 
 extension DetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cellId = userEmotionTrashes[indexPath.item].id
-        print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
+        // let cellId = userEmotionTrashes[indexPath.item].id
+        // print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
     }
 
     // 스크롤이 멈추면 호출되며, 스크롤이 셀의 중앙에 멈추도록 함
