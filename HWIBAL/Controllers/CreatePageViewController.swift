@@ -6,11 +6,11 @@
 
 import AVFoundation
 import EventBus
+import SnapKit
 import UIKit
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
     var keyboardHeight: CGFloat = 0
-    var audioRecorder: AVAudioRecorder?
     private var attachedImageView: UIImageView?
 
     override func viewDidLoad() {
@@ -21,89 +21,19 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        AVAudioSession.sharedInstance().requestRecordPermission { [weak self] allowed in
-            DispatchQueue.main.async {
-                if !allowed {
-                    let alert = UIAlertController(title: "Permission Denied", message: "Please allow access to microphone for recording.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
-                    self?.present(alert, animated: true)
-                }
-            }
-        }
+    
         rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(stopRecording))
-        rootView.soundWaveView.addGestureRecognizer(tap)
-        rootView.soundWaveView.isUserInteractionEnabled = true
-        
+
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
     }
     
     @objc func startOrStopRecording() {
-        if audioRecorder == nil {
-            let session = AVAudioSession.sharedInstance()
-            switch session.recordPermission {
-            case .undetermined:
-                session.requestRecordPermission { [weak self] allowed in
-                    DispatchQueue.main.async {
-                        if allowed {
-                            self?.startRecording()
-                        } else {
-                            let alert = UIAlertController(title: "Permission Denied", message: "Please allow access to microphone for recording.", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .default))
-                            self?.present(alert, animated: true)
-                        }
-                    }
-                }
-            case .denied:
-                let alert = UIAlertController(title: "Permission Denied", message: "Please allow access to microphone for recording in settings.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                present(alert, animated: true)
-            case .granted:
-                startRecording()
-            @unknown default:
-                break
-            }
-        } else {
-            stopRecording()
-        }
+        let recordingVC = RecordingViewController()
+        recordingVC.modalPresentationStyle = .custom
+        recordingVC.transitioningDelegate = recordingVC
+        present(recordingVC, animated: true, completion: nil)
     }
-    
-    func startRecording() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
-        
-        do {
-            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
-            audioRecorder?.delegate = self
-            audioRecorder?.record()
-            
-            rootView.soundButton.setTitle("Stop", for: .normal)
-        } catch {
-            audioRecorder = nil
-            let alert = UIAlertController(title: "Recording Failed", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alert, animated: true)
-        }
-    }
-    
-    @objc func stopRecording() {
-        audioRecorder?.stop()
-        audioRecorder = nil
-        rootView.soundButton.setTitle("Record", for: .normal)
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
+
     @objc func presentImagePickerOptions() {
         let actionSheet = UIAlertController(title: nil, message: "Choose Image Source", preferredStyle: .actionSheet)
         
@@ -204,50 +134,50 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func showCancelAlert() {
-        let alertController = UIAlertController(title: "아,휘발 🔥", message: "정말로 삭제 하시겠습니까?", preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
+        let cancelCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
             if self?.rootView.textView.text.isEmpty ?? true {
                 self?.dismiss(animated: true, completion: nil)
             }
         }
-        
-        let confirmAction = UIAlertAction(title: "휘발🔥", style: .default) { [weak self] _ in
+
+        let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
             if self?.rootView.textView.text.isEmpty ?? true {
-                let secondaryAlert = UIAlertController(title: "휘발🔥", message: "작성하시던 페이지가 삭제됩니다", preferredStyle: .alert)
-                let confirmSecondaryAction = UIAlertAction(title: "확인", style: .default, handler: { _ in
-                    self?.dismiss(animated: true, completion: nil)
-                })
-                let cancelSecondaryAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-                secondaryAlert.addAction(confirmSecondaryAction)
-                secondaryAlert.addAction(cancelSecondaryAction)
-                self?.present(secondaryAlert, animated: true, completion: nil)
+                AlertManager.shared.showAlert(on: self!, title: "아, 휘발🔥", message: "삭제된 감정쓰레기는 복구할 수 없습니다. \n 삭제하시겠습니까?",
+                                              okCompletion: { _ in
+                                                  self?.dismiss(animated: true, completion: nil)
+                                              })
             } else {
-                self?.dismiss(animated: true, completion: nil)
+                self?.showConfirmationToDeleteText()
             }
         }
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(confirmAction)
-        
-        present(alertController, animated: true, completion: nil)
+
+        AlertManager.shared.showAlert(on: self, title: "아, 휘발 🔥", message: "이 감정쓰레기를 삭제하시겠어요?", okCompletion: okCompletion, cancelCompletion: cancelCompletion)
     }
 
-    
-    @objc func showWriteAlert() {
-        let alertController = UIAlertController(title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥", preferredStyle: .alert)
-        
-        present(alertController, animated: true) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                alertController.dismiss(animated: true) { [weak self] in
-                    self?.dismiss(animated: true, completion: nil)
-                }
-            }
+    private func showConfirmationToDeleteText() {
+        let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
         }
-        let text = rootView.textView.text ?? ""
-        EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
-        EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
-        NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+        
+        AlertManager.shared.showAlert(on: self, title: "아, 휘발🔥", message: "삭제된 감정쓰레기는 복구할 수 없습니다. \n 삭제하시겠습니까?", okCompletion: okCompletion)
+    }
+
+    @objc func showWriteAlert() {
+        AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 휘발주기에 맞추어 불태워 드릴게요 🔥") {
+            let text = self.rootView.textView.text ?? ""
+            // attachedImageView가 nil인지 & imageView의 image 속성이 nil인지 확인 -> nil아닐 경우 저장
+            if let imageView = self.attachedImageView, let attachedImage = imageView.image {
+                print("attachedImageView 첨부")
+                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text, attachedImage)
+            } else {
+                print("attachedImageView nil")
+                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
+            }
+            EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
+            NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 
     override func viewWillLayoutSubviews() {
@@ -276,23 +206,18 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         }
         
         let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill //scaleAspectFill이 최선인건가..?,scaleAspectFit하면 세로 사진은 가로로 표현이 불가..그리고 가로폭이 짧음..
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        
-        let imageViewWidth = rootView.textView.bounds.width
-        let imageViewHeight = rootView.textView.bounds.height / 2
-        
-        let imageViewY = rootView.textView.frame.origin.y + rootView.textView.frame.height - imageViewHeight
-        
-        imageView.frame = CGRect(x: rootView.textView.frame.origin.x, y: imageViewY, width: imageViewWidth, height: imageViewHeight)
-        
+        imageView.layer.cornerRadius = 12.0
         rootView.addSubview(imageView)
-        
-        let textViewNewHeight = rootView.textView.frame.height / 2
-        rootView.textView.frame = CGRect(x: rootView.textView.frame.origin.x, y: rootView.textView.frame.origin.y, width: rootView.textView.frame.width, height: textViewNewHeight)
-        
         attachedImageView = imageView
+        
+        imageView.snp.makeConstraints { make in
+            make.left.equalTo(rootView.textView).offset(rootView.textView.textContainerInset.left)
+            make.right.equalTo(rootView.textView).offset(-rootView.textView.textContainerInset.right)
+            make.top.equalTo(rootView.textView.snp.bottom).offset(10)
+            make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10)
+        }
         rootView.isImageViewAttached = true
-        rootView.setNeedsLayout()
     }
 }
