@@ -54,6 +54,7 @@ class MyPageCustomCell: UITableViewCell {
             button.setImage(colorImage, for: .normal)
             button.tintColor = UIColor.label
         }
+        button.isUserInteractionEnabled = false
         return button
     }()
     
