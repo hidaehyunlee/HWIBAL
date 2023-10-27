@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "dswaveformimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dmrschmidt/DSWaveformImage.git",
+      "state" : {
+        "revision" : "42f0ea1e0b52d98374407c1d3304e2a37fed7cd0",
+        "version" : "14.1.2"
+      }
+    },
+    {
       "identity" : "eventbus",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftarium/EventBus.git",
