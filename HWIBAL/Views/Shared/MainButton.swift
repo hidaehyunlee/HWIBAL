@@ -24,7 +24,7 @@ class MainButton: UIButton {
         layer.borderColor = customButtonType.borderColor.cgColor
         layer.borderWidth = customButtonType.borderWidth
         snp.makeConstraints { make in
-            make.width.equalTo(333)
+            make.width.equalTo(345)
             make.height.equalTo(56)
         }
     }
