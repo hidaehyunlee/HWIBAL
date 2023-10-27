@@ -28,12 +28,11 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func startOrStopRecording() {
-    let recordingVC = RecordingViewController()
-    recordingVC.modalPresentationStyle = .custom
-    recordingVC.transitioningDelegate = recordingVC
-    present(recordingVC, animated: true, completion: nil)
+        let recordingVC = RecordingViewController()
+        recordingVC.modalPresentationStyle = .custom
+        recordingVC.transitioningDelegate = recordingVC
+        present(recordingVC, animated: true, completion: nil)
     }
-
 
     @objc func presentImagePickerOptions() {
         let actionSheet = UIAlertController(title: nil, message: "Choose Image Source", preferredStyle: .actionSheet)
@@ -164,10 +163,10 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
 
     @objc func showWriteAlert() {
-        AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 3일 후에 불태워 드릴게요 🔥") {
+        AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 휘발주기에 맞추어 불태워 드릴게요 🔥") {
             let text = self.rootView.textView.text ?? ""
             // attachedImageView가 nil인지 & imageView의 image 속성이 nil인지 확인 -> nil아닐 경우 저장
-            if let imageView = self.attachedImageView, let attachedImage = imageView.image{
+            if let imageView = self.attachedImageView, let attachedImage = imageView.image {
                 print("attachedImageView 첨부")
                 EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text, attachedImage)
             } else {
@@ -180,9 +179,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
             self.dismiss(animated: true, completion: nil)
         }
     }
-
-
-
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -212,7 +208,7 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 10.0
+        imageView.layer.cornerRadius = 12.0
         rootView.addSubview(imageView)
         attachedImageView = imageView
         
