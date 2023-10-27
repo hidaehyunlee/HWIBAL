@@ -46,11 +46,15 @@ class MyPageCustomCell: UITableViewCell {
         switchControl.isOn = true
         return switchControl
     }()
-
-    private let iconImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    
+    private let indicator: UIButton = {
+        let button = UIButton()
+        if let image = UIImage(named: ">") {
+            let colorImage = image.withRenderingMode(.alwaysTemplate)
+            button.setImage(colorImage, for: .normal)
+            button.tintColor = UIColor.label
+        }
+        return button
     }()
     
     @objc func didTapSwitch(sender: UISwitch) {
@@ -88,30 +92,24 @@ class MyPageCustomCell: UITableViewCell {
         
         switch settingItem.type {
         case .appearance:
-            appearanceControl.isHidden = false
             appearanceControl.isOn = UserDefaults.standard.bool(forKey: "isDarkMode")
             switchControl.isHidden = true
-            iconImageView.isHidden = true
+            indicator.isHidden = true
             dateLabel.isHidden = true
         case .autoLogin:
             appearanceControl.isHidden = true
-            switchControl.isHidden = false
-            iconImageView.isHidden = true
+            indicator.isHidden = true
             dateLabel.isHidden = true
             switchControl.isOn = UserDefaults.standard.bool(forKey: "isSignedIn")
         case .autoVolatilizationDate:
             appearanceControl.isHidden = true
             switchControl.isHidden = true
-            iconImageView.isHidden = false
-            dateLabel.isHidden = false
             dateLabel.text = "\(user.autoExpireDays)일"
-            iconImageView.image = settingItem.icon
+            
         case .logout:
             appearanceControl.isHidden = true
             switchControl.isHidden = true
-            iconImageView.isHidden = false
             dateLabel.isHidden = true
-            iconImageView.image = settingItem.icon
         }
         initializeUI()
     }
@@ -135,17 +133,17 @@ class MyPageCustomCell: UITableViewCell {
             make.trailing.equalToSuperview().offset(-30)
         }
 
-        contentView.addSubview(iconImageView)
-        iconImageView.snp.makeConstraints { make in
+        contentView.addSubview(indicator)
+        indicator.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-30)
+            make.trailing.equalToSuperview().offset(-23)
             make.width.height.equalTo(24)
         }
         
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalTo(iconImageView.snp.leading).offset(-10)
+            make.trailing.equalTo(indicator.snp.leading).offset(-10)
             make.width.equalTo(44)
         }
     }

@@ -29,8 +29,8 @@ private extension MyPageViewController {
         
         let appearanceItem = SettingItem(type: .appearance, title: "다크모드", isSwitchOn: true)
         let autoLoginItem = SettingItem(type: .autoLogin, title: "자동 로그인", isSwitchOn: true)
-        let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발 주기 설정", icon: UIImage(named: ">"), isSwitchOn: false)
-        let logoutItem = SettingItem(type: .logout, title: "로그아웃", icon: UIImage(named: ">"), isSwitchOn: false)
+        let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발 주기 설정", isSwitchOn: false)
+        let logoutItem = SettingItem(type: .logout, title: "로그아웃", isSwitchOn: false)
         settingsItems = [appearanceItem, autoLoginItem, autoVolatilizationDateItem, logoutItem]
         
         // MARK: - Update Title Label
@@ -157,13 +157,11 @@ struct SettingItem {
 
     let type: ItemType
     let title: String
-    let icon: UIImage?
     var isSwitchOn: Bool
 
-    init(type: ItemType, title: String, icon: UIImage? = nil, isSwitchOn: Bool) {
+    init(type: ItemType, title: String, isSwitchOn: Bool) {
         self.type = type
         self.title = title
-        self.icon = icon
         self.isSwitchOn = isSwitchOn
     }
 }
