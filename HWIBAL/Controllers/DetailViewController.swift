@@ -109,7 +109,8 @@ extension DetailViewController: UICollectionViewDataSource {
         }
 
         let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(signedInUser)
-        let data = userEmotionTrashes[indexPath.item]
+        let reversedIndex = userEmotionTrashes.count - 1 - indexPath.item
+        let data = userEmotionTrashes[reversedIndex]
 
         if let imageData = data.image, let image = UIImage(data: imageData) {
             cell.emotionTrashBackView.backImageView.image = image
@@ -139,21 +140,16 @@ extension DetailViewController: UICollectionViewDataSource {
 
     func getDaysAgo(startDate: Date, endDate: Date) -> String {
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: startDate, to: endDate)
-        var daysAgo = ""
+        let startDay = calendar.component(.day, from: startDate)
+        let endDay = calendar.component(.day, from: endDate)
 
-        if let days = components.day {
-            if days == 0 {
-                daysAgo = "오늘"
-                return daysAgo
-            } else {
-                daysAgo = String(days) + "일전"
-                return daysAgo
-            }
+        var daysAgo = ""
+        if startDay != endDay {
+            daysAgo = "\(startDay - endDay)일 전"
         } else {
-            print("Error: getDaysAgo")
-            return daysAgo
+            daysAgo = "오늘"
         }
+        return daysAgo
     }
 }
 
