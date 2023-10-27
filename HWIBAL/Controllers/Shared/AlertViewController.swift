@@ -12,28 +12,28 @@ class AlertManager {
     
     private init() {}
     
-    let titleFont: UIFont = FontGuide.size16Bold
-    let titleColor: UIColor = ColorGuide.main
-    let messageFont: UIFont = FontGuide.size14
-    let messageColor: UIColor = ColorGuide.textHint
-    
-    func showAlert(on viewController: UIViewController, title: String, message: String, completion: ((UIAlertAction) -> Void)? = nil) {
-        let titleString = NSAttributedString(string: title, attributes: [
-            NSAttributedString.Key.font: titleFont,
-            NSAttributedString.Key.foregroundColor: titleColor
-        ])
-
-        let messageString = NSAttributedString(string: message, attributes: [
-            NSAttributedString.Key.font: messageFont,
-            NSAttributedString.Key.foregroundColor: messageColor
-        ])
+    func showAlert(on viewController: UIViewController, title: String, message: String, okCompletion: ((UIAlertAction) -> Void)? = nil, cancelCompletion: ((UIAlertAction) -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
-        alertController.setValue(titleString, forKey: "attributedTitle")
-        alertController.setValue(messageString, forKey: "attributedMessage")
-        
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: completion)
+        let okAction = UIAlertAction(title: "삭제", style: .destructive, handler: okCompletion)
         alertController.addAction(okAction)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: cancelCompletion)
+        alertController.addAction(cancelAction)
+        
         viewController.present(alertController, animated: true, completion: nil)
     }
+    
+    func showMessageAlert(on viewController: UIViewController, title: String, message: String, completion: (() -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        viewController.present(alertController, animated: true, completion: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            alertController.dismiss(animated: true) {
+                completion?()
+            }
+        }
+    }
 }
+
