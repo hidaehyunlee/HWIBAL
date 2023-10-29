@@ -132,13 +132,29 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     @objc func cancelAction() {
-        //취소 로직 추가 - 녹음한 내용 삭제
+        let audioURL = getRecordingURL()
+        // 파일이 존재하는지 확인 후 삭제
+        let fileManager = FileManager.default
+        if fileManager.fileExists(atPath: audioURL.path) {
+            do {
+                try fileManager.removeItem(at: audioURL)
+            } catch {
+                print("Error deleting recording: \(error.localizedDescription)")
+            }
+        }
+        
         self.dismiss(animated: true, completion: nil)
     }
 
     @objc func saveAction() {
-        // 저장 로직 추가 - 녹음한 파일을 어디에 저장..?할지...그리고 url로 저장해야할지...(대현님이 보내준 블로그 참고)
+        let savedAudioURL = getRecordingURL()
+        print("Saved recording at: \(savedAudioURL.absoluteString)")
+        
         self.dismiss(animated: true, completion: nil)
+    }
+
+    func getRecordingURL() -> URL {
+        return getDocumentsDirectory().appendingPathComponent("recording.m4a")
     }
 }
 

@@ -134,33 +134,25 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func showCancelAlert() {
-        let cancelCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
-            if self?.rootView.textView.text.isEmpty ?? true {
-                self?.dismiss(animated: true, completion: nil)
-            }
-        }
-
-        let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
-            if self?.rootView.textView.text.isEmpty ?? true {
-                AlertManager.shared.showAlert(on: self!, title: "아, 휘발🔥", message: "삭제된 감정쓰레기는 복구할 수 없습니다. \n 삭제하시겠습니까?",
-                                              okCompletion: { _ in
-                                                  self?.dismiss(animated: true, completion: nil)
-                                              })
-            } else {
+        if rootView.textView.text.isEmpty {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
                 self?.showConfirmationToDeleteText()
             }
-        }
 
-        AlertManager.shared.showAlert(on: self, title: "아, 휘발 🔥", message: "이 감정쓰레기를 삭제하시겠어요?", okCompletion: okCompletion, cancelCompletion: cancelCompletion)
+            AlertManager.shared.showAlert(on: self, title: "아, 휘발 🔥", message: "이 감정쓰레기를 삭제하시겠어요?", okCompletion: okCompletion)
+        }
     }
 
     private func showConfirmationToDeleteText() {
         let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         }
-        
+
         AlertManager.shared.showAlert(on: self, title: "아, 휘발🔥", message: "삭제된 감정쓰레기는 복구할 수 없습니다. \n 삭제하시겠습니까?", okCompletion: okCompletion)
     }
+
 
     @objc func showWriteAlert() {
         AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 휘발주기에 맞추어 불태워 드릴게요 🔥") {
