@@ -65,7 +65,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         
         if let image = UIImage(named: "hwibari_create") {
             firstImageView.image = image
-            firstImageView.contentMode = .scaleAspectFit
+            firstImageView.contentMode = .scaleAspectFill
             
             addSubview(firstImageView)
             addSubview(soundButton)
