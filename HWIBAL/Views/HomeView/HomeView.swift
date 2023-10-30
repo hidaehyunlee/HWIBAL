@@ -323,16 +323,3 @@ final class HomeView: UIView, RootView {
         EventBus.shared.emit(PushToCreatePageScreenEvent())
     }
 }
-
-extension UIView {
-    var viewController: UIViewController? {
-        var responder: UIResponder? = self
-        while responder != nil {
-            if let viewController = responder as? UIViewController {
-                return viewController
-            }
-            responder = responder?.next
-        }
-        return nil
-    }
-}
