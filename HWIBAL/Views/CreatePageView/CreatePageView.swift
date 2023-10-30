@@ -142,8 +142,8 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         counterLabel.snp.makeConstraints { make in
             make.width.equalTo(150)
             make.height.equalTo(20)
-            make.bottom.equalToSuperview().offset(-205)
-            make.right.equalTo(textView.snp.right).offset(-18)
+            make.bottom.equalTo(firstImageView.snp.top).offset(-15)
+            make.right.equalToSuperview().offset(-24)
         }
         counterLabel.alpha = 1.0
         
