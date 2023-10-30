@@ -7,6 +7,7 @@
 import AVFoundation
 import EventBus
 import UIKit
+import SnapKit
 
 class CreatePageView: UIView, RootView, UITextViewDelegate {
     let bgView = UIView()
@@ -58,13 +59,13 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         paragraphStyle2.lineHeightMultiple = 1.03
         counterLabel.textColor = ColorGuide.textHint
         counterLabel.font = FontGuide.size14Bold
-        counterLabel.textAlignment = .right
         counterLabel.attributedText = NSMutableAttributedString(string: "0 / 300", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle2])
+        counterLabel.textAlignment = .right
         addSubview(counterLabel)
         
         if let image = UIImage(named: "hwibari_create") {
             firstImageView.image = image
-            firstImageView.contentMode = .scaleAspectFit
+            firstImageView.contentMode = .scaleAspectFill
             
             addSubview(firstImageView)
             addSubview(soundButton)
@@ -88,6 +89,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
     @objc func textViewDidChange(_ textView: UITextView) {
         if let text = textView.text {
             counterLabel.attributedText = NSMutableAttributedString(string: "\(text.count) / 300", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle2])
+            counterLabel.textAlignment = .right
         }
     }
     
@@ -137,11 +139,12 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
             height: min(textViewHeight, textViewMaxHeight)
         )
         
-        let counterLabelWidth: CGFloat = bounds.width - 293 - 45
-        let counterLabelHeight: CGFloat = 20
-        let counterLabelX: CGFloat = 314
-        let counterLabelY: CGFloat = bounds.height - counterLabelHeight - 205
-        counterLabel.frame = CGRect(x: counterLabelX, y: counterLabelY, width: counterLabelWidth, height: counterLabelHeight)
+        counterLabel.snp.makeConstraints { make in
+            make.width.equalTo(150)
+            make.height.equalTo(20)
+            make.bottom.equalTo(firstImageView.snp.top).offset(-15)
+            make.right.equalToSuperview().offset(-24)
+        }
         counterLabel.alpha = 1.0
         
         let cameraButtonX: CGFloat = 24

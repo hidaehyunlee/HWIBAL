@@ -12,6 +12,9 @@ import UIKit
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
     var keyboardHeight: CGFloat = 0
     private var attachedImageView: UIImageView?
+    var playButton: UIButton?
+    var savedAudioURL: URL?
+    private var audioPlayer: AVAudioPlayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,27 +28,77 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
 
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
+        
+        setupPlayButton()
+    }
+
+    private func setupPlayButton() {
+        playButton = UIButton(frame: .zero)
+        playButton?.isHidden = true
+        playButton?.setImage(UIImage(named: "play"), for: .normal)
+        playButton?.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
+    
+        playButton?.backgroundColor = .red
+        playButton?.layer.cornerRadius = 25
+        view.addSubview(playButton!)
+    
+        let distanceBetweenButtons = rootView.cameraButton.frame.minY - rootView.soundButton.frame.maxY
+        let playButtonCenterYOffset = rootView.soundButton.frame.midY - (distanceBetweenButtons / 2)
+
+        playButton?.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.centerY.equalTo(playButtonCenterYOffset)
+            make.width.height.equalTo(50)
+        }
+
+        view.bringSubviewToFront(playButton!)
     }
     
     @objc func startOrStopRecording() {
         let recordingVC = RecordingViewController()
         recordingVC.modalPresentationStyle = .custom
         recordingVC.transitioningDelegate = recordingVC
+        recordingVC.completionHandler = { [weak self] saved, url in
+            if saved, let audioURL = url {
+                print("받은 오디오 URL: \(audioURL)")
+                self?.playButton?.isHidden = false
+                self?.savedAudioURL = url
+            }
+        }
         present(recordingVC, animated: true, completion: nil)
     }
 
+    @objc func playSavedAudio() {
+        if audioPlayer?.isPlaying == true {
+            audioPlayer?.stop()
+            // 필요하면 UI 업데이트 로직 추가 (예: 재생 버튼 아이콘 변경)
+        } else {
+            guard let url = savedAudioURL else {
+                return
+            }
+
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.prepareToPlay()
+                audioPlayer?.play()
+            } catch {
+                print("오디오 재생에 실패했습니다. \(error)")
+            }
+        }
+    }
+
     @objc func presentImagePickerOptions() {
-        let actionSheet = UIAlertController(title: nil, message: "Choose Image Source", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: "이미지 선택", preferredStyle: .actionSheet)
         
-        let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
+        let cameraAction = UIAlertAction(title: "카메라", style: .default) { _ in
             self.presentImagePicker(sourceType: .camera)
         }
         
-        let galleryAction = UIAlertAction(title: "Gallery", style: .default) { _ in
+        let galleryAction = UIAlertAction(title: "앨범", style: .default) { _ in
             self.presentImagePicker(sourceType: .photoLibrary)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: "취소", style: .destructive)
         
         actionSheet.addAction(cameraAction)
         actionSheet.addAction(galleryAction)
@@ -134,31 +187,22 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func showCancelAlert() {
-        let cancelCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
-            if self?.rootView.textView.text.isEmpty ?? true {
-                self?.dismiss(animated: true, completion: nil)
-            }
-        }
-
-        let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
-            if self?.rootView.textView.text.isEmpty ?? true {
-                AlertManager.shared.showAlert(on: self!, title: "아, 휘발🔥", message: "삭제된 감정쓰레기는 복구할 수 없습니다. \n 삭제하시겠습니까?",
-                                              okCompletion: { _ in
-                                                  self?.dismiss(animated: true, completion: nil)
-                                              })
-            } else {
+        if rootView.textView.text.isEmpty {
+            dismiss(animated: true, completion: nil)
+        } else {
+            let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
                 self?.showConfirmationToDeleteText()
             }
-        }
 
-        AlertManager.shared.showAlert(on: self, title: "아, 휘발 🔥", message: "이 감정쓰레기를 삭제하시겠어요?", okCompletion: okCompletion, cancelCompletion: cancelCompletion)
+            AlertManager.shared.showAlert(on: self, title: "아, 휘발 🔥", message: "이 감정쓰레기를 삭제하시겠어요?", okCompletion: okCompletion)
+        }
     }
 
     private func showConfirmationToDeleteText() {
         let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         }
-        
+
         AlertManager.shared.showAlert(on: self, title: "아, 휘발🔥", message: "삭제된 감정쓰레기는 복구할 수 없습니다. \n 삭제하시겠습니까?", okCompletion: okCompletion)
     }
 
