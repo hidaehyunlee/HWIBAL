@@ -69,7 +69,6 @@ final class ReportView: UIView, RootView {
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .none
-//            section.interGroupSpacing = 65
                 
             return section
         }
