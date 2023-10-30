@@ -31,7 +31,7 @@ final class DetailViewController: RootViewController<DetailView> {
 
     func bindDetailViewEvents() {
         rootView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
-        rootView.playPauseButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
+        rootView.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
     }
 
 //    func configureAudioPlayer(for indexPath: IndexPath, withFileName fileName: String) {
@@ -55,13 +55,8 @@ final class DetailViewController: RootViewController<DetailView> {
         rootView.collectionView.setContentOffset(CGPoint(x: -DetailView.CarouselConst.insetX, y: 0), animated: true)
     }
 
-    @objc func playButtonTapped() {
-        print("playButtonTapped")
-//        let path = Bundle.main.path(forResource: "Info", ofType: ".plist") // 시뮬레이터 경로 알기 위함
-//        print(path)
-
-        // Bundle.main 이 아니라 파일디렉토리, 파일매니저 (유저 디렉토리를 생성해서 저장해야함)
-        guard let audioURL = Bundle.main.url(forResource: "hwibalAudio_2", withExtension: "mp3") else {
+    @objc func playPauseButtonTapped() {
+        guard let audioURL = Bundle.main.url(forResource: "hwibal_test1", withExtension: "mp3") else {
             print("configureAudioPlayer Error: Could not find the audio file. fileName")
             return
         }
@@ -69,16 +64,19 @@ final class DetailViewController: RootViewController<DetailView> {
         do {
             player = try AVAudioPlayer(data: try! Data(contentsOf: audioURL))
             player?.prepareToPlay()
+            player?.delegate = self
         } catch {
             print("Error creating audio player: \(error)")
         }
 
-        if player?.isPlaying == true {
-            player?.pause()
-            rootView.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
-        } else {
-            player?.play()
-            rootView.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
+        if let player = player {
+            if player.isPlaying {
+                player.pause()
+                rootView.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
+            } else {
+                player.play()
+                rootView.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
+            }
         }
     }
 
@@ -86,7 +84,7 @@ final class DetailViewController: RootViewController<DetailView> {
         let index = sender.tag
         let cellId = userEmotionTrashes[index].id
 
-        AlertManager.shared.showAlert(on: self, title: "감정쓰레기 삭제", message: "당신의 이 감정을 불태워 드릴게요.", okCompletion:  { _ in
+        AlertManager.shared.showAlert(on: self, title: "감정쓰레기 삭제", message: "당신의 이 감정을 불태워 드릴게요.", okCompletion: { _ in
             EmotionTrashService.shared.deleteEmotionTrash(SignInService.shared.signedInUser!, cellId!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
             self.navigationController?.popViewController(animated: true)
@@ -122,7 +120,7 @@ extension DetailViewController: UICollectionViewDataSource {
         // let audioFileName = URL(fileURLWithPath: audioFilePath)
         // configureAudioPlayer(for: indexPath, withFileName: audioFilePath)
 
-        // rootView.playPauseButton.isHidden = false
+        rootView.playPauseButton.isHidden = false
         // } else {}
 
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
@@ -179,6 +177,15 @@ extension DetailViewController: UICollectionViewDelegate {
             DispatchQueue.main.async { [weak self] in
                 self?.rootView.updateNumberOfPageLabel(currentPage)
             }
+        }
+    }
+}
+
+extension DetailViewController: AVAudioPlayerDelegate {
+    // 오디오 파일이 끝나면 버튼 UI 업데이트하는 델리게이트 메서드
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            rootView.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
         }
     }
 }
