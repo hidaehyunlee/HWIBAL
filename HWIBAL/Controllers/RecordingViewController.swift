@@ -18,7 +18,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     var currentRecordingTime: TimeInterval = 0.0
     var saveButton: UIButton!
     var cancelButton: UIButton!
-
+    var completionHandler: ((Bool, URL?) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,7 +133,6 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     
     @objc func cancelAction() {
         let audioURL = getRecordingURL()
-        // 파일이 존재하는지 확인 후 삭제
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: audioURL.path) {
             do {
@@ -148,10 +147,19 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
 
     @objc func saveAction() {
         let savedAudioURL = getRecordingURL()
-        print("Saved recording at: \(savedAudioURL.absoluteString)")
-        
+        let fileManager = FileManager.default
+
+        if fileManager.fileExists(atPath: savedAudioURL.path) {
+            print("오디오 저장 성공!")
+            self.completionHandler?(true, savedAudioURL)
+        } else {
+            print("오디오 저장 실패.")
+            self.completionHandler?(false, nil)
+        }
         self.dismiss(animated: true, completion: nil)
     }
+
+
 
     func getRecordingURL() -> URL {
         return getDocumentsDirectory().appendingPathComponent("recording.m4a")
