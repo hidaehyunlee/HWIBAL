@@ -53,6 +53,9 @@ final class DetailViewController: RootViewController<DetailView> {
 
     @objc func goToFirstButtonTapped() {
         rootView.collectionView.setContentOffset(CGPoint(x: -DetailView.CarouselConst.insetX, y: 0), animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.rootView.updateNumberOfPageLabel(1)
+        }
     }
 
     @objc func playPauseButtonTapped() {
