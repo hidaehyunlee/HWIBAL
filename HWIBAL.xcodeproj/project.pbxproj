@@ -35,7 +35,6 @@
 		3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445612ADF79D80003DCD4 /* SignInService.swift */; };
 		3F9445662ADFD5EA0003DCD4 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445652ADFD5EA0003DCD4 /* ReportService.swift */; };
 		3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */; };
-		3FF18E762AE76BEE00CC70D2 /* hwibalAudio_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */; };
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
 		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
 		DE01F2A82AE819DA004663F7 /* EmotionTrashBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */; };
@@ -48,6 +47,7 @@
 		DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */; };
 		DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */; };
 		DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0F2ADE75D900C77FE4 /* DummyData.swift */; };
+		DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */; };
 		DEDA76992ADFB98600EA41C1 /* EmotionTrashCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */; };
 		DEECD7352AEBC86600BE20CE /* DSWaveformImage in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7342AEBC86600BE20CE /* DSWaveformImage */; };
 		DEECD7372AEBC86600BE20CE /* DSWaveformImageViews in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7362AEBC86600BE20CE /* DSWaveformImageViews */; };
@@ -92,7 +92,6 @@
 		3F9445612ADF79D80003DCD4 /* SignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInService.swift; sourceTree = "<group>"; };
 		3F9445652ADFD5EA0003DCD4 /* ReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportService.swift; sourceTree = "<group>"; };
 		3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashService.swift; sourceTree = "<group>"; };
-		3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibalAudio_2.mp3; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashBackView.swift; sourceTree = "<group>"; };
@@ -103,6 +102,7 @@
 		DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DE434E0F2ADE75D900C77FE4 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
+		DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibal_test1.mp3; sourceTree = "<group>"; };
 		DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashCell.swift; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -219,7 +219,6 @@
 		DEFE39FE2AD53C3A0076FE11 /* HWIBAL */ = {
 			isa = PBXGroup;
 			children = (
-				3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */,
 				DE434DF52ADCCD8800C77FE4 /* Services */,
 				DEFE3A0D2AD53C3B0076FE11 /* Info.plist */,
 				DEFE3A2E2AD542CF0076FE11 /* Models */,
@@ -233,6 +232,7 @@
 		DEFE3A132AD53E720076FE11 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */,
 				DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */,
 				DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */,
 				DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */,
@@ -397,8 +397,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */,
 				DEFE3A0C2AD53C3B0076FE11 /* LaunchScreen.storyboard in Resources */,
-				3FF18E762AE76BEE00CC70D2 /* hwibalAudio_2.mp3 in Resources */,
 				DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

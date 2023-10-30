@@ -39,6 +39,9 @@ private extension ReportViewController {
     
     @objc func goToFirstButtonTapped() {
         rootView.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.rootView.updateNumberOfPageLabel(1)
+        }
     }
 }
 
