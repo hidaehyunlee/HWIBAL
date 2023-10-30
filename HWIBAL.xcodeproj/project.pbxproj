@@ -102,6 +102,7 @@
 		DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DE434E0F2ADE75D900C77FE4 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
+		DEC256242AEF75E9002917C4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibal_test1.mp3; sourceTree = "<group>"; };
 		DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashCell.swift; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +202,7 @@
 		DEFE39F32AD53C3A0076FE11 = {
 			isa = PBXGroup;
 			children = (
+				DEC256242AEF75E9002917C4 /* README.md */,
 				3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */,
 				DEFE39FE2AD53C3A0076FE11 /* HWIBAL */,
 				DEFE39FD2AD53C3A0076FE11 /* Products */,
