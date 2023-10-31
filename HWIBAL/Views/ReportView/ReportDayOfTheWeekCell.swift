@@ -28,6 +28,7 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -36,7 +37,7 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         label.font = FontGuide.size14
         label.textColor = .black
         label.textAlignment = .left
-        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -76,10 +77,6 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
     private let seperateLineView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
-        view.snp.makeConstraints { make in
-            make.width.equalTo(295)
-            make.height.equalTo(1)
-        }
         return view
     }()
     
@@ -304,7 +301,9 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         
         rankView.addSubview(seperateLineView)
         seperateLineView.snp.makeConstraints { make in
+            make.height.equalTo(1)
             make.top.equalTo(rankTitle.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
             make.centerX.equalToSuperview()
         }
         

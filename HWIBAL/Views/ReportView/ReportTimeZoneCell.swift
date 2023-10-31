@@ -27,6 +27,7 @@ class ReportTimeZoneCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -36,6 +37,7 @@ class ReportTimeZoneCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -96,18 +98,12 @@ class ReportTimeZoneCell: UICollectionViewCell {
     private lazy var fromTimeLine: UIView = {
         let view = UIView()
         view.backgroundColor = ColorGuide.main
-        view.snp.makeConstraints { make in
-            make.height.equalTo(4)
-        }
         return view
     }()
     
     private lazy var untilTimeLine: UIView = {
         let view = UIView()
         view.backgroundColor = ColorGuide.main
-        view.snp.makeConstraints { make in
-            make.height.equalTo(4)
-        }
         return view
     }()
     
@@ -224,6 +220,7 @@ class ReportTimeZoneCell: UICollectionViewCell {
         
         view.addSubview(fromTimeLine)
         fromTimeLine.snp.makeConstraints { make in
+            make.height.equalTo(4)
             make.top.equalTo(fromTimeStackView.snp.top).offset(46)
             make.leading.equalTo(fromTimeStackView.snp.trailing).offset(10)
             make.trailing.equalToSuperview()
@@ -231,6 +228,7 @@ class ReportTimeZoneCell: UICollectionViewCell {
         
         view.addSubview(untilTimeLine)
         untilTimeLine.snp.makeConstraints { make in
+            make.height.equalTo(4)
             make.top.equalTo(untilTimeStackView.snp.top).offset(45)
             make.leading.equalToSuperview()
             make.trailing.equalTo(untilTimeStackView.snp.leading).offset(-10)
