@@ -35,6 +35,7 @@
 		3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445612ADF79D80003DCD4 /* SignInService.swift */; };
 		3F9445662ADFD5EA0003DCD4 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445652ADFD5EA0003DCD4 /* ReportService.swift */; };
 		3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */; };
+		3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */; };
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
 		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
 		DE01F2A82AE819DA004663F7 /* EmotionTrashBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */; };
@@ -93,6 +94,7 @@
 		3F9445612ADF79D80003DCD4 /* SignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInService.swift; sourceTree = "<group>"; };
 		3F9445652ADFD5EA0003DCD4 /* ReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportService.swift; sourceTree = "<group>"; };
 		3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashService.swift; sourceTree = "<group>"; };
+		3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportEmptyView.swift; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashBackView.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				3F783A292AD8C41B0024D692 /* ReportView.swift */,
+				3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */,
 				3F783A342AD931C70024D692 /* ReportSummaryCell.swift */,
 				3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */,
 				3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */,
@@ -429,6 +432,7 @@
 				3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */,
 				3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */,
 				3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */,
+				3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */,
 				3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */,
 				DE434E002ADCCE5200C77FE4 /* SignInView.swift in Sources */,
 				3F783A2A2AD8C41B0024D692 /* ReportView.swift in Sources */,
