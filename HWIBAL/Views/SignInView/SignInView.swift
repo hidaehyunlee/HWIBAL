@@ -14,66 +14,60 @@ final class SignInView: UIView, RootView {
 
     private lazy var hwibariImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "hwibari_01"))
-
         return imageView
     }()
 
-    private lazy var label: UILabel = {
+    private lazy var title: UILabel = {
         let label = UILabel()
-
-        label.text = "아, 휘발\n나만의 안전한 공간"
-        label.textColor = ColorGuide.main
+        label.text = """
+                     아, 휘발
+                     나만의 안전한 공간
+                     """
+        label.textColor = .label
         label.font = FontGuide.size32Bold
         label.numberOfLines = 2
-
+        label.adjustsFontSizeToFitWidth = true
         return label
+    }()
+    
+    private lazy var imageAndTitle: UIStackView  = {
+        let stackView = UIStackView(arrangedSubviews: [hwibariImageView, title])
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.spacing = 27
+        return stackView
     }()
 
     private lazy var googleSignInButton: GIDSignInButton = {
         let button = GIDSignInButton()
-
         button.colorScheme = .light
         button.style = .wide
         button.addTarget(self, action: #selector(handleGoogleSignIn), for: .touchUpInside)
-
         return button
     }()
-
+    
     //let googleSignInButton = MainButton(type: .googleLogin)
 
     func initializeUI() {
         backgroundColor = .systemBackground
+        
+        addSubview(imageAndTitle)
+        imageAndTitle.snp.makeConstraints { make in
+            make.top.lessThanOrEqualToSuperview().offset(246)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
+        }
 
         addSubview(googleSignInButton)
-        addSubview(hwibariImageView)
-        addSubview(label)
-
-        hwibariImageView.snp.makeConstraints { make in
-            make.width.equalTo(93)
-            make.height.equalTo(131)
-            make.leading.equalToSuperview().offset(36)
-            make.top.equalToSuperview().offset(246)
-        }
-
-        label.snp.makeConstraints { make in
-            make.width.equalTo(248)
-            make.height.equalTo(80)
-            make.top.equalTo(hwibariImageView.snp.bottom).offset(27)
-            make.leading.equalToSuperview().offset(36)
-            make.trailing.equalToSuperview().offset(-109)
-        }
-
         googleSignInButton.snp.makeConstraints { make in
-            make.width.equalTo(333)
             make.height.equalTo(56)
-            make.top.equalTo(label.snp.bottom).offset(54)
-            make.leading.equalToSuperview().offset(30)
-            make.trailing.equalToSuperview().offset(-30)
+            make.top.equalTo(imageAndTitle.snp.bottom).offset(54)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
         }
     }
 
-    @objc
-    private func handleGoogleSignIn() {
+    @objc private func handleGoogleSignIn() {
         onGoogleSignInTapped?()
     }
 }
