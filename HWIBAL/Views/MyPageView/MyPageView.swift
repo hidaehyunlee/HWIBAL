@@ -24,9 +24,6 @@ final class MyPageView: UIView, RootView {
         label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 2
-        label.snp.makeConstraints { make in
-            make.height.equalTo(60)
-        }
         return label
     }()
     
@@ -74,6 +71,7 @@ final class MyPageView: UIView, RootView {
     
     let tableView: UITableView = {
         let tableView = UITableView()
+        tableView.isScrollEnabled = false
         tableView.register(MyPageCustomCell.self, forCellReuseIdentifier: MyPageCustomCell.identifier)
         return tableView
     }()
