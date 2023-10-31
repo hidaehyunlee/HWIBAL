@@ -11,9 +11,10 @@ import DGCharts
 
 class ReportDayOfTheWeekCell: UICollectionViewCell {
     static let identifier = "dayOfTheWeekCell"
-    var daysOfWeekCount = ReportService.shared.calculateDaysOfWeekCount()
-    var maxDay = ""
-    var maxCount = 0
+    private var daysOfWeekCount = ReportService.shared.calculateDaysOfWeekCount()
+    private var maxDay = ""
+    private var maxCount = 0
+    private var chartGenerated = false
     
     private let view: UIView = {
         let view = UIView()
@@ -199,7 +200,10 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         subTitle.text = "다른 요일보다 평균 감정쓰레기 개수가 많아요"
         
         // MARK: - Day of The Week
-        generateChartForDayOfWeek()
+        if !chartGenerated {
+            generateChartForDayOfWeek()
+            chartGenerated = true
+        }
         
         // MARK: - Rank
         let sortedDaysOfWeekCount = daysOfWeekCount.sorted { $0.value > $1.value }
