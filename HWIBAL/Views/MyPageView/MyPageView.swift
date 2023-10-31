@@ -24,6 +24,7 @@ final class MyPageView: UIView, RootView {
         label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
