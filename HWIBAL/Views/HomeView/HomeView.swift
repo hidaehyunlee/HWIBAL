@@ -25,6 +25,12 @@ final class HomeView: UIView, RootView {
     
     private var isHwibariImageTapped = false
     
+    private var bubbleView1Timer: Timer?
+    private var bubbleView2Timer: Timer?
+    
+    private var isBubbleView1Visible = true
+    private var isBubbleView2Visible = true
+    
     // MARK: - UI Elements
     
     private lazy var titleLabel1: UILabel = {
@@ -48,6 +54,56 @@ final class HomeView: UIView, RootView {
         return imageView
     }()
     
+    private lazy var infoButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 15
+        button.layer.masksToBounds = true
+        button.setImage(UIImage(systemName: "info.circle"), for: .normal)
+        button.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var bubbleView1: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray
+        view.layer.cornerRadius = 8
+        view.clipsToBounds = true
+        view.isHidden = false
+
+        let label = UILabel()
+        label.textColor = .white
+        label.text = "휘발이를 누르면 작성한 감정쓰레기를 볼 수 있어요!"
+        label.font = FontGuide.size14
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view).inset(10)
+            make.top.bottom.equalTo(view).inset(5)
+        }
+
+        return view
+    }()
+    
+    private lazy var bubbleView2: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray
+        view.layer.cornerRadius = 8
+        view.clipsToBounds = true
+        view.isHidden = false
+
+        let label = UILabel()
+        label.textColor = .white
+        label.text = "아래의 좌측 버튼으로 모든 감정쓰레기를 제거하고\n 우측 버튼으로 감정쓰레기를 작성해요!"
+        label.font = FontGuide.size14
+        label.numberOfLines = 0
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view).inset(10)
+            make.top.bottom.equalTo(view).inset(5)
+        }
+
+        return view
+    }()
+    
     // MARK: - Label Title Update Function
     
     func updateEmotionTrashesCountLabel(_ emotionCount: Int) {
@@ -63,7 +119,8 @@ final class HomeView: UIView, RootView {
         myPageButton()
         setupHwibariImageView()
         setupButton()
-//        createButton()
+        setupBubbleView()
+        setupInfoButton()
     }
     
     // MARK: - Private Functions
@@ -86,7 +143,7 @@ final class HomeView: UIView, RootView {
     
     private func setupConstraints() {
         titleLabel1.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(107)
+            make.top.equalToSuperview().offset(90 * UIScreen.main.bounds.height / 926) // 비율 조정
             make.leading.equalToSuperview().offset(24)
         }
         titleLabel2.snp.makeConstraints { make in
@@ -95,10 +152,12 @@ final class HomeView: UIView, RootView {
         }
         hwibariImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel2.snp.bottom).offset(60)
+            make.top.equalTo(titleLabel2.snp.bottom).offset(100 * UIScreen.main.bounds.height / 926) // 비율 조정
+            make.width.equalTo(330 * UIScreen.main.bounds.width / 428) // 너비 크게 조정
+            make.height.equalTo(462 * UIScreen.main.bounds.height / 926) // 높이 크게 조정
         }
     }
-    
+
     private func myPageButton() {
         let userIconView = UIImageView(image: UIImage(named: "user"))
         userIconView.contentMode = .scaleAspectFit
@@ -158,34 +217,34 @@ final class HomeView: UIView, RootView {
         }
     }
         
-        private func createSquareView() -> UIView {
-            let squareView = UIView()
-            squareView.backgroundColor = .white
-            squareView.layer.cornerRadius = 4
-            squareView.layer.borderWidth = 1.5
-            squareView.layer.borderColor = ColorGuide.main.cgColor
-            let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
-            squareView.addGestureRecognizer(squareViewTapGesture)
+    private func createSquareView() -> UIView {
+        let squareView = UIView()
+        squareView.backgroundColor = .white
+        squareView.layer.cornerRadius = 4
+        squareView.layer.borderWidth = 1.5
+        squareView.layer.borderColor = ColorGuide.main.cgColor
+        let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
+        squareView.addGestureRecognizer(squareViewTapGesture)
             
-            addSubview(squareView)
+        addSubview(squareView)
             
-            squareView.snp.makeConstraints { make in
-                make.width.equalTo(56)
-                make.height.equalTo(56)
-                make.trailing.equalToSuperview().offset(-24)
-                make.bottom.equalToSuperview().offset(-40)
-            }
-            
-            let penImage = createPenImage()
-            squareView.addSubview(penImage)
-            
-            penImage.snp.makeConstraints { make in
-                make.width.equalTo(25)
-                make.height.equalTo(25)
-                make.center.equalToSuperview()
-            }
-            return squareView
+        squareView.snp.makeConstraints { make in
+            make.width.equalTo(56)
+            make.height.equalTo(56)
+            make.trailing.equalToSuperview().offset(-24)
+            make.bottom.equalToSuperview().offset(-40)
         }
+            
+        let penImage = createPenImage()
+        squareView.addSubview(penImage)
+            
+        penImage.snp.makeConstraints { make in
+            make.width.equalTo(25)
+            make.height.equalTo(25)
+            make.center.equalToSuperview()
+        }
+        return squareView
+    }
     
     private func createPenImage() -> UIView {
         let penImage = UIView()
@@ -212,50 +271,46 @@ final class HomeView: UIView, RootView {
         }
     }
     
-    // MARK: - Event Handling
-    
-    @objc private func myPageButtonTapped() {
-        print("'유저버튼'이 탭되었습니다.")
-        EventBus.shared.emit(PushToMyPageScreenEvent())
+    private func setupBubbleView() {
+        addSubview(bubbleView1)
+        addSubview(bubbleView2)
+        
+        bubbleView1.snp.makeConstraints { make in
+            make.top.equalTo(hwibariImage.snp.top).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        bubbleView2.snp.makeConstraints { make in
+            make.top.equalTo(hwibariImage.snp.bottom)
+            make.centerX.equalToSuperview()
+        }
+
+        let bubble1TapGesture = UITapGestureRecognizer(target: self, action: #selector(bubble1Tapped))
+        bubbleView1.isUserInteractionEnabled = true
+        bubbleView1.addGestureRecognizer(bubble1TapGesture)
+        
+        let bubble2TapGesture = UITapGestureRecognizer(target: self, action: #selector(bubble2Tapped))
+        bubbleView2.isUserInteractionEnabled = true
+        bubbleView2.addGestureRecognizer(bubble2TapGesture)
+        
+        startBubbleView1Timer()
+        startBubbleView2Timer()
     }
     
-    @objc private func hwibariImageViewTapped() {
-        if isHwibariImageTapped {
-            return
-        }
-        isHwibariImageTapped = true // hwibariImageViewTapped 중복실행 방지 (True/false)
-        
-        print("'hwibari'가 탭되었습니다.")
-        
-        hwibariImage.animationImages = [
-            UIImage(named: "hwibari_default")!,
-            UIImage(named: "hwibariopen")!
-        ]
-        hwibariImage.animationDuration = 0.3
-        hwibariImage.animationRepeatCount = 1
-        hwibariImage.startAnimating()
-        
-        hwibariImage.image = UIImage(named: "hwibariopen2")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            let detailViewController = DetailViewController()
-            if let navigationController = self.viewController?.navigationController {
-                navigationController.pushViewController(detailViewController, animated: true)
-            }
-            self.isHwibariImageTapped = false
-        }
+    private func startBubbleView1Timer() {
+        bubbleView1Timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(bubble1Tapped), userInfo: nil, repeats: false)
+    }
+
+    private func startBubbleView2Timer() {
+        bubbleView2Timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(bubble2Tapped), userInfo: nil, repeats: false)
     }
     
-    @objc private func removeButtonTapped() {
-        print("'전체지우기'가 탭되었습니다.")
+    private func setupInfoButton() {
+        addSubview(infoButton)
         
-        // AlertManager를 사용하여 확인 다이얼로그를 표시
-        AlertManager.shared.showAlert(on: viewController!,
-                                      title: "다, 휘발 🔥",
-                                      message: "정말로 전체 지우시겠습니까?",
-                                      okCompletion: { _ in
-                                          self.startRemoveAnimation()
-                                      })
+        infoButton.snp.makeConstraints { make in
+            make.bottom.equalTo(hwibariImage.snp.top)
+            make.centerX.equalToSuperview()
+        }
     }
     
     // 애니메이션을 시작하는 함수
@@ -315,6 +370,79 @@ final class HomeView: UIView, RootView {
                 burningView.removeFromSuperview()
             }
         }
+    }
+    
+    // MARK: - Event Handling
+    
+    @objc private func myPageButtonTapped() {
+        print("'유저버튼'이 탭되었습니다.")
+        EventBus.shared.emit(PushToMyPageScreenEvent())
+    }
+    
+    @objc private func hwibariImageViewTapped() {
+        if isHwibariImageTapped {
+            return
+        }
+        isHwibariImageTapped = true // hwibariImageViewTapped 중복실행 방지 (True/false)
+        
+        print("'hwibari'가 탭되었습니다.")
+        
+        hwibariImage.animationImages = [
+            UIImage(named: "hwibari_default")!,
+            UIImage(named: "hwibariopen")!
+        ]
+        hwibariImage.animationDuration = 0.3
+        hwibariImage.animationRepeatCount = 1
+        hwibariImage.startAnimating()
+        
+        hwibariImage.image = UIImage(named: "hwibariopen2")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let detailViewController = DetailViewController()
+            if let navigationController = self.viewController?.navigationController {
+                navigationController.pushViewController(detailViewController, animated: true)
+            }
+            self.isHwibariImageTapped = false
+        }
+    }
+    
+    @objc private func removeButtonTapped() {
+        print("'전체지우기'가 탭되었습니다.")
+        
+        // AlertManager를 사용하여 확인 다이얼로그를 표시
+        AlertManager.shared.showAlert(on: viewController!,
+                                      title: "다, 휘발 🔥",
+                                      message: "정말로 전체 지우시겠습니까?",
+                                      okCompletion: { _ in
+                                          self.startRemoveAnimation()
+                                      })
+    }
+    
+    @objc private func bubble1Tapped() {
+        bubbleView1.isHidden = true
+        bubbleView1Timer?.invalidate()
+    }
+    
+    @objc private func bubble2Tapped() {
+        bubbleView2.isHidden = true
+        bubbleView2Timer?.invalidate()
+    }
+    
+    @objc private func infoButtonTapped() {
+        bubbleView1.isHidden.toggle()
+        bubbleView2.isHidden.toggle()
+        
+        if isBubbleView1Visible {
+                startBubbleView1Timer()
+            } else {
+                bubbleView1Timer?.invalidate()
+            }
+
+            if isBubbleView2Visible {
+                startBubbleView2Timer()
+            } else {
+                bubbleView2Timer?.invalidate()
+            }
     }
     
     @objc private func createButtonTapped() {
