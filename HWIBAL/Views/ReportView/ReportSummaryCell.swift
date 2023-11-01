@@ -26,9 +26,7 @@ class ReportSummaryCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2
-        label.snp.makeConstraints { make in
-            make.width.equalTo(180)
-        }
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -37,10 +35,7 @@ class ReportSummaryCell: UICollectionViewCell {
         label.font = FontGuide.size14
         label.textColor = .black
         label.textAlignment = .left
-        label.numberOfLines = 2
-        label.snp.makeConstraints { make in
-            make.width.equalTo(250)
-        }
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -62,9 +57,7 @@ class ReportSummaryCell: UICollectionViewCell {
         chartView.rightAxis.enabled = false
         chartView.legend.enabled = false
         chartView.animate(yAxisDuration: 2, easingOption: .easeInBack)
-        chartView.snp.makeConstraints { make in
-            make.width.equalTo(295)
-        }
+        chartView.setViewPortOffsets(left: 10, top: 20, right: 10, bottom: 25)
         return chartView
     }()
     
@@ -74,9 +67,7 @@ class ReportSummaryCell: UICollectionViewCell {
         label.font = FontGuide.size14
         label.textColor = ColorGuide.textHint
         label.textAlignment = .right
-        label.snp.makeConstraints { make in
-            make.width.equalTo(50)
-        }
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
    
@@ -140,6 +131,7 @@ class ReportSummaryCell: UICollectionViewCell {
         
         view.addSubview(chartView)
         chartView.snp.makeConstraints { make in
+            make.width.equalTo(295)
             make.top.equalTo(subTitle.snp.bottom).offset(60)
             make.bottom.equalToSuperview().offset(-40)
             make.centerX.equalToSuperview()

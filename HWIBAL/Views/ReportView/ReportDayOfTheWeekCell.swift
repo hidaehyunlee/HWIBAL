@@ -11,9 +11,10 @@ import DGCharts
 
 class ReportDayOfTheWeekCell: UICollectionViewCell {
     static let identifier = "dayOfTheWeekCell"
-    var daysOfWeekCount = ReportService.shared.calculateDaysOfWeekCount()
-    var maxDay = ""
-    var maxCount = 0
+    private var daysOfWeekCount = ReportService.shared.calculateDaysOfWeekCount()
+    private var maxDay = ""
+    private var maxCount = 0
+    private var chartGenerated = false
     
     private let view: UIView = {
         let view = UIView()
@@ -27,6 +28,7 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -35,11 +37,11 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         label.font = FontGuide.size14
         label.textColor = .black
         label.textAlignment = .left
-        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
-    let Largecircle: UILabel = {
+    let largeCircle: UILabel = {
         let label = UILabel()
         label.backgroundColor = ColorGuide.main
         label.font = FontGuide.size64Bold
@@ -47,6 +49,12 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         label.textAlignment = .center
         label.clipsToBounds = true
         return label
+    }()
+    
+    private let daysOfWeekView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
     }()
     
     private lazy var daysOfWeekStackView: UIStackView = {
@@ -75,10 +83,6 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
     private let seperateLineView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
-        view.snp.makeConstraints { make in
-            make.width.equalTo(295)
-            make.height.equalTo(1)
-        }
         return view
     }()
     
@@ -199,7 +203,10 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         subTitle.text = "다른 요일보다 평균 감정쓰레기 개수가 많아요"
         
         // MARK: - Day of The Week
-        generateChartForDayOfWeek()
+        if !chartGenerated {
+            generateChartForDayOfWeek()
+            chartGenerated = true
+        }
         
         // MARK: - Rank
         let sortedDaysOfWeekCount = daysOfWeekCount.sorted { $0.value > $1.value }
@@ -226,8 +233,8 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
             let isMaxDay = day == maxDay
             let circleLabel: UILabel
             if isMaxDay {
-                circleLabel = Largecircle
-                let diameter = UIScreen.main.bounds.width - 278 // 셀 마진 24, 컨텐츠 마진 25, 작은 circle 지름30
+                circleLabel = largeCircle
+                let diameter = UIScreen.main.bounds.width - 278 // 셀 마진 24, 컨텐츠 마진 25, 작은 circle 지름 30
                 circleLabel.layer.cornerRadius = diameter/2
                 circleLabel.snp.makeConstraints { make in
                     make.width.height.equalTo(diameter)
@@ -279,17 +286,12 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
             make.leading.equalToSuperview().offset(25)
         }
         
-        view.addSubview(daysOfWeekStackView)
-        daysOfWeekStackView.snp.makeConstraints { make in
-            make.top.equalTo(subTitle.snp.bottom).offset(84)
-            make.leading.equalToSuperview().offset(25)
-        }
-        
         view.addSubview(rankView)
         rankView.snp.makeConstraints { make in
-            make.width.equalTo(295)
             make.height.equalTo(111)
             make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().offset(-25)
             make.bottom.equalToSuperview().offset(-40)
         }
         
@@ -297,17 +299,32 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         rankTitle.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
         }
-        
+
         rankView.addSubview(seperateLineView)
         seperateLineView.snp.makeConstraints { make in
+            make.height.equalTo(1)
             make.top.equalTo(rankTitle.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
-        
+
         rankView.addSubview(rank)
         rank.snp.makeConstraints { make in
             make.top.equalTo(seperateLineView.snp.bottom).offset(13)
             make.leading.trailing.bottom.equalToSuperview()
+        }
+
+        view.addSubview(daysOfWeekView)
+        daysOfWeekView.snp.makeConstraints { make in
+            make.top.equalTo(subTitle.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(rankView.snp.top)
+        }
+        
+        daysOfWeekView.addSubview(daysOfWeekStackView)
+        daysOfWeekStackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().offset(-25)
         }
     }
 }
