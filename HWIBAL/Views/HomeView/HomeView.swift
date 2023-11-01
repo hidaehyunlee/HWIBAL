@@ -63,7 +63,6 @@ final class HomeView: UIView, RootView {
         myPageButton()
         setupHwibariImageView()
         setupRemove()
-        createButton()
     }
     
     // MARK: - Private Functions
@@ -87,11 +86,11 @@ final class HomeView: UIView, RootView {
     private func setupConstraints() {
         titleLabel1.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(107)
-            make.left.equalTo(24)
+            make.leading.equalToSuperview().offset(24)
         }
         titleLabel2.snp.makeConstraints { make in
             make.top.equalTo(titleLabel1.snp.bottom)
-            make.left.equalTo(24)
+            make.leading.equalToSuperview().offset(24)
         }
         hwibariImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -123,6 +122,32 @@ final class HomeView: UIView, RootView {
     }
     
     private func setupRemove() {
+        let squareView = UIView()
+            squareView.backgroundColor = .white
+            squareView.layer.cornerRadius = 4
+            squareView.layer.borderWidth = 1.5
+            squareView.layer.borderColor = ColorGuide.main.cgColor
+            let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeButtonTapped))
+            squareView.addGestureRecognizer(squareViewTapGesture)
+            
+            addSubview(squareView)
+            
+            squareView.snp.makeConstraints { make in
+                make.width.equalTo(56)
+                make.height.equalTo(56)
+                make.trailing.equalToSuperview().offset(-24)
+                make.bottom.equalToSuperview().offset(-40)
+            }
+            
+            let penImage = createPenImage()
+            squareView.addSubview(penImage)
+            
+            penImage.snp.makeConstraints { make in
+                make.width.equalTo(25)
+                make.height.equalTo(25)
+                make.center.equalToSuperview()
+            }
+        
         let removeBar = UIView()
         removeBar.backgroundColor = ColorGuide.main
         removeBar.layer.cornerRadius = 4
@@ -130,13 +155,13 @@ final class HomeView: UIView, RootView {
         let removeTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeButtonTapped))
         removeBar.addGestureRecognizer(removeTapGesture)
         
-        addSubview(removeBar)
+        squareView.addSubview(removeBar)
         
         removeBar.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(279)
-            make.leading.equalTo(self).offset(24)
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-40)
+            make.trailing.equalTo(squareView.snp.leading).offset(-10)
+            make.bottom.equalToSuperview()
         }
         
         let removeButton = removeTitle()
@@ -158,34 +183,6 @@ final class HomeView: UIView, RootView {
         paragraphStyle.lineHeightMultiple = 1.04
         removeButton.attributedText = NSMutableAttributedString(string: "다, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         return removeButton
-    }
-    
-    private func createButton() {
-        let squareView = UIView()
-        squareView.backgroundColor = .white
-        squareView.layer.cornerRadius = 4
-        squareView.layer.borderWidth = 1.5
-        squareView.layer.borderColor = ColorGuide.main.cgColor
-        let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
-        squareView.addGestureRecognizer(squareViewTapGesture)
-        
-        addSubview(squareView)
-        
-        squareView.snp.makeConstraints { make in
-            make.width.equalTo(56)
-            make.height.equalTo(56)
-            make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-40)
-        }
-        
-        let penImage = createPenImage()
-        squareView.addSubview(penImage)
-        
-        penImage.snp.makeConstraints { make in
-            make.width.equalTo(25)
-            make.height.equalTo(25)
-            make.center.equalToSuperview()
-        }
     }
     
     private func createPenImage() -> UIView {
@@ -306,7 +303,7 @@ final class HomeView: UIView, RootView {
             // 불타는 애니메이션
             let animation = CABasicAnimation(keyPath: "locations")
             animation.fromValue = [0.75, 1, 1.5] // 아래에서 위로 이동하도록
-            animation.toValue = [0, 0, 0.2]
+            animation.toValue = [0, 0, 0.2] // 0~1, 낮을수록 채색 선명
             // 그라디언트 위치가 어두운 부분으로 이동하도록 끝 위치를 나타냅니다
             // maskLayer.colors에서 clear = 0, clear = 0, black = 0.2
             animation.duration = 0.8
