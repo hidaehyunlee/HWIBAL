@@ -15,6 +15,10 @@ final class MyPageView: UIView, RootView {
         view.layer.cornerRadius = 12
         view.clipsToBounds = true
         view.isUserInteractionEnabled = true
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowRadius = 12
+        view.layer.masksToBounds = false
         return view
     }()
     
@@ -24,9 +28,7 @@ final class MyPageView: UIView, RootView {
         label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 2
-        label.snp.makeConstraints { make in
-            make.height.equalTo(60)
-        }
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -74,6 +76,7 @@ final class MyPageView: UIView, RootView {
     
     let tableView: UITableView = {
         let tableView = UITableView()
+        tableView.isScrollEnabled = false
         tableView.register(MyPageCustomCell.self, forCellReuseIdentifier: MyPageCustomCell.identifier)
         return tableView
     }()
@@ -108,7 +111,7 @@ final class MyPageView: UIView, RootView {
         
         addSubview(reportSummaryView)
         reportSummaryView.snp.makeConstraints { make in
-            make.top.equalTo(layoutMarginsGuide.snp.top).offset(50)
+            make.top.equalTo(layoutMarginsGuide.snp.top).offset(35)
             make.centerX.equalToSuperview()
             make.width.equalTo(343)
             make.height.equalTo(161)
@@ -134,7 +137,8 @@ final class MyPageView: UIView, RootView {
         
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(reportSummaryView.snp.bottom).offset(50)
+            make.top.equalTo(reportSummaryView.snp.bottom).offset(35
+            )
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(300)
@@ -143,7 +147,7 @@ final class MyPageView: UIView, RootView {
         addSubview(withdrawalButton)
         withdrawalButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-50)
+            make.bottom.equalToSuperview().offset(-40)
         }
     }
     

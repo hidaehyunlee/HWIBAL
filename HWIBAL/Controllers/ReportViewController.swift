@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class ReportViewController: RootViewController<ReportView> {
     private var ReportPageItems: [ReportPage] = []
@@ -14,7 +15,17 @@ final class ReportViewController: RootViewController<ReportView> {
         super.viewDidLoad()
 
         overrideUserInterfaceStyle = .dark
-        initializeUI()
+        
+        if ReportService.shared.calculateEmotionTrashCount() == 0 {
+            let emptyView = ReportEmptyView()
+            view.addSubview(emptyView)
+            emptyView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            emptyView.closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        } else {
+            initializeUI()
+        }
     }
     
 }

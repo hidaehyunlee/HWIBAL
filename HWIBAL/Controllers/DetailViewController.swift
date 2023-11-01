@@ -19,17 +19,31 @@ final class DetailViewController: RootViewController<DetailView> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
 
+        if userEmotionTrashes.count == 0 {
+            initEmptyDetailView()
+        } else {
+            initDetailView()
+        }
+    }
+
+    private func initEmptyDetailView() {
+        let emptyView = EmptyDetailView()
+
+        view.addSubview(emptyView)
+
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+
+    private func initDetailView() {
         rootView.collectionView.delegate = self
         rootView.collectionView.dataSource = self
 
-        userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
         rootView.totalPage = userEmotionTrashes.count
 
-        bindDetailViewEvents()
-    }
-
-    func bindDetailViewEvents() {
         rootView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
         rootView.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
     }
