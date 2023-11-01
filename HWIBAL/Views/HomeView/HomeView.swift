@@ -63,6 +63,7 @@ final class HomeView: UIView, RootView {
         myPageButton()
         setupHwibariImageView()
         setupRemove()
+        createButton()
     }
     
     // MARK: - Private Functions
@@ -122,32 +123,6 @@ final class HomeView: UIView, RootView {
     }
     
     private func setupRemove() {
-        let squareView = UIView()
-            squareView.backgroundColor = .white
-            squareView.layer.cornerRadius = 4
-            squareView.layer.borderWidth = 1.5
-            squareView.layer.borderColor = ColorGuide.main.cgColor
-            let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeButtonTapped))
-            squareView.addGestureRecognizer(squareViewTapGesture)
-            
-            addSubview(squareView)
-            
-            squareView.snp.makeConstraints { make in
-                make.width.equalTo(56)
-                make.height.equalTo(56)
-                make.trailing.equalToSuperview().offset(-24)
-                make.bottom.equalToSuperview().offset(-40)
-            }
-            
-            let penImage = createPenImage()
-            squareView.addSubview(penImage)
-            
-            penImage.snp.makeConstraints { make in
-                make.width.equalTo(25)
-                make.height.equalTo(25)
-                make.center.equalToSuperview()
-            }
-        
         let removeBar = UIView()
         removeBar.backgroundColor = ColorGuide.main
         removeBar.layer.cornerRadius = 4
@@ -155,13 +130,13 @@ final class HomeView: UIView, RootView {
         let removeTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeButtonTapped))
         removeBar.addGestureRecognizer(removeTapGesture)
         
-        squareView.addSubview(removeBar)
+        addSubview(removeBar)
         
         removeBar.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.width.equalTo(279)
-            make.trailing.equalTo(squareView.snp.leading).offset(-10)
-            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview().offset(24)
+            make.bottom.equalToSuperview().offset(-40)
         }
         
         let removeButton = removeTitle()
@@ -183,6 +158,34 @@ final class HomeView: UIView, RootView {
         paragraphStyle.lineHeightMultiple = 1.04
         removeButton.attributedText = NSMutableAttributedString(string: "다, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         return removeButton
+    }
+    
+    private func createButton() {
+        let squareView = UIView()
+        squareView.backgroundColor = .white
+        squareView.layer.cornerRadius = 4
+        squareView.layer.borderWidth = 1.5
+        squareView.layer.borderColor = ColorGuide.main.cgColor
+        let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
+        squareView.addGestureRecognizer(squareViewTapGesture)
+        
+        addSubview(squareView)
+        
+        squareView.snp.makeConstraints { make in
+            make.width.equalTo(56)
+            make.height.equalTo(56)
+            make.trailing.equalToSuperview().offset(-24)
+            make.bottom.equalToSuperview().offset(-40)
+        }
+        
+        let penImage = createPenImage()
+        squareView.addSubview(penImage)
+        
+        penImage.snp.makeConstraints { make in
+            make.width.equalTo(25)
+            make.height.equalTo(25)
+            make.center.equalToSuperview()
+        }
     }
     
     private func createPenImage() -> UIView {
