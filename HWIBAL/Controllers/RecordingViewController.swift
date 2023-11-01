@@ -8,6 +8,10 @@
 import AVFoundation
 import UIKit
 
+protocol RecordingViewControllerDelegate: AnyObject {
+    func didSaveRecording(with url: URL)
+}
+
 class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     var audioRecorder: AVAudioRecorder?
     var startStopButton: UIButton!
@@ -19,6 +23,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     var saveButton: UIButton!
     var cancelButton: UIButton!
     var completionHandler: ((Bool, URL?) -> Void)?
+    weak var delegate: RecordingViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,6 +156,9 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
 
         if fileManager.fileExists(atPath: savedAudioURL.path) {
             print("오디오 저장 성공!")
+
+            // 저장 성공 시 delegate에 저장된 오디오의 URL 전달
+            self.delegate?.didSaveRecording(with: savedAudioURL)
             self.completionHandler?(true, savedAudioURL)
         } else {
             print("오디오 저장 실패.")
@@ -161,8 +169,9 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
 
 
 
+
     func getRecordingURL() -> URL {
-        return getDocumentsDirectory().appendingPathComponent("recording.m4a")
+        return getDocumentsDirectory().appendingPathComponent("recording.m4a") //mp3..로 해도 충분할 듯
     }
 }
 

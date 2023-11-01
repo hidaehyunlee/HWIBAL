@@ -6,8 +6,8 @@
 //
 import AVFoundation
 import EventBus
-import UIKit
 import SnapKit
+import UIKit
 
 class CreatePageView: UIView, RootView, UITextViewDelegate {
     let bgView = UIView()
@@ -16,8 +16,8 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
     let firstImageView = UIImageView()
     let soundWaveView = UIView()
     var isImageViewAttached: Bool = false
+    let playButton = CircleButton(type: .play)
 
-    
     let textView = UITextView()
     let paragraphStyle2 = NSMutableParagraphStyle()
     
@@ -47,9 +47,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         addSubview(bgView)
         
         dateLabel.textColor = ColorGuide.textHint
-        
         dateLabel.font = FontGuide.size14
-        
         let paragraphStyle1 = NSMutableParagraphStyle()
         paragraphStyle1.lineHeightMultiple = 1.18
         dateLabel.attributedText = NSMutableAttributedString(string: getCurrentDateString(), attributes: [NSAttributedString.Key.kern: -0.15, NSAttributedString.Key.paragraphStyle: paragraphStyle1])
@@ -84,6 +82,8 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         soundWaveView.backgroundColor = .systemGray
         soundWaveView.isHidden = true
         addSubview(soundWaveView)
+        
+        addSubview(playButton)
     }
     
     @objc func textViewDidChange(_ textView: UITextView) {
@@ -111,13 +111,20 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         bgView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 168)
         bgView.backgroundColor = UIColor(red: 60/60, green: 60/60, blue: 67/67, alpha: 0.36)
         
-        dateLabel.frame = CGRect(x: 120, y: bgView.frame.maxY - 25 - 20, width: 153, height: 20)
+        dateLabel.snp.makeConstraints { make in
+            make.width.equalTo(153)
+            make.height.equalTo(20)
+            make.top.equalTo(bgView.snp.bottom).offset(-25 - 20)
+            make.leading.equalToSuperview().offset(120)
+            make.centerX.equalToSuperview()
+        }
         
-        let imageViewWidth: CGFloat = 241
-        let imageViewHeight: CGFloat = 150.02
-        let imageViewX: CGFloat = 127
-        let imageViewY: CGFloat = bounds.height - imageViewHeight - 40
-        firstImageView.frame = CGRect(x: imageViewX, y: imageViewY, width: imageViewWidth, height: imageViewHeight)
+        firstImageView.snp.makeConstraints { make in
+            make.width.equalTo(241)
+            make.height.equalTo(150.02)
+            make.centerX.equalToSuperview().offset(-bounds.width/2 + 127 + 241/2)
+            make.bottom.equalToSuperview().offset(-40)
+        }
         
         textView.frame = CGRect(x: dateLabel.frame.origin.x, y: dateLabel.frame.maxY + 10, width: bounds.width - 40, height: 30)
         
@@ -131,7 +138,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
             width: textViewWidth,
             height: textViewHeight
         )
-        let textViewMaxHeight: CGFloat = bounds.height - textView.frame.origin.y - (cameraButton.buttonSize + 2 * 40) 
+        let textViewMaxHeight: CGFloat = bounds.height - textView.frame.origin.y - (cameraButton.buttonSize + 2 * 40)
         textView.frame = CGRect(
             x: textViewPaddingHorizontal,
             y: dateLabel.frame.maxY + textViewPaddingVertical,
@@ -143,27 +150,33 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
             make.width.equalTo(150)
             make.height.equalTo(20)
             make.bottom.equalTo(firstImageView.snp.top).offset(-15)
-            make.right.equalToSuperview().offset(-24)
+            make.trailing.equalToSuperview().offset(-24)
         }
         counterLabel.alpha = 1.0
         
-        let cameraButtonX: CGFloat = 24
-        let cameraButtonSize: CGFloat = cameraButton.buttonSize
-        let cameraButtonY = bounds.height - cameraButtonSize - 40
-        cameraButton.frame = CGRect(x: cameraButtonX, y: cameraButtonY, width: cameraButtonSize, height: cameraButtonSize)
+        cameraButton.snp.makeConstraints { make in
+            make.width.equalTo(cameraButton.buttonSize)
+            make.height.equalTo(cameraButton.buttonSize)
+            make.leading.equalToSuperview().offset(24)
+            make.bottom.equalToSuperview().offset(-40)
+        }
         
         let soundButtonX: CGFloat = 73
         let soundButtonSize: CGFloat = soundButton.buttonSize
         let soundButtonY = bounds.height - soundButtonSize - 40
         soundButton.frame = CGRect(x: soundButtonX, y: soundButtonY, width: soundButtonSize, height: soundButtonSize)
         
+        let playButtonX: CGFloat = soundButton.frame.origin.x
+        let playButtonSize: CGFloat = playButton.buttonSize
+        let playButtonY = soundButton.frame.origin.y - playButtonSize - 10
+        playButton.frame = CGRect(x: playButtonX, y: playButtonY, width: playButtonSize, height: playButtonSize)
+        
         let soundWaveX: CGFloat = soundButton.frame.origin.x + soundButton.frame.width + 10
         let soundWaveY: CGFloat = soundButton.frame.origin.y
         soundWaveView.frame = CGRect(x: soundWaveX, y: soundWaveY, width: 50, height: soundButton.frame.height)
         
-        
         if isImageViewAttached {
-            let textViewNewHeight = textView.frame.height / 2
+            let textViewNewHeight = textView.frame.height/2
             textView.frame = CGRect(
                 x: textView.frame.origin.x,
                 y: textView.frame.origin.y,
