@@ -15,6 +15,10 @@ final class MyPageView: UIView, RootView {
         view.layer.cornerRadius = 12
         view.clipsToBounds = true
         view.isUserInteractionEnabled = true
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowRadius = 12
+        view.layer.masksToBounds = false
         return view
     }()
     
