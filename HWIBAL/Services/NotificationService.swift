@@ -40,19 +40,21 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("노티 등장")
+        // 포그라운드 상태에서 실행될 로직
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
         
-        completionHandler([.list, .banner, .sound])
+        completionHandler([.list, .banner, .sound, .badge])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // 노티 클릭 시 실행될 로직
         if response.notification.request.identifier == "deleteNotification" {
             UNUserNotificationCenter.current().removeAllDeliveredNotifications()
             UIApplication.shared.applicationIconBadgeNumber = 0
             
+            // 삭제 로직 없어져도 됨
             DispatchQueue.main.async {
                 print("삭제 로직 실행")
                 EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)

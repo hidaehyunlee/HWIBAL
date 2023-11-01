@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let _ = application.beginBackgroundTask(expirationHandler: {
-            // 백그라운드 태스크가 종료될 때 실행할 코드
+            // 백그라운드 태스크가 종료될 때 실행할 코드 -> 노티(푸시알림) 이벤트 발송
             NotificationService.shared.autoDeleteNotification()
             print("자동 휘발 실행 성공")
         })
@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func startAutoDeleteTask() {
-        // 백그라운드에서 실행될 함수를 호출할 타이머 설정
+        // 백그라운드에서 실행될 함수를 호출할 타이머 설정 -> withTimeInterval: * 60 * 60 * 24 처리하면 autoExpireDays일 후 실행, repeats: true로 변경
         Timer.scheduledTimer(withTimeInterval: Double((SignInService.shared.signedInUser?.autoExpireDays ?? 7)) * 5, repeats: false) { _ in
             // 원하는 주기(예: n일 간격)로 실행될 코드 작성
             
