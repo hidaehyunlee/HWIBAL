@@ -33,45 +33,54 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
 
     private func setupPlayButton() {
-        playButton = UIButton(frame: .zero)
-        playButton?.isHidden = true
-        playButton?.setImage(UIImage(named: "play"), for: .normal)
-        playButton?.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
-    
-        playButton?.backgroundColor = .red
-        playButton?.layer.cornerRadius = 25
-        view.addSubview(playButton!)
-    
-        let distanceBetweenButtons = rootView.cameraButton.frame.minY - rootView.soundButton.frame.maxY
-        let playButtonCenterYOffset = rootView.soundButton.frame.midY - (distanceBetweenButtons / 2)
+        print("setupPlayButton called")
+        
+        let PlayButton = rootView.playButton
+        PlayButton.isHidden = false
+        PlayButton.setImage(UIImage(named: "play"), for: .normal)
+        PlayButton.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
+        PlayButton.backgroundColor = .red
+        PlayButton.layer.cornerRadius = 25
 
-        playButton?.snp.makeConstraints { make in
+        PlayButton.snp.makeConstraints { make in
             make.centerX.equalTo(view)
-            make.centerY.equalTo(playButtonCenterYOffset)
+            make.bottom.equalTo(rootView.soundButton.snp.top).offset(-10)
             make.width.height.equalTo(50)
         }
 
+        playButton = PlayButton
         view.bringSubviewToFront(playButton!)
     }
-    
+
     @objc func startOrStopRecording() {
         let recordingVC = RecordingViewController()
         recordingVC.modalPresentationStyle = .custom
         recordingVC.transitioningDelegate = recordingVC
         recordingVC.completionHandler = { [weak self] saved, url in
+            print("Completion handler called!")
             if saved, let audioURL = url {
                 print("받은 오디오 URL: \(audioURL)")
                 self?.playButton?.isHidden = false
+                self?.playButton?.backgroundColor = .green
                 self?.savedAudioURL = url
+                print(self?.playButton?.isHidden ?? "nil")
+                if let superviewOfPlayButton = self?.playButton?.superview {
+                    print("Superview found!")
+                } else {
+                    print("Superview not found!")
+                }
+                self?.view.bringSubviewToFront(self?.playButton ?? UIView())
             }
         }
         present(recordingVC, animated: true, completion: nil)
     }
 
+
+
+
     @objc func playSavedAudio() {
         if audioPlayer?.isPlaying == true {
             audioPlayer?.stop()
-            // 필요하면 UI 업데이트 로직 추가 (예: 재생 버튼 아이콘 변경)
         } else {
             guard let url = savedAudioURL else {
                 return
@@ -257,8 +266,8 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         attachedImageView = imageView
         
         imageView.snp.makeConstraints { make in
-            make.left.equalTo(rootView.textView).offset(rootView.textView.textContainerInset.left)
-            make.right.equalTo(rootView.textView).offset(-rootView.textView.textContainerInset.right)
+            make.leading.equalTo(rootView.textView).offset(rootView.textView.textContainerInset.left)
+            make.trailing.equalTo(rootView.textView).offset(-rootView.textView.textContainerInset.right)
             make.top.equalTo(rootView.textView.snp.bottom).offset(10)
             make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10)
         }
