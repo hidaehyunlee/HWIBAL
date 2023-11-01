@@ -41,6 +41,18 @@ class ReportTimeZoneCell: UICollectionViewCell {
         return label
     }()
     
+    private let subView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private let timeZoneView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     lazy var fromTimeUnit: UILabel = {
         let label = UILabel()
         label.font = FontGuide.size14Bold
@@ -90,6 +102,14 @@ class ReportTimeZoneCell: UICollectionViewCell {
     private lazy var untilTimeStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [untilTimeUnit, untilTime])
         stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 10
+        return stackView
+    }()
+    
+    private lazy var timeZoneStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [fromTimeStackView, untilTimeStackView])
+        stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 10
         return stackView
@@ -206,18 +226,31 @@ class ReportTimeZoneCell: UICollectionViewCell {
             make.leading.equalToSuperview().offset(25)
         }
         
-        view.addSubview(fromTimeStackView)
-        fromTimeStackView.snp.makeConstraints { make in
-            make.top.equalTo(subTitle.snp.bottom).offset(109)
-            make.leading.equalToSuperview().offset(25)
+        view.addSubview(subView)
+        subView.snp.makeConstraints { make in
+            make.top.equalTo(subTitle.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
+        subView.addSubview(timeZoneView)
+        timeZoneView.snp.makeConstraints { make in
+            make.height.equalTo(190)
+            make.centerY.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        timeZoneView.addSubview(fromTimeStackView)
+        fromTimeStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(25)
+        }
+
         view.addSubview(untilTimeStackView)
         untilTimeStackView.snp.makeConstraints { make in
             make.top.equalTo(fromTimeStackView.snp.bottom).offset(10)
             make.trailing.equalToSuperview().offset(-25)
         }
-        
+
         view.addSubview(fromTimeLine)
         fromTimeLine.snp.makeConstraints { make in
             make.height.equalTo(4)
@@ -225,7 +258,7 @@ class ReportTimeZoneCell: UICollectionViewCell {
             make.leading.equalTo(fromTimeStackView.snp.trailing).offset(10)
             make.trailing.equalToSuperview()
         }
-        
+
         view.addSubview(untilTimeLine)
         untilTimeLine.snp.makeConstraints { make in
             make.height.equalTo(4)
