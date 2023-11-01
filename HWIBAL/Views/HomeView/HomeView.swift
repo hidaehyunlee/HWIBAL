@@ -139,25 +139,21 @@ final class HomeView: UIView, RootView {
             make.bottom.equalToSuperview().offset(-40)
         }
         
-        let removeButton = removeTitle()
-        removeBar.addSubview(removeButton)
+        let removeLabel = UILabel()
+        removeLabel.textColor = .white
+        removeLabel.font = FontGuide.size19Bold
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.04
+        removeLabel.attributedText = NSMutableAttributedString(string: "다, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         
-        removeButton.snp.makeConstraints { make in
+        removeBar.addSubview(removeLabel)
+        
+        removeLabel.snp.makeConstraints { make in
             make.centerX.equalTo(removeBar)
             make.centerY.equalTo(removeBar)
             make.width.equalTo(83)
             make.height.equalTo(24)
         }
-    }
-    
-    private func removeTitle() -> UILabel {
-        let removeButton = UILabel()
-        removeButton.textColor = .white
-        removeButton.font = FontGuide.size19Bold
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.04
-        removeButton.attributedText = NSMutableAttributedString(string: "다, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        return removeButton
     }
     
     private func createButton() {
