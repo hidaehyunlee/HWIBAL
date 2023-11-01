@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class ReportViewController: RootViewController<ReportView> {
     private var ReportPageItems: [ReportPage] = []
@@ -21,7 +22,6 @@ final class ReportViewController: RootViewController<ReportView> {
             emptyView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-            
             emptyView.closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         } else {
             initializeUI()
