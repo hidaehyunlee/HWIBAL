@@ -107,7 +107,7 @@ final class MyPageView: UIView, RootView {
         
         addSubview(reportSummaryView)
         reportSummaryView.snp.makeConstraints { make in
-            make.top.equalTo(layoutMarginsGuide.snp.top).offset(50)
+            make.top.equalTo(layoutMarginsGuide.snp.top).offset(35)
             make.centerX.equalToSuperview()
             make.width.equalTo(343)
             make.height.equalTo(161)
@@ -133,7 +133,8 @@ final class MyPageView: UIView, RootView {
         
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(reportSummaryView.snp.bottom).offset(50)
+            make.top.equalTo(reportSummaryView.snp.bottom).offset(35
+            )
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(300)
@@ -142,7 +143,7 @@ final class MyPageView: UIView, RootView {
         addSubview(withdrawalButton)
         withdrawalButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-50)
+            make.bottom.equalToSuperview().offset(-40)
         }
     }
     
