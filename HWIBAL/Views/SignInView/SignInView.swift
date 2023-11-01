@@ -43,7 +43,19 @@ final class SignInView: UIView, RootView {
         button.colorScheme = .light
         button.style = .wide
         button.addTarget(self, action: #selector(handleGoogleSignIn), for: .touchUpInside)
+        button.snp.makeConstraints { make in
+            make.width.equalTo(UIScreen.main.bounds.width - 48)
+            make.height.equalTo(56)
+        }
         return button
+    }()
+    
+    private lazy var signInComponents: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [imageAndTitle, googleSignInButton])
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.spacing = 54
+        return stackView
     }()
     
     //let googleSignInButton = MainButton(type: .googleLogin)
@@ -51,17 +63,9 @@ final class SignInView: UIView, RootView {
     func initializeUI() {
         backgroundColor = .systemBackground
         
-        addSubview(imageAndTitle)
-        imageAndTitle.snp.makeConstraints { make in
-            make.top.lessThanOrEqualToSuperview().offset(246)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-        }
-
-        addSubview(googleSignInButton)
-        googleSignInButton.snp.makeConstraints { make in
-            make.height.equalTo(56)
-            make.top.equalTo(imageAndTitle.snp.bottom).offset(54)
+        addSubview(signInComponents)
+        signInComponents.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
         }
