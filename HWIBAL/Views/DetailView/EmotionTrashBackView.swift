@@ -13,15 +13,15 @@ class EmotionTrashBackView: UIView {
         let imageView = UIImageView()
 
         imageView.contentMode = .scaleAspectFit
-
+        
         return imageView
     }()
 
     lazy var closeButton: UIButton = {
         let button = UIButton()
 
-        button.setTitle("X", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage(systemName: "x.circle.fill"), for: .normal)
+        button.tintColor = UIColor(red: 140/255, green: 140/255, blue: 140/255, alpha: 1.0)
 
         return button
     }()
@@ -37,7 +37,7 @@ class EmotionTrashBackView: UIView {
     }
 
     private func setupViews() {
-        backgroundColor = ColorGuide.main
+        backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
 
         addSubview(backImageView)
         addSubview(closeButton)

@@ -14,7 +14,18 @@ final class ReportViewController: RootViewController<ReportView> {
         super.viewDidLoad()
 
         overrideUserInterfaceStyle = .dark
-        initializeUI()
+        
+        if ReportService.shared.calculateEmotionTrashCount() == 0 {
+            let emptyView = ReportEmptyView()
+            view.addSubview(emptyView)
+            emptyView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            
+            emptyView.closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        } else {
+            initializeUI()
+        }
     }
     
 }
@@ -39,6 +50,9 @@ private extension ReportViewController {
     
     @objc func goToFirstButtonTapped() {
         rootView.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.rootView.updateNumberOfPageLabel(1)
+        }
     }
 }
 

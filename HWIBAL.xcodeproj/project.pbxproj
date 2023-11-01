@@ -35,7 +35,7 @@
 		3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445612ADF79D80003DCD4 /* SignInService.swift */; };
 		3F9445662ADFD5EA0003DCD4 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445652ADFD5EA0003DCD4 /* ReportService.swift */; };
 		3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */; };
-		3FF18E762AE76BEE00CC70D2 /* hwibalAudio_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */; };
+		3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */; };
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
 		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
 		DE01F2A82AE819DA004663F7 /* EmotionTrashBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */; };
@@ -48,7 +48,11 @@
 		DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */; };
 		DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */; };
 		DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0F2ADE75D900C77FE4 /* DummyData.swift */; };
+		DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */; };
+		DE7930282AF0EAA40040258A /* EmptyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7930272AF0EAA40040258A /* EmptyDetailView.swift */; };
 		DEDA76992ADFB98600EA41C1 /* EmotionTrashCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */; };
+		DEECD7352AEBC86600BE20CE /* DSWaveformImage in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7342AEBC86600BE20CE /* DSWaveformImage */; };
+		DEECD7372AEBC86600BE20CE /* DSWaveformImageViews in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7362AEBC86600BE20CE /* DSWaveformImageViews */; };
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
@@ -90,7 +94,7 @@
 		3F9445612ADF79D80003DCD4 /* SignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInService.swift; sourceTree = "<group>"; };
 		3F9445652ADFD5EA0003DCD4 /* ReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportService.swift; sourceTree = "<group>"; };
 		3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashService.swift; sourceTree = "<group>"; };
-		3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibalAudio_2.mp3; sourceTree = "<group>"; };
+		3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportEmptyView.swift; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashBackView.swift; sourceTree = "<group>"; };
@@ -101,6 +105,9 @@
 		DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DE434E0F2ADE75D900C77FE4 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
+		DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibal_test1.mp3; sourceTree = "<group>"; };
+		DE7930272AF0EAA40040258A /* EmptyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDetailView.swift; sourceTree = "<group>"; };
+		DEC256242AEF75E9002917C4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashCell.swift; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,8 +129,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEECD7352AEBC86600BE20CE /* DSWaveformImage in Frameworks */,
 				DEFE3A222AD541250076FE11 /* EventBus in Frameworks */,
 				3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */,
+				DEECD7372AEBC86600BE20CE /* DSWaveformImageViews in Frameworks */,
 				0791B34B2AE10B59004B8740 /* AVFoundation.framework in Frameworks */,
 				3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */,
 				DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */,
@@ -155,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				3F783A292AD8C41B0024D692 /* ReportView.swift */,
+				3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */,
 				3F783A342AD931C70024D692 /* ReportSummaryCell.swift */,
 				3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */,
 				3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */,
@@ -190,6 +200,7 @@
 				DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */,
 				DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */,
 				DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */,
+				DE7930272AF0EAA40040258A /* EmptyDetailView.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -197,6 +208,7 @@
 		DEFE39F32AD53C3A0076FE11 = {
 			isa = PBXGroup;
 			children = (
+				DEC256242AEF75E9002917C4 /* README.md */,
 				3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */,
 				DEFE39FE2AD53C3A0076FE11 /* HWIBAL */,
 				DEFE39FD2AD53C3A0076FE11 /* Products */,
@@ -215,7 +227,6 @@
 		DEFE39FE2AD53C3A0076FE11 /* HWIBAL */ = {
 			isa = PBXGroup;
 			children = (
-				3FF18E752AE76BEE00CC70D2 /* hwibalAudio_2.mp3 */,
 				DE434DF52ADCCD8800C77FE4 /* Services */,
 				DEFE3A0D2AD53C3B0076FE11 /* Info.plist */,
 				DEFE3A2E2AD542CF0076FE11 /* Models */,
@@ -229,6 +240,7 @@
 		DEFE3A132AD53E720076FE11 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */,
 				DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */,
 				DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */,
 				DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */,
@@ -341,6 +353,8 @@
 				3F9445582ADCDE4B0003DCD4 /* DGCharts */,
 				DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */,
 				DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */,
+				DEECD7342AEBC86600BE20CE /* DSWaveformImage */,
+				DEECD7362AEBC86600BE20CE /* DSWaveformImageViews */,
 			);
 			productName = HWIBAL;
 			productReference = DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */;
@@ -375,6 +389,7 @@
 				3F14EA8C2AD55E6C0047CE34 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				3F9445572ADCDE4B0003DCD4 /* XCRemoteSwiftPackageReference "Charts" */,
 				DE434DF02ADCCD1100C77FE4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				DEECD7332AEBC86600BE20CE /* XCRemoteSwiftPackageReference "DSWaveformImage" */,
 			);
 			productRefGroup = DEFE39FD2AD53C3A0076FE11 /* Products */;
 			projectDirPath = "";
@@ -390,8 +405,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */,
 				DEFE3A0C2AD53C3B0076FE11 /* LaunchScreen.storyboard in Resources */,
-				3FF18E762AE76BEE00CC70D2 /* hwibalAudio_2.mp3 in Resources */,
 				DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,11 +432,13 @@
 				3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */,
 				3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */,
 				3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */,
+				3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */,
 				3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */,
 				DE434E002ADCCE5200C77FE4 /* SignInView.swift in Sources */,
 				3F783A2A2AD8C41B0024D692 /* ReportView.swift in Sources */,
 				DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */,
 				DEDA76992ADFB98600EA41C1 /* EmotionTrashCell.swift in Sources */,
+				DE7930282AF0EAA40040258A /* EmptyDetailView.swift in Sources */,
 				DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */,
 				DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */,
 				3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */,
@@ -692,6 +709,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		DEECD7332AEBC86600BE20CE /* XCRemoteSwiftPackageReference "DSWaveformImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmrschmidt/DSWaveformImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.2;
+			};
+		};
 		DEFE3A202AD541250076FE11 /* XCRemoteSwiftPackageReference "EventBus" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/swiftarium/EventBus.git";
@@ -722,6 +747,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DE434DF02ADCCD1100C77FE4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		DEECD7342AEBC86600BE20CE /* DSWaveformImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEECD7332AEBC86600BE20CE /* XCRemoteSwiftPackageReference "DSWaveformImage" */;
+			productName = DSWaveformImage;
+		};
+		DEECD7362AEBC86600BE20CE /* DSWaveformImageViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEECD7332AEBC86600BE20CE /* XCRemoteSwiftPackageReference "DSWaveformImage" */;
+			productName = DSWaveformImageViews;
 		};
 		DEFE3A212AD541250076FE11 /* EventBus */ = {
 			isa = XCSwiftPackageProductDependency;

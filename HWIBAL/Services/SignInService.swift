@@ -21,6 +21,7 @@ class SignInService {
             UserService.shared.createUser(email: email, name: name, id: id, autoExpireDays: autoExpireDays)
             signedInUser = UserService.shared.getExistUser(email)
             setSignedInUser(email)
+            UserDefaults.standard.set(false, forKey: "isDarkMode")
             UserService.shared.printAllUsers()
         }
     }
@@ -28,7 +29,6 @@ class SignInService {
     func setSignedInUser(_ email: String) {
         UserDefaults.standard.set(email, forKey: "loadSignedInUserEmail")
         UserDefaults.standard.set(true, forKey: "isSignedIn")
-        UserDefaults.standard.set(false, forKey: "isDarkMode")
     }
     
     func SetOffAutoSignIn(_ email: String) {
