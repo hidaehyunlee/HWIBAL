@@ -22,9 +22,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         setupNavigationBar()
         view.backgroundColor = .systemBackground
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    
         rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
 
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
@@ -121,20 +118,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         imagePicker.sourceType = sourceType
         imagePicker.delegate = self
         present(imagePicker, animated: true)
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let userInfo = notification.userInfo,
-           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-        {
-            keyboardHeight = keyboardFrame.height
-            adjustLayoutForKeyboardState()
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        keyboardHeight = 0
-        adjustLayoutForKeyboardState()
     }
     
     func adjustLayoutForKeyboardState() {
