@@ -299,21 +299,20 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         rankTitle.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
         }
-        
+
         rankView.addSubview(seperateLineView)
         seperateLineView.snp.makeConstraints { make in
             make.height.equalTo(1)
             make.top.equalTo(rankTitle.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
-            make.centerX.equalToSuperview()
         }
-        
+
         rankView.addSubview(rank)
         rank.snp.makeConstraints { make in
             make.top.equalTo(seperateLineView.snp.bottom).offset(13)
             make.leading.trailing.bottom.equalToSuperview()
         }
-        
+
         view.addSubview(daysOfWeekView)
         daysOfWeekView.snp.makeConstraints { make in
             make.top.equalTo(subTitle.snp.bottom)
