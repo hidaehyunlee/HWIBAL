@@ -7,6 +7,7 @@
 
 import AVFoundation
 import UIKit
+import CoreData
 
 protocol RecordingViewControllerDelegate: AnyObject {
     func didSaveRecording(with url: URL)
@@ -24,11 +25,14 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     var cancelButton: UIButton!
     var completionHandler: ((Bool, URL?) -> Void)?
     weak var delegate: RecordingViewControllerDelegate?
+    var context: NSManagedObjectContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setupUI()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        context = appDelegate.persistentContainer.viewContext
     }
  
     func setupUI() {
@@ -157,7 +161,22 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         if fileManager.fileExists(atPath: savedAudioURL.path) {
             print("오디오 저장 성공!")
 
-            // 저장 성공 시 delegate에 저장된 오디오의 URL 전달
+            // Core Data에 저장
+            if let context = context {
+                let recording = NSEntityDescription.insertNewObject(forEntityName: "Recording", into: context) as! Recording
+                recording.filePath = savedAudioURL.absoluteString
+                recording.dateRecorded = Date()
+                recording.duration = currentRecordingTime
+                recording.title = "Recording on \(recording.dateRecorded!)"
+                
+                do {
+                    try context.save()
+                } catch {
+                    print("Failed to save recording to Core Data: \(error)")
+                }
+            }
+
+            // 저장 성공 -> delegate에 저장된 오디오의 URL 전달
             self.delegate?.didSaveRecording(with: savedAudioURL)
             self.completionHandler?(true, savedAudioURL)
         } else {
@@ -169,9 +188,8 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
 
 
 
-
     func getRecordingURL() -> URL {
-        return getDocumentsDirectory().appendingPathComponent("recording.m4a") //mp3..로 해도 충분할 듯
+        return getDocumentsDirectory().appendingPathComponent("recording.m4a")
     }
 }
 

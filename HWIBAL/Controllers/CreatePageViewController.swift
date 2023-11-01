@@ -8,8 +8,9 @@ import AVFoundation
 import EventBus
 import SnapKit
 import UIKit
+import CoreData
 
-class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
+class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate  {
     var keyboardHeight: CGFloat = 0
     private var attachedImageView: UIImageView?
     var playButton: UIButton?
@@ -76,11 +77,10 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
 
 
-
-
     @objc func playSavedAudio() {
         if audioPlayer?.isPlaying == true {
             audioPlayer?.stop()
+            playButton?.backgroundColor = .green
         } else {
             guard let url = savedAudioURL else {
                 return
@@ -88,11 +88,19 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 
             do {
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.delegate = self
                 audioPlayer?.prepareToPlay()
                 audioPlayer?.play()
+                playButton?.backgroundColor = .red
             } catch {
                 print("오디오 재생에 실패했습니다. \(error)")
             }
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            playButton?.backgroundColor = .green
         }
     }
 
