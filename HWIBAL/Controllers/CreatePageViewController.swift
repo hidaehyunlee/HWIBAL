@@ -15,21 +15,29 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     var playButton: UIButton?
     var savedAudioURL: URL?
     private var audioPlayer: AVAudioPlayer?
+    private var activeTextView: UITextView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationBar()
+        hideKeyboard()
+        registerForKeyboardNotifications()
         view.backgroundColor = .systemBackground
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    
         rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
 
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
         
         setupPlayButton()
+    }
+    
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        view.frame.origin.y = 0
     }
 
     private func setupPlayButton() {
@@ -121,20 +129,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         imagePicker.sourceType = sourceType
         imagePicker.delegate = self
         present(imagePicker, animated: true)
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let userInfo = notification.userInfo,
-           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-        {
-            keyboardHeight = keyboardFrame.height
-            adjustLayoutForKeyboardState()
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        keyboardHeight = 0
-        adjustLayoutForKeyboardState()
     }
     
     func adjustLayoutForKeyboardState() {
@@ -272,5 +266,11 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
             make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10)
         }
         rootView.isImageViewAttached = true
+    }
+}
+
+extension CreatePageViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        activeTextView = textView
     }
 }
