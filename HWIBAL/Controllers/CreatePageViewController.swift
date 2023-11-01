@@ -20,8 +20,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         super.viewDidLoad()
         
         setupNavigationBar()
-        hideKeyboard()
-        registerForKeyboardNotifications()
         view.backgroundColor = .systemBackground
         
         rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
@@ -29,14 +27,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
         
         setupPlayButton()
-    }
-    
-    private func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func keyboardWillHide(_ notification: Notification) {
-        view.frame.origin.y = 0
     }
 
     private func setupPlayButton() {

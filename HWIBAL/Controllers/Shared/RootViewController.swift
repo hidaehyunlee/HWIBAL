@@ -18,6 +18,7 @@ class RootViewController<View: RootView>: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         rootView.initializeUI()
+        hideKeyboard()
     }
     
     func hideKeyboard() {
