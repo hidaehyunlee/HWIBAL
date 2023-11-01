@@ -57,7 +57,7 @@ class ReportSummaryCell: UICollectionViewCell {
         chartView.rightAxis.enabled = false
         chartView.legend.enabled = false
         chartView.animate(yAxisDuration: 2, easingOption: .easeInBack)
-        chartView.setViewPortOffsets(left: 10, top: 15, right: 10, bottom: 25)
+        chartView.setViewPortOffsets(left: 10, top: 20, right: 10, bottom: 25)
         return chartView
     }()
     
