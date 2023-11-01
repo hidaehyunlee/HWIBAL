@@ -15,7 +15,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     var playButton: UIButton?
     var savedAudioURL: URL?
     private var audioPlayer: AVAudioPlayer?
-    private var activeTextView: UITextView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -266,11 +265,5 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
             make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10)
         }
         rootView.isImageViewAttached = true
-    }
-}
-
-extension CreatePageViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        activeTextView = textView
     }
 }
