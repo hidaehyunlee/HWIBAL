@@ -26,13 +26,19 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     var completionHandler: ((Bool, URL?) -> Void)?
     weak var delegate: RecordingViewControllerDelegate?
     var context: NSManagedObjectContext?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setupUI()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        context = appDelegate.persistentContainer.viewContext
+
+        let container = NSPersistentContainer(name: "Model")
+        container.loadPersistentStores(completionHandler: { storeDescription, error in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        context = container.viewContext
     }
  
     func setupUI() {
