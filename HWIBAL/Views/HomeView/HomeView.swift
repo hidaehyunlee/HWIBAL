@@ -62,8 +62,8 @@ final class HomeView: UIView, RootView {
         setupConstraints()
         myPageButton()
         setupHwibariImageView()
-        setupRemove()
-        createButton()
+        setupButton()
+//        createButton()
     }
     
     // MARK: - Private Functions
@@ -122,7 +122,7 @@ final class HomeView: UIView, RootView {
         hwibariImage.addGestureRecognizer(hwibariTapGesture)
     }
     
-    private func setupRemove() {
+    private func setupButton() {
         let removeBar = UIView()
         removeBar.backgroundColor = ColorGuide.main
         removeBar.layer.cornerRadius = 4
@@ -132,10 +132,12 @@ final class HomeView: UIView, RootView {
         
         addSubview(removeBar)
         
+        let squareView = createSquareView()
+        
         removeBar.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.width.equalTo(279)
             make.leading.equalToSuperview().offset(24)
+            make.trailing.equalTo(squareView.snp.leading).offset(-10)
             make.bottom.equalToSuperview().offset(-40)
         }
         
@@ -155,34 +157,35 @@ final class HomeView: UIView, RootView {
             make.height.equalTo(24)
         }
     }
-    
-    private func createButton() {
-        let squareView = UIView()
-        squareView.backgroundColor = .white
-        squareView.layer.cornerRadius = 4
-        squareView.layer.borderWidth = 1.5
-        squareView.layer.borderColor = ColorGuide.main.cgColor
-        let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
-        squareView.addGestureRecognizer(squareViewTapGesture)
         
-        addSubview(squareView)
-        
-        squareView.snp.makeConstraints { make in
-            make.width.equalTo(56)
-            make.height.equalTo(56)
-            make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-40)
+        private func createSquareView() -> UIView {
+            let squareView = UIView()
+            squareView.backgroundColor = .white
+            squareView.layer.cornerRadius = 4
+            squareView.layer.borderWidth = 1.5
+            squareView.layer.borderColor = ColorGuide.main.cgColor
+            let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
+            squareView.addGestureRecognizer(squareViewTapGesture)
+            
+            addSubview(squareView)
+            
+            squareView.snp.makeConstraints { make in
+                make.width.equalTo(56)
+                make.height.equalTo(56)
+                make.trailing.equalToSuperview().offset(-24)
+                make.bottom.equalToSuperview().offset(-40)
+            }
+            
+            let penImage = createPenImage()
+            squareView.addSubview(penImage)
+            
+            penImage.snp.makeConstraints { make in
+                make.width.equalTo(25)
+                make.height.equalTo(25)
+                make.center.equalToSuperview()
+            }
+            return squareView
         }
-        
-        let penImage = createPenImage()
-        squareView.addSubview(penImage)
-        
-        penImage.snp.makeConstraints { make in
-            make.width.equalTo(25)
-            make.height.equalTo(25)
-            make.center.equalToSuperview()
-        }
-    }
     
     private func createPenImage() -> UIView {
         let penImage = UIView()
