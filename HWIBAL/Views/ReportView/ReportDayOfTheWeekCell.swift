@@ -41,7 +41,7 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         return label
     }()
     
-    let Largecircle: UILabel = {
+    let largeCircle: UILabel = {
         let label = UILabel()
         label.backgroundColor = ColorGuide.main
         label.font = FontGuide.size64Bold
@@ -227,8 +227,8 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
             let isMaxDay = day == maxDay
             let circleLabel: UILabel
             if isMaxDay {
-                circleLabel = Largecircle
-                let diameter = UIScreen.main.bounds.width - 278 // 셀 마진 24, 컨텐츠 마진 25, 작은 circle 지름30
+                circleLabel = largeCircle
+                let diameter = UIScreen.main.bounds.width - 278 // 셀 마진 24, 컨텐츠 마진 25, 작은 circle 지름 30
                 circleLabel.layer.cornerRadius = diameter/2
                 circleLabel.snp.makeConstraints { make in
                     make.width.height.equalTo(diameter)
