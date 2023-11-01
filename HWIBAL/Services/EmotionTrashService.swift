@@ -97,21 +97,6 @@ class EmotionTrashService {
         }
     }
     
-    // auto delete: 유저의 감정쓰레기 자동 삭제
-    func autoDeleteEmotionTrash(_ user: User, _ day: Int) {
-        let totalEmotionTrashes = fetchTotalEmotionTrashes(user)
-        let calendar = Calendar.current
-        
-        for emotionTrash in totalEmotionTrashes {
-            if let trashDate = emotionTrash.timestamp {
-                if calendar.isDate(trashDate, inSameDayAs: calendar.date(byAdding: .day, value: -day, to: Date())!) {
-                    deleteEmotionTrash(user, emotionTrash.id!)
-                }
-            }
-        }
-        NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
-    }
-    
     // fetch: 유저의 전체 감정쓰레기 가져오기
     func fetchTotalEmotionTrashes(_ user: User) -> [EmotionTrash] {
         let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
