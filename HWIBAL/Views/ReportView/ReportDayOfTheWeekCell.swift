@@ -51,6 +51,12 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         return label
     }()
     
+    private let daysOfWeekView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     private lazy var daysOfWeekStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -280,17 +286,12 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
             make.leading.equalToSuperview().offset(25)
         }
         
-        view.addSubview(daysOfWeekStackView)
-        daysOfWeekStackView.snp.makeConstraints { make in
-            make.top.equalTo(subTitle.snp.bottom).offset(84)
-            make.leading.equalToSuperview().offset(25)
-        }
-        
         view.addSubview(rankView)
         rankView.snp.makeConstraints { make in
-            make.width.equalTo(295)
             make.height.equalTo(111)
             make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().offset(-25)
             make.bottom.equalToSuperview().offset(-40)
         }
         
@@ -311,6 +312,20 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         rank.snp.makeConstraints { make in
             make.top.equalTo(seperateLineView.snp.bottom).offset(13)
             make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        view.addSubview(daysOfWeekView)
+        daysOfWeekView.snp.makeConstraints { make in
+            make.top.equalTo(subTitle.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(rankView.snp.top)
+        }
+        
+        daysOfWeekView.addSubview(daysOfWeekStackView)
+        daysOfWeekStackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().offset(-25)
         }
     }
 }
