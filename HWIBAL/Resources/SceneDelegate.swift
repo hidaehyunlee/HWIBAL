@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 SignInService.shared.signedInUser = user
                 window?.rootViewController = MainViewController()
                 SignInService.shared.getSignedInUserInfo()
+                NotificationCenter.default.post(name: NSNotification.Name("UserSignIn"), object: nil)
             }
         } else {
             window?.rootViewController = SignInViewController()

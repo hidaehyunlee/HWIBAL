@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let setting = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(setting)
         }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(checkAutoDelete), name: NSNotification.Name("UserSignIn"), object: nil)
-        
+
         return true
     }
     
@@ -35,13 +35,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("자동 휘발 완료")
                 NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
                 print("감쓰 개수 업데이트 완료")
-                
+
                 // 다음 자동 삭제를 위해 expire date 업데이트
                 let autoExpireDays = UserDefaults.standard.integer(forKey: "autoExpireDays_\(email))")
                 UserService.shared.updateUser(email: email, autoExpireDays: autoExpireDays)
+            } else {
+                let differenceInDays = Calendar.current.dateComponents([.day], from: currentDate, to: autoExpireDate).day
+                print("자동 휘발일 D-\(String(describing: differenceInDays))")
             }
-            let differenceInDays = Calendar.current.dateComponents([.day], from: currentDate, to: autoExpireDate).day
-            print("자동 휘발일 D-\(String(describing: differenceInDays))")
         }
     }
 
