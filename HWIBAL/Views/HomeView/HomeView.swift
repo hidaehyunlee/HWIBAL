@@ -263,13 +263,18 @@ final class HomeView: UIView, RootView {
             hwibariImage.animationImages = [
                 UIImage(named: "hwibariopen2")!,
                 UIImage(named: "hwibariopen")!
-            ]
+            ]} else {
+                hwibariImage.animationImages = [
+                    UIImage(named: "hwibariopen01")!,
+                    UIImage(named: "hwibariopen02")!
+                    ]
+            }
+    
             hwibariImage.animationDuration = 0.3
             hwibariImage.animationRepeatCount = 1
             hwibariImage.startAnimating()
             hwibariImage.image = UIImage(named: "hwibari_default")
         }
-    }
     
     private func setupBubbleView() {
         addSubview(bubbleView1)
@@ -387,15 +392,26 @@ final class HomeView: UIView, RootView {
         
         print("'hwibari'가 탭되었습니다.")
         
-        hwibariImage.animationImages = [
-            UIImage(named: "hwibari_default")!,
-            UIImage(named: "hwibariopen")!
-        ]
-        hwibariImage.animationDuration = 0.3
-        hwibariImage.animationRepeatCount = 1
-        hwibariImage.startAnimating()
-        
-        hwibariImage.image = UIImage(named: "hwibariopen2")
+        if emotionCount == 0 {
+            hwibariImage.animationImages = [
+                UIImage(named: "hwibari_default")!,
+                UIImage(named: "hwibariopen02")!
+            ]
+        } else {
+            hwibariImage.animationImages = [
+                UIImage(named: "hwibari_default")!,
+                UIImage(named: "hwibariopen")!
+            ]
+        }
+            hwibariImage.animationDuration = 0.3
+            hwibariImage.animationRepeatCount = 1
+            hwibariImage.startAnimating()
+            
+            if emotionCount == 0 {
+                hwibariImage.image = UIImage(named: "hwibariopen01")
+            } else {
+                hwibariImage.image = UIImage(named: "hwibariopen2")
+            }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let detailViewController = DetailViewController()
