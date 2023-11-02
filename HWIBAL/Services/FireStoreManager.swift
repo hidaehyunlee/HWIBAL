@@ -20,6 +20,7 @@ final class FireStoreManager {
     let db = Firestore.firestore()
 
     // MARK: - Users
+    // 유저 생성 테스트 완료
     func createUser(email: String, name: String, userId: String) {
 
         db.collection("Users").document(userId).setData([
@@ -36,6 +37,7 @@ final class FireStoreManager {
         }
     }
     
+    // 업데이트 유저 테스트 완료
     func updateUser(userId: String, autoExpireDays: Int) {
         guard let userId = SignInService.shared.signedInUser?.id else {
             print("User ID is nil, cannot save to Firestore")
@@ -53,6 +55,7 @@ final class FireStoreManager {
         }
     }
     
+    // 유저 삭제 테스트 완료
     func deleteUser(userId: String) {
         guard let userId = SignInService.shared.signedInUser?.id else {
             print("User ID is nil, cannot save to Firestore")
@@ -101,6 +104,7 @@ final class FireStoreManager {
     }
     
     // MARK: - Emotion Trash
+    // 감쓰 작성 테스트 완료, 일부 미작동
     func createEmotionTrash(user: User, EmotionTrashesId: String, text: String, image: UIImage? = nil, recording: Recording? = nil) {
         var trashData: [String: Any] = [
             "id": EmotionTrashesId,
@@ -130,6 +134,7 @@ final class FireStoreManager {
 //        }
             
         // 녹음 파일 업로드 및 URL 추가
+        // 녹음빼고 저장됨
         if let recordingURL = recording?.filePath {
             let recordingFileURL = URL(fileURLWithPath: recordingURL)
             uploadRecording(audioFileURL: recordingFileURL) { result in
@@ -151,8 +156,38 @@ final class FireStoreManager {
         }
     }
     
+    // cellId가 어떤식으로 지정되는지 모르겠음, 테스트 실패
+    func deleteEmotionTrash(EmotionTrashesId: String) {
+        db.collection("EmotionTrashes").document(EmotionTrashesId).delete { error in
+            if let error = error {
+                print("Error deleting document: \(error)")
+            } else {
+                print("Document successfully deleted: \(EmotionTrashesId)")
+            }
+        }
+    }
+    
+    // 전체 삭제 테스트 완료
+    func deleteAllEmotionTrash(completion: @escaping (Error?) -> Void) {
+        
+        db.collection("EmotionTrashes").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(error)
+            } else {
+                let batch = self.db.batch()
+                for document in querySnapshot!.documents {
+                    batch.deleteDocument(document.reference)
+                }
+                batch.commit { (batchError) in
+                    completion(batchError)
+                }
+            }
+        }
+    }
+    
     // MARK: - FireStore Document 관련 로직
     // 문서 수 반환하는 함수(감쓰 총 개수, 모든 유저의 수 등)
+    // 테스트 완료
     func getDocumentCount(forCollection collectionName: String, completion: @escaping (Result<Int, Error>) -> Void) {
         db.collection(collectionName).getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -193,6 +228,7 @@ final class FireStoreManager {
 //    }
     
     // 녹음 처리
+    // 테스트 실패
     func uploadRecording(audioFileURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
         let storageRef = Storage.storage().reference().child("audio/\(UUID().uuidString).m4a")
         let metadata = StorageMetadata()
@@ -215,6 +251,7 @@ final class FireStoreManager {
     
     // MARK: - 추가 세팅 함수
     // 자동 휘발일 초기 설정 함수
+    // 테스트 완료
     func setAutoExpireDate(day: Int) -> Date? {
         if let sevenDaysLater = Calendar.current.date(byAdding: .day, value: day, to: Date()) {
             let components = Calendar.current.dateComponents([.year, .month, .day], from: sevenDaysLater)

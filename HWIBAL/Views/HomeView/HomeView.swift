@@ -288,6 +288,14 @@ final class HomeView: UIView, RootView {
         hwibariImage.startAnimating()
         
         EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+//        FireStoreManager.shared.deleteAllEmotionTrash { error in
+//            if let error = error {
+//                print("Error deleting documents: \(error.localizedDescription)")
+//            } else {
+//                print("All documents deleted successfully.")
+//            }
+//        }
+        
         NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
         
         if let viewController = viewController {
