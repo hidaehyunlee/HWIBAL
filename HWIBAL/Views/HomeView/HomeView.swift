@@ -25,11 +25,11 @@ final class HomeView: UIView, RootView {
     
     private var isHwibariImageTapped = false
     
-    private var bubbleView1Timer: Timer?
-    private var bubbleView2Timer: Timer?
+    private var hwibariImageTooltipTimer: Timer?
+    private var twoButtonsTooltipViewTimer: Timer?
     
-    private var isBubbleView1Visible = true
-    private var isBubbleView2Visible = true
+    private var hwibariImageTooltipAuto = true
+    private var twoButtonsTooltipViewAuto = true
     
     // MARK: - UI Elements
     
@@ -50,7 +50,7 @@ final class HomeView: UIView, RootView {
     }()
     
     private lazy var hwibariImage: UIImageView = {
-        let imageView = createImageView(named: "hwibari_default", contentMode: .scaleAspectFit)
+        let imageView = hwibariImageView(named: "hwibari_default", contentMode: .scaleAspectFit)
         return imageView
     }()
     
@@ -65,7 +65,7 @@ final class HomeView: UIView, RootView {
 
     private lazy var hwibariImageTooltipView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray
+        view.backgroundColor = UIColor.systemGray.withAlphaComponent(0.9)
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         view.isHidden = false
@@ -83,9 +83,9 @@ final class HomeView: UIView, RootView {
         return view
     }()
     
-    private lazy var         twoButtonsTooltipView: UIView = {
+    private lazy var twoButtonsTooltipView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray
+        view.backgroundColor = UIColor.systemGray.withAlphaComponent(0.9)
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         view.isHidden = false
@@ -125,7 +125,7 @@ final class HomeView: UIView, RootView {
     
     // MARK: - Private Functions
     
-    private func createImageView(named: String, contentMode: UIView.ContentMode) -> UIImageView {
+    private func hwibariImageView(named: String, contentMode: UIView.ContentMode) -> UIImageView {
         let imageView = UIImageView(image: UIImage(named: named))
         imageView.contentMode = contentMode
         imageView.snp.makeConstraints { make in
@@ -278,13 +278,13 @@ final class HomeView: UIView, RootView {
     
     private func setupBubbleView() {
         addSubview(hwibariImageTooltipView)
-        addSubview(        twoButtonsTooltipView)
+        addSubview(twoButtonsTooltipView)
         
         hwibariImageTooltipView.snp.makeConstraints { make in
             make.top.equalTo(hwibariImage.snp.top).offset(5)
             make.centerX.equalToSuperview()
         }
-                twoButtonsTooltipView.snp.makeConstraints { make in
+        twoButtonsTooltipView.snp.makeConstraints { make in
             make.top.equalTo(hwibariImage.snp.bottom)
             make.centerX.equalToSuperview()
         }
@@ -294,19 +294,19 @@ final class HomeView: UIView, RootView {
         hwibariImageTooltipView.addGestureRecognizer(bubble1TapGesture)
         
         let bubble2TapGesture = UITapGestureRecognizer(target: self, action: #selector(bubble2Tapped))
-                twoButtonsTooltipView.isUserInteractionEnabled = true
-                twoButtonsTooltipView.addGestureRecognizer(bubble2TapGesture)
+        twoButtonsTooltipView.isUserInteractionEnabled = true
+        twoButtonsTooltipView.addGestureRecognizer(bubble2TapGesture)
         
         startBubbleView1Timer()
         startBubbleView2Timer()
     }
     
     private func startBubbleView1Timer() {
-        bubbleView1Timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(bubble1Tapped), userInfo: nil, repeats: false)
+        hwibariImageTooltipTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(bubble1Tapped), userInfo: nil, repeats: false)
     }
 
     private func startBubbleView2Timer() {
-        bubbleView2Timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(bubble2Tapped), userInfo: nil, repeats: false)
+        twoButtonsTooltipViewTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(bubble2Tapped), userInfo: nil, repeats: false)
     }
     
     private func setupInfoButton() {
@@ -445,28 +445,28 @@ final class HomeView: UIView, RootView {
     
     @objc private func bubble1Tapped() {
         hwibariImageTooltipView.isHidden = true
-        bubbleView1Timer?.invalidate()
+        hwibariImageTooltipTimer?.invalidate()
     }
     
     @objc private func bubble2Tapped() {
-                twoButtonsTooltipView.isHidden = true
-        bubbleView2Timer?.invalidate()
+        twoButtonsTooltipView.isHidden = true
+        twoButtonsTooltipViewTimer?.invalidate()
     }
     
     @objc private func infoButtonTapped() {
         hwibariImageTooltipView.isHidden.toggle()
-                twoButtonsTooltipView.isHidden.toggle()
+        twoButtonsTooltipView.isHidden.toggle()
         
-        if isBubbleView1Visible {
+        if hwibariImageTooltipAuto {
             startBubbleView1Timer()
         } else {
-            bubbleView1Timer?.invalidate()
+            hwibariImageTooltipTimer?.invalidate()
         }
 
-        if isBubbleView2Visible {
+        if twoButtonsTooltipViewAuto {
             startBubbleView2Timer()
         } else {
-            bubbleView2Timer?.invalidate()
+            twoButtonsTooltipViewTimer?.invalidate()
         }
     }
     
