@@ -335,12 +335,21 @@ final class HomeView: UIView, RootView {
     
     // 추가 애니메이션을 시작하는 함수
     private func continueRemoveAnimation() {
-        hwibariImage.animationImages = [
-            UIImage(named: "hwibari_ing02_fire")!,
-            UIImage(named: "burningImage")!,
-            UIImage(named: "hwibari_ing01_fire")!,
-            UIImage(named: "hwibari_default")!
-        ]
+        if emotionCount == 0 {
+            hwibariImage.animationImages = [
+                UIImage(named: "hwibari_ing01_fire")!,
+                UIImage(named: "burningImage")!,
+                UIImage(named: "hwibari_ing01_fire")!,
+                UIImage(named: "hwibari_default")!
+            ]
+        } else {
+            hwibariImage.animationImages = [
+                UIImage(named: "hwibari_ing02_fire")!,
+                UIImage(named: "burningImage")!,
+                UIImage(named: "hwibari_ing01_fire")!,
+                UIImage(named: "hwibari_default")!
+            ]
+        }
         
         hwibariImage.animationDuration = 1.0 // 애니메이션 한 번의 지속 시간을 설정
         hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
