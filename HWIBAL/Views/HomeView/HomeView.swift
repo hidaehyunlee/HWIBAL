@@ -197,7 +197,7 @@ final class HomeView: UIView, RootView {
             make.height.equalTo(56)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalTo(squareView.snp.leading).offset(-10)
-            make.bottom.equalToSuperview().offset(-40)
+            make.bottom.equalToSuperview().offset(-20 * UIScreen.main.bounds.height / 926)
         }
         
         let removeLabel = UILabel()
@@ -232,7 +232,7 @@ final class HomeView: UIView, RootView {
             make.width.equalTo(56)
             make.height.equalTo(56)
             make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-40)
+            make.bottom.equalToSuperview().offset(-20 * UIScreen.main.bounds.height / 926)
         }
             
         let penImage = createPenImage()
@@ -346,7 +346,7 @@ final class HomeView: UIView, RootView {
         
         if let viewController = viewController {
             let burningView = UIView(frame: viewController.view.bounds)
-            burningView.backgroundColor = UIColor(red: 247/255, green: 142/255, blue: 0/255, alpha: 1)
+            burningView.backgroundColor = UIColor(red: 247 / 255, green: 142 / 255, blue: 0 / 255, alpha: 1)
             burningView.alpha = 0.9 // 그라디언트 효과의 불투명도 설정
             viewController.view.addSubview(burningView)
             
@@ -433,16 +433,16 @@ final class HomeView: UIView, RootView {
         bubbleView2.isHidden.toggle()
         
         if isBubbleView1Visible {
-                startBubbleView1Timer()
-            } else {
-                bubbleView1Timer?.invalidate()
-            }
+            startBubbleView1Timer()
+        } else {
+            bubbleView1Timer?.invalidate()
+        }
 
-            if isBubbleView2Visible {
-                startBubbleView2Timer()
-            } else {
-                bubbleView2Timer?.invalidate()
-            }
+        if isBubbleView2Visible {
+            startBubbleView2Timer()
+        } else {
+            bubbleView2Timer?.invalidate()
+        }
     }
     
     @objc private func createButtonTapped() {
