@@ -15,6 +15,7 @@ import FirebaseStorage
 final class FireStoreManager {
     static let shared = FireStoreManager()
     typealias UserResult = (Result<User, Error>) -> Void
+    var signInUser: User?
 
     // Firestore 데이터베이스 참조
     let db = Firestore.firestore()
@@ -38,45 +39,57 @@ final class FireStoreManager {
     }
     
     // 업데이트 유저 테스트 완료
-    func updateUser(userId: String, autoExpireDays: Int) {
-        guard let userId = SignInService.shared.signedInUser?.id else {
-            print("User ID is nil, cannot save to Firestore")
-            return
-        }
-        
-        db.collection("Users").document(userId).setData([
-            "autoExpireDate": setAutoExpireDate(day: autoExpireDays) ?? Date()
-        ], merge: true) { error in
-            if let error = error {
-                print("Error updating document: \(error)")
-            } else {
-                print("Document updated with new autoExpireDays: \(String(describing: SignInService.shared.signedInUser?.autoExpireDate))")
-            }
-        }
-    }
+//    func updateUser(userId: String, autoExpireDays: Int) {
+//        guard let userId = SignInService.shared.signedInUser?.id else {
+//            print("User ID is nil, cannot save to Firestore")
+//            return
+//        }
+//
+//        db.collection("Users").document(userId).setData([
+//            "autoExpireDate": setAutoExpireDate(day: autoExpireDays) ?? Date()
+//        ], merge: true) { error in
+//            if let error = error {
+//                print("Error updating document: \(error)")
+//            } else {
+//                print("Document updated with new autoExpireDays: \(String(describing: SignInService.shared.signedInUser?.autoExpireDate))")
+//            }
+//        }
+//    }
     
     // 유저 삭제 테스트 완료
-    func deleteUser(userId: String) {
-        guard let userId = SignInService.shared.signedInUser?.id else {
-            print("User ID is nil, cannot save to Firestore")
-            return
-        }
+//    func deleteUser(userId: String) {
+//        guard let userId = SignInService.shared.signedInUser?.id else {
+//            print("User ID is nil, cannot save to Firestore")
+//            return
+//        }
+//        
+//        db.collection("Users").document(userId).delete { error in
+//            if let error = error {
+//                print("Error deleting document: \(error)")
+//            } else {
+//                print("Document successfully deleted: \(userId)")
+//            }
+//        }
+//    }
+    
+    // 유저 존재 여부 T/F
+    func isUserExistInFirestore(userID: String, completion: @escaping (Bool, Error?) -> Void) {
         
-        db.collection("Users").document(userId).delete { error in
+        db.collection("Users").document(userID).getDocument { (document, error) in
             if let error = error {
-                print("Error deleting document: \(error)")
+                completion(false, error)
+            } else if let document = document, document.exists {
+                completion(true, nil)
             } else {
-                print("Document successfully deleted: \(userId)")
+                completion(false, nil)
             }
         }
     }
     
-    // 🤔 이거는 다시 한번 확인 필요함. 코어데이터 모델 안지우고는 이게 최선이나, 리턴값을 불러오기 힘듦.
-    // 🚨 코어데이터 지우고 별도의 모델을 다시 구성할 때 Codable 프로토콜 채택 필수
-    func getUser(userId: String, completion: @escaping UserResult) {
+    func getUser(userId: String, completion: @escaping (User?, Error?) -> Void) {
         db.collection("Users").document(userId).getDocument { (document, error) in
             if let error = error {
-                completion(.failure(error))
+                completion(nil, error)
             } else if let document = document, document.exists {
                 let userData = document.data()
                 let name = userData?["name"] as? String ?? ""
@@ -84,21 +97,12 @@ final class FireStoreManager {
                 let autoExpireDate = userData?["autoExpireDate"] as? Date ?? Date()
 
                 // 가져온 데이터를 이용하여 User 객체 생성
-                let context = CoreDataManager.shared.persistentContainer.viewContext
-                if let entity = NSEntityDescription.entity(forEntityName: "User", in: context) {
-                    let user = User(entity: entity, insertInto: context)
-                    user.id = userId
-                    user.name = name
-                    user.email = email
-                    user.autoExpireDate = autoExpireDate
+                let user = User(id: userId, name: name, email: email, autoExpireDate: autoExpireDate)
                 
-                    // 완료 클로저 호출하여 사용자 데이터 반환
-                    completion(.success(user))
-                }
+                completion(user, nil)
             } else {
-                // 문서가 존재하지 않는 경우
                 let error = NSError(domain: "Firestore", code: 404, userInfo: [NSLocalizedDescriptionKey: "Document not found"])
-                completion(.failure(error))
+                completion(nil, nil)
             }
         }
     }
@@ -187,6 +191,26 @@ final class FireStoreManager {
         }
     }
     
+    // 유저의 감쓰 전체를 가져오는 함수
+    func fetchEmotionTrashDocuments(userId: String, completion: @escaping ([DocumentSnapshot]?, Error?) -> Void) {
+        let emotionTrashCollectionRef = db.collection("EmotionTrashes")
+        
+        let query = emotionTrashCollectionRef.whereField("user.id", isEqualTo: userId)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching emotion trash documents: \(error)")
+                completion(nil, error)
+            } else {
+                if let documents = querySnapshot?.documents {
+                    completion(documents, nil)
+                } else {
+                    completion(nil, nil)
+                }
+            }
+        }
+    }
+    
     // MARK: - Reports
     // 레포트 생성 테스트 완료
     func createReport(user: User, reportId: String, text: String) {
@@ -210,13 +234,45 @@ final class FireStoreManager {
     // MARK: - FireStore Document 관련 로직
     // 문서 수 반환하는 함수(감쓰 총 개수, 모든 유저의 수 등)
     // 테스트 완료
-    func getDocumentCount(forCollection collectionName: String, completion: @escaping (Result<Int, Error>) -> Void) {
+    func getDocumentCount(collectionName: String, completion: @escaping (Result<Int, Error>) -> Void) {
         db.collection(collectionName).getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(.failure(error))
             } else {
                 let documentCount = querySnapshot?.documents.count ?? 0
                 completion(.success(documentCount))
+            }
+        }
+    }
+    
+    // 유저의 감쓰 총 개수 반환하는 함수
+    func getEmotionTrashCount(userId: String, completion: @escaping (Result<Int, Error>) -> Void) {
+        let collectionRef = db.collection("EmotionTrashes").whereField("user.id", isEqualTo: userId)
+        
+        collectionRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let documentCount = querySnapshot?.documents.count ?? 0
+                completion(.success(documentCount))
+            }
+        }
+    }
+
+    
+    // 컬렉션을 전체 가져오는 함수(유저, 감쓰, 리포트)
+    func fetchDocumentsFromCollection(collectionName: String, completion: @escaping ([DocumentSnapshot]?, Error?) -> Void) {
+        
+        db.collection(collectionName).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching documents: \(error)")
+                completion(nil, error)
+            } else {
+                if let documents = querySnapshot?.documents {
+                    completion(documents, nil)
+                } else {
+                    completion(nil, nil)
+                }
             }
         }
     }

@@ -11,15 +11,19 @@ import UIKit
 final class HomeView: UIView, RootView {
     // MARK: - Properties
     
-    var emotionCount = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
+    var emotionCount = 0
+    
+    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        getEmotionTrashCount()
         initializeUI()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        getEmotionTrashCount()
         initializeUI()
     }
     
@@ -52,6 +56,22 @@ final class HomeView: UIView, RootView {
     
     func updateEmotionTrashesCountLabel(_ emotionCount: Int) {
         titleLabel2.text = "감정쓰레기 \(emotionCount)개"
+    }
+    
+    func getEmotionTrashCount() {
+        if let userId = FireStoreManager.shared.signInUser?.id {
+            FireStoreManager.shared.getEmotionTrashCount(userId: userId) { result in
+                switch result {
+                case .success(let documentCount):
+                    self.emotionCount = documentCount
+                case .failure(let error):
+                    print("Error fetching emotion trash documents: \(error)")
+                }
+            }
+        } else {
+            // userId가 nil인 경우에 대한 처리
+        }
+        
     }
     
     // MARK: - Initialization
@@ -287,7 +307,7 @@ final class HomeView: UIView, RootView {
         hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
         hwibariImage.startAnimating()
         
-        EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+//        EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
 //        FireStoreManager.shared.deleteAllEmotionTrash { error in
 //            if let error = error {
 //                print("Error deleting documents: \(error.localizedDescription)")

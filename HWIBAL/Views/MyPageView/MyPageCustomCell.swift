@@ -59,15 +59,15 @@ class MyPageCustomCell: UITableViewCell {
     }()
     
     @objc func didTapSwitch(sender: UISwitch) {
-        if sender.isOn {
-            SignInService.shared.setSignedInUser((SignInService.shared.signedInUser?.email)!)
-            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!)
-            print(SignInService.shared.isSignedIn())
-        } else {
-            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
-            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!)
-            print(SignInService.shared.isSignedIn())
-        }
+//        if sender.isOn {
+//            SignInService.shared.setSignedInUser((SignInService.shared.signedInUser?.email)!)
+////            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!)
+//            print(SignInService.shared.isSignedIn())
+//        } else {
+//            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
+////            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!)
+//            print(SignInService.shared.isSignedIn())
+//        }
     }
     
     @objc func didTapappearanceSwitch(sender: UISwitch) {
@@ -105,7 +105,7 @@ class MyPageCustomCell: UITableViewCell {
         case .autoVolatilizationDate:
             appearanceControl.isHidden = true
             switchControl.isHidden = true
-            dateLabel.text = "\(UserDefaults.standard.integer(forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))"))일"
+//            dateLabel.text = "\(UserDefaults.standard.integer(forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))"))일"
             
         case .logout:
             appearanceControl.isHidden = true

@@ -57,7 +57,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
             // 삭제 로직 없어져도 됨
             DispatchQueue.main.async {
                 print("삭제 로직 실행")
-                EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+//                EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
                 NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
             }
             

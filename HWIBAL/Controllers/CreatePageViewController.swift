@@ -222,13 +222,13 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
             if let imageView = self.attachedImageView, let attachedImage = imageView.image {
                 print("attachedImageView 첨부")
 //                FireStoreManager.shared.createEmotionTrash(user: SignInService.shared.signedInUser!, EmotionTrashesId: UUID().uuidString, text: text, image: attachedImage)
-                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text, attachedImage)
+//                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text, attachedImage)
             } else {
                 print("attachedImageView nil")
 //                FireStoreManager.shared.createEmotionTrash(user: SignInService.shared.signedInUser!, EmotionTrashesId: UUID().uuidString, text: text)
-                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
+//                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
             }
-            EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
+//            EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
 
             self.dismiss(animated: true, completion: nil)
