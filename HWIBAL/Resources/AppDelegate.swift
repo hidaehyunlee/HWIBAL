@@ -20,13 +20,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let setting = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(setting)
         }
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(checkAutoDelete), name: NSNotification.Name("UserSignIn"), object: nil)
 
         return true
     }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        checkAutoDelete()
+    }
+    
     @objc func checkAutoDelete() {
+        print("자동 휘발일 확인")
         if let email = SignInService.shared.signedInUser?.email,
            let autoExpireDate = SignInService.shared.signedInUser?.autoExpireDate {
             let currentDate = Date()
