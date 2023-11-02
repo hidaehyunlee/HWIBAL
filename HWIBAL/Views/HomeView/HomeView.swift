@@ -197,7 +197,7 @@ final class HomeView: UIView, RootView {
             make.height.equalTo(56)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalTo(squareView.snp.leading).offset(-10)
-            make.bottom.equalToSuperview().offset(-20 * UIScreen.main.bounds.height / 926)
+            make.bottom.equalToSuperview().offset(-30 * UIScreen.main.bounds.height / 926)
         }
         
         let removeLabel = UILabel()
@@ -232,7 +232,7 @@ final class HomeView: UIView, RootView {
             make.width.equalTo(56)
             make.height.equalTo(56)
             make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-20 * UIScreen.main.bounds.height / 926)
+            make.bottom.equalToSuperview().offset(-30 * UIScreen.main.bounds.height / 926)
         }
             
         let penImage = createPenImage()
