@@ -77,6 +77,7 @@ final class MyPageView: UIView, RootView {
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.isScrollEnabled = false
+        tableView.isUserInteractionEnabled = true
         tableView.register(MyPageCustomCell.self, forCellReuseIdentifier: MyPageCustomCell.identifier)
         return tableView
     }()
