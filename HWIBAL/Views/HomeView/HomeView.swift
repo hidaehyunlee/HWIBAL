@@ -63,7 +63,7 @@ final class HomeView: UIView, RootView {
         return button
     }()
 
-    private lazy var bubbleView1: UIView = {
+    private lazy var hwibariImageTooltipView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray
         view.layer.cornerRadius = 8
@@ -83,7 +83,7 @@ final class HomeView: UIView, RootView {
         return view
     }()
     
-    private lazy var bubbleView2: UIView = {
+    private lazy var         twoButtonsTooltipView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray
         view.layer.cornerRadius = 8
@@ -182,22 +182,22 @@ final class HomeView: UIView, RootView {
     }
     
     private func setupButton() {
-        let removeBar = UIView()
-        removeBar.backgroundColor = ColorGuide.main
-        removeBar.layer.cornerRadius = 4
-        removeBar.translatesAutoresizingMaskIntoConstraints = false
+        let deleteButton = UIView()
+        deleteButton.backgroundColor = ColorGuide.main
+        deleteButton.layer.cornerRadius = 4
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
         let removeTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeButtonTapped))
-        removeBar.addGestureRecognizer(removeTapGesture)
+        deleteButton.addGestureRecognizer(removeTapGesture)
         
-        addSubview(removeBar)
+        addSubview(deleteButton)
         
         let squareView = createSquareView()
         
-        removeBar.snp.makeConstraints { make in
+        deleteButton.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalTo(squareView.snp.leading).offset(-10)
-            make.bottom.equalToSuperview().offset(-30 * UIScreen.main.bounds.height / 926)
+            make.bottom.equalToSuperview().offset(-40)
         }
         
         let removeLabel = UILabel()
@@ -207,43 +207,43 @@ final class HomeView: UIView, RootView {
         paragraphStyle.lineHeightMultiple = 1.04
         removeLabel.attributedText = NSMutableAttributedString(string: "다, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         
-        removeBar.addSubview(removeLabel)
+        deleteButton.addSubview(removeLabel)
         
         removeLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(removeBar)
-            make.centerY.equalTo(removeBar)
+            make.centerX.equalTo(deleteButton)
+            make.centerY.equalTo(deleteButton)
             make.width.equalTo(83)
             make.height.equalTo(24)
         }
     }
         
     private func createSquareView() -> UIView {
-        let squareView = UIView()
-        squareView.backgroundColor = .white
-        squareView.layer.cornerRadius = 4
-        squareView.layer.borderWidth = 1.5
-        squareView.layer.borderColor = ColorGuide.main.cgColor
+        let writeButton = UIView()
+        writeButton.backgroundColor = .white
+        writeButton.layer.cornerRadius = 4
+        writeButton.layer.borderWidth = 1.5
+        writeButton.layer.borderColor = ColorGuide.main.cgColor
         let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
-        squareView.addGestureRecognizer(squareViewTapGesture)
+        writeButton.addGestureRecognizer(squareViewTapGesture)
             
-        addSubview(squareView)
+        addSubview(writeButton)
             
-        squareView.snp.makeConstraints { make in
+        writeButton.snp.makeConstraints { make in
             make.width.equalTo(56)
             make.height.equalTo(56)
             make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-30 * UIScreen.main.bounds.height / 926)
+            make.bottom.equalToSuperview().offset(-40)
         }
             
         let penImage = createPenImage()
-        squareView.addSubview(penImage)
+        writeButton.addSubview(penImage)
             
         penImage.snp.makeConstraints { make in
             make.width.equalTo(25)
             make.height.equalTo(25)
             make.center.equalToSuperview()
         }
-        return squareView
+        return writeButton
     }
     
     private func createPenImage() -> UIView {
@@ -277,25 +277,25 @@ final class HomeView: UIView, RootView {
         }
     
     private func setupBubbleView() {
-        addSubview(bubbleView1)
-        addSubview(bubbleView2)
+        addSubview(hwibariImageTooltipView)
+        addSubview(        twoButtonsTooltipView)
         
-        bubbleView1.snp.makeConstraints { make in
+        hwibariImageTooltipView.snp.makeConstraints { make in
             make.top.equalTo(hwibariImage.snp.top).offset(5)
             make.centerX.equalToSuperview()
         }
-        bubbleView2.snp.makeConstraints { make in
+                twoButtonsTooltipView.snp.makeConstraints { make in
             make.top.equalTo(hwibariImage.snp.bottom)
             make.centerX.equalToSuperview()
         }
 
         let bubble1TapGesture = UITapGestureRecognizer(target: self, action: #selector(bubble1Tapped))
-        bubbleView1.isUserInteractionEnabled = true
-        bubbleView1.addGestureRecognizer(bubble1TapGesture)
+        hwibariImageTooltipView.isUserInteractionEnabled = true
+        hwibariImageTooltipView.addGestureRecognizer(bubble1TapGesture)
         
         let bubble2TapGesture = UITapGestureRecognizer(target: self, action: #selector(bubble2Tapped))
-        bubbleView2.isUserInteractionEnabled = true
-        bubbleView2.addGestureRecognizer(bubble2TapGesture)
+                twoButtonsTooltipView.isUserInteractionEnabled = true
+                twoButtonsTooltipView.addGestureRecognizer(bubble2TapGesture)
         
         startBubbleView1Timer()
         startBubbleView2Timer()
@@ -444,18 +444,18 @@ final class HomeView: UIView, RootView {
     }
     
     @objc private func bubble1Tapped() {
-        bubbleView1.isHidden = true
+        hwibariImageTooltipView.isHidden = true
         bubbleView1Timer?.invalidate()
     }
     
     @objc private func bubble2Tapped() {
-        bubbleView2.isHidden = true
+                twoButtonsTooltipView.isHidden = true
         bubbleView2Timer?.invalidate()
     }
     
     @objc private func infoButtonTapped() {
-        bubbleView1.isHidden.toggle()
-        bubbleView2.isHidden.toggle()
+        hwibariImageTooltipView.isHidden.toggle()
+                twoButtonsTooltipView.isHidden.toggle()
         
         if isBubbleView1Visible {
             startBubbleView1Timer()
