@@ -36,7 +36,7 @@ final class HomeViewController: RootViewController<HomeView> {
 //    }
         
         initializeUI()
-        
+        handleEmotionTrashUpdateNotification()
         NotificationCenter.default.addObserver(self, selector: #selector(handleEmotionTrashUpdateNotification), name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
 
         EventBus.shared.on(PushToMyPageScreenEvent.self, by: self) { listener, _ in
@@ -73,7 +73,7 @@ private extension HomeViewController {
     }
     
     @objc func handleEmotionTrashUpdateNotification() {
-//        rootView.emotionCount = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
+        rootView.getEmotionTrashCount()
         DispatchQueue.main.async {
             self.rootView.updateEmotionTrashesCountLabel(self.rootView.emotionCount)
         }

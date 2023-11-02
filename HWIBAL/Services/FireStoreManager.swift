@@ -5,12 +5,12 @@
 //  Created by t2023-m0076 on 2023/11/02.
 //
 
+import CoreData
 import FirebaseCore
 import FirebaseDatabase
 import FirebaseFirestore
-import Foundation
-import CoreData
 import FirebaseStorage
+import Foundation
 
 final class FireStoreManager {
     static let shared = FireStoreManager()
@@ -21,9 +21,9 @@ final class FireStoreManager {
     let db = Firestore.firestore()
 
     // MARK: - Users
+
     // 유저 생성 테스트 완료
     func createUser(email: String, name: String, userId: String) {
-
         db.collection("Users").document(userId).setData([
             "name": name,
             "email": email,
@@ -36,6 +36,8 @@ final class FireStoreManager {
                 print("Document added with ID: \(userId)")
             }
         }
+        let user = User(id: userId, name: name, email: email, autoExpireDate: setAutoExpireDate(day: 7) ?? Date())
+        FireStoreManager.shared.signInUser = user
     }
     
     // 업데이트 유저 테스트 완료
@@ -62,7 +64,7 @@ final class FireStoreManager {
 //            print("User ID is nil, cannot save to Firestore")
 //            return
 //        }
-//        
+//
 //        db.collection("Users").document(userId).delete { error in
 //            if let error = error {
 //                print("Error deleting document: \(error)")
@@ -72,10 +74,9 @@ final class FireStoreManager {
 //        }
 //    }
     
-    // 유저 존재 여부 T/F
-    func isUserExistInFirestore(userID: String, completion: @escaping (Bool, Error?) -> Void) {
-        
-        db.collection("Users").document(userID).getDocument { (document, error) in
+    // 유저 존재 여부 T/F - ID로 확인
+    func isUserIdExistInFirestore(userId: String, completion: @escaping (Bool, Error?) -> Void) {
+        db.collection("Users").document(userId).getDocument { document, error in
             if let error = error {
                 completion(false, error)
             } else if let document = document, document.exists {
@@ -86,8 +87,22 @@ final class FireStoreManager {
         }
     }
     
+    // 유저 존재 여부 T/F - email로 확인
+    // 테스트 완료
+    func isUserEmailExistInFirestore(email: String, completion: @escaping (Bool, Error?) -> Void) {
+        db.collection("Users").whereField("email", isEqualTo: email).getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                // 이메일을 기반으로 검색한 결과가 존재하는지 확인
+                let exists = !querySnapshot!.documents.isEmpty
+                completion(exists, nil)
+            }
+        }
+    }
+    
     func getUser(userId: String, completion: @escaping (User?, Error?) -> Void) {
-        db.collection("Users").document(userId).getDocument { (document, error) in
+        db.collection("Users").document(userId).getDocument { document, error in
             if let error = error {
                 completion(nil, error)
             } else if let document = document, document.exists {
@@ -107,14 +122,39 @@ final class FireStoreManager {
         }
     }
     
+    // 테스트 완료
+    func getUserForEmail(email: String, completion: @escaping (User?, Error?) -> Void) {
+        db.collection("Users").whereField("email", isEqualTo: email).getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                if let document = querySnapshot?.documents.first, document.exists {
+                    let userData = document.data()
+                    let name = userData["name"] as? String ?? ""
+                    let id = userData["id"] as? String ?? ""
+                    let autoExpireDate = userData["autoExpireDate"] as? Date ?? Date()
+
+                    // 가져온 데이터를 이용하여 User 객체 생성
+                    let user = User(id: id, name: name, email: email, autoExpireDate: autoExpireDate)
+                            
+                    completion(user, nil)
+                } else {
+                    let error = NSError(domain: "Firestore", code: 404, userInfo: [NSLocalizedDescriptionKey: "Document not found"])
+                    completion(nil, error)
+                }
+            }
+        }
+    }
+    
     // MARK: - Emotion Trash
+
     // 감쓰 작성 테스트 완료, 일부 미작동
     func createEmotionTrash(user: User, EmotionTrashesId: String, text: String, image: UIImage? = nil, recording: Recording? = nil) {
         var trashData: [String: Any] = [
             "id": EmotionTrashesId,
             "text": text,
             "timestamp": Date(),
-            "user": [ "id": user.id ]
+            "user": ["id": user.id]
         ]
         
         // 🚨 이미지 처리 안되고 있음 ㅠ
@@ -175,8 +215,7 @@ final class FireStoreManager {
     
     // 전체 삭제 테스트 완료
     func deleteAllEmotionTrash(completion: @escaping (Error?) -> Void) {
-        
-        db.collection("EmotionTrashes").getDocuments { (querySnapshot, error) in
+        db.collection("EmotionTrashes").getDocuments { querySnapshot, error in
             if let error = error {
                 completion(error)
             } else {
@@ -184,7 +223,7 @@ final class FireStoreManager {
                 for document in querySnapshot!.documents {
                     batch.deleteDocument(document.reference)
                 }
-                batch.commit { (batchError) in
+                batch.commit { batchError in
                     completion(batchError)
                 }
             }
@@ -197,7 +236,7 @@ final class FireStoreManager {
         
         let query = emotionTrashCollectionRef.whereField("user.id", isEqualTo: userId)
         
-        query.getDocuments { (querySnapshot, error) in
+        query.getDocuments { querySnapshot, error in
             if let error = error {
                 print("Error fetching emotion trash documents: \(error)")
                 completion(nil, error)
@@ -212,13 +251,14 @@ final class FireStoreManager {
     }
     
     // MARK: - Reports
+
     // 레포트 생성 테스트 완료
     func createReport(user: User, reportId: String, text: String) {
         var reportData: [String: Any] = [
             "id": reportId,
             "text": text,
             "timestamp": Date(),
-            "user": [ "id": user.id ]
+            "user": ["id": user.id]
         ]
         
         db.collection("Reports").document(reportId).setData(reportData) { error in
@@ -230,12 +270,12 @@ final class FireStoreManager {
         }
     }
 
-    
     // MARK: - FireStore Document 관련 로직
+
     // 문서 수 반환하는 함수(감쓰 총 개수, 모든 유저의 수 등)
     // 테스트 완료
     func getDocumentCount(collectionName: String, completion: @escaping (Result<Int, Error>) -> Void) {
-        db.collection(collectionName).getDocuments { (querySnapshot, error) in
+        db.collection(collectionName).getDocuments { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -249,7 +289,7 @@ final class FireStoreManager {
     func getEmotionTrashCount(userId: String, completion: @escaping (Result<Int, Error>) -> Void) {
         let collectionRef = db.collection("EmotionTrashes").whereField("user.id", isEqualTo: userId)
         
-        collectionRef.getDocuments { (querySnapshot, error) in
+        collectionRef.getDocuments { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -259,11 +299,9 @@ final class FireStoreManager {
         }
     }
 
-    
     // 컬렉션을 전체 가져오는 함수(유저, 감쓰, 리포트)
     func fetchDocumentsFromCollection(collectionName: String, completion: @escaping ([DocumentSnapshot]?, Error?) -> Void) {
-        
-        db.collection(collectionName).getDocuments { (querySnapshot, error) in
+        db.collection(collectionName).getDocuments { querySnapshot, error in
             if let error = error {
                 print("Error fetching documents: \(error)")
                 completion(nil, error)
@@ -277,8 +315,8 @@ final class FireStoreManager {
         }
     }
     
-    
     // MARK: - Firebase Storage 관련 로직(이미지, 녹음)
+
     // 이미지 처리
 //    func uploadImage(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
 //        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
@@ -312,11 +350,11 @@ final class FireStoreManager {
         let metadata = StorageMetadata()
         metadata.contentType = "audio/m4a"
         
-        storageRef.putFile(from: audioFileURL, metadata: metadata) { (metadata, error) in
+        storageRef.putFile(from: audioFileURL, metadata: metadata) { _, error in
             if let error = error {
                 completion(.failure(error))
             } else {
-                storageRef.downloadURL { (url, error) in
+                storageRef.downloadURL { url, error in
                     if let downloadURL = url {
                         completion(.success(downloadURL))
                     } else if let error = error {
@@ -328,6 +366,7 @@ final class FireStoreManager {
     }
     
     // MARK: - 추가 세팅 함수
+
     // 자동 휘발일 초기 설정 함수
     // 테스트 완료
     func setAutoExpireDate(day: Int) -> Date? {
@@ -340,5 +379,4 @@ final class FireStoreManager {
         }
         return nil
     }
-    
 }

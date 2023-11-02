@@ -13,8 +13,6 @@ final class HomeView: UIView, RootView {
     
     var emotionCount = 0
     
-    
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         getEmotionTrashCount()

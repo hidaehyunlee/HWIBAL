@@ -6,6 +6,7 @@
 //
 
 import GoogleSignIn
+import FirebaseAuth
 import UIKit
 
 final class SignInViewController: RootViewController<SignInView> {
@@ -27,26 +28,26 @@ final class SignInViewController: RootViewController<SignInView> {
             let name = user.profile?.name ?? "default name"
             let id = String("\(String(describing: email))\(Date())".hashValue) // 나중에 바꾸는게 좋음.
 
-            FireStoreManager.shared.isUserExistInFirestore(userID: id) { (isExist, error) in
+            FireStoreManager.shared.isUserEmailExistInFirestore(email: email) { (isExist, error) in
                 if let error = error {
                     print("Error: \(error.localizedDescription)")
                 } else {
                     if isExist {
-                        print("User with ID \(id) exists in Firestore.")
-                        FireStoreManager.shared.getUser(userId: id) { (user, error) in
+                        print("User with Email \(email) exists in Firestore.")
+                        FireStoreManager.shared.getUserForEmail(email: email) { (user, error) in
                             if let error = error {
                                 print("Error: \(error.localizedDescription)")
                             } else if let user = user {
                                 FireStoreManager.shared.signInUser = user
-                                print("User ID: \(user.id)")
+                                print("🚨User ID: \(user.id)")
                                 print("User Name: \(user.name)")
                                 print("User Email: \(user.email)")
                             } else {
-                                print("User with ID \(id) does not exist in Firestore.")
+                                print("User with Email \(email) does not exist in Firestore.")
                             }
                         }
                     } else {
-                        print("User with ID \(id) does not exist in Firestore.")
+                        print("User with Email \(email) does not exist in Firestore.")
                         FireStoreManager.shared.createUser(email: email, name: name, userId: id)
                     }
                 }
