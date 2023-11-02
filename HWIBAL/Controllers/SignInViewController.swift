@@ -39,10 +39,10 @@ final class SignInViewController: RootViewController<SignInView> {
 
             let email = user.profile?.email ?? "default email"
             let name = user.profile?.name ?? "default name"
-            let id = String("\(String(describing: email))\(Date())".hashValue) // 나중에 바꾸는게 좋음.
+            let id = UUID().uuidString
             let autoExpireDays: Int64 = 7
 
-            SignInService.shared.signIn(email, name, id, autoExpireDays)
+            SignInService.shared.signIn(email, name, id, autoExpireDays) // 코어데이터에 저장
 
             // 로그인 완료 후 MainViewController로 이동
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -68,15 +68,12 @@ extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizati
 
             // 계정 정보 가져오기
             let id = appleIDCredential.user
-            let name = "\(String(describing: appleIDCredential.fullName?.familyName)) + \(String(describing: appleIDCredential.fullName?.givenName))"
-            let email = appleIDCredential.email ?? ""
+            let name = "\(appleIDCredential.fullName.unsafelyUnwrapped.familyName!)\(appleIDCredential.fullName.unsafelyUnwrapped.givenName!)"
+            let email = appleIDCredential.email!
             let idToken = appleIDCredential.identityToken!
-            let tokeStr = String(data: idToken, encoding: .utf8)
             let autoExpireDays: Int64 = 7
             
-            print("APPLE User ID : \(id)")
-            print("APPLE User Email : \(email)")
-            print("APPLE User Name : \(name)")
+            // let tokeStr = String(data: idToken, encoding: .utf8)
             // print("token : \(String(describing: tokeStr))")
 
             SignInService.shared.signIn(email, name, id, autoExpireDays)
