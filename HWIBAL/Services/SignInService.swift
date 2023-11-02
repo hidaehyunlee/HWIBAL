@@ -25,6 +25,7 @@ class SignInService {
             UserDefaults.standard.set(7, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))")
             UserService.shared.printAllUsers()
         }
+        NotificationCenter.default.post(name: NSNotification.Name("UserSignIn"), object: nil)
     }
     
     func setSignedInUser(_ email: String) {

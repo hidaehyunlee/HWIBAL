@@ -21,36 +21,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerUserNotificationSettings(setting)
         }
         
-//        let _ = application.beginBackgroundTask(expirationHandler: {
-//            // 백그라운드 태스크가 종료될 때 실행할 코드 -> 노티(푸시알림) 이벤트 발송
-//            NotificationService.shared.autoDeleteNotification()
-//            print("자동 휘발 노티 알림 발송")
-//        })
-        
-        // 정기적으로 실행할 함수 호출
-//        startAutoDeleteTask()
+        NotificationCenter.default.addObserver(self, selector: #selector(checkAutoDelete), name: NSNotification.Name("UserSignIn"), object: nil)
         
         return true
     }
     
-//    func startAutoDeleteTask() {
-//        print("""
-//              📢 [자동 삭제 알림] \(String(describing: SignInService.shared.signedInUser?.autoExpireDays))일 후 삭제 예정
-//              """)
-//        // 백그라운드에서 실행될 함수를 호출할 타이머 설정 -> withTimeInterval: * 60 * 60 * 24 처리하면 autoExpireDays일 후 실행, repeats: true로 변경
-//        // (테스트 코드) Double((SignInService.shared.signedInUser?.autoExpireDays ?? 7)) * 5, repeats: false
-//        Timer.scheduledTimer(withTimeInterval: Double((SignInService.shared.signedInUser?.autoExpireDays ?? 7)) * 60 * 60 * 24, repeats: false) { _ in
-//            // 원하는 주기(예: n일 간격)로 실행될 코드 작성
-//            
-//            print("백그라운드에서 실행 중...")
-//            DispatchQueue.main.async {
-//                print("삭제 로직 실행")
-//                EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
-//                NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
-//                print("삭제 완료")
-//            }
-//        }
-//    }
+    @objc func checkAutoDelete() {
+        if let email = SignInService.shared.signedInUser?.email,
+           let autoExpireDate = SignInService.shared.signedInUser?.autoExpireDate {
+            let currentDate = Date()
+            if currentDate >= autoExpireDate {
+                EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+                print("자동 휘발 완료")
+                NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+                print("감쓰 개수 업데이트 완료")
+                
+                // 다음 자동 삭제를 위해 expire date 업데이트
+                let autoExpireDays = UserDefaults.standard.integer(forKey: "autoExpireDays_\(email))")
+                UserService.shared.updateUser(email: email, autoExpireDays: autoExpireDays)
+            }
+            let differenceInDays = Calendar.current.dateComponents([.day], from: currentDate, to: autoExpireDate).day
+            print("자동 휘발일 D-\(String(describing: differenceInDays))")
+        }
+    }
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)

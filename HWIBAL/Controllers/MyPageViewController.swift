@@ -123,12 +123,14 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 let action = UIAlertAction(title: formattedDay, style: .default) { _ in
                     UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: day)
                     print("\(day) 후 감정쓰레기를 태워 드립니다.")
+                    
                     UserDefaults.standard.set(day, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))")
+                    
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
                         cell.updateDateLabel(formattedDay)
                     }
-                    EmotionTrashService.shared.startAutoDeleteTask(day)
+//                    EmotionTrashService.shared.startAutoDeleteTask(day)
                     // 백그라운드 태스크 실행
 //                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
 //                        appDelegate.startAutoDeleteTask()
