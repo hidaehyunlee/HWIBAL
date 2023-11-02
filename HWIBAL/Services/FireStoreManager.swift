@@ -154,6 +154,8 @@ final class FireStoreManager {
                 print("Document added with ID: \(EmotionTrashesId)")
             }
         }
+        
+        createReport(user: user, reportId: UUID().uuidString, text: text)
     }
     
     // cellId가 어떤식으로 지정되는지 모르겠음, 테스트 실패
@@ -184,6 +186,26 @@ final class FireStoreManager {
             }
         }
     }
+    
+    // MARK: - Reports
+    // 레포트 생성 테스트 완료
+    func createReport(user: User, reportId: String, text: String) {
+        var reportData: [String: Any] = [
+            "id": reportId,
+            "text": text,
+            "timestamp": Date(),
+            "user": [ "id": user.id ]
+        ]
+        
+        db.collection("Reports").document(reportId).setData(reportData) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added with ID: \(reportId)")
+            }
+        }
+    }
+
     
     // MARK: - FireStore Document 관련 로직
     // 문서 수 반환하는 함수(감쓰 총 개수, 모든 유저의 수 등)
