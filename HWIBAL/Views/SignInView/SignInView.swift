@@ -5,6 +5,7 @@
 //  Created by daelee on 10/13/23.
 //
 
+import AuthenticationServices
 import GoogleSignIn
 import SnapKit
 import UIKit
@@ -20,17 +21,17 @@ final class SignInView: UIView, RootView {
     private lazy var title: UILabel = {
         let label = UILabel()
         label.text = """
-                     아, 휘발
-                     나만의 안전한 공간
-                     """
+        아, 휘발
+        나만의 안전한 공간
+        """
         label.textColor = .label
         label.font = FontGuide.size32Bold
         label.numberOfLines = 2
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    
-    private lazy var imageAndTitle: UIStackView  = {
+
+    private lazy var imageAndTitle: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [hwibariImageView, title])
         stackView.axis = .vertical
         stackView.alignment = .leading
@@ -49,20 +50,29 @@ final class SignInView: UIView, RootView {
         }
         return button
     }()
-    
+
+    lazy var appleSignInButton: ASAuthorizationAppleIDButton = {
+        let button = ASAuthorizationAppleIDButton()
+        button.snp.makeConstraints { make in
+            make.width.equalTo(UIScreen.main.bounds.width - 48)
+            make.height.equalTo(56)
+        }
+        return button
+    }()
+
     private lazy var signInComponents: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [imageAndTitle, googleSignInButton])
+        let stackView = UIStackView(arrangedSubviews: [imageAndTitle, googleSignInButton, appleSignInButton])
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 54
         return stackView
     }()
-    
-    //let googleSignInButton = MainButton(type: .googleLogin)
+
+    // let googleSignInButton = MainButton(type: .googleLogin)
 
     func initializeUI() {
         backgroundColor = .systemBackground
-        
+
         addSubview(signInComponents)
         signInComponents.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
