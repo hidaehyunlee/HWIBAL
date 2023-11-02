@@ -75,7 +75,7 @@ class UserService {
             return nil
         }
     }
-
+    
     func fetchAllUsers() -> [User] {
         let context = coreDataManager.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()

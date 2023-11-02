@@ -23,6 +23,18 @@ struct PushToDetailScreenEvent: EventProtocol {
 final class HomeViewController: RootViewController<HomeView> {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        FireStoreManager.shared.getUser(userId: SignInService.shared.signedInUser!.id!, completion: <#T##FireStoreManager.UserResult##FireStoreManager.UserResult##(Result<User, Error>) -> Void#>)
+        
+//        FireStoreManager.shared.getDocumentCount(forCollection: "Users") { result in
+//        switch result {
+//        case .success(let documentCount):
+//            print("Document count in the collection: \(documentCount)")
+//        case .failure(let error):
+//            print("Error: \(error.localizedDescription)")
+//        }
+//    }
+        
         initializeUI()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleEmotionTrashUpdateNotification), name: NSNotification.Name("EmotionTrashUpdate"), object: nil)

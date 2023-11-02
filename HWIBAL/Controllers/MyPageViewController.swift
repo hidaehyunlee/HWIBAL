@@ -54,8 +54,9 @@ private extension MyPageViewController {
         print("🫵 클릭: 회원탈퇴")
         let witdrawalAlert = UIAlertController(title: "", message: "계정을 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다.", preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "회원탈퇴", style: .destructive) { _ in
-            SignInService.shared.setWithdrawal()
-            UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
+            FireStoreManager.shared.deleteUser(userId: (SignInService.shared.signedInUser?.id)!)
+//            SignInService.shared.setWithdrawal()
+//            UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
             self.goToSignInVC()
         }
         witdrawalAlert.addAction(action)

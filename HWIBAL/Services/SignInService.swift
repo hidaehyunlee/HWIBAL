@@ -18,6 +18,7 @@ class SignInService {
             signedInUser = existUser
             setSignedInUser(existUser.email!)
         } else {
+            FireStoreManager.shared.createUser(email: email, name: name, userId: id)
             UserService.shared.createUser(email: email, name: name, id: id)
             signedInUser = UserService.shared.getExistUser(email)
             setSignedInUser(email)
