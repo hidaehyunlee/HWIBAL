@@ -50,7 +50,7 @@ final class HomeView: UIView, RootView {
 
     private lazy var hwibariImageTooltipView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.systemGray
+        view.backgroundColor = UIColor.systemGray.withAlphaComponent(0.9)
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         view.isHidden = false
@@ -60,23 +60,31 @@ final class HomeView: UIView, RootView {
         label.text = "휘발이를 누르면 작성한 감정쓰레기를 볼 수 있어요!\n하부에는 두개의 버튼이 있어요!\n좌측버튼은 모든 감정쓰레기를 제거해요!\n우측버튼은 감정쓰레기를 작성할 수 있어요!"
         label.font = FontGuide.size16Bold
         label.numberOfLines = 0
-            label.lineBreakMode = .byWordWrapping
+        
+        let paragraphStyle = NSMutableParagraphStyle() // 생성시 텍스트의 스타일 및 서식을 정의 가능
+        paragraphStyle.lineSpacing = 8 // 줄간격 값 설정
+
+        let attributedText = NSMutableAttributedString(string: label.text ?? "")
+        // label.text에서 텍스트를 가져와 이 텍스트를 가지고 있는 attributedText를 생성
+        
+        attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
+        // NSAttributedString.Key.paragraphStyle 속성을 적용
+        
+        label.attributedText = attributedText // 줄간격이 적용된 텍스트가 라벨에 표시
+        
         view.addSubview(label)
+        
         label.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(10)
-                make.trailing.equalTo(view).inset(30)
-                make.top.bottom.equalTo(view).inset(5)
+            make.centerX.equalTo(view)
+            make.centerY.equalTo(view)
         }
 
         return view
     }()
     
-    private lazy var closeHwibariImageTooltipButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        button.tintColor = .white
-        button.addTarget(self, action: #selector(closeHwibariImageTooltip), for: .touchUpInside)
-        return button
+    private lazy var tapGestureRecognizer: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        return tapGesture
     }()
 
     // MARK: - Label Title Update Function
@@ -94,7 +102,9 @@ final class HomeView: UIView, RootView {
         myPageButton()
         setupHwibariImageView()
         setupButton()
-        setupBubbleView()
+        setuphwibariImageTooltipView()
+        
+        addGestureRecognizer(tapGestureRecognizer)
     }
     
     // MARK: - Private Functions
@@ -126,7 +136,7 @@ final class HomeView: UIView, RootView {
         }
         hwibariImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel2.snp.bottom).offset(100 * UIScreen.main.bounds.height / 926) // 비율 조정
+            make.top.equalTo(titleLabel2.snp.bottom).offset(80 * UIScreen.main.bounds.height / 926) // 비율 조정
             make.width.equalTo(330 * UIScreen.main.bounds.width / 428) // 너비 크게 조정
             make.height.equalTo(462 * UIScreen.main.bounds.height / 926) // 높이 크게 조정
         }
@@ -237,34 +247,29 @@ final class HomeView: UIView, RootView {
             hwibariImage.animationImages = [
                 UIImage(named: "hwibariopen2")!,
                 UIImage(named: "hwibariopen")!
-            ]} else {
-                hwibariImage.animationImages = [
-                    UIImage(named: "hwibariopen01")!,
-                    UIImage(named: "hwibariopen02")!
-                    ]
-            }
-    
-            hwibariImage.animationDuration = 0.3
-            hwibariImage.animationRepeatCount = 1
-            hwibariImage.startAnimating()
-            hwibariImage.image = UIImage(named: "hwibari_default")
+            ]
+        } else {
+            hwibariImage.animationImages = [
+                UIImage(named: "hwibariopen01")!,
+                UIImage(named: "hwibariopen02")!
+            ]
         }
     
-    private func setupBubbleView() {
+        hwibariImage.animationDuration = 0.3
+        hwibariImage.animationRepeatCount = 1
+        hwibariImage.startAnimating()
+        hwibariImage.image = UIImage(named: "hwibari_default")
+    }
+    
+    private func setuphwibariImageTooltipView() {
         addSubview(hwibariImageTooltipView)
         
         hwibariImageTooltipView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel2.snp.bottom).offset(5)
+            make.top.equalTo(hwibariImage.snp.top).offset(40)
             make.centerX.equalToSuperview()
+            make.width.equalTo(330)
+            make.height.equalTo(120)
         }
-        
-        let closeHwibariImageTooltipButton = createCloseButton()
-            hwibariImageTooltipView.addSubview(closeHwibariImageTooltipButton)
-            
-            closeHwibariImageTooltipButton.snp.makeConstraints { make in
-                make.trailing.equalTo(hwibariImageTooltipView)
-                make.width.height.equalTo(20)
-            }
     }
 
     // 애니메이션을 시작하는 함수
@@ -335,18 +340,17 @@ final class HomeView: UIView, RootView {
         }
     }
     
-    private func createCloseButton() -> UIButton {
-        let closeButton = UIButton()
-        closeButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        closeButton.tintColor = .white
-        closeButton.addTarget(self, action: #selector(closeHwibariImageTooltip), for: .touchUpInside)
-        return closeButton
+    private func hideTooltip() {
+        hwibariImageTooltipView.isHidden = true
     }
     
     // MARK: - Event Handling
     
     @objc private func myPageButtonTapped() {
         print("'유저버튼'이 탭되었습니다.")
+        
+        hideTooltip()
+        
         EventBus.shared.emit(PushToMyPageScreenEvent())
     }
     
@@ -357,6 +361,8 @@ final class HomeView: UIView, RootView {
         isHwibariImageTapped = true // hwibariImageViewTapped 중복실행 방지 (True/false)
         
         print("'hwibari'가 탭되었습니다.")
+        
+        hideTooltip()
         
         if emotionCount == 0 {
             hwibariImage.animationImages = [
@@ -369,15 +375,15 @@ final class HomeView: UIView, RootView {
                 UIImage(named: "hwibariopen")!
             ]
         }
-            hwibariImage.animationDuration = 0.3
-            hwibariImage.animationRepeatCount = 1
-            hwibariImage.startAnimating()
+        hwibariImage.animationDuration = 0.3
+        hwibariImage.animationRepeatCount = 1
+        hwibariImage.startAnimating()
             
-            if emotionCount == 0 {
-                hwibariImage.image = UIImage(named: "hwibariopen01")
-            } else {
-                hwibariImage.image = UIImage(named: "hwibariopen2")
-            }
+        if emotionCount == 0 {
+            hwibariImage.image = UIImage(named: "hwibariopen01")
+        } else {
+            hwibariImage.image = UIImage(named: "hwibariopen2")
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let detailViewController = DetailViewController()
@@ -391,6 +397,8 @@ final class HomeView: UIView, RootView {
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
         
+        hideTooltip()
+        
         // AlertManager를 사용하여 확인 다이얼로그를 표시
         AlertManager.shared.showAlert(on: viewController!,
                                       title: "다, 휘발 🔥",
@@ -399,13 +407,16 @@ final class HomeView: UIView, RootView {
                                           self.startRemoveAnimation()
                                       })
     }
-    
-    @objc private func closeHwibariImageTooltip() {
-        hwibariImageTooltipView.isHidden = true
-    }
 
     @objc private func createButtonTapped() {
         print("'작성하기'가 탭되었습니다.")
+        
+        hideTooltip()
+        
         EventBus.shared.emit(PushToCreatePageScreenEvent())
+    }
+    
+    @objc private func handleTap() {
+        hideTooltip()
     }
 }
