@@ -75,8 +75,28 @@ final class HomeView: UIView, RootView {
         view.addSubview(label)
         
         label.snp.makeConstraints { make in
-            make.centerX.equalTo(view)
-            make.centerY.equalTo(view)
+            make.center.equalTo(view)
+        }
+
+        return view
+    }()
+    
+    private lazy var tooltipInfoView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.systemYellow.withAlphaComponent(1)
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        view.isHidden = false
+
+        let label = UILabel()
+        label.textColor = .white
+        label.text = "Tooltip"
+        label.font = FontGuide.size14Bold
+        
+        view.addSubview(label)
+        
+        label.snp.makeConstraints { make in
+            make.center.equalTo(view)
         }
 
         return view
@@ -263,12 +283,20 @@ final class HomeView: UIView, RootView {
     
     private func setuphwibariImageTooltipView() {
         addSubview(hwibariImageTooltipView)
+        addSubview(tooltipInfoView)
         
         hwibariImageTooltipView.snp.makeConstraints { make in
             make.top.equalTo(hwibariImage.snp.top).offset(40)
             make.centerX.equalToSuperview()
             make.width.equalTo(330)
             make.height.equalTo(120)
+        }
+        
+        tooltipInfoView.snp.makeConstraints { make in
+            make.bottom.equalTo(hwibariImageTooltipView.snp.top).offset(-5)
+            make.leading.equalToSuperview().offset(24)
+            make.width.equalTo(55)
+            make.height.equalTo(25)
         }
     }
 
@@ -342,6 +370,7 @@ final class HomeView: UIView, RootView {
     
     private func hideTooltip() {
         hwibariImageTooltipView.isHidden = true
+        tooltipInfoView.isHidden = true
     }
     
     // MARK: - Event Handling
