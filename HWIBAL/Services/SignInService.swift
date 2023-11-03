@@ -20,6 +20,7 @@ class SignInService {
         } else {
             let autoExpireDate = Calendar.current.date(byAdding: .day, value: 7, to: Date()) ?? Date()
             UserService.shared.createUser(email: email, name: name, id: id, autoExpireDate: autoExpireDate)
+            UserService.shared.createUser(email: email, name: name, id: id)
             signedInUser = UserService.shared.getExistUser(email)
             setSignedInUser(email)
             UserDefaults.standard.set(false, forKey: "isDarkMode")

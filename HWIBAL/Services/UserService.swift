@@ -20,6 +20,16 @@ class UserService {
             user.name = name
             user.id = id
             user.autoExpireDate = Calendar.current.date(byAdding: .day, value: 7, to: autoExpireDate)
+            
+            if let sevenDaysLater = Calendar.current.date(byAdding: .day, value: 8, to: Date()) {
+                let components = Calendar.current.dateComponents([.year, .month, .day], from: sevenDaysLater)
+                
+                if let year = components.year, let month = components.month, let day = components.day {
+                    if let sevenDaysLaterMidnight = Calendar.current.date(from: DateComponents(year: year, month: month, day: day, hour: 0, minute: 0, second: 0)) {
+                        user.autoExpireDate = sevenDaysLaterMidnight
+                    }
+                }
+            }
 
             coreDataManager.saveContext()
         }
