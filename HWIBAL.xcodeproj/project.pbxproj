@@ -28,13 +28,13 @@
 		3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A302AD8E76B0024D692 /* CloseButton.swift */; };
 		3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A322AD8EA7E0024D692 /* CircleButton.swift */; };
 		3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A342AD931C70024D692 /* ReportSummaryCell.swift */; };
-		3F8669BE2AE8B3FB00F58CE3 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8669BC2AE8B3FB00F58CE3 /* User+CoreDataClass.swift */; };
 		3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9445582ADCDE4B0003DCD4 /* DGCharts */; };
 		3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */; };
 		3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */; };
 		3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445612ADF79D80003DCD4 /* SignInService.swift */; };
 		3F9445662ADFD5EA0003DCD4 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445652ADFD5EA0003DCD4 /* ReportService.swift */; };
 		3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */; };
+		3F9BE37F2AF385860036D880 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9BE37D2AF385750036D880 /* User+CoreDataClass.swift */; };
 		3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */; };
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
 		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
@@ -88,12 +88,12 @@
 		3F783A302AD8E76B0024D692 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		3F783A322AD8EA7E0024D692 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		3F783A342AD931C70024D692 /* ReportSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSummaryCell.swift; sourceTree = "<group>"; };
-		3F8669BC2AE8B3FB00F58CE3 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDayOfTheWeekCell.swift; sourceTree = "<group>"; };
 		3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimeZoneCell.swift; sourceTree = "<group>"; };
 		3F9445612ADF79D80003DCD4 /* SignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInService.swift; sourceTree = "<group>"; };
 		3F9445652ADFD5EA0003DCD4 /* ReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportService.swift; sourceTree = "<group>"; };
 		3F9445672AE0D2BF0003DCD4 /* EmotionTrashService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashService.swift; sourceTree = "<group>"; };
+		3F9BE37D2AF385750036D880 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportEmptyView.swift; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -324,7 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */,
-				3F8669BC2AE8B3FB00F58CE3 /* User+CoreDataClass.swift */,
+				3F9BE37D2AF385750036D880 /* User+CoreDataClass.swift */,
 				3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */,
 				0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */,
 			);
@@ -423,6 +423,7 @@
 				DEFE3A172AD53F3C0076FE11 /* RootView.swift in Sources */,
 				DEFE3A2D2AD5429D0076FE11 /* MyPageViewController.swift in Sources */,
 				3F783A242AD805330024D692 /* ColorGuide.swift in Sources */,
+				3F9BE37F2AF385860036D880 /* User+CoreDataClass.swift in Sources */,
 				DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */,
 				3F9445662ADFD5EA0003DCD4 /* ReportService.swift in Sources */,
 				DEFE3A2B2AD542300076FE11 /* HomeViewController.swift in Sources */,
@@ -449,7 +450,6 @@
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
 				DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */,
-				3F8669BE2AE8B3FB00F58CE3 /* User+CoreDataClass.swift in Sources */,
 				DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */,
