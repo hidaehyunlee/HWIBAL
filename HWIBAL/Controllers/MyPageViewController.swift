@@ -54,7 +54,7 @@ private extension MyPageViewController {
         print("🫵 클릭: 회원탈퇴")
         let witdrawalAlert = UIAlertController(title: "", message: "계정을 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다.", preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "회원탈퇴", style: .destructive) { _ in
-//            FireStoreManager.shared.deleteUser(userId: (FireStoreManager.shared.signedInUser?.id)!)
+            FireStoreManager.shared.deleteUser(userId: FireStoreManager.shared.signInUser!.id)
 //            SignInService.shared.setWithdrawal()
 //            UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
             self.goToSignInVC()
@@ -122,6 +122,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             for day in days {
                 let formattedDay = "\(day)일"
                 let action = UIAlertAction(title: formattedDay, style: .default) { _ in
+                    FireStoreManager.shared.updateUser(userId: FireStoreManager.shared.signInUser!.id, autoExpireDays: day)
 //                    UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: day)
                     print("\(day) 후 감정쓰레기를 태워 드립니다.")
 //                    UserDefaults.standard.set(day, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))")

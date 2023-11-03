@@ -41,38 +41,34 @@ final class FireStoreManager {
     }
     
     // 업데이트 유저 테스트 완료
-//    func updateUser(userId: String, autoExpireDays: Int) {
-//        guard let userId = SignInService.shared.signedInUser?.id else {
-//            print("User ID is nil, cannot save to Firestore")
-//            return
-//        }
-//
-//        db.collection("Users").document(userId).setData([
-//            "autoExpireDate": setAutoExpireDate(day: autoExpireDays) ?? Date()
-//        ], merge: true) { error in
-//            if let error = error {
-//                print("Error updating document: \(error)")
-//            } else {
-//                print("Document updated with new autoExpireDays: \(String(describing: SignInService.shared.signedInUser?.autoExpireDate))")
-//            }
-//        }
-//    }
+    func updateUser(userId: String, autoExpireDays: Int) {
+        guard let userId = signInUser?.id else {
+            print("User ID is nil, cannot save to Firestore")
+            return
+        }
+
+        db.collection("Users").document(userId).setData([
+            "autoExpireDate": setAutoExpireDate(day: autoExpireDays) ?? Date()
+        ], merge: true)
+    }
     
     // 유저 삭제 테스트 완료
-//    func deleteUser(userId: String) {
-//        guard let userId = SignInService.shared.signedInUser?.id else {
-//            print("User ID is nil, cannot save to Firestore")
-//            return
-//        }
-//
-//        db.collection("Users").document(userId).delete { error in
-//            if let error = error {
-//                print("Error deleting document: \(error)")
-//            } else {
-//                print("Document successfully deleted: \(userId)")
-//            }
-//        }
-//    }
+    func deleteUser(userId: String) {
+        guard let userId = signInUser?.id else {
+            print("User ID is nil, cannot save to Firestore")
+            return
+        }
+
+        deleteAllEmotionTrashOfUser(userId: userId) { error in
+            if let error = error {
+                print("Error deleting emotion trash: \(error.localizedDescription)")
+            } else {
+                print("Emotion trash deleted successfully.")
+                self.db.collection("Users").document(userId).delete()
+                print("User deleted successfully.")
+            }
+        }
+    }
     
     // 유저 존재 여부 T/F - ID로 확인
     func isUserIdExistInFirestore(userId: String, completion: @escaping (Bool, Error?) -> Void) {
@@ -154,7 +150,11 @@ final class FireStoreManager {
             "id": EmotionTrashesId,
             "text": text,
             "timestamp": Date(),
-            "user": ["id": user.id]
+            "user": [
+                "id": user.id,
+                "name": user.name,
+                "email": user.email
+            ]
         ]
         
         // 🚨 이미지 처리 안되고 있음 ㅠ
@@ -204,13 +204,7 @@ final class FireStoreManager {
     
     // cellId가 어떤식으로 지정되는지 모르겠음, 테스트 실패
     func deleteEmotionTrash(EmotionTrashesId: String) {
-        db.collection("EmotionTrashes").document(EmotionTrashesId).delete { error in
-            if let error = error {
-                print("Error deleting document: \(error)")
-            } else {
-                print("Document successfully deleted: \(EmotionTrashesId)")
-            }
-        }
+        db.collection("EmotionTrashes").document(EmotionTrashesId).delete()
     }
     
     // 전체 삭제 테스트 완료
@@ -229,6 +223,24 @@ final class FireStoreManager {
             }
         }
     }
+    
+    func deleteAllEmotionTrashOfUser(userId: String, completion: @escaping (Error?) -> Void) {
+        let emotionTrashCollectionRef = db.collection("EmotionTrashes")
+        
+        let query = emotionTrashCollectionRef.whereField("user.id", isEqualTo: userId)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(error)
+            } else {
+                for document in querySnapshot!.documents {
+                    document.reference.delete()
+                }
+                completion(nil)
+            }
+        }
+    }
+
     
     // 유저의 감쓰 전체를 가져오는 함수
     func fetchEmotionTrashDocuments(userId: String, completion: @escaping ([DocumentSnapshot]?, Error?) -> Void) {
@@ -258,7 +270,11 @@ final class FireStoreManager {
             "id": reportId,
             "text": text,
             "timestamp": Date(),
-            "user": ["id": user.id]
+            "user": [
+                "id": user.id,
+                "name": user.name,
+                "email": user.email
+            ]
         ]
         
         db.collection("Reports").document(reportId).setData(reportData) { error in
