@@ -28,38 +28,38 @@ final class SignInViewController: RootViewController<SignInView> {
             let name = user.profile?.name ?? "default name"
             let id = String("\(String(describing: email))\(Date())".hashValue) // 나중에 바꾸는게 좋음.
 
-            FireStoreManager.shared.isUserEmailExistInFirestore(email: email) { (isExist, error) in
+            FireStoreManager.shared.getUserForEmail(email: email) { (user, error) in
                 if let error = error {
                     print("Error: \(error.localizedDescription)")
+                } else if let user = user {
+                    FireStoreManager.shared.signInUser = user
+                    print("🚨User ID: \(user.id)")
+                    print("User Name: \(user.name)")
+                    print("User Email: \(user.email)")
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        self?.goToMainVC()
+                    }
                 } else {
-                    if isExist {
-                        print("User with Email \(email) exists in Firestore.")
-                        FireStoreManager.shared.getUserForEmail(email: email) { (user, error) in
-                            if let error = error {
-                                print("Error: \(error.localizedDescription)")
-                            } else if let user = user {
-                                FireStoreManager.shared.signInUser = user
-                                print("🚨User ID: \(user.id)")
-                                print("User Name: \(user.name)")
-                                print("User Email: \(user.email)")
-                            } else {
-                                print("User with Email \(email) does not exist in Firestore.")
-                            }
-                        }
-                    } else {
-                        print("User with Email \(email) does not exist in Firestore.")
-                        FireStoreManager.shared.createUser(email: email, name: name, userId: id)
+                    print("User with Email \(email) does not exist in Firestore.")
+                    FireStoreManager.shared.createUser(email: email, name: name, userId: id)
+                    DispatchQueue.main.async { [weak self] in
+                        self?.goToMainVC()
                     }
                 }
             }
 
-            // 로그인 완료 후 MainViewController로 이동
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let sceneDelegate = windowScene.delegate as? SceneDelegate
-            {
-                let mainViewController = MainViewController()
-                sceneDelegate.window?.rootViewController = mainViewController
-            }
+            
+        }
+    }
+    
+    func goToMainVC() {
+        // 로그인 완료 후 MainViewController로 이동
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let sceneDelegate = windowScene.delegate as? SceneDelegate
+        {
+            let mainViewController = MainViewController()
+            sceneDelegate.window?.rootViewController = mainViewController
         }
     }
 }
