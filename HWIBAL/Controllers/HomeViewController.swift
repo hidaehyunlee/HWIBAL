@@ -56,10 +56,16 @@ final class HomeViewController: RootViewController<HomeView> {
         }
     }
 
+    var hasLaunchedBefore: Bool = false
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        rootView.returnHwibari() // 홈뷰 로드시 휘바리 이미지 변경
+        if hasLaunchedBefore {
+                rootView.returnHwibari()
+            } else {
+                hasLaunchedBefore = true
+            }
     }
 }
 
