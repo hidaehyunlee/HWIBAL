@@ -100,7 +100,7 @@ final class MyPageView: UIView, RootView {
         super.init(frame: frame)
         
         initializeUI()
-        updateTitleLabel()
+//        updateTitleLabel()
     }
 
     required init?(coder: NSCoder) {
@@ -152,19 +152,19 @@ final class MyPageView: UIView, RootView {
         }
     }
     
-    func updateTitleLabel() {
-        reportSummaryTitle.text = """
-                     가입 이후 작성한
-                     감정쓰레기 \(ReportService.shared.calculateEmotionTrashCount())개
-                     """
-        
-        switch ReportService.shared.calculateEmotionTrashCount() {
-        case let difference where difference > ReportService.shared.calculateAverageEmotionTrashCount():
-            reportSummarySubTitle.text = "평균보다 \(difference - ReportService.shared.calculateAverageEmotionTrashCount())개 더 썼어요"
-        case let difference where difference < ReportService.shared.calculateAverageEmotionTrashCount():
-            reportSummarySubTitle.text = "평균보다 \(ReportService.shared.calculateAverageEmotionTrashCount() - difference)개 적게 썼어요"
-        default:
-            reportSummarySubTitle.text = "평균과 같아요"
-        }
-    }
+//    func updateTitleLabel() {
+//        reportSummaryTitle.text = """
+//                     가입 이후 작성한
+//                     감정쓰레기 \(ReportService.shared.calculateEmotionTrashCount())개
+//                     """
+//
+//        switch ReportService.shared.calculateEmotionTrashCount() {
+//        case let difference where difference > ReportService.shared.calculateAverageEmotionTrashCount():
+//            reportSummarySubTitle.text = "평균보다 \(difference - ReportService.shared.calculateAverageEmotionTrashCount())개 더 썼어요"
+//        case let difference where difference < ReportService.shared.calculateAverageEmotionTrashCount():
+//            reportSummarySubTitle.text = "평균보다 \(ReportService.shared.calculateAverageEmotionTrashCount() - difference)개 적게 썼어요"
+//        default:
+//            reportSummarySubTitle.text = "평균과 같아요"
+//        }
+//    }
 }

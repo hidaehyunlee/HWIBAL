@@ -11,7 +11,7 @@ import DGCharts
 
 class ReportDayOfTheWeekCell: UICollectionViewCell {
     static let identifier = "dayOfTheWeekCell"
-    private var daysOfWeekCount = ReportService.shared.calculateDaysOfWeekCount()
+//    private var daysOfWeekCount = ReportService.shared.calculateDaysOfWeekCount()
     private var maxDay = ""
     private var maxCount = 0
     private var chartGenerated = false
@@ -189,12 +189,12 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         initializeUI()
         
         // MARK: - Title, SubTitle
-        for (day, count) in daysOfWeekCount {
-            if count > maxCount {
-                maxCount = count
-                maxDay = day
-            }
-        }
+//        for (day, count) in daysOfWeekCount {
+//            if count > maxCount {
+//                maxCount = count
+//                maxDay = day
+//            }
+//        }
         
         title.text = """
                      \(maxDay)요일만 되면
@@ -209,22 +209,22 @@ class ReportDayOfTheWeekCell: UICollectionViewCell {
         }
         
         // MARK: - Rank
-        let sortedDaysOfWeekCount = daysOfWeekCount.sorted { $0.value > $1.value }
+//        let sortedDaysOfWeekCount = daysOfWeekCount.sorted { $0.value > $1.value }
 
-        if sortedDaysOfWeekCount.count >= 1 {
-            firstRankingDayOfTheWeek.text = "1. \(sortedDaysOfWeekCount[0].key)요일"
-            firstRankingCount.text = "\(sortedDaysOfWeekCount[0].value)개"
-        }
-
-        if sortedDaysOfWeekCount.count >= 2 {
-            secondRankingDayOfTheWeek.text = "2. \(sortedDaysOfWeekCount[1].key)요일"
-            secondRankingCount.text = "\(sortedDaysOfWeekCount[1].value)개"
-        }
-
-        if sortedDaysOfWeekCount.count >= 3 {
-            thirdRankingDayOfTheWeek.text = "3. \(sortedDaysOfWeekCount[2].key)요일"
-            thirdRankingCount.text = "\(sortedDaysOfWeekCount[2].value)개"
-        }
+//        if sortedDaysOfWeekCount.count >= 1 {
+//            firstRankingDayOfTheWeek.text = "1. \(sortedDaysOfWeekCount[0].key)요일"
+//            firstRankingCount.text = "\(sortedDaysOfWeekCount[0].value)개"
+//        }
+//
+//        if sortedDaysOfWeekCount.count >= 2 {
+//            secondRankingDayOfTheWeek.text = "2. \(sortedDaysOfWeekCount[1].key)요일"
+//            secondRankingCount.text = "\(sortedDaysOfWeekCount[1].value)개"
+//        }
+//
+//        if sortedDaysOfWeekCount.count >= 3 {
+//            thirdRankingDayOfTheWeek.text = "3. \(sortedDaysOfWeekCount[2].key)요일"
+//            thirdRankingCount.text = "\(sortedDaysOfWeekCount[2].value)개"
+//        }
     }
     
     private func generateChartForDayOfWeek() {

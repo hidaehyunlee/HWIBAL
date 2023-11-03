@@ -10,7 +10,7 @@ import SnapKit
 
 class ReportTimeZoneCell: UICollectionViewCell {
     static let identifier = "timeZoneCell"
-    var timeZoneCount = ReportService.shared.calculateTimeZoneCount()
+    var timeZoneCount = 0 //ReportService.shared.calculateTimeZoneCount()
     var maxTimeZone = ""
     var maxCount = 0
     var averageCount = 0
@@ -132,12 +132,12 @@ class ReportTimeZoneCell: UICollectionViewCell {
         initializeUI()
         
         // MARK: - Title, SubTitle
-        for (timeZone, count) in timeZoneCount {
-            if count > maxCount {
-                maxCount = count
-                maxTimeZone = timeZone
-            }
-        }
+//        for (timeZone, count) in timeZoneCount {
+//            if count > maxCount {
+//                maxCount = count
+//                maxTimeZone = timeZone
+//            }
+//        }
         
         title.text = """
                      \(generateGreetingForHour(maxTimeZone))에
@@ -153,10 +153,10 @@ class ReportTimeZoneCell: UICollectionViewCell {
     }
     
     private func averageEmotionTrashCount() -> Int {
-        let totalValues = timeZoneCount.values.reduce(0, +)
-        averageCount = Int(Double(totalValues)) / timeZoneCount.count
+//        let totalValues = timeZoneCount.values.reduce(0, +)
+//        averageCount = Int(Double(totalValues)) / timeZoneCount.count
         
-        return averageCount
+        return 0
     }
     
     private func generateGreetingForHour(_ timeZone: String) -> String {
