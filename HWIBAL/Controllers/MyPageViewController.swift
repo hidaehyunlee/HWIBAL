@@ -98,7 +98,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 56
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -107,7 +107,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
         switch settingItem.type {
             case .appearance:
-            print("🫵 클릭: 화면모드")            
+            print("🫵 클릭: 화면모드")
             break
                 
             case .autoLogin:
@@ -127,11 +127,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
                         cell.updateDateLabel(formattedDay)
                     }
-                    EmotionTrashService.shared.startAutoDeleteTask(day)
-                    // 백그라운드 태스크 실행
-//                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-//                        appDelegate.startAutoDeleteTask()
-//                    }
+                    NotificationService.shared.autoDeleteNotification(day)
                 }
                 volatilizationDateSettingAlert.addAction(action)
             }

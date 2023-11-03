@@ -5,11 +5,12 @@
 //  Created by 김도윤 on 2023/10/12.
 
 import AVFoundation
+import CoreData
 import EventBus
 import SnapKit
 import UIKit
 
-class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
+class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var keyboardHeight: CGFloat = 0
     private var attachedImageView: UIImageView?
     var playButton: UIButton?
@@ -24,7 +25,8 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveAudioNotification(_:)), name: NSNotification.Name("RecordingDidFinish"), object: nil)
+        
         rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
 
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
@@ -56,43 +58,39 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         let recordingVC = RecordingViewController()
         recordingVC.modalPresentationStyle = .custom
         recordingVC.transitioningDelegate = recordingVC
-        recordingVC.completionHandler = { [weak self] saved, url in
-            print("Completion handler called!")
-            if saved, let audioURL = url {
-                print("받은 오디오 URL: \(audioURL)")
-                self?.playButton?.isHidden = false
-                self?.playButton?.backgroundColor = .green
-                self?.savedAudioURL = url
-                print(self?.playButton?.isHidden ?? "nil")
-                if let superviewOfPlayButton = self?.playButton?.superview {
-                    print("Superview found!")
-                } else {
-                    print("Superview not found!")
-                }
-                self?.view.bringSubviewToFront(self?.playButton ?? UIView())
-            }
-        }
         present(recordingVC, animated: true, completion: nil)
     }
 
-
-
+    @objc func receiveAudioNotification(_ notification: Notification) {
+        if let url = notification.userInfo?["savedAudioURL"] as? URL {
+            savedAudioURL = url
+            DispatchQueue.main.async {
+                self.playButton?.isEnabled = true
+            }
+        } else {
+            print("Audio URL is nil")
+        }
+    }
 
     @objc func playSavedAudio() {
-        if audioPlayer?.isPlaying == true {
-            audioPlayer?.stop()
-        } else {
-            guard let url = savedAudioURL else {
-                return
-            }
+        guard let url = savedAudioURL else {
+            print("Audio URL is nil")
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.delegate = self
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+        } catch {
+            print("AVAudioPlayer init failed with error: \(error.localizedDescription)")
+        }
+    }
 
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: url)
-                audioPlayer?.prepareToPlay()
-                audioPlayer?.play()
-            } catch {
-                print("오디오 재생에 실패했습니다. \(error)")
-            }
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            playButton?.backgroundColor = .green
         }
     }
 
@@ -218,13 +216,28 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     @objc func showWriteAlert() {
         AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 휘발주기에 맞추어 불태워 드릴게요 🔥") {
             let text = self.rootView.textView.text ?? ""
-            // attachedImageView가 nil인지 & imageView의 image 속성이 nil인지 확인 -> nil아닐 경우 저장
-            if let imageView = self.attachedImageView, let attachedImage = imageView.image {
-                print("attachedImageView 첨부")
-                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text, attachedImage)
+            var recording: Recording?
+
+            if let savedAudioURL = self.savedAudioURL, let currentUser = SignInService.shared.signedInUser {
+                recording = RecordingService.shared.createRecording(filePath: savedAudioURL.path, duration: TimeInterval(), title: "Recording on \(Date())", user: currentUser)
+            }
+
+            if let recording = recording {
+                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
+                    print("attachedImageView 첨부 with recording")
+                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: attachedImage, recording: recording)
+                } else {
+                    print("attachedImageView nil with recording")
+                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: nil, recording: recording)
+                }
             } else {
-                print("attachedImageView nil")
-                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
+                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
+                    print("attachedImageView 첨부 without recording")
+                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: attachedImage, recording: nil)
+                } else {
+                    print("attachedImageView nil without recording")
+                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: nil, recording: nil)
+                }
             }
             EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
@@ -241,6 +254,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .init("RecordingDidFinish"), object: nil)
     }
 }
 
@@ -266,8 +280,8 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         attachedImageView = imageView
         
         imageView.snp.makeConstraints { make in
-            make.leading.equalTo(rootView.textView).offset(rootView.textView.textContainerInset.left)
-            make.trailing.equalTo(rootView.textView).offset(-rootView.textView.textContainerInset.right)
+            make.leading.equalTo(rootView.textView.snp.leading)
+            make.trailing.equalTo(rootView.textView.snp.trailing)
             make.top.equalTo(rootView.textView.snp.bottom).offset(10)
             make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10)
         }
