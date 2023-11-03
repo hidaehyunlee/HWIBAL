@@ -19,7 +19,7 @@ final class DetailViewController: RootViewController<DetailView> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
+//        userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
 
         if userEmotionTrashes.count == 0 {
             initEmptyDetailView()
@@ -102,7 +102,7 @@ final class DetailViewController: RootViewController<DetailView> {
         let cellId = userEmotionTrashes[index].id
 
         AlertManager.shared.showAlert(on: self, title: "감정쓰레기 삭제", message: "당신의 이 감정을 불태워 드릴게요.", okCompletion: { _ in
-            EmotionTrashService.shared.deleteEmotionTrash(SignInService.shared.signedInUser!, cellId!)
+//            EmotionTrashService.shared.deleteEmotionTrash(SignInService.shared.signedInUser!, cellId!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
             self.navigationController?.popViewController(animated: true)
         })
@@ -122,7 +122,18 @@ extension DetailViewController: UICollectionViewDataSource {
             cellsInitialized[indexPath] = true
         }
 
-        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
+        FireStoreManager.shared.fetchDocumentsFromCollection(collectionName: "users") { (documents, error) in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else if let documents = documents {
+                for document in documents {
+                    let userEmotionTrashes = document.data()
+                }
+            } else {
+                print("No documents found.")
+            }
+        }
+        //EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
         let reversedIndex = userEmotionTrashes.count - 1 - indexPath.item
         let data = userEmotionTrashes[reversedIndex]
 
