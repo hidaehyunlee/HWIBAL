@@ -26,9 +26,8 @@ final class SignInViewController: RootViewController<SignInView> {
             let email = user.profile?.email ?? "default email"
             let name = user.profile?.name ?? "default name"
             let id = String("\(String(describing: email))\(Date())".hashValue) // 나중에 바꾸는게 좋음.
-            let autoExpireDays: Int64 = 7
 
-            SignInService.shared.signIn(email, name, id, autoExpireDays)
+            SignInService.shared.signIn(email, name, id)
 
             // 로그인 완료 후 MainViewController로 이동
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
