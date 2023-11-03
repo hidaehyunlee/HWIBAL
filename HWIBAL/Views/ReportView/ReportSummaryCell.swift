@@ -11,8 +11,8 @@ import DGCharts
 
 class ReportSummaryCell: UICollectionViewCell {
     static let identifier = "summaryCell"
-    var totalEmotionTrashCount = 0 //ReportService.shared.calculateEmotionTrashCount()
-    var averageEmotionTrashCount = 0 //ReportService.shared.calculateAverageEmotionTrashCount()
+    var totalEmotionTrashCount = ReportService.shared.calculateEmotionTrashCount()
+    var averageEmotionTrashCount = ReportService.shared.calculateAverageEmotionTrashCount()
     
     private let view: UIView = {
         let view = UIView()
