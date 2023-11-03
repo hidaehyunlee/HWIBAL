@@ -105,7 +105,7 @@ class MyPageCustomCell: UITableViewCell {
         case .autoVolatilizationDate:
             appearanceControl.isHidden = true
             switchControl.isHidden = true
-            dateLabel.text = "\(UserDefaults.standard.integer(forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))"))일"
+            dateLabel.text = "\(user.autoExpireDays)일"
             
         case .logout:
             appearanceControl.isHidden = true
