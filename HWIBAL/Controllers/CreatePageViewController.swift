@@ -9,7 +9,7 @@ import EventBus
 import SnapKit
 import UIKit
 
-class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
+class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate  {
     var keyboardHeight: CGFloat = 0
     private var attachedImageView: UIImageView?
     var playButton: UIButton?
@@ -24,9 +24,9 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveAudioNotification(_:)), name: NSNotification.Name("RecordingDidFinish"), object: nil)
+        
         rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
-
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
         
         setupPlayButton()
@@ -40,62 +40,52 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         PlayButton.setImage(UIImage(named: "play"), for: .normal)
         PlayButton.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
         PlayButton.backgroundColor = .red
-        PlayButton.layer.cornerRadius = 25
-
-        PlayButton.snp.makeConstraints { make in
-            make.centerX.equalTo(view)
-            make.bottom.equalTo(rootView.soundButton.snp.top).offset(-10)
-            make.width.height.equalTo(50)
-        }
-
+        
         playButton = PlayButton
         view.bringSubviewToFront(playButton!)
-    }
+        }
 
     @objc func startOrStopRecording() {
         let recordingVC = RecordingViewController()
         recordingVC.modalPresentationStyle = .custom
         recordingVC.transitioningDelegate = recordingVC
-        recordingVC.completionHandler = { [weak self] saved, url in
-            print("Completion handler called!")
-            if saved, let audioURL = url {
-                print("받은 오디오 URL: \(audioURL)")
-                self?.playButton?.isHidden = false
-                self?.playButton?.backgroundColor = .green
-                self?.savedAudioURL = url
-                print(self?.playButton?.isHidden ?? "nil")
-                if let superviewOfPlayButton = self?.playButton?.superview {
-                    print("Superview found!")
-                } else {
-                    print("Superview not found!")
-                }
-                self?.view.bringSubviewToFront(self?.playButton ?? UIView())
-            }
-        }
         present(recordingVC, animated: true, completion: nil)
     }
 
-
-
-
-    @objc func playSavedAudio() {
-        if audioPlayer?.isPlaying == true {
-            audioPlayer?.stop()
+    @objc func receiveAudioNotification(_ notification: Notification) {
+        if let url = notification.userInfo?["savedAudioURL"] as? URL {
+            savedAudioURL = url
+            DispatchQueue.main.async {
+                self.playButton?.isEnabled = true
+            }
         } else {
-            guard let url = savedAudioURL else {
-                return
-            }
-
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: url)
-                audioPlayer?.prepareToPlay()
-                audioPlayer?.play()
-            } catch {
-                print("오디오 재생에 실패했습니다. \(error)")
-            }
+            print("Audio URL is nil")
         }
     }
 
+    
+    @objc func playSavedAudio() {
+        guard let url = savedAudioURL else {
+            print("Audio URL is nil")
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.delegate = self
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+        } catch {
+            print("AVAudioPlayer init failed with error: \(error.localizedDescription)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            playButton?.backgroundColor = .green
+        }
+    }
+    
     @objc func presentImagePickerOptions() {
         let actionSheet = UIAlertController(title: nil, message: "이미지 선택", preferredStyle: .actionSheet)
         
@@ -218,17 +208,30 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     @objc func showWriteAlert() {
         AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 휘발주기에 맞추어 불태워 드릴게요 🔥") {
             let text = self.rootView.textView.text ?? ""
-            // attachedImageView가 nil인지 & imageView의 image 속성이 nil인지 확인 -> nil아닐 경우 저장
-            if let imageView = self.attachedImageView, let attachedImage = imageView.image {
-                print("attachedImageView 첨부")
-                FireStoreManager.shared.createEmotionTrash(user: FireStoreManager.shared.signInUser!, EmotionTrashesId: UUID().uuidString, text: text, image: attachedImage)
-//                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text, attachedImage)
-            } else {
-                print("attachedImageView nil")
-                FireStoreManager.shared.createEmotionTrash(user: FireStoreManager.shared.signInUser!, EmotionTrashesId: UUID().uuidString, text: text)
-//                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
+            var recording: Recording?
+
+            if let currentUser = FireStoreManager.shared.signInUser {
+                recording = RecordingService.shared.createRecording(duration: TimeInterval(), title: "Recording on \(Date())", user: FireStoreManager.shared.signInUser!)
             }
-//            EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
+            
+            if let recording = recording {
+                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
+                    print("attachedImageView 첨부 with recording")
+                    FireStoreManager.shared.createEmotionTrash(user: FireStoreManager.shared.signInUser!, EmotionTrashesId: "", text: text, image: attachedImage, recording: recording)
+                } else {
+                    print("attachedImageView nil with recording")
+                    FireStoreManager.shared.createEmotionTrash(user: FireStoreManager.shared.signInUser!, EmotionTrashesId: "", text: text, image: nil, recording: recording)
+                }
+            } else {
+                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
+                    print("attachedImageView 첨부 without recording")
+                    FireStoreManager.shared.createEmotionTrash(user: FireStoreManager.shared.signInUser!, EmotionTrashesId: "", text: text, image: attachedImage, recording: nil)
+                } else {
+                    print("attachedImageView nil without recording")
+                    FireStoreManager.shared.createEmotionTrash(user: FireStoreManager.shared.signInUser!, EmotionTrashesId: "", text: text, image: nil, recording: nil)
+                }
+            }
+          //  FireStoreManager.shared.printTotalEmotionTrashes(FireStoreManager.shared.signInUser!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
 
             self.dismiss(animated: true, completion: nil)
@@ -246,8 +249,10 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
 }
 
+
 extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        
         if let image = info[.originalImage] as? UIImage {
             addAndLayoutAttachedImageView(with: image)
         }
@@ -257,22 +262,31 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
     private func addAndLayoutAttachedImageView(with image: UIImage) {
         if let existingImageView = attachedImageView {
             existingImageView.image = image
-            return
+        } else {
+            let imageView = UIImageView(image: image)
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.layer.cornerRadius = 12.0
+            rootView.addSubview(imageView)
+            attachedImageView = imageView
+            
+            imageView.snp.makeConstraints { make in
+                make.leading.equalTo(rootView.textView.snp.leading)
+                make.trailing.equalTo(rootView.textView.snp.trailing)
+                make.top.equalTo(rootView.textView.snp.bottom).offset(10)
+                make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10)
+            }
         }
         
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12.0
-        rootView.addSubview(imageView)
-        attachedImageView = imageView
-        
-        imageView.snp.makeConstraints { make in
-            make.leading.equalTo(rootView.textView).offset(rootView.textView.textContainerInset.left)
-            make.trailing.equalTo(rootView.textView).offset(-rootView.textView.textContainerInset.right)
-            make.top.equalTo(rootView.textView.snp.bottom).offset(10)
-            make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10)
-        }
         rootView.isImageViewAttached = true
+        
+        // Check if the image view is attached and adjust the textView height
+        if rootView.isImageViewAttached {
+            rootView.textView.snp.remakeConstraints { make in
+                make.height.equalTo(rootView.textView.frame.height / 2)
+                // Other constraints for the textView should be reapplied here as needed.
+            }
+            rootView.layoutIfNeeded() // To ensure the layout is updated immediately
+        }
     }
 }

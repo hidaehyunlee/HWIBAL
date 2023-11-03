@@ -12,6 +12,7 @@
 		0759A4562AE26A18000FFF76 /* CreatePageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759A4552AE26A18000FFF76 /* CreatePageCameraViewController.swift */; };
 		0759A4582AE26A39000FFF76 /* CreatePageCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759A4572AE26A39000FFF76 /* CreatePageCameraView.swift */; };
 		076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */; };
+		0773963D2AF4E40E0034C414 /* RecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0773963C2AF4E40E0034C414 /* RecordingService.swift */; };
 		0791B34B2AE10B59004B8740 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0791B3492AE10A7F004B8740 /* AVFoundation.framework */; };
 		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
 		07D18F7C2AD948450080FACA /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F7B2AD948450080FACA /* AlertManager.swift */; };
@@ -81,6 +82,7 @@
 		0759A4552AE26A18000FFF76 /* CreatePageCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageCameraViewController.swift; sourceTree = "<group>"; };
 		0759A4572AE26A39000FFF76 /* CreatePageCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageCameraView.swift; sourceTree = "<group>"; };
 		076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageView.swift; sourceTree = "<group>"; };
+		0773963C2AF4E40E0034C414 /* RecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingService.swift; sourceTree = "<group>"; };
 		0791B3492AE10A7F004B8740 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
 		07D18F7B2AD948450080FACA /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				3F9445652ADFD5EA0003DCD4 /* ReportService.swift */,
 				07D18F7B2AD948450080FACA /* AlertManager.swift */,
 				3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */,
+				0773963C2AF4E40E0034C414 /* RecordingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */,
 				3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */,
 				3F9BE38E2AF3CBEE0036D880 /* FireStoreManager.swift in Sources */,
+				0773963D2AF4E40E0034C414 /* RecordingService.swift in Sources */,
 				3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */,
 				3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */,
 				DE434E002ADCCE5200C77FE4 /* SignInView.swift in Sources */,

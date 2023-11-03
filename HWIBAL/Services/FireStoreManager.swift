@@ -179,17 +179,17 @@ final class FireStoreManager {
             
         // 녹음 파일 업로드 및 URL 추가
         // 녹음빼고 저장됨
-        if let recordingURL = recording?.filePath {
-            let recordingFileURL = URL(fileURLWithPath: recordingURL)
-            uploadRecording(audioFileURL: recordingFileURL) { result in
-                switch result {
-                case .success(let audioURL):
-                    trashData["audioURL"] = audioURL.absoluteString
-                case .failure(let error):
-                    print("Error uploading audio file: \(error.localizedDescription)")
-                }
-            }
-        }
+//        if let recordingURL = recording?.filePath {
+//            let recordingFileURL = URL(fileURLWithPath: recordingURL)
+//            uploadRecording(audioFileURL: recordingFileURL) { result in
+//                switch result {
+//                case .success(let audioURL):
+//                    trashData["audioURL"] = audioURL.absoluteString
+//                case .failure(let error):
+//                    print("Error uploading audio file: \(error.localizedDescription)")
+//                }
+//            }
+//        }
         
         db.collection("EmotionTrashes").document(EmotionTrashesId).setData(trashData) { error in
             if let error = error {
