@@ -8,17 +8,10 @@
 import CoreData
 import UIKit
 import UserNotifications
-import FirebaseCore
-import FirebaseFirestore
-import FirebaseAuth
-import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        FirebaseApp.configure()
-        
         if #available(iOS 11.0, *) {
             let notiCenter = UNUserNotificationCenter.current()
             notiCenter.requestAuthorization(options: [.alert, .badge, .sound]) { (didAllow, e) in }

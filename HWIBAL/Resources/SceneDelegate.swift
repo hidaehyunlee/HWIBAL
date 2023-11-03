@@ -15,16 +15,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = .init(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
-//        if SignInService.shared.isSignedIn() {
-//            if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
-//               let user = UserService.shared.getExistUser(signedInUserEmail) {
-//                SignInService.shared.signedInUser = user
-//                window?.rootViewController = MainViewController()
-//                SignInService.shared.getSignedInUserInfo()
-//            }
-//        } else {
+        if SignInService.shared.isSignedIn() {
+            if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
+               let user = UserService.shared.getExistUser(signedInUserEmail) {
+                SignInService.shared.signedInUser = user
+                window?.rootViewController = MainViewController()
+                SignInService.shared.getSignedInUserInfo()
+            }
+        } else {
             window?.rootViewController = SignInViewController()
-//        }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}

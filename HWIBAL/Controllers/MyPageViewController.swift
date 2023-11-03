@@ -43,7 +43,7 @@ private extension MyPageViewController {
     
     @objc func updateTitleLabel() {
         DispatchQueue.main.async { [weak self] in
-//            self?.rootView.updateTitleLabel()
+            self?.rootView.updateTitleLabel()
         }
         
     }
@@ -54,9 +54,8 @@ private extension MyPageViewController {
         print("🫵 클릭: 회원탈퇴")
         let witdrawalAlert = UIAlertController(title: "", message: "계정을 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다.", preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "회원탈퇴", style: .destructive) { _ in
-            FireStoreManager.shared.deleteUser(userId: FireStoreManager.shared.signInUser!.id)
-//            SignInService.shared.setWithdrawal()
-//            UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
+            SignInService.shared.setWithdrawal()
+            UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
             self.goToSignInVC()
         }
         witdrawalAlert.addAction(action)
@@ -92,7 +91,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         let settingItem = settingsItems[indexPath.row]
-        cell.configure(settingItem, FireStoreManager.shared.signInUser!)
+        cell.configure(settingItem, SignInService.shared.signedInUser!)
         cell.selectionStyle = .none
 
         return cell
@@ -122,15 +121,13 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             for day in days {
                 let formattedDay = "\(day)일"
                 let action = UIAlertAction(title: formattedDay, style: .default) { _ in
-                    FireStoreManager.shared.updateUser(userId: FireStoreManager.shared.signInUser!.id, autoExpireDays: day)
-//                    UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: day)
+                    UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: Int64(day))
                     print("\(day) 후 감정쓰레기를 태워 드립니다.")
-//                    UserDefaults.standard.set(day, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))")
                     if let indexPath = self.selectedIndexPath,
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
                         cell.updateDateLabel(formattedDay)
                     }
-//                    EmotionTrashService.shared.startAutoDeleteTask(day)
+                    EmotionTrashService.shared.startAutoDeleteTask(day)
                     // 백그라운드 태스크 실행
 //                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
 //                        appDelegate.startAutoDeleteTask()
@@ -145,7 +142,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             
             case .logout:
             print("🫵 클릭: 로그아웃")
-//            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
+            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
             goToSignInVC()
             break
         }

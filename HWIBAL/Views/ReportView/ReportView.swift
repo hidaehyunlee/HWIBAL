@@ -27,7 +27,7 @@ final class ReportView: UIView, RootView {
     
     var title: UILabel = {
         let label = UILabel()
-        label.text = "\(FireStoreManager.shared.signInUser?.name ?? "사용자") 님의 리포트"
+        label.text = "\(SignInService.shared.signedInUser?.name ?? "사용자") 님의 리포트"
         label.font = FontGuide.size14Bold
         label.textColor = .white
         return label
