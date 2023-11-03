@@ -9,6 +9,7 @@ import CoreData
 import FirebaseCore
 import FirebaseDatabase
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 import FirebaseStorage
 import Foundation
 
@@ -16,6 +17,7 @@ final class FireStoreManager {
     static let shared = FireStoreManager()
     typealias UserResult = (Result<User, Error>) -> Void
     var signInUser: User?
+    var reportEmotionTrashes: [Report] = []
 
     // Firestore 데이터베이스 참조
     let db = Firestore.firestore()
@@ -246,11 +248,7 @@ final class FireStoreManager {
             "id": reportId,
             "text": text,
             "timestamp": Date(),
-            "user": [
-                "id": user.id,
-                "name": user.name,
-                "email": user.email
-            ]
+            "userId": user.id
         ]
         
         db.collection("Reports").document(reportId).setData(reportData) { error in
@@ -261,12 +259,35 @@ final class FireStoreManager {
             }
         }
     }
-
+    
+    func fetchReports() {
+        db.collection("Reports").getDocuments { querySnapshot, err in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    if let timestamp = data["timestamp"] as? Timestamp {
+                        print("timestamp: ", timestamp)
+                        if let id = data["id"] as? String, let text = data["text"] as? String, let timestamp = timestamp.dateValue() as? Date, let userId = data["userId"] as? String {
+                            print("id: \(id), text: \(text), timestamp: \(timestamp), userId: \(userId)")
+                            let report = Report(id: id, text: text, timestamp: timestamp, userId: userId)
+                            print("report: ", report)
+                            self.reportEmotionTrashes.append(report)
+                            // 중복 생성되는거 막아야함
+                            print(self.reportEmotionTrashes)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - FireStore Document 관련 로직
 
     // 문서 수 반환하는 함수(감쓰 총 개수, 모든 유저의 수 등)
-    func getDocumentCount(collectionName: String, completion: @escaping (Int) -> Void) {
-        db.collection(collectionName).getDocuments { (querySnapshot, error) in
+    func getDocumentCount(collectionName: String, completion _: @escaping (Int) -> Void) {
+        db.collection(collectionName).getDocuments { querySnapshot, error in
             if let error = error {
                 print("Error getting documents: \(error)")
             } else {

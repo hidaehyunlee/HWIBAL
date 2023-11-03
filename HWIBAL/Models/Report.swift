@@ -11,12 +11,12 @@ struct Report: Codable {
     var id: String
     var text: String
     var timestamp: Date
-    var user: User
+    var userId: String
 
-    init(id: String, text: String, timestamp: Date, user: User) {
+    init(id: String, text: String, timestamp: Date, userId: String) {
         self.id = id
         self.text = text
         self.timestamp = timestamp
-        self.user = user
+        self.userId = userId
     }
 }

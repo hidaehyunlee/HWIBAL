@@ -12,9 +12,16 @@ final class MyPageViewController: RootViewController<MyPageView> {
     private var selectedIndexPath: IndexPath?
     
     // MARK: - Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
+        
+        ReportService.shared.fetchReports()
     }
 }
 
@@ -43,7 +50,7 @@ private extension MyPageViewController {
     
     @objc func updateTitleLabel() {
         DispatchQueue.main.async { [weak self] in
-//            self?.rootView.updateTitleLabel()
+            self?.rootView.updateTitleLabel()
         }
         
     }
