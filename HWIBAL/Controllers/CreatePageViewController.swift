@@ -9,7 +9,7 @@ import EventBus
 import SnapKit
 import UIKit
 
-class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate {
+class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var keyboardHeight: CGFloat = 0
     private var attachedImageView: UIImageView?
     var playButton: UIButton?
@@ -24,9 +24,9 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    
-        rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveAudioNotification(_:)), name: NSNotification.Name("RecordingDidFinish"), object: nil)
 
+        rootView.soundButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
         
         setupPlayButton()
@@ -40,19 +40,12 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         PlayButton.setImage(UIImage(named: "play"), for: .normal)
         PlayButton.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
         PlayButton.backgroundColor = .red
-        PlayButton.layer.cornerRadius = 25
-
-        PlayButton.snp.makeConstraints { make in
-            make.centerX.equalTo(view)
-            make.bottom.equalTo(rootView.soundButton.snp.top).offset(-10)
-            make.width.height.equalTo(50)
-        }
 
         playButton = PlayButton
         view.bringSubviewToFront(playButton!)
     }
 
-    @objc func startOrStopRecording() {
+    @objc func startOrStopRecording() { // 이 부분은 일단 변경하지 않음
         let recordingVC = RecordingViewController()
         recordingVC.modalPresentationStyle = .custom
         recordingVC.transitioningDelegate = recordingVC
@@ -75,10 +68,18 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         present(recordingVC, animated: true, completion: nil)
     }
 
+    @objc func receiveAudioNotification(_ notification: Notification) {
+        if let url = notification.userInfo?["savedAudioURL"] as? URL {
+            savedAudioURL = url
+            DispatchQueue.main.async {
+                self.playButton?.isEnabled = true
+            }
+        } else {
+            print("Audio URL is nil")
+        }
+    }
 
-
-
-    @objc func playSavedAudio() {
+    @objc func playSavedAudio() { // 이 부분은 일단 변경하지 않음
         if audioPlayer?.isPlaying == true {
             audioPlayer?.stop()
         } else {
@@ -93,6 +94,12 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
             } catch {
                 print("오디오 재생에 실패했습니다. \(error)")
             }
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            playButton?.backgroundColor = .green
         }
     }
 
@@ -218,13 +225,28 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     @objc func showWriteAlert() {
         AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 휘발주기에 맞추어 불태워 드릴게요 🔥") {
             let text = self.rootView.textView.text ?? ""
-            // attachedImageView가 nil인지 & imageView의 image 속성이 nil인지 확인 -> nil아닐 경우 저장
-            if let imageView = self.attachedImageView, let attachedImage = imageView.image {
-                print("attachedImageView 첨부")
-                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text, attachedImage)
+            var recording: Recording?
+
+            if let savedAudioURL = self.savedAudioURL, let currentUser = SignInService.shared.signedInUser {
+                recording = RecordingService.shared.createRecording(filePath: savedAudioURL.path, duration: TimeInterval(), title: "Recording on \(Date())", user: currentUser)
+            }
+
+            if let recording = recording {
+                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
+                    print("attachedImageView 첨부 with recording")
+                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: attachedImage, recording: recording)
+                } else {
+                    print("attachedImageView nil with recording")
+                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: nil, recording: recording)
+                }
             } else {
-                print("attachedImageView nil")
-                EmotionTrashService.shared.createEmotionTrash(SignInService.shared.signedInUser!, text)
+                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
+                    print("attachedImageView 첨부 without recording")
+                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: attachedImage, recording: nil)
+                } else {
+                    print("attachedImageView nil without recording")
+                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: nil, recording: nil)
+                }
             }
             EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
@@ -241,6 +263,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .init("RecordingDidFinish"), object: nil)
     }
 }
 
@@ -266,10 +289,10 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         attachedImageView = imageView
         
         imageView.snp.makeConstraints { make in
-            make.leading.equalTo(rootView.textView).offset(rootView.textView.textContainerInset.left)
-            make.trailing.equalTo(rootView.textView).offset(-rootView.textView.textContainerInset.right)
-            make.top.equalTo(rootView.textView.snp.bottom).offset(10)
-            make.bottom.equalTo(rootView.counterLabel.snp.top).offset(-10)
+            make.leading.equalTo(rootView.textView.snp.leading)
+            make.trailing.equalTo(rootView.textView.snp.trailing)
+            make.top.equalTo(rootView.textView.snp.top).offset((rootView.textView.frame.height / 2) + 10)
+            make.bottom.equalTo(rootView.cameraButton.snp.top).offset(-10)
         }
         rootView.isImageViewAttached = true
     }

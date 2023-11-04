@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import CoreData
 import UIKit
 
 protocol RecordingViewControllerDelegate: AnyObject {
@@ -24,13 +25,24 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     var cancelButton: UIButton!
     var completionHandler: ((Bool, URL?) -> Void)?
     weak var delegate: RecordingViewControllerDelegate?
+    var currentUser: User?
+    var savedAudioURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setupUI()
+        loadSignedInUser()
     }
  
+    func loadSignedInUser() {
+        if SignInService.shared.isSignedIn(),
+           let userEmail = SignInService.shared.loadSignedInUserEmail()
+        {
+            currentUser = UserService.shared.getExistUser(userEmail)
+        }
+    }
+    
     func setupUI() {
         startStopButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         startStopButton.center = view.center
@@ -55,7 +67,6 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         waveformView.backgroundColor = .lightGray
         view.addSubview(waveformView)
 
-        
         cancelButton = UIButton(frame: CGRect(x: 10, y: 10, width: 80, height: 40))
         cancelButton.setTitle("취소", for: .normal)
         cancelButton.setTitleColor(.blue, for: .normal)
@@ -78,7 +89,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func startRecording() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
+        let audioFilename = getRecordingURL() // 파일명에 타임스탬프를 포함
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 12000,
@@ -103,6 +114,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
 
     func stopRecording() {
         audioRecorder?.stop()
+        savedAudioURL = audioRecorder?.url
         audioRecorder = nil
         startStopButton.setTitle("⚫️", for: .normal)
         statusLabel.text = "녹음 멈춤"
@@ -147,31 +159,25 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
             }
         }
         
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     @objc func saveAction() {
-        let savedAudioURL = getRecordingURL()
-        let fileManager = FileManager.default
-
-        if fileManager.fileExists(atPath: savedAudioURL.path) {
-            print("오디오 저장 성공!")
-
-            // 저장 성공 시 delegate에 저장된 오디오의 URL 전달
-            self.delegate?.didSaveRecording(with: savedAudioURL)
-            self.completionHandler?(true, savedAudioURL)
-        } else {
-            print("오디오 저장 실패.")
-            self.completionHandler?(false, nil)
+        dismiss(animated: true) { [weak self] in
+            guard let self = self, let audioURL = self.savedAudioURL else {
+                print("Error: Audio URL is not available to send.")
+                return
+            }
+            NotificationCenter.default.post(name: .init("RecordingDidFinish"), object: nil, userInfo: ["savedAudioURL": audioURL])
         }
-        self.dismiss(animated: true, completion: nil)
     }
 
-
-
-
     func getRecordingURL() -> URL {
-        return getDocumentsDirectory().appendingPathComponent("recording.m4a") //mp3..로 해도 충분할 듯
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let dateString = dateFormatter.string(from: Date())
+        let fileName = "recording_\(dateString).m4a"
+        return getDocumentsDirectory().appendingPathComponent(fileName)
     }
 }
 
@@ -181,4 +187,3 @@ extension RecordingViewController: UIViewControllerTransitioningDelegate {
         return presentationController
     }
 }
-

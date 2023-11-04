@@ -12,38 +12,28 @@ class UserService {
     static let shared = UserService()
     let coreDataManager = CoreDataManager.shared
 
-    func createUser(email: String, name: String, id: String) {
+    func createUser(email: String, name: String, id: String, autoExpireDays: Int64) {
         let context = coreDataManager.persistentContainer.viewContext
         if let entity = NSEntityDescription.entity(forEntityName: "User", in: context) {
             let user = User(entity: entity, insertInto: context)
             user.email = email
             user.name = name
             user.id = id
-            
-            if let sevenDaysLater = Calendar.current.date(byAdding: .day, value: 8, to: Date()) {
-                let components = Calendar.current.dateComponents([.year, .month, .day], from: sevenDaysLater)
-                
-                if let year = components.year, let month = components.month, let day = components.day {
-                    if let sevenDaysLaterMidnight = Calendar.current.date(from: DateComponents(year: year, month: month, day: day, hour: 0, minute: 0, second: 0)) {
-                        user.autoExpireDate = sevenDaysLaterMidnight
-                    }
-                }
-            }
+            user.autoExpireDays = autoExpireDays
 
             coreDataManager.saveContext()
         }
     }
 
-    func updateUser(email: String, autoExpireDays: Int? = nil) {
+    func updateUser(email: String, autoExpireDays: Int64? = nil) {
         let context = coreDataManager.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "email == %@", email)
 
         do {
             if let userToUpdate = try context.fetch(fetchRequest).first {
-                if let autoExpireDays = autoExpireDays,
-                   let newAutoExpireDate = Calendar.current.date(byAdding: .day, value: autoExpireDays, to: Date()) {
-                    userToUpdate.autoExpireDate = newAutoExpireDate
+                if let newAutoExpireDays = autoExpireDays {
+                    userToUpdate.autoExpireDays = newAutoExpireDays
                 }
 
                 coreDataManager.saveContext()
@@ -52,7 +42,7 @@ class UserService {
                 Email: \(userToUpdate.email ?? "No email")
                 Name: \(userToUpdate.name ?? "No name")
                 ID: \(userToUpdate.id ?? "No ID")
-                AutoExpireDate: \(String(describing: userToUpdate.autoExpireDate))
+                AutoExpireDays: \(userToUpdate.autoExpireDays)
                 """)
             } else {
                 print("Error fetching users: \(email)")
@@ -96,7 +86,7 @@ class UserService {
             let users = try context.fetch(fetchRequest)
             for user in users {
                 print("User -")
-                print("Email: \(user.email ?? "No email"), Name: \(user.name ?? "No name"), ID: \(user.id ?? "No ID"), AutoExpireDate: \(String(describing: user.autoExpireDate))")
+                print("Email: \(user.email ?? "No email"), Name: \(user.name ?? "No name"), ID: \(user.id ?? "No ID"), AutoExpireDays: \(user.autoExpireDays)")
             }
         } catch {
             print("Failed to fetch users: \(error)")

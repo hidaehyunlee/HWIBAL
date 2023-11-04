@@ -12,17 +12,16 @@ class SignInService {
     
     var signedInUser: User?
     
-    func signIn(_ email: String, _ name: String, _ id: String) {
+    func signIn(_ email: String, _ name: String, _ id: String, _ autoExpireDays: Int64) {
         if let existUser = UserService.shared.getExistUser(email) {
             print("이미 가입한 회원")
             signedInUser = existUser
             setSignedInUser(existUser.email!)
         } else {
-            UserService.shared.createUser(email: email, name: name, id: id)
+            UserService.shared.createUser(email: email, name: name, id: id, autoExpireDays: autoExpireDays)
             signedInUser = UserService.shared.getExistUser(email)
             setSignedInUser(email)
             UserDefaults.standard.set(false, forKey: "isDarkMode")
-            UserDefaults.standard.set(7, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))")
             UserService.shared.printAllUsers()
         }
     }
@@ -57,7 +56,7 @@ class SignInService {
               Email: \(signedInUser?.email ?? "No email")
               Name: \(signedInUser?.name ?? "No name")
               ID: \(signedInUser?.id ?? "No ID")
-              자동 휘발일: \(String(describing: signedInUser?.autoExpireDate))
+              자동 휘발일: \(String(describing: signedInUser?.autoExpireDays))
               """)
         print("--------------------------------")
     }
