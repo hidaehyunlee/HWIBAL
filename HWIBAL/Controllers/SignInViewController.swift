@@ -39,7 +39,7 @@ final class SignInViewController: RootViewController<SignInView> {
 
             let email = user.profile?.email ?? "default email"
             let name = user.profile?.name ?? "default name"
-            let id = UUID().uuidString
+            let id = self.extractIDFromEmail(email) // 구글은 email로부터 id 생성
             let autoExpireDays: Int64 = 7
 
             SignInService.shared.signIn(email, name, id, autoExpireDays) // 코어데이터에 저장
@@ -52,6 +52,15 @@ final class SignInViewController: RootViewController<SignInView> {
                 sceneDelegate.window?.rootViewController = mainViewController
             }
         }
+    }
+
+    private func extractIDFromEmail(_ email: String) -> String {
+        let components = email.components(separatedBy: "@")
+        guard components.count == 2 else {
+            print("ERROR: extractUsername")
+            return ""
+        }
+        return components[0]
     }
 }
 
