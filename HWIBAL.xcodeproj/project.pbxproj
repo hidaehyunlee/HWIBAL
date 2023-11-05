@@ -56,7 +56,6 @@
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
-		DEFE3A0C2AD53C3B0076FE11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A0A2AD53C3B0076FE11 /* LaunchScreen.storyboard */; };
 		DEFE3A172AD53F3C0076FE11 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A162AD53F3C0076FE11 /* RootView.swift */; };
 		DEFE3A1F2AD5402C0076FE11 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A1E2AD5402C0076FE11 /* HomeView.swift */; };
 		DEFE3A222AD541250076FE11 /* EventBus in Frameworks */ = {isa = PBXBuildFile; productRef = DEFE3A212AD541250076FE11 /* EventBus */; };
@@ -114,7 +113,6 @@
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DEFE3A0B2AD53C3B0076FE11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEFE3A0D2AD53C3B0076FE11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DEFE3A162AD53F3C0076FE11 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		DEFE3A1E2AD5402C0076FE11 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 				DEFE3A232AD5415F0076FE11 /* MyPageView */,
 				DEFE3A1D2AD540140076FE11 /* HomeView */,
 				DEFE3A152AD53EE80076FE11 /* Shared */,
-				DEFE3A0A2AD53C3B0076FE11 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -379,11 +376,12 @@
 			};
 			buildConfigurationList = DEFE39F72AD53C3A0076FE11 /* Build configuration list for PBXProject "HWIBAL" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = DEFE39F32AD53C3A0076FE11;
 			packageReferences = (
@@ -408,7 +406,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */,
-				DEFE3A0C2AD53C3B0076FE11 /* LaunchScreen.storyboard in Resources */,
 				DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -472,23 +469,13 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		DEFE3A0A2AD53C3B0076FE11 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DEFE3A0B2AD53C3B0076FE11 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		DEFE3A0E2AD53C3B0076FE11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -552,6 +539,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
