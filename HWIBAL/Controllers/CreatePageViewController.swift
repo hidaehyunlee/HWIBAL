@@ -15,6 +15,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     var playButton: UIButton?
     var savedAudioURL: URL?
     private var audioPlayer: AVAudioPlayer?
+    private var isAudioPlaying = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         print("setupPlayButton called")
         
         let PlayButton = rootView.playButton
-        PlayButton.isHidden = false
         PlayButton.setImage(UIImage(named: "play"), for: .normal)
         PlayButton.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
         PlayButton.backgroundColor = .red
@@ -44,27 +44,11 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         playButton = PlayButton
         view.bringSubviewToFront(playButton!)
     }
-
-    @objc func startOrStopRecording() { // 이 부분은 일단 변경하지 않음
+    
+    @objc func startOrStopRecording() {
         let recordingVC = RecordingViewController()
         recordingVC.modalPresentationStyle = .custom
         recordingVC.transitioningDelegate = recordingVC
-        recordingVC.completionHandler = { [weak self] saved, url in
-            print("Completion handler called!")
-            if saved, let audioURL = url {
-                print("받은 오디오 URL: \(audioURL)")
-                self?.playButton?.isHidden = false
-                self?.playButton?.backgroundColor = .green
-                self?.savedAudioURL = url
-                print(self?.playButton?.isHidden ?? "nil")
-                if let superviewOfPlayButton = self?.playButton?.superview {
-                    print("Superview found!")
-                } else {
-                    print("Superview not found!")
-                }
-                self?.view.bringSubviewToFront(self?.playButton ?? UIView())
-            }
-        }
         present(recordingVC, animated: true, completion: nil)
     }
 
@@ -72,34 +56,43 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         if let url = notification.userInfo?["savedAudioURL"] as? URL {
             savedAudioURL = url
             DispatchQueue.main.async {
-                self.playButton?.isEnabled = true
+                self.playButton?.backgroundColor = .green
             }
         } else {
             print("Audio URL is nil")
         }
     }
-
-    @objc func playSavedAudio() { // 이 부분은 일단 변경하지 않음
-        if audioPlayer?.isPlaying == true {
-            audioPlayer?.stop()
+    
+    @objc func playSavedAudio() {
+        guard let url = savedAudioURL else {
+            print("Audio URL is nil")
+            return
+        }
+        
+        if let player = audioPlayer, player.isPlaying {
+            player.pause()
+            isAudioPlaying = false
+            playButton?.setImage(UIImage(named: "play"), for: .normal)
         } else {
-            guard let url = savedAudioURL else {
-                return
-            }
-
             do {
-                audioPlayer = try AVAudioPlayer(contentsOf: url)
-                audioPlayer?.prepareToPlay()
+                if audioPlayer == nil {
+                    audioPlayer = try AVAudioPlayer(contentsOf: url)
+                    audioPlayer?.delegate = self
+                    audioPlayer?.prepareToPlay()
+                }
                 audioPlayer?.play()
+                isAudioPlaying = true
+                playButton?.setImage(UIImage(named: "pause"), for: .normal)
             } catch {
-                print("오디오 재생에 실패했습니다. \(error)")
+                print("AVAudioPlayer init or resume failed with error: \(error.localizedDescription)")
             }
         }
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {
-            playButton?.backgroundColor = .green
+            isAudioPlaying = false
+            playButton?.setImage(UIImage(named: "play"), for: .normal)
         }
     }
 
