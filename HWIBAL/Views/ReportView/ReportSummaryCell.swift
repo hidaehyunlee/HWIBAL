@@ -12,7 +12,9 @@ import DGCharts
 class ReportSummaryCell: UICollectionViewCell {
     static let identifier = "summaryCell"
     var totalEmotionTrashCount = ReportService.shared.calculateEmotionTrashCount()
-    var averageEmotionTrashCount = ReportService.shared.calculateAverageEmotionTrashCount()
+    var thisWeekEmotionTrashCount = ReportService.shared.calculateThisWeekEmotionTrashCount()
+    var lastWeekEmotionTrashCount = ReportService.shared.calculateLastWeekEmotionTrashCount()
+    var compareEmotionTrashCount = ReportService.shared.compareWeek()
     
     private let view: UIView = {
         let view = UIView()
@@ -45,7 +47,7 @@ class ReportSummaryCell: UICollectionViewCell {
         chartView.xAxis.drawGridLinesEnabled = false
         chartView.xAxis.granularity = 1
         chartView.xAxis.axisLineWidth = 0
-        chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: ["나", "평균"])
+        chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: ["이번주", "지난주"])
         chartView.xAxis.labelPosition = .bottom
         chartView.xAxis.labelFont = FontGuide.size16Bold
         chartView.xAxis.labelTextColor = ColorGuide.subButton
@@ -81,18 +83,18 @@ class ReportSummaryCell: UICollectionViewCell {
                      감정쓰레기 \(totalEmotionTrashCount)개
                      """
         
-        switch totalEmotionTrashCount {
-        case let difference where difference > averageEmotionTrashCount:
-            subTitle.text = "평균보다 \(difference - averageEmotionTrashCount)개 더 썼어요"
-        case let difference where difference < averageEmotionTrashCount:
-            subTitle.text = "평균보다 \(averageEmotionTrashCount - difference)개 적게 썼어요"
+        switch thisWeekEmotionTrashCount {
+        case let difference where difference > lastWeekEmotionTrashCount:
+            subTitle.text = "지난주보다 \(difference - lastWeekEmotionTrashCount)개 더 썼어요"
+        case let difference where difference < lastWeekEmotionTrashCount:
+            subTitle.text = "지난주보다 \(lastWeekEmotionTrashCount - difference)개 적게 썼어요"
         default:
-            subTitle.text = "평균과 같아요"
+            subTitle.text = "지난주와 같아요"
         }
         
         // MARK: - Chart
-        let totalEntry = BarChartDataEntry(x: 0, y: Double(totalEmotionTrashCount))
-        let averageEntry = BarChartDataEntry(x: 1, y: Double(averageEmotionTrashCount))
+        let totalEntry = BarChartDataEntry(x: 0, y: Double(thisWeekEmotionTrashCount))
+        let averageEntry = BarChartDataEntry(x: 1, y: Double(lastWeekEmotionTrashCount))
         
         let dataSet = BarChartDataSet(entries: [totalEntry, averageEntry], label: "감정쓰레기 개수")
         dataSet.colors = [ColorGuide.main, ColorGuide.textHint]
