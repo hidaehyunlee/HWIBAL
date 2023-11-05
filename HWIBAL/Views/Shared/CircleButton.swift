@@ -18,9 +18,9 @@ class CircleButton: UIButton {
         setImage(customButtonType.image, for: .normal)
         tintColor = customButtonType.titleColor
         backgroundColor = customButtonType.backgroundColor
-        layer.cornerRadius = CGFloat(customButtonType.size/2)
+        layer.cornerRadius = CGFloat(ButtonType.size/2)
         snp.makeConstraints { make in
-            make.width.height.equalTo(customButtonType.size)
+            make.width.height.equalTo(ButtonType.size)
         }
     }
     
@@ -30,6 +30,8 @@ class CircleButton: UIButton {
     
     enum ButtonType {
         case play, pause, stop, photo, record
+        
+        static let size = 36
         
         var image: UIImage {
             switch self {
@@ -60,17 +62,10 @@ class CircleButton: UIButton {
             case .record: return .white
             }
         }
-        
-        var size: Int {
-            switch self {
-            case .play, .pause, .stop: return 32
-            case .photo, .record: return 36
-            }
-        }
     }
 }
 extension CircleButton {
     var buttonSize: CGFloat {
-        return CGFloat(self.customButtonType.size)
+        return CGFloat(ButtonType.size)
     }
 }
