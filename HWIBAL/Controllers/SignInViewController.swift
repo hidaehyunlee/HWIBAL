@@ -68,14 +68,17 @@ extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizati
 
             // 계정 정보 가져오기
             let id = appleIDCredential.user
-            let name = "\(appleIDCredential.fullName.unsafelyUnwrapped.familyName!)\(appleIDCredential.fullName.unsafelyUnwrapped.givenName!)"
-            let email = appleIDCredential.email!
-            let idToken = appleIDCredential.identityToken!
+            let familyName = appleIDCredential.fullName?.familyName ?? ""
+            let givenName = appleIDCredential.fullName?.givenName ?? ""
+            let name = "\(familyName)\(givenName)"
+            let email = appleIDCredential.email ?? ""
             let autoExpireDays: Int64 = 7
-            
+
+            // let idToken = appleIDCredential.identityToken!
             // let tokeStr = String(data: idToken, encoding: .utf8)
             // print("token : \(String(describing: tokeStr))")
 
+            // 현재 옵셔널로 값 넘어가는 상태 (상관 없는 것 같음)
             SignInService.shared.signIn(email, name, id, autoExpireDays)
 
             // 로그인 완료 후 MainViewController로 이동
