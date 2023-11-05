@@ -45,13 +45,13 @@ final class SignInView: UIView, RootView {
         button.setTitle("Google로 로그인", for: .normal)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
         button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = FontGuide.size21
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         button.semanticContentAttribute = .forceLeftToRight
         button.contentVerticalAlignment = .center
         button.layer.cornerRadius = 4
         button.layer.borderWidth = 1
         button.layer.borderColor = ColorGuide.inputLine.cgColor
-        
+
         if let image = UIImage(named: "google") {
             button.setImage(image, for: .normal)
             button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
