@@ -158,9 +158,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        navigationController?.navigationBar.backgroundColor = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 0.94)
-        navigationController?.navigationBar.barTintColor = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 0.94)
-        
         let leftItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(showCancelAlert))
         leftItem.tintColor = ColorGuide.main
         navigationItem.leftBarButtonItem = leftItem
@@ -206,24 +203,16 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         if rootView.textView.text.isEmpty {
             dismiss(animated: true, completion: nil)
         } else {
-            let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
-                self?.showConfirmationToDeleteText()
+            let confirmAction: ((UIAlertAction) -> Void) = { [weak self] _ in
+                self?.dismiss(animated: true, completion: nil)
             }
 
-            AlertManager.shared.showAlert(on: self, title: "아, 휘발 🔥", message: "이 감정쓰레기를 삭제하시겠어요?", okCompletion: okCompletion)
+            AlertManager.shared.confirmAlert(on: self, title: "", message: "작성 중인 감정쓰레기를 취소하시겠습니까?", confirmAction: confirmAction)
         }
-    }
-
-    private func showConfirmationToDeleteText() {
-        let okCompletion: ((UIAlertAction) -> Void) = { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-
-        AlertManager.shared.showAlert(on: self, title: "아, 휘발🔥", message: "삭제된 감정쓰레기는 복구할 수 없습니다. \n 삭제하시겠습니까?", okCompletion: okCompletion)
     }
 
     @objc func showWriteAlert() {
-        AlertManager.shared.showMessageAlert(on: self, title: "아, 휘발 🔥", message: "오... 그랬군요 🥹 \n당신의 감정을 휘발주기에 맞추어 불태워 드릴게요 🔥") {
+        AlertManager.shared.showMessageAlert(on: self, title: "", message: "오, 저런!\n휘발 주기에 맞춰 불 태워 드릴게요 🔥") {
             let text = self.rootView.textView.text ?? ""
             var recording: Recording?
 

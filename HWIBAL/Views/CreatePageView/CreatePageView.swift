@@ -10,7 +10,6 @@ import SnapKit
 import UIKit
 
 class CreatePageView: UIView, RootView, UITextViewDelegate {
-    let bgView = UIView()
     let dateLabel = UILabel()
     let counterLabel = UILabel()
     let soundWaveView = UIView()
@@ -39,9 +38,6 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
     }
     
     func setupViews() {
-        bgView.backgroundColor = UIColor(red: 0.976, green: 0.976, blue: 0.976, alpha: 0.94)
-        addSubview(bgView)
-        
         dateLabel.textColor = ColorGuide.textHint
         dateLabel.font = FontGuide.size14
         let paragraphStyle1 = NSMutableParagraphStyle()
@@ -59,7 +55,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         addSubview(soundButton)
         addSubview(cameraButton)
         bringSubviewToFront(counterLabel)
-        
+                
         textView.delegate = self
         textView.backgroundColor = .systemBackground
         textView.font = FontGuide.size14
@@ -67,6 +63,10 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         addSubview(textView)
         
         addSubview(playButton)
+        
+        // v1.0.0 
+        soundButton.isHidden = true
+        playButton.isHidden = true
     }
     
     @objc func textViewDidChange(_ textView: UITextView) {
@@ -91,12 +91,9 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        bgView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 168)
-        bgView.backgroundColor = UIColor(red: 60/60, green: 60/60, blue: 67/67, alpha: 0.36)
-        
         dateLabel.snp.makeConstraints { make in
             make.height.equalTo(20)
-            make.top.equalTo(bgView.snp.bottom).offset(-25 - 20)
+            make.top.equalTo(layoutMarginsGuide.snp.top)
             make.centerX.equalToSuperview()
         }
         

@@ -45,25 +45,7 @@ final class DetailViewController: RootViewController<DetailView> {
         rootView.totalPage = userEmotionTrashes.count
 
         rootView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
-        rootView.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
     }
-
-//    func configureAudioPlayer(for indexPath: IndexPath, withFileName fileName: String) {
-//        let urlString = Bundle.main.path(forResource: fileName, ofType: "mp3")
-//        print("urlString: \(String(describing: urlString))") // test
-//
-//        guard let audioURL = Bundle.main.url(forResource: "hwibalAudio_1", withExtension: "mp3") else {
-//            print("configureAudioPlayer Error: Could not find the audio file. \(fileName)")
-//            return
-//        }
-//
-//        do {
-//            player = try AVAudioPlayer(contentsOf: audioURL, fileTypeHint: AVFileType.mp3.rawValue)
-//            player?.prepareToPlay()
-//        } catch {
-//            print("Error creating audio player: \(error)")
-//        }
-//    }
 
     @objc func goToFirstButtonTapped() {
         rootView.collectionView.setContentOffset(CGPoint(x: -DetailView.CarouselConst.insetX, y: 0), animated: true)
@@ -72,27 +54,29 @@ final class DetailViewController: RootViewController<DetailView> {
         }
     }
 
-    @objc func playPauseButtonTapped() {
-        guard let audioURL = Bundle.main.url(forResource: "hwibal_test1", withExtension: "mp3") else {
-            print("configureAudioPlayer Error: Could not find the audio file. fileName")
-            return
-        }
+    @objc func playPauseButtonTapped(sender: UIButton) {
+        let index = sender.tag
+        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
+        let reversedIndex = userEmotionTrashes.count - 1 - index
+        let data = userEmotionTrashes[reversedIndex]
 
-        do {
-            player = try AVAudioPlayer(data: try! Data(contentsOf: audioURL))
-            player?.prepareToPlay()
-            player?.delegate = self
-        } catch {
-            print("Error creating audio player: \(error)")
-        }
+        if let recording = data.recording, let filePath = recording.filePath {
+            guard let audioURL = URL(string: filePath) else {
+                print("Error: URL로 변환 실패")
+                return
+            }
 
-        if let player = player {
-            if player.isPlaying {
-                player.pause()
-                rootView.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: audioURL.path) {
+                do {
+                    player = try AVAudioPlayer(contentsOf: audioURL)
+                    player?.prepareToPlay()
+                    player?.delegate = self
+                } catch {
+                    print("플레이어 생성 Error: \(error)")
+                }
             } else {
-                player.play()
-                rootView.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
+                print("Error: 파일이 존재하지 않음")
             }
         }
     }
@@ -107,8 +91,6 @@ final class DetailViewController: RootViewController<DetailView> {
             self.navigationController?.popViewController(animated: true)
         })
     }
-    
-    
 }
 
 extension DetailViewController: UICollectionViewDataSource {
@@ -135,12 +117,24 @@ extension DetailViewController: UICollectionViewDataSource {
             cell.showImageButton.isHidden = true
         }
 
-        // if let audioFilePath = data.recording?.filePath {
-        // let audioFileName = URL(fileURLWithPath: audioFilePath)
-        // configureAudioPlayer(for: indexPath, withFileName: audioFilePath)
-
-        // rootView.playPauseButton.isHidden = false
-        // } else {}
+        // for v1.0.0
+//        if let recording = data.recording, let filePath = recording.filePath {
+//            cell.playPauseButton.isHidden = false
+//            cell.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
+//            cell.playPauseButton.tag = indexPath.item
+//
+//            if let player = player {
+//                if player.isPlaying {
+//                    player.pause()
+//                    cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
+//                } else {
+//                    player.play()
+//                    cell.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
+//                }
+//            }
+//        } else {
+//            cell.playPauseButton.isHidden = true
+//        }
 
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
         cell.textContentLabel.text = data.text
@@ -202,11 +196,11 @@ extension DetailViewController: UICollectionViewDelegate {
 
 extension DetailViewController: AVAudioPlayerDelegate {
     // 오디오 파일이 끝나면 버튼 UI 업데이트하는 델리게이트 메서드
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if flag {
-            rootView.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
-        }
-    }
+//    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+//        if flag {
+//            cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
+//        }
+//    }
 }
 
 // extension DetailViewController: UICollectionViewDelegateFlowLayout {
