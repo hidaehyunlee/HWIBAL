@@ -63,6 +63,19 @@ class UserService {
             return nil
         }
     }
+    
+    func getExistUserAsId(_ id: String) -> User? {
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+        do {
+            let users = try CoreDataManager.shared.mainContext.fetch(fetchRequest)
+            return users.first(where: { $0.id == id })
+        } catch {
+            print("Error fetching users: \(error)")
+            return nil
+        }
+    }
 
     func fetchAllUsers() -> [User] {
         let context = coreDataManager.persistentContainer.viewContext
