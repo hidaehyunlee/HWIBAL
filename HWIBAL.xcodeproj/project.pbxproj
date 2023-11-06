@@ -38,7 +38,6 @@
 		3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */; };
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
 		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
-		DE01F2A82AE819DA004663F7 /* EmotionTrashBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
 		DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */; };
 		DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */; };
@@ -51,6 +50,8 @@
 		DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */; };
 		DE7930282AF0EAA40040258A /* EmptyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7930272AF0EAA40040258A /* EmptyDetailView.swift */; };
 		DECCFAD02AF884D900BBAD5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DECCFACE2AF884D900BBAD5C /* LaunchScreen.storyboard */; };
+		DECCFAD22AF8BEBD00BBAD5C /* ImageModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECCFAD12AF8BEBD00BBAD5C /* ImageModalViewController.swift */; };
+		DECCFAD42AF8C09000BBAD5C /* ImageModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECCFAD32AF8C09000BBAD5C /* ImageModalView.swift */; };
 		DEDA76992ADFB98600EA41C1 /* EmotionTrashCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */; };
 		DEECD7352AEBC86600BE20CE /* DSWaveformImage in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7342AEBC86600BE20CE /* DSWaveformImage */; };
 		DEECD7372AEBC86600BE20CE /* DSWaveformImageViews in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7362AEBC86600BE20CE /* DSWaveformImageViews */; };
@@ -97,7 +98,6 @@
 		3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportEmptyView.swift; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashBackView.swift; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +109,8 @@
 		DE7930272AF0EAA40040258A /* EmptyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDetailView.swift; sourceTree = "<group>"; };
 		DEC256242AEF75E9002917C4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DECCFACF2AF884D900BBAD5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DECCFAD12AF8BEBD00BBAD5C /* ImageModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModalViewController.swift; sourceTree = "<group>"; };
+		DECCFAD32AF8C09000BBAD5C /* ImageModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModalView.swift; sourceTree = "<group>"; };
 		DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashCell.swift; sourceTree = "<group>"; };
 		DEE212402AF38A5F0039E832 /* HWIBAL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HWIBAL.entitlements; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,8 +202,8 @@
 			children = (
 				DE434E0D2ADE4F2800C77FE4 /* DetailView.swift */,
 				DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */,
-				DE01F2A72AE819D9004663F7 /* EmotionTrashBackView.swift */,
 				DE7930272AF0EAA40040258A /* EmptyDetailView.swift */,
+				DECCFAD32AF8C09000BBAD5C /* ImageModalView.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -310,6 +312,7 @@
 				DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */,
 				07264AB72AEA45E10030BAFE /* RecordingViewController.swift */,
 				07264AB92AEA52BB0030BAFE /* BottomSheetPresentationController.swift */,
+				DECCFAD12AF8BEBD00BBAD5C /* ImageModalViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */,
 				DEFE3A172AD53F3C0076FE11 /* RootView.swift in Sources */,
 				DEFE3A2D2AD5429D0076FE11 /* MyPageViewController.swift in Sources */,
+				DECCFAD42AF8C09000BBAD5C /* ImageModalView.swift in Sources */,
 				3F783A242AD805330024D692 /* ColorGuide.swift in Sources */,
 				3F9BE37F2AF385860036D880 /* User+CoreDataClass.swift in Sources */,
 				DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */,
@@ -445,10 +449,10 @@
 				DE7930282AF0EAA40040258A /* EmptyDetailView.swift in Sources */,
 				DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */,
 				DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */,
+				DECCFAD22AF8BEBD00BBAD5C /* ImageModalViewController.swift in Sources */,
 				3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */,
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
-				DE01F2A82AE819DA004663F7 /* EmotionTrashBackView.swift in Sources */,
 				07D18F7C2AD948450080FACA /* AlertManager.swift in Sources */,
 				3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */,
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,

@@ -49,27 +49,21 @@ final class DetailView: UIView, RootView {
             numberOfPageLabel.textAlignment = .right
         }
     }
-    
+
     lazy var numberOfPageLabel: UILabel = {
         let label = UILabel()
 
         return label
     }()
 
-    private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-
         layout.scrollDirection = .horizontal
         layout.itemSize = CarouselConst.itemSize
         layout.minimumLineSpacing = CarouselConst.itemSpacing
         layout.minimumInteritemSpacing = 0
 
-        return layout
-    }()
-
-    lazy var collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewFlowLayout)
-
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = true
@@ -103,46 +97,55 @@ final class DetailView: UIView, RootView {
 
     lazy var deleteButton = MainButton(type: .delete)
 
+    private lazy var detailMainView: UIView = {
+        let view = UIView()
+        return view
+    }()
+
     func initializeUI() {
         backgroundColor = .systemBackground
 
-        addSubview(goToFirstButton)
-        addSubview(numberOfPageLabel)
-        addSubview(collectionView)
-        addSubview(audioView)
-        audioView.addSubview(playPauseButton)
+        addSubview(detailMainView)
+        detailMainView.addSubview(goToFirstButton)
+        detailMainView.addSubview(numberOfPageLabel)
+        detailMainView.addSubview(collectionView)
+        detailMainView.addSubview(playPauseButton)
         addSubview(deleteButton)
 
-        collectionView.snp.makeConstraints { make in
-            make.height.equalTo(CarouselConst.itemSize.height)
-            make.top.equalToSuperview().offset(196) // 오토레이아웃 고민하기
+        detailMainView.snp.makeConstraints { make in
+            make.top.equalTo(layoutMarginsGuide.snp.top)
             make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(deleteButton.snp.top)
         }
 
         goToFirstButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(54)
-            make.bottom.equalTo(collectionView.snp.top).offset(-15)
+            make.top.equalToSuperview().offset(45)
+            make.height.equalTo(20)
         }
 
         numberOfPageLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-54)
-            make.bottom.equalTo(collectionView.snp.top).offset(-15)
+            make.top.equalToSuperview().offset(45)
+            make.height.equalTo(20)
         }
 
-        audioView.snp.makeConstraints { make in
-            make.width.equalTo(307)
-            make.height.equalTo(40)
-            make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
-            make.top.equalTo(collectionView.snp.bottom).offset(20)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(goToFirstButton.snp.bottom).offset(15)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(CarouselConst.itemSize.height)
         }
 
         playPauseButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-15)
+            make.trailing.equalToSuperview().offset(-58)
+            make.top.equalTo(collectionView.snp.bottom).offset(15)
+            make.size.equalTo(36)
         }
 
         deleteButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.width.equalTo(UIScreen.main.bounds.width - 48)
+            make.height.equalTo(56)
             make.bottom.equalToSuperview().offset(-40)
         }
     }
@@ -171,7 +174,7 @@ final class DetailView: UIView, RootView {
 // Carousel 애니메이션: itemSize, itemSpacing, insetX 정의
 extension DetailView {
     enum CarouselConst {
-        static let itemSize = CGSize(width: 307, height: 440)
+        static let itemSize = CGSize(width: 307 * UIScreen.main.bounds.width / 393, height: 440 * UIScreen.main.bounds.height / 852)
         static let itemSpacing = 24.0
 
         static var insetX: CGFloat {

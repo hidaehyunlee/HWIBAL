@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class EmotionTrashCell: UICollectionViewCell, RootView {
+class EmotionTrashCell: UICollectionViewCell {
     static let identifier = "EmotionTrashCell"
 
     lazy var showImageButton: UIButton = {
@@ -48,14 +48,7 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
         return textView
     }()
 
-    var emotionTrashBackView: EmotionTrashBackView = .init()
-
-    public func configure() {
-        // initializeUI()
-        // print(testData[0])
-
-        // MARK: - Title, SubTitle
-    }
+    var imageModalView: ImageModalView = .init()
 
     func initializeUI() {
         backgroundColor = ColorGuide.main
@@ -83,23 +76,54 @@ class EmotionTrashCell: UICollectionViewCell, RootView {
         }
     }
 
-    // ✏️VC로 옮기기
-    @objc private func showImageButtonTapped() {
-        // emotionTrashBackView를 추가할 때 전환효과를 줘야함
-        UIView.transition(with: self, duration: 0.6, options: .transitionFlipFromLeft, animations: {
-            self.addSubview(self.emotionTrashBackView)
-            self.emotionTrashBackView.closeButton.addTarget(self, action: #selector(self.closeButtonTapped), for: .touchUpInside) // ✏️VC로 옮기기
-
-            self.emotionTrashBackView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        })
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        showImageButton.isHidden = false
+        imageModalView.removeFromSuperview()
+        daysAgoLabel.text = ""
+        textContentLabel.text = ""
+        // imageModalView.backImageView.image = nil
     }
 
-    // ✏️VC로 옮기기
-    @objc private func closeButtonTapped() {
-        UIView.transition(with: self, duration: 0.6, options: .transitionFlipFromRight, animations: {
-            self.emotionTrashBackView.removeFromSuperview()
-        })
+    @objc private func showImageButtonTapped() {
+        guard let image = imageModalView.imageView.image else {
+            return
+        }
+
+        let modalViewController = UIViewController()
+        modalViewController.modalPresentationStyle = .overFullScreen
+
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        modalViewController.view.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.centerX.equalTo(modalViewController.view)
+            make.centerY.equalTo(modalViewController.view)
+            make.width.equalTo(modalViewController.view).multipliedBy(0.8)
+            make.height.equalTo(modalViewController.view).multipliedBy(0.8)
+        }
+
+        modalViewController.view.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+
+        let closeButton = UIButton()
+        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.tintColor = .white
+        closeButton.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
+        modalViewController.view.addSubview(closeButton)
+        closeButton.snp.makeConstraints { make in
+            make.top.equalTo(modalViewController.view).offset(40)
+            make.trailing.equalTo(modalViewController.view).offset(-20)
+            make.width.height.equalTo(32)
+        }
+
+        if let topViewController = UIApplication.shared.windows.first?.rootViewController {
+            topViewController.present(modalViewController, animated: true, completion: nil)
+        }
+    }
+
+    @objc private func closeModal() {
+        if let topViewController = UIApplication.shared.windows.first?.rootViewController {
+            topViewController.dismiss(animated: true, completion: nil)
+        }
     }
 }
