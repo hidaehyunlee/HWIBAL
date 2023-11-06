@@ -21,9 +21,9 @@ final class SignInView: UIView, RootView {
     private lazy var title: UILabel = {
         let label = UILabel()
         label.text = """
-        아, 휘발
-        나만의 안전한 공간
-        """
+                     아, 휘발
+                     나만의 안전한 공간
+                     """
         label.textColor = .label
         label.font = FontGuide.size32Bold
         label.numberOfLines = 2
