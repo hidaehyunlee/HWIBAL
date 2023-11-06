@@ -49,27 +49,21 @@ final class DetailView: UIView, RootView {
             numberOfPageLabel.textAlignment = .right
         }
     }
-    
+
     lazy var numberOfPageLabel: UILabel = {
         let label = UILabel()
 
         return label
     }()
 
-    private let collectionViewFlowLayout: UICollectionViewFlowLayout = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-
         layout.scrollDirection = .horizontal
         layout.itemSize = CarouselConst.itemSize
         layout.minimumLineSpacing = CarouselConst.itemSpacing
         layout.minimumInteritemSpacing = 0
-
-        return layout
-    }()
-
-    lazy var collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewFlowLayout)
-
+        
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = true
@@ -103,38 +97,29 @@ final class DetailView: UIView, RootView {
 
     lazy var deleteButton = MainButton(type: .delete)
 
+    private lazy var DetailComponents: UIStackView = {
+        let topStackView = UIStackView(arrangedSubviews: [goToFirstButton, numberOfPageLabel])
+        topStackView.axis = .horizontal
+        topStackView.spacing = 140
+
+        let stackView = UIStackView(arrangedSubviews: [topStackView, collectionView, audioView])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 15
+        return stackView
+    }()
+
     func initializeUI() {
         backgroundColor = .systemBackground
 
-        addSubview(goToFirstButton)
-        addSubview(numberOfPageLabel)
-        addSubview(collectionView)
-        addSubview(audioView)
+        addSubview(DetailComponents)
         audioView.addSubview(playPauseButton)
         addSubview(deleteButton)
 
-        collectionView.snp.makeConstraints { make in
-            make.height.equalTo(CarouselConst.itemSize.height)
-            make.top.equalToSuperview().offset(196) // 오토레이아웃 고민하기
-            make.leading.trailing.equalToSuperview()
-        }
-
-        goToFirstButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(54)
-            make.bottom.equalTo(collectionView.snp.top).offset(-15)
-        }
-
-        numberOfPageLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-54)
-            make.bottom.equalTo(collectionView.snp.top).offset(-15)
-        }
-
-        audioView.snp.makeConstraints { make in
-            make.width.equalTo(307)
-            make.height.equalTo(40)
+        DetailComponents.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(43)
             make.trailing.equalToSuperview().offset(-43)
-            make.top.equalTo(collectionView.snp.bottom).offset(20)
         }
 
         playPauseButton.snp.makeConstraints { make in
@@ -143,6 +128,8 @@ final class DetailView: UIView, RootView {
 
         deleteButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.width.equalTo(UIScreen.main.bounds.width - 48)
+            make.height.equalTo(56)
             make.bottom.equalToSuperview().offset(-40)
         }
     }
