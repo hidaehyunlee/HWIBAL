@@ -18,13 +18,13 @@ class ImageModalViewController: RootViewController<ImageModalView> {
         // modalPresentationStyle = .overFullScreen
         view.backgroundColor = UIColor.white
 
-        if let image = ImageModalView.shared.imageView.image {
-            ImageModalView.shared.imageView.image = image
-            print("image: ", image)
-            print("나 여기 있어요!")
-        }
+//        if let image = ImageModalView.shared.imageView.image {
+//            ImageModalView.shared.imageView.image = image
+//            print("image: ", image)
+//            print("나 여기 있어요!")
+//        }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handleImageNotification(_:)), name: NSNotification.Name("imageModalVC"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(handleImageNotification(_:)), name: NSNotification.Name("imageModalVC"), object: nil)
 
         rootView.closeButton.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
     }
