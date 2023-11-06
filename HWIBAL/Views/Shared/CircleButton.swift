@@ -6,32 +6,50 @@
 //
 
 import Foundation
-import UIKit
 import SnapKit
+import UIKit
 
 class CircleButton: UIButton {
-    private let customButtonType: ButtonType
+    private var customButtonType: ButtonType {
+        didSet {
+            configureButton()
+        }
+    }
     
     init(type: ButtonType) {
         self.customButtonType = type
         super.init(frame: .zero)
+        configureButton()
         setImage(customButtonType.image, for: .normal)
         tintColor = customButtonType.titleColor
         backgroundColor = customButtonType.backgroundColor
-        layer.cornerRadius = CGFloat(ButtonType.size/2)
+        layer.cornerRadius = CGFloat(customButtonType.size / 2)
         snp.makeConstraints { make in
-            make.width.height.equalTo(ButtonType.size)
+            make.width.height.equalTo(customButtonType.size)
         }
     }
     
+    private func configureButton() {
+        setImage(customButtonType.image, for: .normal)
+        tintColor = customButtonType.titleColor
+        backgroundColor = customButtonType.backgroundColor
+        layer.cornerRadius = CGFloat(customButtonType.size / 2)
+        snp.makeConstraints { make in
+            make.width.height.equalTo(customButtonType.size)
+        }
+    }
+
+    func updateButtonType(to newType: ButtonType) {
+        customButtonType = newType
+    }
+    
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     enum ButtonType {
         case play, pause, stop, photo, record
-        
-        static let size = 36
         
         var image: UIImage {
             switch self {
@@ -62,10 +80,17 @@ class CircleButton: UIButton {
             case .record: return .white
             }
         }
+        
+        var size: Int {
+            switch self {
+            case .photo, .record, .play, .pause, .stop: return 36
+            }
+        }
     }
 }
+
 extension CircleButton {
     var buttonSize: CGFloat {
-        return CGFloat(ButtonType.size)
+        return CGFloat(customButtonType.size)
     }
 }

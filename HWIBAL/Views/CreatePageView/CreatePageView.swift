@@ -62,14 +62,9 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         
         textView.delegate = self
         textView.backgroundColor = .systemBackground
-        //textView.layer.cornerRadius = 5
         textView.font = FontGuide.size14
-       // textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
         addSubview(textView)
-        
-//        soundWaveView.backgroundColor = .systemGray
-//        soundWaveView.isHidden = true
-//        addSubview(soundWaveView)
         
         addSubview(playButton)
     }
@@ -132,9 +127,6 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
             make.bottom.equalTo(cameraButton.snp.bottom)
         }
         
-//        let soundWaveX: CGFloat = soundButton.frame.origin.x + soundButton.frame.width + 10
-//        let soundWaveY: CGFloat = soundButton.frame.origin.y
-//        soundWaveView.frame = CGRect(x: soundWaveX, y: soundWaveY, width: 50, height: soundButton.frame.height)
         if isImageViewAttached {
             let textViewNewHeight = textView.frame.height/2
             textView.frame = CGRect(
