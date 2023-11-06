@@ -48,7 +48,7 @@ class EmotionTrashCell: UICollectionViewCell {
         return textView
     }()
 
-   // var imageModalView: ImageModalView = .init()
+    var imageModalView: ImageModalView = .init()
 
     func initializeUI() {
         backgroundColor = ColorGuide.main
@@ -79,19 +79,47 @@ class EmotionTrashCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         showImageButton.isHidden = false
-        ImageModalView.shared.removeFromSuperview()
+        imageModalView.removeFromSuperview()
         daysAgoLabel.text = ""
         textContentLabel.text = ""
-        //ImageModalView.shared.imageView.image = nil
+        // imageModalView.backImageView.image = nil
     }
 
     @objc private func showImageButtonTapped() {
-        let modalViewController = ImageModalViewController() // 뷰컨간 통신 바
+        guard let image = imageModalView.imageView.image else {
+            return
+        }
+
+        let modalViewController = UIViewController()
+        modalViewController.modalPresentationStyle = .overFullScreen
+
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        modalViewController.view.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.centerX.equalTo(modalViewController.view)
+            make.centerY.equalTo(modalViewController.view)
+            make.width.equalTo(modalViewController.view).multipliedBy(0.8)
+            make.height.equalTo(modalViewController.view).multipliedBy(0.8)
+        }
+
+        modalViewController.view.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+
+        let closeButton = UIButton()
+        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.tintColor = .white
+        closeButton.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
+        modalViewController.view.addSubview(closeButton)
+        closeButton.snp.makeConstraints { make in
+            make.top.equalTo(modalViewController.view).offset(40)
+            make.trailing.equalTo(modalViewController.view).offset(-20)
+            make.width.height.equalTo(32)
+        }
+
         if let topViewController = UIApplication.shared.windows.first?.rootViewController {
             topViewController.present(modalViewController, animated: true, completion: nil)
         }
     }
-
 
     @objc private func closeModal() {
         if let topViewController = UIApplication.shared.windows.first?.rootViewController {

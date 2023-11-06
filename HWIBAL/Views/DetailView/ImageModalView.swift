@@ -8,15 +8,14 @@
 import UIKit
 
 class ImageModalView: UIView, RootView {
-    static let shared = ImageModalView()
+    // static let shared = ImageModalView()
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
-        
-        imageView.backgroundColor = .green
+        imageView.clipsToBounds = true
 
         return imageView
     }()
