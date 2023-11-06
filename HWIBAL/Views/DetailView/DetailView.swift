@@ -84,12 +84,6 @@ final class DetailView: UIView, RootView {
         view.backgroundColor = .clear
         return view
     }()
-    
-    private lazy var testView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        return view
-    }()
 
     lazy var playPauseButton: UIButton = {
         let button = UIButton()
@@ -103,61 +97,56 @@ final class DetailView: UIView, RootView {
 
     lazy var deleteButton = MainButton(type: .delete)
 
-    private lazy var DetailComponents: UIStackView = {
-        let topStackView = UIStackView(arrangedSubviews: [goToFirstButton, numberOfPageLabel])
-        topStackView.axis = .horizontal
-        topStackView.spacing = 140
-
-        let stackView = UIStackView(arrangedSubviews: [topStackView, collectionView, audioView])
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 15
-        return stackView
+    private lazy var detailMainView: UIView = {
+        let view = UIView()
+        return view
     }()
 
     func initializeUI() {
         backgroundColor = .systemBackground
 
+        addSubview(detailMainView)
+        detailMainView.addSubview(goToFirstButton)
+        detailMainView.addSubview(numberOfPageLabel)
+        detailMainView.addSubview(collectionView)
+        detailMainView.addSubview(playPauseButton)
         addSubview(deleteButton)
-        deleteButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalTo(UIScreen.main.bounds.width - 48)
-            make.height.equalTo(56)
-            make.bottom.equalToSuperview().offset(-40)
-        }
 
-        addSubview(testView)
-        testView.snp.makeConstraints { make in
+        detailMainView.snp.makeConstraints { make in
             make.top.equalTo(layoutMarginsGuide.snp.top)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(deleteButton.snp.top)
         }
 
-        testView.addSubview(goToFirstButton)
         goToFirstButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(54)
-            make.top.equalToSuperview().offset(15)
+            make.top.equalToSuperview().offset(45)
             make.height.equalTo(20)
         }
 
-        testView.addSubview(numberOfPageLabel)
         numberOfPageLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-54)
-            make.top.equalToSuperview().offset(15)
+            make.top.equalToSuperview().offset(45)
             make.height.equalTo(20)
         }
 
-        testView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(goToFirstButton.snp.bottom).offset(15)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(440)
+            make.height.equalTo(CarouselConst.itemSize.height)
         }
 
-        testView.addSubview(playPauseButton)
         playPauseButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-58)
+            make.top.equalTo(collectionView.snp.bottom).offset(15)
             make.size.equalTo(36)
+        }
+
+        deleteButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(UIScreen.main.bounds.width - 48)
+            make.height.equalTo(56)
+            make.bottom.equalToSuperview().offset(-40)
         }
     }
 
@@ -185,7 +174,7 @@ final class DetailView: UIView, RootView {
 // Carousel 애니메이션: itemSize, itemSpacing, insetX 정의
 extension DetailView {
     enum CarouselConst {
-        static let itemSize = CGSize(width: 307, height: 440)
+        static let itemSize = CGSize(width: 307 * UIScreen.main.bounds.width / 393, height: 440 * UIScreen.main.bounds.height / 852)
         static let itemSpacing = 24.0
 
         static var insetX: CGFloat {
