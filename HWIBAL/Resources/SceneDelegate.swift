@@ -15,6 +15,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = .init(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
+        if SignInService.shared.isDarkMode() {
+            window?.overrideUserInterfaceStyle = .dark
+        } else {
+            window?.overrideUserInterfaceStyle = .light
+        }
+        
         if SignInService.shared.isSignedIn() {
             if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
                let user = UserService.shared.getExistUser(signedInUserEmail) {
