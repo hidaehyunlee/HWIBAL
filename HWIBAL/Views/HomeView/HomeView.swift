@@ -53,6 +53,12 @@ final class HomeView: UIView, RootView {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         return view
     }()
+    
+    private lazy var centerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.systemBackground
+        return view
+    }()
 
     private lazy var hwibariImageTooltipView: UIImageView = {
         let imageView = UIImageView()
@@ -104,10 +110,10 @@ final class HomeView: UIView, RootView {
         backgroundColor = .systemBackground
         myPageButton.isEnabled = false
         myPageButton.customView?.alpha = 0.2
+        setupButton()
         addSubviews()
         setupConstraints()
         setupHwibariImageView()
-        setupButton()
         setupTooltipView()
     }
     
@@ -122,7 +128,8 @@ final class HomeView: UIView, RootView {
     private func addSubviews() {
         addSubview(titleLabel1)
         addSubview(titleLabel2)
-        addSubview(hwibariImage)
+        addSubview(centerView)
+        centerView.addSubview(hwibariImage)
         viewController?.navigationItem.rightBarButtonItem = myPageButton
     }
     
@@ -135,9 +142,13 @@ final class HomeView: UIView, RootView {
             make.top.equalTo(titleLabel1.snp.bottom)
             make.leading.equalToSuperview().offset(24)
         }
+        centerView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel2.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-96)
+        }
         hwibariImage.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel2.snp.bottom).offset(59 * UIScreen.main.bounds.height / 852) // 비율 조정
+            make.center.equalToSuperview()
             make.width.equalTo(289 * UIScreen.main.bounds.width / 393) // 너비 조정
             make.height.equalTo(407 * UIScreen.main.bounds.height / 852) // 높이 조정
         }
