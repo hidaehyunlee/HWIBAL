@@ -45,7 +45,6 @@ final class DetailViewController: RootViewController<DetailView> {
         rootView.totalPage = userEmotionTrashes.count
 
         rootView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
-        rootView.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
     }
 
     @objc func goToFirstButtonTapped() {
@@ -78,16 +77,6 @@ final class DetailViewController: RootViewController<DetailView> {
                 }
             } else {
                 print("Error: 파일이 존재하지 않음")
-            }
-
-            if let player = player {
-                if player.isPlaying {
-                    player.pause()
-                    rootView.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
-                } else {
-                    player.play()
-                    rootView.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
-                }
             }
         }
     }
@@ -129,11 +118,21 @@ extension DetailViewController: UICollectionViewDataSource {
         }
 
         if let recording = data.recording, let filePath = recording.filePath {
-            rootView.playPauseButton.isHidden = false
-            rootView.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
-            rootView.playPauseButton.tag = indexPath.item
+            cell.playPauseButton.isHidden = false
+            cell.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
+            cell.playPauseButton.tag = indexPath.item
+
+            if let player = player {
+                if player.isPlaying {
+                    player.pause()
+                    cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
+                } else {
+                    player.play()
+                    cell.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
+                }
+            }
         } else {
-            rootView.playPauseButton.isHidden = true
+            cell.playPauseButton.isHidden = true
         }
 
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
@@ -196,11 +195,11 @@ extension DetailViewController: UICollectionViewDelegate {
 
 extension DetailViewController: AVAudioPlayerDelegate {
     // 오디오 파일이 끝나면 버튼 UI 업데이트하는 델리게이트 메서드
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if flag {
-            rootView.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
-        }
-    }
+//    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+//        if flag {
+//            cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
+//        }
+//    }
 }
 
 // extension DetailViewController: UICollectionViewDelegateFlowLayout {
