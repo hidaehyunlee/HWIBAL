@@ -71,6 +71,26 @@ final class HomeView: UIView, RootView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    private lazy var myPageButton: UIBarButtonItem = {
+        let userIconView = UIImageView(image: UIImage(named: "user"))
+        userIconView.contentMode = .scaleAspectFit
+        
+        let userButton = UIBarButtonItem(customView: userIconView)
+        userButton.target = self
+        userButton.action = #selector(myPageButtonTapped)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myPageButtonTapped))
+        userIconView.isUserInteractionEnabled = true
+        userIconView.addGestureRecognizer(tapGesture)
+        
+        userIconView.snp.makeConstraints { make in
+            make.width.equalTo(23)
+            make.height.equalTo(23)
+        }
+        
+        return userButton
+    }()
 
     // MARK: - Label Title Update Function
     
@@ -82,26 +102,12 @@ final class HomeView: UIView, RootView {
     
     func initializeUI() {
         backgroundColor = .systemBackground
+        myPageButton.isEnabled = false
+        myPageButton.customView?.alpha = 0.2
         addSubviews()
         setupConstraints()
         setupHwibariImageView()
         setupButton()
-        
-        let userIconView = UIImageView(image: UIImage(named: "user"))
-        userIconView.contentMode = .scaleAspectFit
-                
-        addSubview(userIconView)
-                
-        userIconView.snp.makeConstraints { make in
-            make.width.equalTo(23)
-            make.height.equalTo(23)
-            make.trailing.equalToSuperview().offset(-24)
-            make.top.equalToSuperview().offset(40)
-        }
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myPageButtonTapped))
-        userIconView.isUserInteractionEnabled = true
-        userIconView.addGestureRecognizer(tapGesture)
-    
         setupTooltipView()
     }
     
@@ -117,6 +123,7 @@ final class HomeView: UIView, RootView {
         addSubview(titleLabel1)
         addSubview(titleLabel2)
         addSubview(hwibariImage)
+        viewController?.navigationItem.rightBarButtonItem = myPageButton
     }
     
     private func setupConstraints() {
@@ -134,6 +141,10 @@ final class HomeView: UIView, RootView {
             make.width.equalTo(289 * UIScreen.main.bounds.width / 393) // 너비 조정
             make.height.equalTo(407 * UIScreen.main.bounds.height / 852) // 높이 조정
         }
+        myPageButton.customView?.snp.makeConstraints { make in
+                make.width.equalTo(23)
+                make.height.equalTo(23)
+            }
     }
     
     private func setupHwibariImageView() {
@@ -393,6 +404,8 @@ final class HomeView: UIView, RootView {
     
     @objc private func hideTooltipButtonTapped() {
         tooltipView.isHidden = true
+        myPageButton.isEnabled = true
+        myPageButton.customView?.alpha = 1.0
     }
 
     @objc private func createButtonTapped() {
