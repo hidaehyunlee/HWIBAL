@@ -6,24 +6,44 @@
 //
 
 import Foundation
-import UIKit
 import SnapKit
+import UIKit
 
 class CircleButton: UIButton {
-    private let customButtonType: ButtonType
+    private var customButtonType: ButtonType {
+        didSet {
+            configureButton()
+        }
+    }
     
     init(type: ButtonType) {
         self.customButtonType = type
         super.init(frame: .zero)
+        configureButton()
         setImage(customButtonType.image, for: .normal)
         tintColor = customButtonType.titleColor
         backgroundColor = customButtonType.backgroundColor
-        layer.cornerRadius = CGFloat(customButtonType.size/2)
+        layer.cornerRadius = CGFloat(customButtonType.size / 2)
         snp.makeConstraints { make in
             make.width.height.equalTo(customButtonType.size)
         }
     }
     
+    private func configureButton() {
+        setImage(customButtonType.image, for: .normal)
+        tintColor = customButtonType.titleColor
+        backgroundColor = customButtonType.backgroundColor
+        layer.cornerRadius = CGFloat(customButtonType.size / 2)
+        snp.makeConstraints { make in
+            make.width.height.equalTo(customButtonType.size)
+        }
+    }
+
+    func updateButtonType(to newType: ButtonType) {
+        customButtonType = newType
+    }
+    
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -63,14 +83,14 @@ class CircleButton: UIButton {
         
         var size: Int {
             switch self {
-            case .play, .pause, .stop: return 32
-            case .photo, .record: return 36
+            case .photo, .record, .play, .pause, .stop: return 36
             }
         }
     }
 }
+
 extension CircleButton {
     var buttonSize: CGFloat {
-        return CGFloat(self.customButtonType.size)
+        return CGFloat(customButtonType.size)
     }
 }
