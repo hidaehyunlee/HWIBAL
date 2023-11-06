@@ -81,18 +81,68 @@ final class MyPageView: UIView, RootView {
         return tableView
     }()
     
-    let withdrawalButton: UIButton = {
-        let button = UIButton()
-        let attributedText = NSAttributedString(string: "회원탈퇴", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
-        button.setAttributedTitle(attributedText, for: .normal)
-        button.titleLabel?.font = FontGuide.size14
-        button.setTitleColor(.label, for: .normal)
-        button.backgroundColor = .systemBackground
-        button.snp.makeConstraints { make in
-            make.width.equalTo(58)
+    let withdrawal: UILabel = {
+        let label = UILabel()
+        label.text = "회원탈퇴"
+        label.textColor = ColorGuide.textHint
+        label.font = FontGuide.size14
+        label.isUserInteractionEnabled = true
+        label.snp.makeConstraints { make in
             make.height.equalTo(24)
         }
-        return button
+        return label
+    }()
+    
+    let seperateLineOne: UIView = {
+        let view = UIView()
+        view.backgroundColor = ColorGuide.inputLine
+        view.snp.makeConstraints { make in
+            make.width.equalTo(1)
+            make.height.equalTo(12)
+        }
+        return view
+    }()
+    
+    let termsOfUse: UILabel = {
+        let label = UILabel()
+        label.text = "이용약관"
+        label.textColor = ColorGuide.textHint
+        label.font = FontGuide.size14
+        label.isUserInteractionEnabled = true
+        label.snp.makeConstraints { make in
+            make.height.equalTo(24)
+        }
+        return label
+    }()
+    
+    let seperateLineTwo: UIView = {
+        let view = UIView()
+        view.backgroundColor = ColorGuide.inputLine
+        view.snp.makeConstraints { make in
+            make.width.equalTo(1)
+            make.height.equalTo(12)
+        }
+        return view
+    }()
+    
+    let privacyPolicy: UILabel = {
+        let label = UILabel()
+        label.text = "개인정보처리방침"
+        label.textColor = ColorGuide.textHint
+        label.font = FontGuide.size14
+        label.isUserInteractionEnabled = true
+        label.snp.makeConstraints { make in
+            make.height.equalTo(24)
+        }
+        return label
+    }()
+    
+    lazy var corpArea: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [withdrawal, seperateLineOne, termsOfUse, seperateLineTwo, privacyPolicy])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 8
+        return stackView
     }()
 
     override init(frame: CGRect) {
@@ -111,7 +161,7 @@ final class MyPageView: UIView, RootView {
         
         addSubview(reportSummaryView)
         reportSummaryView.snp.makeConstraints { make in
-            make.top.equalTo(layoutMarginsGuide.snp.top).offset(35)
+            make.top.equalTo(layoutMarginsGuide.snp.top).offset(35 * UIScreen.main.bounds.height / 852)
             make.centerX.equalToSuperview()
             make.width.equalTo(343)
             make.height.equalTo(161)
@@ -137,15 +187,14 @@ final class MyPageView: UIView, RootView {
         
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(reportSummaryView.snp.bottom).offset(35
-            )
+            make.top.equalTo(reportSummaryView.snp.bottom).offset(35 * UIScreen.main.bounds.height / 852)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(300)
         }
         
-        addSubview(withdrawalButton)
-        withdrawalButton.snp.makeConstraints { make in
+        addSubview(corpArea)
+        corpArea.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-40)
         }
@@ -157,13 +206,13 @@ final class MyPageView: UIView, RootView {
                      감정쓰레기 \(ReportService.shared.calculateEmotionTrashCount())개
                      """
         
-        switch ReportService.shared.calculateEmotionTrashCount() {
-        case let difference where difference > ReportService.shared.calculateAverageEmotionTrashCount():
-            reportSummarySubTitle.text = "평균보다 \(difference - ReportService.shared.calculateAverageEmotionTrashCount())개 더 썼어요"
-        case let difference where difference < ReportService.shared.calculateAverageEmotionTrashCount():
-            reportSummarySubTitle.text = "평균보다 \(ReportService.shared.calculateAverageEmotionTrashCount() - difference)개 적게 썼어요"
+        switch ReportService.shared.calculateThisWeekEmotionTrashCount() {
+        case let difference where difference > ReportService.shared.calculateLastWeekEmotionTrashCount():
+            reportSummarySubTitle.text = "지난주보다 \(difference - ReportService.shared.calculateLastWeekEmotionTrashCount())개 더 썼어요"
+        case let difference where difference < ReportService.shared.calculateLastWeekEmotionTrashCount():
+            reportSummarySubTitle.text = "지난주보다 \(ReportService.shared.calculateLastWeekEmotionTrashCount() - difference)개 적게 썼어요"
         default:
-            reportSummarySubTitle.text = "평균과 같아요"
+            reportSummarySubTitle.text = "지난주와 같아요"
         }
     }
 }

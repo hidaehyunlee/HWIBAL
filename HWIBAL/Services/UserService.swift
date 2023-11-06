@@ -19,6 +19,7 @@ class UserService {
             user.email = email
             user.name = name
             user.id = id
+            user.autoExpireDate = setAutoExpireDate(day: 8)
             
             
             if let sevenDaysLater = Calendar.current.date(byAdding: .day, value: 8, to: Date()) {
@@ -42,10 +43,7 @@ class UserService {
 
         do {
             if let userToUpdate = try context.fetch(fetchRequest).first {
-                if let autoExpireDays = autoExpireDays,
-                   let newAutoExpireDate = Calendar.current.date(byAdding: .day, value: autoExpireDays, to: Date()) {
-                    userToUpdate.autoExpireDate = newAutoExpireDate
-                }
+                userToUpdate.autoExpireDate = setAutoExpireDate(day: (autoExpireDays ?? 7) + 1)
 
                 coreDataManager.saveContext()
                 print("""
@@ -71,6 +69,19 @@ class UserService {
         do {
             let users = try CoreDataManager.shared.mainContext.fetch(fetchRequest)
             return users.first(where: { $0.email == email })
+        } catch {
+            print("Error fetching users: \(error)")
+            return nil
+        }
+    }
+    
+    func getExistUserAsId(_ id: String) -> User? {
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+        do {
+            let users = try CoreDataManager.shared.mainContext.fetch(fetchRequest)
+            return users.first(where: { $0.id == id })
         } catch {
             print("Error fetching users: \(error)")
             return nil
@@ -121,5 +132,17 @@ class UserService {
         } catch {
             print("Error deleting user: \(error)")
         }
+    }
+    
+    // 자동 휘발일 설정
+    func setAutoExpireDate(day: Int) -> Date? {
+        if let sevenDaysLater = Calendar.current.date(byAdding: .day, value: day, to: Date()) {
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: sevenDaysLater)
+
+            if let year = components.year, let month = components.month, let day = components.day {
+                return Calendar.current.date(from: DateComponents(year: year, month: month, day: day, hour: 0, minute: 0, second: 0))
+            }
+        }
+        return nil
     }
 }

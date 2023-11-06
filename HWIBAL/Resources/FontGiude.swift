@@ -59,6 +59,9 @@ enum FontGuide {
     static let size24 = customFont(size: 24, lineHeight: 32)
     static let size24Bold = customFont(size: 24, lineHeight: 32, isBold: true)
     
+    static let size21 = customFont(size: 21, lineHeight: 21)
+    static let size21Bold = customFont(size: 21, lineHeight: 21, isBold: true)
+    
     static let size19 = customFont(size: 19, lineHeight: 26)
     static let size19Bold = customFont(size: 19, lineHeight: 26, isBold: true)
     
