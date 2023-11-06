@@ -61,8 +61,6 @@ class EmotionTrashCell: UICollectionViewCell {
         addSubview(playPauseButton)
 
         showImageButton.snp.makeConstraints { make in
-            make.width.equalTo(77)
-            make.height.equalTo(28)
             make.trailing.equalToSuperview().offset(-20)
             make.bottom.equalToSuperview().offset(-20)
         }
