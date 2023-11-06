@@ -19,17 +19,8 @@ class UserService {
             user.email = email
             user.name = name
             user.id = id
+            user.autoExpireDate = setAutoExpireDate(day: 8)
             
-            if let sevenDaysLater = Calendar.current.date(byAdding: .day, value: 8, to: Date()) {
-                let components = Calendar.current.dateComponents([.year, .month, .day], from: sevenDaysLater)
-                
-                if let year = components.year, let month = components.month, let day = components.day {
-                    if let sevenDaysLaterMidnight = Calendar.current.date(from: DateComponents(year: year, month: month, day: day, hour: 0, minute: 0, second: 0)) {
-                        user.autoExpireDate = sevenDaysLaterMidnight
-                    }
-                }
-            }
-
             coreDataManager.saveContext()
         }
     }
@@ -41,10 +32,7 @@ class UserService {
 
         do {
             if let userToUpdate = try context.fetch(fetchRequest).first {
-                if let autoExpireDays = autoExpireDays,
-                   let newAutoExpireDate = Calendar.current.date(byAdding: .day, value: autoExpireDays, to: Date()) {
-                    userToUpdate.autoExpireDate = newAutoExpireDate
-                }
+                userToUpdate.autoExpireDate = setAutoExpireDate(day: (autoExpireDays ?? 7) + 1)
 
                 coreDataManager.saveContext()
                 print("""
@@ -133,5 +121,17 @@ class UserService {
         } catch {
             print("Error deleting user: \(error)")
         }
+    }
+    
+    // 자동 휘발일 설정
+    func setAutoExpireDate(day: Int) -> Date? {
+        if let sevenDaysLater = Calendar.current.date(byAdding: .day, value: day, to: Date()) {
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: sevenDaysLater)
+
+            if let year = components.year, let month = components.month, let day = components.day {
+                return Calendar.current.date(from: DateComponents(year: year, month: month, day: day, hour: 0, minute: 0, second: 0))
+            }
+        }
+        return nil
     }
 }

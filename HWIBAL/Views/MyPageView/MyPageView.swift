@@ -157,13 +157,13 @@ final class MyPageView: UIView, RootView {
                      감정쓰레기 \(ReportService.shared.calculateEmotionTrashCount())개
                      """
         
-        switch ReportService.shared.calculateEmotionTrashCount() {
-        case let difference where difference > ReportService.shared.calculateAverageEmotionTrashCount():
-            reportSummarySubTitle.text = "평균보다 \(difference - ReportService.shared.calculateAverageEmotionTrashCount())개 더 썼어요"
-        case let difference where difference < ReportService.shared.calculateAverageEmotionTrashCount():
-            reportSummarySubTitle.text = "평균보다 \(ReportService.shared.calculateAverageEmotionTrashCount() - difference)개 적게 썼어요"
+        switch ReportService.shared.calculateThisWeekEmotionTrashCount() {
+        case let difference where difference > ReportService.shared.calculateLastWeekEmotionTrashCount():
+            reportSummarySubTitle.text = "지난주보다 \(difference - ReportService.shared.calculateLastWeekEmotionTrashCount())개 더 썼어요"
+        case let difference where difference < ReportService.shared.calculateLastWeekEmotionTrashCount():
+            reportSummarySubTitle.text = "지난주보다 \(ReportService.shared.calculateLastWeekEmotionTrashCount() - difference)개 적게 썼어요"
         default:
-            reportSummarySubTitle.text = "평균과 같아요"
+            reportSummarySubTitle.text = "지난주와 같아요"
         }
     }
 }
