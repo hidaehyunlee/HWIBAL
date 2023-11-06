@@ -79,22 +79,6 @@ final class DetailView: UIView, RootView {
         return view
     }()
 
-    private lazy var audioView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
-    }()
-
-    lazy var playPauseButton: UIButton = {
-        let button = UIButton()
-
-        let image = UIImage(named: "play")
-        button.setBackgroundImage(image, for: .normal)
-        button.isHidden = true
-
-        return button
-    }()
-
     lazy var deleteButton = MainButton(type: .delete)
 
     private lazy var detailMainView: UIView = {
@@ -109,7 +93,6 @@ final class DetailView: UIView, RootView {
         detailMainView.addSubview(goToFirstButton)
         detailMainView.addSubview(numberOfPageLabel)
         detailMainView.addSubview(collectionView)
-        detailMainView.addSubview(playPauseButton)
         addSubview(deleteButton)
 
         detailMainView.snp.makeConstraints { make in
@@ -134,12 +117,6 @@ final class DetailView: UIView, RootView {
             make.top.equalTo(goToFirstButton.snp.bottom).offset(15)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(CarouselConst.itemSize.height)
-        }
-
-        playPauseButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-58)
-            make.top.equalTo(collectionView.snp.bottom).offset(15)
-            make.size.equalTo(36)
         }
 
         deleteButton.snp.makeConstraints { make in
