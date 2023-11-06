@@ -107,6 +107,8 @@ final class DetailViewController: RootViewController<DetailView> {
             self.navigationController?.popViewController(animated: true)
         })
     }
+    
+    
 }
 
 extension DetailViewController: UICollectionViewDataSource {
@@ -127,9 +129,11 @@ extension DetailViewController: UICollectionViewDataSource {
         let data = userEmotionTrashes[reversedIndex]
 
         if let imageData = data.image, let image = UIImage(data: imageData) {
-            cell.emotionTrashBackView.backImageView.image = image
+            //ImageModalView.shared.imageView.image = image
+            NotificationCenter.default.post(name: NSNotification.Name("imageModalVC"), object: image)
+            print("이미지 할당 완료")
         } else {
-            cell.emotionTrashBackView.backImageView.image = nil
+            ImageModalView.shared.imageView.image = nil
             cell.showImageButton.isHidden = true
         }
 
