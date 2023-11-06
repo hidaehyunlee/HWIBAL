@@ -47,36 +47,55 @@ final class HomeView: UIView, RootView {
         let imageView = hwibariImageView(named: "hwibari_default", contentMode: .scaleAspectFit)
         return imageView
     }()
-
-    private lazy var hwibariImageTooltipView: UIView = {
+    
+    private lazy var tooltipView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.systemGray
-        view.layer.cornerRadius = 8
-        view.clipsToBounds = true
-        view.isHidden = false
-
-        let label = UILabel()
-        label.textColor = .white
-        label.text = "휘발이를 누르면 작성한 감정쓰레기를 볼 수 있어요!\n하부에는 두개의 버튼이 있어요!\n좌측버튼은 모든 감정쓰레기를 제거해요!\n우측버튼은 감정쓰레기를 작성할 수 있어요!"
-        label.font = FontGuide.size16Bold
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        view.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.leading.equalTo(view).inset(10)
-            make.trailing.equalTo(view).inset(30)
-            make.top.bottom.equalTo(view).inset(5)
-        }
-
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         return view
     }()
     
-    private lazy var closeHwibariImageTooltipButton: UIButton = {
+    private lazy var centerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.systemBackground
+        return view
+    }()
+
+    private lazy var hwibariImageTooltipView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "guideimage")
+        imageView.contentMode = .scaleToFill
+        imageView.isHidden = false
+        imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
+    
+    private lazy var hideTooltipButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        button.tintColor = .white
-        button.addTarget(self, action: #selector(closeHwibariImageTooltip), for: .touchUpInside)
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(hideTooltipButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    
+    private lazy var myPageButton: UIBarButtonItem = {
+        let userIconView = UIImageView(image: UIImage(named: "user"))
+        userIconView.contentMode = .scaleAspectFit
+        
+        let userButton = UIBarButtonItem(customView: userIconView)
+        userButton.target = self
+        userButton.action = #selector(myPageButtonTapped)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myPageButtonTapped))
+        userIconView.isUserInteractionEnabled = true
+        userIconView.addGestureRecognizer(tapGesture)
+        
+        userIconView.snp.makeConstraints { make in
+            make.width.equalTo(23)
+            make.height.equalTo(23)
+        }
+        
+        return userButton
     }()
 
     // MARK: - Label Title Update Function
@@ -89,12 +108,13 @@ final class HomeView: UIView, RootView {
     
     func initializeUI() {
         backgroundColor = .systemBackground
+        myPageButton.isEnabled = false
+        myPageButton.customView?.alpha = 0.2
+        setupButton()
         addSubviews()
         setupConstraints()
-        myPageButton()
         setupHwibariImageView()
-        setupButton()
-        setupBubbleView()
+        setupTooltipView()
     }
     
     // MARK: - Private Functions
@@ -108,7 +128,9 @@ final class HomeView: UIView, RootView {
     private func addSubviews() {
         addSubview(titleLabel1)
         addSubview(titleLabel2)
-        addSubview(hwibariImage)
+        addSubview(centerView)
+        centerView.addSubview(hwibariImage)
+        viewController?.navigationItem.rightBarButtonItem = myPageButton
     }
     
     private func setupConstraints() {
@@ -120,29 +142,20 @@ final class HomeView: UIView, RootView {
             make.top.equalTo(titleLabel1.snp.bottom)
             make.leading.equalToSuperview().offset(24)
         }
+        centerView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel2.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-96)
+        }
         hwibariImage.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel2.snp.bottom).offset(59 * UIScreen.main.bounds.height / 852) // 비율 조정
+            make.center.equalToSuperview()
             make.width.equalTo(289 * UIScreen.main.bounds.width / 393) // 너비 조정
             make.height.equalTo(407 * UIScreen.main.bounds.height / 852) // 높이 조정
         }
-    }
-
-    private func myPageButton() {
-        let userIconView = UIImageView(image: UIImage(named: "user"))
-        userIconView.contentMode = .scaleAspectFit
-        
-        let userButton = UIBarButtonItem(customView: userIconView)
-        viewController?.navigationItem.rightBarButtonItem = userButton
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myPageButtonTapped))
-        userIconView.isUserInteractionEnabled = true
-        userIconView.addGestureRecognizer(tapGesture)
-        
-        userIconView.snp.makeConstraints { make in
-            make.width.equalTo(23)
-            make.height.equalTo(23)
-        }
+        myPageButton.customView?.snp.makeConstraints { make in
+                make.width.equalTo(23)
+                make.height.equalTo(23)
+            }
     }
     
     private func setupHwibariImageView() {
@@ -161,12 +174,12 @@ final class HomeView: UIView, RootView {
         
         addSubview(deleteButton)
         
-        let squareView = createSquareView()
+        let pencilView = pencilImageView()
         
         deleteButton.snp.makeConstraints { make in
             make.height.equalTo(56)
             make.leading.equalToSuperview().offset(24)
-            make.trailing.equalTo(squareView.snp.leading).offset(-10)
+            make.trailing.equalTo(pencilView.snp.leading).offset(-10)
             make.bottom.equalToSuperview().offset(-40)
         }
         
@@ -187,14 +200,14 @@ final class HomeView: UIView, RootView {
         }
     }
         
-    private func createSquareView() -> UIView {
+    private func pencilImageView() -> UIView {
         let writeButton = UIView()
         writeButton.backgroundColor = .white
         writeButton.layer.cornerRadius = 4
         writeButton.layer.borderWidth = 1.5
         writeButton.layer.borderColor = ColorGuide.main.cgColor
-        let squareViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
-        writeButton.addGestureRecognizer(squareViewTapGesture)
+        let pencilImageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
+        writeButton.addGestureRecognizer(pencilImageViewTapGesture)
             
         addSubview(writeButton)
             
@@ -247,20 +260,31 @@ final class HomeView: UIView, RootView {
         hwibariImage.image = UIImage(named: "hwibari_default")
     }
     
-    private func setupBubbleView() {
-        addSubview(hwibariImageTooltipView)
-        
-        hwibariImageTooltipView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel2.snp.bottom).offset(5)
-            make.centerX.equalToSuperview()
+    private func setupTooltipView() {
+
+        addSubview(tooltipView)
+        tooltipView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
-        let closeHwibariImageTooltipButton = createCloseButton()
-        hwibariImageTooltipView.addSubview(closeHwibariImageTooltipButton)
+        tooltipView.addSubview(hwibariImageTooltipView)
+        
+        hwibariImageTooltipView.layer.cornerRadius = 12
+        hwibariImageTooltipView.layer.masksToBounds = true
+
+        hwibariImageTooltipView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalTo(270)
+            make.height.equalTo(340)
+        }
+        
+        tooltipView.addSubview(hideTooltipButton)
             
-        closeHwibariImageTooltipButton.snp.makeConstraints { make in
-            make.trailing.equalTo(hwibariImageTooltipView)
-            make.width.height.equalTo(20)
+        hideTooltipButton.snp.makeConstraints { make in
+            make.top.equalTo(hwibariImageTooltipView.snp.top).offset(15)
+            make.trailing.equalTo(hwibariImageTooltipView.snp.trailing).offset(-15)
+            make.width.equalTo(20)
+            make.height.equalTo(20)
         }
     }
 
@@ -332,14 +356,6 @@ final class HomeView: UIView, RootView {
         }
     }
     
-    private func createCloseButton() -> UIButton {
-        let closeButton = UIButton()
-        closeButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        closeButton.tintColor = .white
-        closeButton.addTarget(self, action: #selector(closeHwibariImageTooltip), for: .touchUpInside)
-        return closeButton
-    }
-    
     // MARK: - Event Handling
     
     @objc private func myPageButtonTapped() {
@@ -397,8 +413,10 @@ final class HomeView: UIView, RootView {
                                       })
     }
     
-    @objc private func closeHwibariImageTooltip() {
-        hwibariImageTooltipView.isHidden = true
+    @objc private func hideTooltipButtonTapped() {
+        tooltipView.isHidden = true
+        myPageButton.isEnabled = true
+        myPageButton.customView?.alpha = 1.0
     }
 
     @objc private func createButtonTapped() {
