@@ -59,7 +59,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         addSubview(soundButton)
         addSubview(cameraButton)
         bringSubviewToFront(counterLabel)
-        
+                
         textView.delegate = self
         textView.backgroundColor = .systemBackground
         textView.font = FontGuide.size14
@@ -67,6 +67,10 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         addSubview(textView)
         
         addSubview(playButton)
+        
+        // v1.0.0 
+        soundButton.isHidden = true
+        playButton.isHidden = true
     }
     
     @objc func textViewDidChange(_ textView: UITextView) {
