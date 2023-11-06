@@ -32,8 +32,9 @@ private extension MyPageViewController {
         let appearanceItem = SettingItem(type: .appearance, title: "다크모드", isSwitchOn: true)
         let autoLoginItem = SettingItem(type: .autoLogin, title: "자동 로그인", isSwitchOn: true)
         let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발 주기 설정", isSwitchOn: false)
+        let appVersionItem = SettingItem(type: .appVersion, title: "앱 버전", isSwitchOn: false)
         let logoutItem = SettingItem(type: .logout, title: "로그아웃", isSwitchOn: false)
-        settingsItems = [appearanceItem, autoLoginItem, autoVolatilizationDateItem, logoutItem]
+        settingsItems = [appearanceItem, autoLoginItem, autoVolatilizationDateItem, appVersionItem, logoutItem]
 
         // MARK: - Update Title Label
 
@@ -162,6 +163,9 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
                 volatilizationDateSettingAlert.addAction(cancelAction)
                 present(volatilizationDateSettingAlert, animated: true)
+            
+            case .appVersion:
+                print("🫵 클릭: 앱 버전")
 
             case .logout:
                 print("🫵 클릭: 로그아웃")
@@ -178,6 +182,7 @@ struct SettingItem {
         case appearance
         case autoLogin
         case autoVolatilizationDate
+        case appVersion
         case logout
     }
 

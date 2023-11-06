@@ -161,7 +161,7 @@ final class MyPageView: UIView, RootView {
         
         addSubview(reportSummaryView)
         reportSummaryView.snp.makeConstraints { make in
-            make.top.equalTo(layoutMarginsGuide.snp.top).offset(35)
+            make.top.equalTo(layoutMarginsGuide.snp.top).offset(35 * UIScreen.main.bounds.height / 852)
             make.centerX.equalToSuperview()
             make.width.equalTo(343)
             make.height.equalTo(161)
@@ -187,8 +187,7 @@ final class MyPageView: UIView, RootView {
         
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(reportSummaryView.snp.bottom).offset(35
-            )
+            make.top.equalTo(reportSummaryView.snp.bottom).offset(35 * UIScreen.main.bounds.height / 852)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(300)
