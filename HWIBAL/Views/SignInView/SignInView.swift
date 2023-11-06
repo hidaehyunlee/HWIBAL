@@ -67,7 +67,16 @@ final class SignInView: UIView, RootView {
     }()
 
     lazy var appleSignInButton: ASAuthorizationAppleIDButton = {
-        let button = ASAuthorizationAppleIDButton()
+        let buttonStyle: ASAuthorizationAppleIDButton.Style
+            
+        if UIColor.systemBackground.isLight() {
+            buttonStyle = .black
+        } else {
+            buttonStyle = .white
+        }
+        
+        let button = ASAuthorizationAppleIDButton(authorizationButtonType: .signIn, authorizationButtonStyle: buttonStyle)
+        
         button.snp.makeConstraints { make in
             make.width.equalTo(UIScreen.main.bounds.width - 48)
             make.height.equalTo(56)
