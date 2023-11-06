@@ -33,7 +33,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneWillResignActive(_ scene: UIScene) {}
 
-    func sceneWillEnterForeground(_ scene: UIScene) {}
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        print("자동 휘발일 확인")
+        if let email = SignInService.shared.signedInUser?.email,
+           let autoExpireDate = SignInService.shared.signedInUser?.autoExpireDate {
+            let currentDate = Date()
+            if currentDate >= autoExpireDate {
+                DispatchQueue.main.async {
+                    print("삭제 로직 실행")
+                    EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
+                    NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
+                    print("삭제 완료")
+                }
+
+                // 다음 자동 삭제를 위해 expire date 업데이트
+                let autoExpireDays = UserDefaults.standard.integer(forKey: "autoExpireDays_\(email))")
+                UserService.shared.updateUser(email: email, autoExpireDays: autoExpireDays)
+            } else {
+                let differenceInDays = Calendar.current.dateComponents([.day], from: currentDate, to: autoExpireDate).day
+                print("자동 휘발일 D-\(String(describing: differenceInDays))")
+            }
+        }
+    }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()

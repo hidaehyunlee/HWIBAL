@@ -13,7 +13,7 @@ class SignInService {
     var signedInUser: User?
     
     func signIn(_ email: String, _ name: String, _ id: String) {
-        if let existUser = UserService.shared.getExistUser(email) {
+        if let existUser = UserService.shared.getExistUserAsId(id) { // ID로 찾는 로직으로 변경
             print("이미 가입한 회원")
             signedInUser = existUser
             setSignedInUser(existUser.email!)

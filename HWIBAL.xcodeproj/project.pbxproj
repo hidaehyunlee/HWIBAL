@@ -50,13 +50,13 @@
 		DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0F2ADE75D900C77FE4 /* DummyData.swift */; };
 		DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */; };
 		DE7930282AF0EAA40040258A /* EmptyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7930272AF0EAA40040258A /* EmptyDetailView.swift */; };
+		DECCFAD02AF884D900BBAD5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DECCFACE2AF884D900BBAD5C /* LaunchScreen.storyboard */; };
 		DEDA76992ADFB98600EA41C1 /* EmotionTrashCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */; };
 		DEECD7352AEBC86600BE20CE /* DSWaveformImage in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7342AEBC86600BE20CE /* DSWaveformImage */; };
 		DEECD7372AEBC86600BE20CE /* DSWaveformImageViews in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7362AEBC86600BE20CE /* DSWaveformImageViews */; };
 		DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */; };
 		DEFE3A022AD53C3A0076FE11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */; };
 		DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */; };
-		DEFE3A0C2AD53C3B0076FE11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEFE3A0A2AD53C3B0076FE11 /* LaunchScreen.storyboard */; };
 		DEFE3A172AD53F3C0076FE11 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A162AD53F3C0076FE11 /* RootView.swift */; };
 		DEFE3A1F2AD5402C0076FE11 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3A1E2AD5402C0076FE11 /* HomeView.swift */; };
 		DEFE3A222AD541250076FE11 /* EventBus in Frameworks */ = {isa = PBXBuildFile; productRef = DEFE3A212AD541250076FE11 /* EventBus */; };
@@ -108,12 +108,13 @@
 		DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibal_test1.mp3; sourceTree = "<group>"; };
 		DE7930272AF0EAA40040258A /* EmptyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDetailView.swift; sourceTree = "<group>"; };
 		DEC256242AEF75E9002917C4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		DECCFACF2AF884D900BBAD5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashCell.swift; sourceTree = "<group>"; };
+		DEE212402AF38A5F0039E832 /* HWIBAL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HWIBAL.entitlements; sourceTree = "<group>"; };
 		DEFE39FC2AD53C3A0076FE11 /* HWIBAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWIBAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A012AD53C3A0076FE11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DEFE3A0B2AD53C3B0076FE11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEFE3A0D2AD53C3B0076FE11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DEFE3A162AD53F3C0076FE11 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		DEFE3A1E2AD5402C0076FE11 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -227,11 +228,13 @@
 		DEFE39FE2AD53C3A0076FE11 /* HWIBAL */ = {
 			isa = PBXGroup;
 			children = (
+				DEE212402AF38A5F0039E832 /* HWIBAL.entitlements */,
 				DE434DF52ADCCD8800C77FE4 /* Services */,
 				DEFE3A0D2AD53C3B0076FE11 /* Info.plist */,
 				DEFE3A2E2AD542CF0076FE11 /* Models */,
 				DEFE3A262AD541D50076FE11 /* Controllers */,
 				DEFE3A142AD53EB30076FE11 /* Views */,
+				DECCFACE2AF884D900BBAD5C /* LaunchScreen.storyboard */,
 				DEFE3A132AD53E720076FE11 /* Resources */,
 			);
 			path = HWIBAL;
@@ -261,7 +264,6 @@
 				DEFE3A232AD5415F0076FE11 /* MyPageView */,
 				DEFE3A1D2AD540140076FE11 /* HomeView */,
 				DEFE3A152AD53EE80076FE11 /* Shared */,
-				DEFE3A0A2AD53C3B0076FE11 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -377,11 +379,12 @@
 			};
 			buildConfigurationList = DEFE39F72AD53C3A0076FE11 /* Build configuration list for PBXProject "HWIBAL" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = DEFE39F32AD53C3A0076FE11;
 			packageReferences = (
@@ -405,8 +408,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DECCFAD02AF884D900BBAD5C /* LaunchScreen.storyboard in Resources */,
 				DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */,
-				DEFE3A0C2AD53C3B0076FE11 /* LaunchScreen.storyboard in Resources */,
 				DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,10 +474,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		DEFE3A0A2AD53C3B0076FE11 /* LaunchScreen.storyboard */ = {
+		DECCFACE2AF884D900BBAD5C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DEFE3A0B2AD53C3B0076FE11 /* Base */,
+				DECCFACF2AF884D900BBAD5C /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -550,6 +554,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -606,9 +611,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HWIBAL/HWIBAL.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = KW2TYH5V3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
@@ -622,7 +628,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.HWIBAL.project;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.HWIBAL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -639,10 +645,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HWIBAL/HWIBAL.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = KW2TYH5V3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
@@ -656,7 +663,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.HWIBAL.project;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.HWIBAL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
