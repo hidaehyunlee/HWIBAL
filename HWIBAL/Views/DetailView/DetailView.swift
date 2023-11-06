@@ -62,7 +62,7 @@ final class DetailView: UIView, RootView {
         layout.itemSize = CarouselConst.itemSize
         layout.minimumLineSpacing = CarouselConst.itemSpacing
         layout.minimumInteritemSpacing = 0
-        
+
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.isScrollEnabled = true
         view.showsHorizontalScrollIndicator = false
@@ -82,6 +82,12 @@ final class DetailView: UIView, RootView {
     private lazy var audioView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
+        return view
+    }()
+    
+    private lazy var testView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
         return view
     }()
 
@@ -112,25 +118,46 @@ final class DetailView: UIView, RootView {
     func initializeUI() {
         backgroundColor = .systemBackground
 
-        addSubview(DetailComponents)
-        audioView.addSubview(playPauseButton)
         addSubview(deleteButton)
-
-        DetailComponents.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(43)
-            make.trailing.equalToSuperview().offset(-43)
-        }
-
-        playPauseButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-15)
-        }
-
         deleteButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalTo(UIScreen.main.bounds.width - 48)
             make.height.equalTo(56)
             make.bottom.equalToSuperview().offset(-40)
+        }
+
+        addSubview(testView)
+        testView.snp.makeConstraints { make in
+            make.top.equalTo(layoutMarginsGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(deleteButton.snp.top)
+        }
+
+        testView.addSubview(goToFirstButton)
+        goToFirstButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(54)
+            make.top.equalToSuperview().offset(15)
+            make.height.equalTo(20)
+        }
+
+        testView.addSubview(numberOfPageLabel)
+        numberOfPageLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-54)
+            make.top.equalToSuperview().offset(15)
+            make.height.equalTo(20)
+        }
+
+        testView.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(goToFirstButton.snp.bottom).offset(15)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(440)
+        }
+
+        testView.addSubview(playPauseButton)
+        playPauseButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-58)
+            make.size.equalTo(36)
         }
     }
 
