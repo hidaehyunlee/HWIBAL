@@ -32,6 +32,18 @@ class MyPageCustomCell: UITableViewCell {
         }
         return label
     }()
+    
+    let versionInfo: UILabel = {
+        let label = UILabel()
+        label.text = "v1.0.0"
+        label.textAlignment = .right
+        label.font = FontGuide.size16
+        label.textColor = ColorGuide.textHint
+        label.snp.makeConstraints { make in
+            make.height.equalTo(20)
+        }
+        return label
+    }()
 
     let switchControl: UISwitch = {
         let switchControl = UISwitch()
@@ -97,20 +109,28 @@ class MyPageCustomCell: UITableViewCell {
             switchControl.isHidden = true
             indicator.isHidden = true
             dateLabel.isHidden = true
+            versionInfo.isHidden = true
         case .autoLogin:
             appearanceControl.isHidden = true
             indicator.isHidden = true
             dateLabel.isHidden = true
             switchControl.isOn = UserDefaults.standard.bool(forKey: "isSignedIn")
+            versionInfo.isHidden = true
         case .autoVolatilizationDate:
             appearanceControl.isHidden = true
             switchControl.isHidden = true
             dateLabel.text = "\(UserDefaults.standard.integer(forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))"))일"
-            
+            versionInfo.isHidden = true
+        case .appVersion:
+            appearanceControl.isHidden = true
+            switchControl.isHidden = true
+            indicator.isHidden = true
+            dateLabel.isHidden = true
         case .logout:
             appearanceControl.isHidden = true
             switchControl.isHidden = true
             dateLabel.isHidden = true
+            versionInfo.isHidden = true
         }
         initializeUI()
     }
@@ -146,6 +166,12 @@ class MyPageCustomCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.trailing.equalTo(indicator.snp.leading).offset(-10)
             make.width.equalTo(44)
+        }
+        
+        contentView.addSubview(versionInfo)
+        versionInfo.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-30)
         }
     }
     
