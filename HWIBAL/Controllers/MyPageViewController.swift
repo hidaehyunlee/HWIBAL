@@ -128,11 +128,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                        let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
                         cell.updateDateLabel(formattedDay)
                     }
-                    EmotionTrashService.shared.startAutoDeleteTask(day)
-                    // 백그라운드 태스크 실행
-//                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-//                        appDelegate.startAutoDeleteTask()
-//                    }
+                    NotificationService.shared.autoDeleteNotification(day)
                 }
                 volatilizationDateSettingAlert.addAction(action)
             }

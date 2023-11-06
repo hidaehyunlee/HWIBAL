@@ -97,31 +97,6 @@ class EmotionTrashService {
         }
     }
     
-    // 자동 휘발 로직
-    func startAutoDeleteTask(_ day: Int) {
-        print("""
-              📢 [자동 삭제 알림] \(day)일 후 삭제 예정 📢
-              """)
-        // 백그라운드에서 실행될 함수를 호출할 타이머 설정 -> withTimeInterval: * 60 * 60 * 24 처리하면 autoExpireDays일 후 실행, repeats: true로 변경
-        // (테스트 코드) Double((SignInService.shared.signedInUser?.autoExpireDays ?? 7)) * 5, repeats: false
-        Timer.scheduledTimer(withTimeInterval: Double(day) * 5, repeats: false) { _ in
-            // 원하는 주기(예: n일 간격)로 실행될 코드 작성
-            
-            
-            // 이건 포그라운드로 들어올때 실행되니까 ! 노티 따로 삭제로직 따로 하면 되겠다!!!
-            print("백그라운드에서 실행 중...")
-            DispatchQueue.main.async {
-                print("삭제 로직 실행")
-                EmotionTrashService.shared.deleteTotalEmotionTrash(SignInService.shared.signedInUser!)
-                NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
-                print("삭제 완료")
-                NotificationService.shared.autoDeleteNotification()
-                print("자동 휘발 노티 알림 발송")
-            }
-            
-        }
-    }
-    
     // fetch: 유저의 전체 감정쓰레기 가져오기
     func fetchTotalEmotionTrashes(_ user: User) -> [EmotionTrash] {
         let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
