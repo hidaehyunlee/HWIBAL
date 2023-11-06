@@ -129,11 +129,9 @@ extension DetailViewController: UICollectionViewDataSource {
         let data = userEmotionTrashes[reversedIndex]
 
         if let imageData = data.image, let image = UIImage(data: imageData) {
-            //ImageModalView.shared.imageView.image = image
-            NotificationCenter.default.post(name: NSNotification.Name("imageModalVC"), object: image)
-            print("이미지 할당 완료")
+            cell.imageModalView.imageView.image = image
         } else {
-            ImageModalView.shared.imageView.image = nil
+            cell.imageModalView.imageView.image = nil
             cell.showImageButton.isHidden = true
         }
 
@@ -141,7 +139,7 @@ extension DetailViewController: UICollectionViewDataSource {
         // let audioFileName = URL(fileURLWithPath: audioFilePath)
         // configureAudioPlayer(for: indexPath, withFileName: audioFilePath)
 
-        rootView.playPauseButton.isHidden = false
+        // rootView.playPauseButton.isHidden = false
         // } else {}
 
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
