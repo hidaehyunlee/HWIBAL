@@ -117,23 +117,24 @@ extension DetailViewController: UICollectionViewDataSource {
             cell.showImageButton.isHidden = true
         }
 
-        if let recording = data.recording, let filePath = recording.filePath {
-            cell.playPauseButton.isHidden = false
-            cell.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
-            cell.playPauseButton.tag = indexPath.item
-
-            if let player = player {
-                if player.isPlaying {
-                    player.pause()
-                    cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
-                } else {
-                    player.play()
-                    cell.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
-                }
-            }
-        } else {
-            cell.playPauseButton.isHidden = true
-        }
+        // for v1.0.0
+//        if let recording = data.recording, let filePath = recording.filePath {
+//            cell.playPauseButton.isHidden = false
+//            cell.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
+//            cell.playPauseButton.tag = indexPath.item
+//
+//            if let player = player {
+//                if player.isPlaying {
+//                    player.pause()
+//                    cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
+//                } else {
+//                    player.play()
+//                    cell.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
+//                }
+//            }
+//        } else {
+//            cell.playPauseButton.isHidden = true
+//        }
 
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
         cell.textContentLabel.text = data.text
