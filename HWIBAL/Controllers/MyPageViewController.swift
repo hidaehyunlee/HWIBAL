@@ -10,8 +10,9 @@ import UIKit
 final class MyPageViewController: RootViewController<MyPageView> {
     private var settingsItems: [SettingItem] = []
     private var selectedIndexPath: IndexPath?
-    
+
     // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUI()
@@ -22,35 +23,39 @@ private extension MyPageViewController {
     func initializeUI() {
         rootView.tableView.dataSource = self
         rootView.tableView.delegate = self
-        
+
         // MARK: - Navigation Setting
+
         navigationItem.title = "내 정보"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         let appearanceItem = SettingItem(type: .appearance, title: "다크모드", isSwitchOn: true)
         let autoLoginItem = SettingItem(type: .autoLogin, title: "자동 로그인", isSwitchOn: true)
         let autoVolatilizationDateItem = SettingItem(type: .autoVolatilizationDate, title: "자동 휘발 주기 설정", isSwitchOn: false)
         let logoutItem = SettingItem(type: .logout, title: "로그아웃", isSwitchOn: false)
         settingsItems = [appearanceItem, autoLoginItem, autoVolatilizationDateItem, logoutItem]
-        
+
         // MARK: - Update Title Label
+
         NotificationCenter.default.addObserver(self, selector: #selector(updateTitleLabel), name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
-        
+
         // MARK: - Action
-        rootView.withdrawalButton.addTarget(self, action: #selector(withdrawalButtonTapped), for: .touchUpInside)
+
         rootView.reportSummaryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(myPageToReport)))
+        rootView.withdrawal.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(withdrawalTapped(_:))))
+        rootView.termsOfUse.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(termsOfUseTapped(_:))))
+        rootView.privacyPolicy.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(privacyPolicyTapped(_:))))
     }
-    
+
     @objc func updateTitleLabel() {
         DispatchQueue.main.async { [weak self] in
             self?.rootView.updateTitleLabel()
         }
-        
     }
 }
 
 private extension MyPageViewController {
-    @objc func withdrawalButtonTapped() {
+    @objc func withdrawalTapped(_ sender: UITapGestureRecognizer) {
         print("🫵 클릭: 회원탈퇴")
         let witdrawalAlert = UIAlertController(title: "", message: "계정을 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다.", preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "회원탈퇴", style: .destructive) { _ in
@@ -63,17 +68,40 @@ private extension MyPageViewController {
         witdrawalAlert.addAction(cancel)
         present(witdrawalAlert, animated: true)
     }
-    
+
+    @objc func termsOfUseTapped(_ sender: UITapGestureRecognizer) {
+        guard let url = URL(string: "https://www.notion.so/54c990bf3c204c4ba4336a6779d890b1") else {
+            return
+        }
+
+        let webViewController = WebViewController()
+        webViewController.loadURL(url)
+
+        present(webViewController, animated: true, completion: nil)
+    }
+
+    @objc func privacyPolicyTapped(_ sender: UITapGestureRecognizer) {
+        guard let url = URL(string: "https://www.notion.so/bab2c8cb9ba3413f82c71751910e66e9") else {
+            return
+        }
+        
+        let webViewController = WebViewController()
+        webViewController.loadURL(url)
+
+        present(webViewController, animated: true, completion: nil)
+    }
+
     @objc func myPageToReport() {
         let reportVC = ReportViewController()
         reportVC.modalPresentationStyle = .fullScreen
         present(reportVC, animated: true, completion: nil)
         print("🫵 클릭: 리포트 더보기")
     }
-    
+
     func goToSignInVC() {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let sceneDelegate = windowScene.delegate as? SceneDelegate {
+           let sceneDelegate = windowScene.delegate as? SceneDelegate
+        {
             let signInViewController = SignInViewController()
             sceneDelegate.window?.rootViewController = signInViewController
         }
@@ -107,41 +135,38 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
         switch settingItem.type {
             case .appearance:
-            print("🫵 클릭: 화면모드")            
-            break
-                
+                print("🫵 클릭: 화면모드")
+
             case .autoLogin:
-            print("🫵 클릭: 자동 로그인")
-            break
-            
+                print("🫵 클릭: 자동 로그인")
+
             case .autoVolatilizationDate:
-            print("🫵 클릭: 자동 휘발일 설정")
-            let volatilizationDateSettingAlert = UIAlertController(title: "", message: "당신의 감정쓰레기를 며칠 후 불태워 드릴까요?", preferredStyle: .actionSheet)
-            let days = [1, 3, 7]
-            for day in days {
-                let formattedDay = "\(day)일"
-                let action = UIAlertAction(title: formattedDay, style: .default) { _ in
-                    UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: day)
-                    print("\(day) 후 감정쓰레기를 태워 드립니다.")
-                    UserDefaults.standard.set(day, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))")
-                    if let indexPath = self.selectedIndexPath,
-                       let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell {
-                        cell.updateDateLabel(formattedDay)
+                print("🫵 클릭: 자동 휘발일 설정")
+                let volatilizationDateSettingAlert = UIAlertController(title: "", message: "당신의 감정쓰레기를 며칠 후 불태워 드릴까요?", preferredStyle: .actionSheet)
+                let days = [1, 3, 7]
+                for day in days {
+                    let formattedDay = "\(day)일"
+                    let action = UIAlertAction(title: formattedDay, style: .default) { _ in
+                        UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: day)
+                        print("\(day) 후 감정쓰레기를 태워 드립니다.")
+                        UserDefaults.standard.set(day, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))")
+                        if let indexPath = self.selectedIndexPath,
+                           let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell
+                        {
+                            cell.updateDateLabel(formattedDay)
+                        }
+                        NotificationService.shared.autoDeleteNotification(day)
                     }
-                    NotificationService.shared.autoDeleteNotification(day)
+                    volatilizationDateSettingAlert.addAction(action)
                 }
-                volatilizationDateSettingAlert.addAction(action)
-            }
-            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            volatilizationDateSettingAlert.addAction(cancelAction)
-            present(volatilizationDateSettingAlert, animated: true)
-            break
-            
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                volatilizationDateSettingAlert.addAction(cancelAction)
+                present(volatilizationDateSettingAlert, animated: true)
+
             case .logout:
-            print("🫵 클릭: 로그아웃")
-            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
-            goToSignInVC()
-            break
+                print("🫵 클릭: 로그아웃")
+                SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
+                goToSignInVC()
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
