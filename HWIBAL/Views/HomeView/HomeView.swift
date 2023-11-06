@@ -123,8 +123,8 @@ final class HomeView: UIView, RootView {
         hwibariImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel2.snp.bottom).offset(59 * UIScreen.main.bounds.height / 852) // 비율 조정
-            make.width.equalTo(289 * UIScreen.main.bounds.width / 393) // 너비 크게 조정
-            make.height.equalTo(407 * UIScreen.main.bounds.height / 852) // 높이 크게 조정
+            make.width.equalTo(289 * UIScreen.main.bounds.width / 393) // 너비 조정
+            make.height.equalTo(407 * UIScreen.main.bounds.height / 852) // 높이 조정
         }
     }
 
