@@ -46,11 +46,26 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func startOrStopRecording() {
-        let recordingVC = RecordingViewController()
+        // 이미 저장된 오디오 URL이 있는지 확인
+        if let savedAudioURL = savedAudioURL {
+            let recordingVC = RecordingViewController()
+            // Timestamp 추출
+            let timestamp = savedAudioURL.lastPathComponent.replacingOccurrences(of: "recording_", with: "").replacingOccurrences(of: ".m4a", with: "")
+            // 기존 녹음 삭제를 위한 timestamp 전달
+            recordingVC.existingAudioTimestamp = timestamp
+            presentRecordingVC(recordingVC)
+        } else {
+            // 기존 녹음이 없으므로 바로 RecordingViewController 표시
+            presentRecordingVC(RecordingViewController())
+        }
+    }
+
+    func presentRecordingVC(_ recordingVC: RecordingViewController) {
         recordingVC.modalPresentationStyle = .custom
         recordingVC.transitioningDelegate = recordingVC
         present(recordingVC, animated: true, completion: nil)
     }
+
 
     @objc func receiveAudioNotification(_ notification: Notification) {
         if let url = notification.userInfo?["savedAudioURL"] as? URL {

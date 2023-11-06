@@ -26,12 +26,17 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     weak var delegate: RecordingViewControllerDelegate?
     var currentUser: User?
     var savedAudioURL: URL?
+    var existingAudioTimestamp: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setupUI()
         loadSignedInUser()
+        if let timestamp = existingAudioTimestamp {
+            // CreatePageViewController에서 전달받은 timestamp -> 기존 녹음 삭제
+            deleteRecordingWithTimestamp(timestamp)
+        }
     }
  
     func loadSignedInUser() {
@@ -229,6 +234,24 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         let directoryURL = getDocumentsDirectory().appendingPathComponent("AudioRecordings")
         // 최종적인 오디오 파일의 경로 반환
         return directoryURL.appendingPathComponent(fileName)
+    }
+    
+    func deleteRecordingWithTimestamp(_ timestamp: String) {
+        let fileManager = FileManager.default
+        let directoryURL = getDocumentsDirectory().appendingPathComponent("AudioRecordings")
+        let recordingName = "recording_\(timestamp).m4a"
+        let fileURL = directoryURL.appendingPathComponent(recordingName)
+        
+        if fileManager.fileExists(atPath: fileURL.path) {
+            do {
+                try fileManager.removeItem(at: fileURL)
+                print("Recording with timestamp \(timestamp) deleted success.")
+            } catch {
+                print("파일삭제 시도할때 에러발생: \(error.localizedDescription)")
+            }
+        } else {
+            print("No recording found with timestamp.")
+        }
     }
 }
 
