@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import CoreData
 import UIKit
 
 protocol RecordingViewControllerDelegate: AnyObject {
@@ -14,47 +15,66 @@ protocol RecordingViewControllerDelegate: AnyObject {
 
 class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     var audioRecorder: AVAudioRecorder?
-    var startStopButton: UIButton!
+    var startStopButton: CircleButton!
     var statusLabel: UILabel!
     var timerLabel: UILabel!
-    var waveformView: UIView!
     var recordingTimer: Timer?
     var currentRecordingTime: TimeInterval = 0.0
     var saveButton: UIButton!
     var cancelButton: UIButton!
     var completionHandler: ((Bool, URL?) -> Void)?
     weak var delegate: RecordingViewControllerDelegate?
+    var currentUser: User?
+    var savedAudioURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setupUI()
+        loadSignedInUser()
     }
  
+    func loadSignedInUser() {
+        if SignInService.shared.isSignedIn(),
+           let userEmail = SignInService.shared.loadSignedInUserEmail()
+        {
+            currentUser = UserService.shared.getExistUser(userEmail)
+        }
+    }
+    
     func setupUI() {
-        startStopButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        startStopButton.center = view.center
-        startStopButton.backgroundColor = .systemGray
-        startStopButton.layer.cornerRadius = 50
-        startStopButton.setTitle("⚫️", for: .normal)
+        startStopButton = CircleButton(type: .play)
         startStopButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
-        
         view.addSubview(startStopButton)
-        
-        statusLabel = UILabel(frame: CGRect(x: 0, y: startStopButton.frame.origin.y - 50, width: view.frame.width, height: 40))
+
+        statusLabel = UILabel()
         statusLabel.text = "녹음 준비"
         statusLabel.textAlignment = .center
         view.addSubview(statusLabel)
-        
-        timerLabel = UILabel(frame: CGRect(x: 0, y: 10 + 90, width: view.frame.width, height: 40))
+
+        statusLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(80)
+            make.centerX.equalTo(view)
+            make.height.equalTo(40)
+        }
+
+        timerLabel = UILabel()
         timerLabel.text = "00:00"
         timerLabel.textAlignment = .center
         view.addSubview(timerLabel)
 
-        waveformView = UIView(frame: CGRect(x: 10, y: timerLabel.frame.origin.y + 70, width: view.frame.width - 20, height: 100))
-        waveformView.backgroundColor = .lightGray
-        view.addSubview(waveformView)
+        timerLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(startStopButton.snp.top).offset(-8)
+            make.centerX.equalTo(view)
+            make.width.equalTo(view)
+            make.height.equalTo(40)
+        }
 
+        startStopButton.snp.makeConstraints { make in
+            make.top.equalTo(statusLabel.snp.bottom).offset(50)
+            make.centerX.equalTo(view)
+            make.width.height.equalTo(100)
+        }
         
         cancelButton = UIButton(frame: CGRect(x: 10, y: 10, width: 80, height: 40))
         cancelButton.setTitle("취소", for: .normal)
@@ -78,7 +98,9 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func startRecording() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
+        createDirectoryIfNeeded()
+        
+        let audioFilename = getRecordingURL() // 파일명에 타임스탬프를 포함
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 12000,
@@ -90,9 +112,10 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder?.delegate = self
             audioRecorder?.record()
-            
-            startStopButton.setTitle("■", for: .normal)
-            statusLabel.text = "녹음 중"
+            DispatchQueue.main.async {
+                self.startStopButton.updateButtonType(to: .pause)
+                self.statusLabel.text = "녹음 중"
+            }
             
             startTimer()
         } catch {
@@ -100,15 +123,33 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
             print("Recording Failed")
         }
     }
+    
+    func createDirectoryIfNeeded() {
+        let fileManager = FileManager.default
+        // 오디오 파일을 저장할 디렉토리 경로 지정해주는 로직
+        let newDirectoryPath = getDocumentsDirectory().appendingPathComponent("AudioRecordings")
 
+        do {
+            // 해당 경로에 디렉토리가 존재하는지 확인 -> 없으면 새로 생성
+            if !fileManager.fileExists(atPath: newDirectoryPath.path) {
+                try fileManager.createDirectory(at: newDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+            }
+        } catch {
+            print("Error creating directory: \(error.localizedDescription)")
+        }
+    }
     func stopRecording() {
         audioRecorder?.stop()
+        savedAudioURL = audioRecorder?.url
         audioRecorder = nil
-        startStopButton.setTitle("⚫️", for: .normal)
-        statusLabel.text = "녹음 멈춤"
+        DispatchQueue.main.async {
+            self.startStopButton.updateButtonType(to: .stop)
+            self.statusLabel.text = "녹음 멈춤"
+        }
         
         stopTimer()
     }
+
     
     func startTimer() {
         timerLabel.text = timeString(time: currentRecordingTime)
@@ -147,31 +188,47 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
             }
         }
         
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     @objc func saveAction() {
-        let savedAudioURL = getRecordingURL()
-        let fileManager = FileManager.default
+        dismiss(animated: true) { [weak self] in
+            guard let self = self else {
+                print("Error: self가 사용 가능하지 않습니다.")
+                return
+            }
 
-        if fileManager.fileExists(atPath: savedAudioURL.path) {
-            print("오디오 저장 성공!")
+            guard let audioURL = self.savedAudioURL else {
+                print("Error: 오디오 URL을 보낼 수 없습니다.")
+                return
+            }
 
-            // 저장 성공 시 delegate에 저장된 오디오의 URL 전달
-            self.delegate?.didSaveRecording(with: savedAudioURL)
-            self.completionHandler?(true, savedAudioURL)
-        } else {
-            print("오디오 저장 실패.")
-            self.completionHandler?(false, nil)
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: audioURL.path) {
+                print("Audio file exists at path: \(audioURL.path)")
+                // URL을 델리게이트에게 보냄
+                self.delegate?.didSaveRecording(with: audioURL)
+                
+                // 오디오 URL + 알림
+                NotificationCenter.default.post(name: .init("RecordingDidFinish"), object: nil, userInfo: ["savedAudioURL": audioURL])
+            } else {
+                print("Error: 파일이 존재하지 않습니다.")
+            }
         }
-        self.dismiss(animated: true, completion: nil)
     }
-
 
 
 
     func getRecordingURL() -> URL {
-        return getDocumentsDirectory().appendingPathComponent("recording.m4a") //mp3..로 해도 충분할 듯
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let dateString = dateFormatter.string(from: Date())
+        // 오디오 파일 이름을 타임스탬프 포함해 생성
+        let fileName = "recording_\(dateString).m4a"
+        // 오디오 파일을 저장할 디렉토리 경로 가져오는 로직
+        let directoryURL = getDocumentsDirectory().appendingPathComponent("AudioRecordings")
+        // 최종적인 오디오 파일의 경로 반환
+        return directoryURL.appendingPathComponent(fileName)
     }
 }
 
@@ -181,4 +238,3 @@ extension RecordingViewController: UIViewControllerTransitioningDelegate {
         return presentationController
     }
 }
-

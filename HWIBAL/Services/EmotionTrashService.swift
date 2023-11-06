@@ -11,13 +11,16 @@ import UIKit
 
 class EmotionTrashService {
     static let shared = EmotionTrashService()
-    let coreDataManager = CoreDataManager.shared
-    let context = CoreDataManager.shared.persistentContainer.viewContext
+    lazy var coreDataManager = CoreDataManager.shared
+    lazy var recordingService = RecordingService.shared
+    lazy var context = CoreDataManager.shared.persistentContainer.viewContext
+
     
     // ⚠️ audioRecording 저장형태에 따라 일부 변경될 수 있음
-    func createEmotionTrash(_ user: User, _ text: String, _ image: UIImage? = nil, _ recordingFilePath: String? = nil) {
-        if let entity = NSEntityDescription.entity(forEntityName: "EmotionTrash", in: context),
-           let reportEntity = NSEntityDescription.entity(forEntityName: "Report", in: context) {
+    func createEmotionTrash(user: User, text: String, image: UIImage?, recording: Recording?) { //reacording을 인자로
+        let context = coreDataManager.persistentContainer.viewContext
+        
+        if let entity = NSEntityDescription.entity(forEntityName: "EmotionTrash", in: context) {
             let newEmotionTrash = EmotionTrash(entity: entity, insertInto: context)
             newEmotionTrash.id = UUID()
             newEmotionTrash.text = text
@@ -27,21 +30,26 @@ class EmotionTrashService {
                 newEmotionTrash.image = image.pngData()
             }
             
-            if let recordingFilePath = recordingFilePath {
-                newEmotionTrash.recording?.filePath = recordingFilePath
+        //    newEmotionTrash.recording = recording
+            if let recording = recording {
+                newEmotionTrash.recording = recording
             }
             
             newEmotionTrash.user = user
             
-            let newReport = Report(entity: reportEntity, insertInto: context)
-            newReport.id = UUID()
-            newReport.text = text
-            newReport.timestamp = Date()
-            newReport.user = user
-    
+            if let reportEntity = NSEntityDescription.entity(forEntityName: "Report", in: context) {
+                let newReport = Report(entity: reportEntity, insertInto: context)
+                newReport.id = UUID()
+                newReport.text = text
+                newReport.timestamp = Date()
+                newReport.user = user
+            }
+            
             coreDataManager.saveContext()
         }
     }
+    
+
     
     func updateEmotionTrash(_ user: User, _ id: UUID, _ text: String, _ image: UIImage? = nil, _ recordingFilePath: String? = nil) {
         let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
