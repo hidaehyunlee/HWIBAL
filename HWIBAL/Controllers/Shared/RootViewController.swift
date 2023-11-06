@@ -18,15 +18,5 @@ class RootViewController<View: RootView>: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         rootView.initializeUI()
-        hideKeyboard()
-    }
-
-    func hideKeyboard() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(RootViewController.dismissKeyboard))
-        view.addGestureRecognizer(tap)
-    }
-
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
 }

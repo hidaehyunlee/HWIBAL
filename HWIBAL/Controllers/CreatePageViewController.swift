@@ -27,6 +27,16 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         rootView.cameraButton.addTarget(self, action: #selector(presentImagePickerOptions), for: .touchUpInside)
         
         setupPlayButton()
+        hideKeyboard()
+    }
+    
+    func hideKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     private func setupPlayButton() {
