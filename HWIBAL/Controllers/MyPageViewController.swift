@@ -71,14 +71,14 @@ private extension MyPageViewController {
     }
 
     @objc func termsOfUseTapped(_ sender: UITapGestureRecognizer) {
-        guard let url = URL(string: "https://www.notion.so/54c990bf3c204c4ba4336a6779d890b1") else {
+        guard let url = URL(string: "https://translucent-globe-4fc.notion.site/54c990bf3c204c4ba4336a6779d890b1?pvs=4") else {
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
     @objc func privacyPolicyTapped(_ sender: UITapGestureRecognizer) {
-        guard let url = URL(string: "https://www.notion.so/bab2c8cb9ba3413f82c71751910e66e9") else {
+        guard let url = URL(string: "https://translucent-globe-4fc.notion.site/bab2c8cb9ba3413f82c71751910e66e9?pvs=4") else {
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
