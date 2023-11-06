@@ -60,12 +60,12 @@ final class HomeView: UIView, RootView {
         label.text = "휘발이를 누르면 작성한 감정쓰레기를 볼 수 있어요!\n하부에는 두개의 버튼이 있어요!\n좌측버튼은 모든 감정쓰레기를 제거해요!\n우측버튼은 감정쓰레기를 작성할 수 있어요!"
         label.font = FontGuide.size16Bold
         label.numberOfLines = 0
-            label.lineBreakMode = .byWordWrapping
+        label.lineBreakMode = .byWordWrapping
         view.addSubview(label)
         label.snp.makeConstraints { make in
             make.leading.equalTo(view).inset(10)
-                make.trailing.equalTo(view).inset(30)
-                make.top.bottom.equalTo(view).inset(5)
+            make.trailing.equalTo(view).inset(30)
+            make.top.bottom.equalTo(view).inset(5)
         }
 
         return view
@@ -102,10 +102,6 @@ final class HomeView: UIView, RootView {
     private func hwibariImageView(named: String, contentMode: UIView.ContentMode) -> UIImageView {
         let imageView = UIImageView(image: UIImage(named: named))
         imageView.contentMode = contentMode
-        imageView.snp.makeConstraints { make in
-            make.width.equalTo(289)
-            make.height.equalTo(407)
-        }
         return imageView
     }
     
@@ -117,7 +113,7 @@ final class HomeView: UIView, RootView {
     
     private func setupConstraints() {
         titleLabel1.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(90 * UIScreen.main.bounds.height / 926) // 비율 조정
+            make.top.equalToSuperview().offset(90 * UIScreen.main.bounds.height / 852) // 비율 조정
             make.leading.equalToSuperview().offset(24)
         }
         titleLabel2.snp.makeConstraints { make in
@@ -126,9 +122,9 @@ final class HomeView: UIView, RootView {
         }
         hwibariImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel2.snp.bottom).offset(100 * UIScreen.main.bounds.height / 926) // 비율 조정
-            make.width.equalTo(330 * UIScreen.main.bounds.width / 428) // 너비 크게 조정
-            make.height.equalTo(462 * UIScreen.main.bounds.height / 926) // 높이 크게 조정
+            make.top.equalTo(titleLabel2.snp.bottom).offset(59 * UIScreen.main.bounds.height / 852) // 비율 조정
+            make.width.equalTo(289 * UIScreen.main.bounds.width / 393) // 너비 조정
+            make.height.equalTo(407 * UIScreen.main.bounds.height / 852) // 높이 조정
         }
     }
 
@@ -237,18 +233,19 @@ final class HomeView: UIView, RootView {
             hwibariImage.animationImages = [
                 UIImage(named: "hwibariopen2")!,
                 UIImage(named: "hwibariopen")!
-            ]} else {
-                hwibariImage.animationImages = [
-                    UIImage(named: "hwibariopen01")!,
-                    UIImage(named: "hwibariopen02")!
-                    ]
-            }
-    
-            hwibariImage.animationDuration = 0.3
-            hwibariImage.animationRepeatCount = 1
-            hwibariImage.startAnimating()
-            hwibariImage.image = UIImage(named: "hwibari_default")
+            ]
+        } else {
+            hwibariImage.animationImages = [
+                UIImage(named: "hwibariopen01")!,
+                UIImage(named: "hwibariopen02")!
+            ]
         }
+    
+        hwibariImage.animationDuration = 0.3
+        hwibariImage.animationRepeatCount = 1
+        hwibariImage.startAnimating()
+        hwibariImage.image = UIImage(named: "hwibari_default")
+    }
     
     private func setupBubbleView() {
         addSubview(hwibariImageTooltipView)
@@ -259,12 +256,12 @@ final class HomeView: UIView, RootView {
         }
         
         let closeHwibariImageTooltipButton = createCloseButton()
-            hwibariImageTooltipView.addSubview(closeHwibariImageTooltipButton)
+        hwibariImageTooltipView.addSubview(closeHwibariImageTooltipButton)
             
-            closeHwibariImageTooltipButton.snp.makeConstraints { make in
-                make.trailing.equalTo(hwibariImageTooltipView)
-                make.width.height.equalTo(20)
-            }
+        closeHwibariImageTooltipButton.snp.makeConstraints { make in
+            make.trailing.equalTo(hwibariImageTooltipView)
+            make.width.height.equalTo(20)
+        }
     }
 
     // 애니메이션을 시작하는 함수
@@ -369,15 +366,15 @@ final class HomeView: UIView, RootView {
                 UIImage(named: "hwibariopen")!
             ]
         }
-            hwibariImage.animationDuration = 0.3
-            hwibariImage.animationRepeatCount = 1
-            hwibariImage.startAnimating()
+        hwibariImage.animationDuration = 0.3
+        hwibariImage.animationRepeatCount = 1
+        hwibariImage.startAnimating()
             
-            if emotionCount == 0 {
-                hwibariImage.image = UIImage(named: "hwibariopen01")
-            } else {
-                hwibariImage.image = UIImage(named: "hwibariopen2")
-            }
+        if emotionCount == 0 {
+            hwibariImage.image = UIImage(named: "hwibariopen01")
+        } else {
+            hwibariImage.image = UIImage(named: "hwibariopen2")
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let detailViewController = DetailViewController()
