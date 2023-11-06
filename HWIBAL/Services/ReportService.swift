@@ -5,19 +5,19 @@
 //  Created by t2023-m0076 on 2023/10/18.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class ReportService {
     static let shared = ReportService()
     let coreDataManager = CoreDataManager.shared
     let context = CoreDataManager.shared.persistentContainer.viewContext
-    
+
     // fetch: 유저의 전체 감정쓰레기 가져오기
     func fetchTotalEmotionTrashes(_ user: User) -> [Report] {
         let fetchRequest: NSFetchRequest<Report> = Report.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "user == %@", user)
-        
+
         do {
             return try context.fetch(fetchRequest)
         } catch {
@@ -25,11 +25,11 @@ class ReportService {
             return []
         }
     }
-    
+
     // fetch: 모든 유저의 전체 감정쓰레기 가져오기
     func fetchAllUsersEmotionTrashes() -> [Report] {
         let fetchRequest: NSFetchRequest<Report> = Report.fetchRequest()
-        
+
         do {
             return try context.fetch(fetchRequest)
         } catch {
@@ -37,11 +37,11 @@ class ReportService {
             return []
         }
     }
-    
+
     // delete: 모든 유저의 감정쓰레기 전체 삭제
     func deleteAllUsersEmotionTrash() {
         let fetchRequest: NSFetchRequest<Report> = Report.fetchRequest()
-        
+
         do {
             let emotionTrashes = try context.fetch(fetchRequest)
             for emotionTrash in emotionTrashes {
@@ -52,7 +52,7 @@ class ReportService {
             print("Error deleting all emotionTrashes: \(error)")
         }
     }
-    
+
     private func convertToKoreanTime(_ date: Date) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -83,6 +83,64 @@ class ReportService {
         return emotionTrashCount - averageTrashCount
     }
 
+    // 날짜에 따른 감정쓰레기 개수 가져오기
+    func fetchEmotionTrashCount(user: User, startDate: Date, endDate: Date) -> Int {
+        let fetchRequest: NSFetchRequest<Report> = Report.fetchRequest()
+        
+        // NSDate로 변환
+        let nsStartDate = startDate as NSDate
+        let nsEndDate = endDate as NSDate
+        
+        // "createdAt" 속성을 사용하여 날짜 범위로 필터링
+        fetchRequest.predicate = NSPredicate(format: "user == %@ AND timestamp >= %@ AND timestamp < %@", argumentArray: [user, nsStartDate, nsEndDate])
+
+        do {
+            let reports = try context.fetch(fetchRequest)
+            return reports.count
+        } catch {
+            print("Error fetching emotion trash: \(error)")
+            return 0
+        }
+    }
+
+    // 이번주 감정쓰레기 개수 계산
+    func calculateThisWeekEmotionTrashCount() -> Int {
+        let calendar = Calendar.current
+        let now = Date()
+
+        // 이번 주의 시작과 끝 날짜 계산
+        guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)),
+              let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)
+        else {
+            return 0
+        }
+
+        return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfWeek, endDate: endOfWeek)
+    }
+
+    // 지난주 감정쓰레기 개수 계산
+    func calculateLastWeekEmotionTrashCount() -> Int {
+        let calendar = Calendar.current
+        let now = Date()
+
+        // 지난 주의 시작과 끝 날짜 계산
+        guard let startOfLastWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)),
+              let endOfLastWeek = calendar.date(byAdding: .day, value: -7, to: startOfLastWeek) else {
+            return 0
+        }
+
+        return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfLastWeek, endDate: endOfLastWeek)
+    }
+    
+    // 일주일 전과 이번주 감정쓰레기 비교
+    func compareWeek() -> Int {
+        let thisWeekEmotionTrashCount = calculateThisWeekEmotionTrashCount()
+        let lastWeekEmotionTrashCount = calculateLastWeekEmotionTrashCount()
+        
+        return thisWeekEmotionTrashCount - lastWeekEmotionTrashCount
+    }
+
+    // 요일별 감정쓰레기 개수 비교
     func calculateDaysOfWeekCount() -> [String: Int] {
         var daysOfWeekCount: [String: Int] = [:]
 
@@ -92,7 +150,7 @@ class ReportService {
                 let dateFormatter = DateFormatter()
                 dateFormatter.locale = Locale(identifier: "ko_KR")
                 let dayOfWeekString = dateFormatter.shortWeekdaySymbols[dayOfWeek - 1]
-                
+
                 daysOfWeekCount[dayOfWeekString, default: 0] += 1
             }
         }
@@ -100,6 +158,7 @@ class ReportService {
         return daysOfWeekCount
     }
 
+    // 시간대별 감정쓰레기 개수 비교
     func calculateTimeZoneCount() -> [String: Int] {
         var timeZoneCount: [String: Int] = [:]
 
@@ -130,5 +189,4 @@ class ReportService {
 
         return timeZoneCount
     }
-    
 }
