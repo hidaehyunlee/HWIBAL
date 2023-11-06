@@ -74,22 +74,14 @@ private extension MyPageViewController {
         guard let url = URL(string: "https://www.notion.so/54c990bf3c204c4ba4336a6779d890b1") else {
             return
         }
-
-        let webViewController = WebViewController()
-        webViewController.loadURL(url)
-
-        present(webViewController, animated: true, completion: nil)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
     @objc func privacyPolicyTapped(_ sender: UITapGestureRecognizer) {
         guard let url = URL(string: "https://www.notion.so/bab2c8cb9ba3413f82c71751910e66e9") else {
             return
         }
-        
-        let webViewController = WebViewController()
-        webViewController.loadURL(url)
-
-        present(webViewController, animated: true, completion: nil)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
     @objc func myPageToReport() {
