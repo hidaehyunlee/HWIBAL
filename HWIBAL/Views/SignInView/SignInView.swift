@@ -21,9 +21,9 @@ final class SignInView: UIView, RootView {
     private lazy var title: UILabel = {
         let label = UILabel()
         label.text = """
-        아, 휘발
-        나만의 안전한 공간
-        """
+                     아, 휘발
+                     나만의 안전한 공간
+                     """
         label.textColor = .label
         label.font = FontGuide.size32Bold
         label.numberOfLines = 2
@@ -39,15 +39,30 @@ final class SignInView: UIView, RootView {
         return stackView
     }()
 
-    private lazy var googleSignInButton: GIDSignInButton = {
-        let button = GIDSignInButton()
-        button.colorScheme = .light
-        button.style = .wide
+    lazy var googleSignInButton: UIButton = {
+        let button = UIButton()
+
+        button.setTitle("Google로 로그인", for: .normal)
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.semanticContentAttribute = .forceLeftToRight
+        button.contentVerticalAlignment = .center
+        button.layer.cornerRadius = 4
+        button.layer.borderWidth = 1
+        button.layer.borderColor = ColorGuide.inputLine.cgColor
+
+        if let image = UIImage(named: "google") {
+            button.setImage(image, for: .normal)
+            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
+        }
+
         button.addTarget(self, action: #selector(handleGoogleSignIn), for: .touchUpInside)
         button.snp.makeConstraints { make in
             make.width.equalTo(UIScreen.main.bounds.width - 48)
             make.height.equalTo(56)
         }
+
         return button
     }()
 
@@ -61,14 +76,16 @@ final class SignInView: UIView, RootView {
     }()
 
     private lazy var signInComponents: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [imageAndTitle, googleSignInButton, appleSignInButton])
+        let signInButtonsStackView = UIStackView(arrangedSubviews: [googleSignInButton, appleSignInButton])
+        signInButtonsStackView.axis = .vertical
+        signInButtonsStackView.spacing = 16
+
+        let stackView = UIStackView(arrangedSubviews: [imageAndTitle, signInButtonsStackView])
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 54
         return stackView
     }()
-
-    // let googleSignInButton = MainButton(type: .googleLogin)
 
     func initializeUI() {
         backgroundColor = .systemBackground

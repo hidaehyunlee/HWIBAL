@@ -39,10 +39,9 @@ final class SignInViewController: RootViewController<SignInView> {
 
             let email = user.profile?.email ?? "default email"
             let name = user.profile?.name ?? "default name"
-            let id = UUID().uuidString
-            let autoExpireDays: Int64 = 7
+            let id = self.extractIDFromEmail(email) // 구글은 email로부터 id 생성
 
-            SignInService.shared.signIn(email, name, id, autoExpireDays) // 코어데이터에 저장
+            SignInService.shared.signIn(email, name, id) // 코어데이터에 저장
 
             // 로그인 완료 후 MainViewController로 이동
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -52,6 +51,15 @@ final class SignInViewController: RootViewController<SignInView> {
                 sceneDelegate.window?.rootViewController = mainViewController
             }
         }
+    }
+
+    private func extractIDFromEmail(_ email: String) -> String {
+        let components = email.components(separatedBy: "@")
+        guard components.count == 2 else {
+            print("ERROR: extractUsername")
+            return ""
+        }
+        return components[0]
     }
 }
 
@@ -72,14 +80,13 @@ extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizati
             let givenName = appleIDCredential.fullName?.givenName ?? ""
             let name = "\(familyName)\(givenName)"
             let email = appleIDCredential.email ?? ""
-            let autoExpireDays: Int64 = 7
 
             // let idToken = appleIDCredential.identityToken!
             // let tokeStr = String(data: idToken, encoding: .utf8)
             // print("token : \(String(describing: tokeStr))")
 
             // 현재 옵셔널로 값 넘어가는 상태 (상관 없는 것 같음)
-            SignInService.shared.signIn(email, name, id, autoExpireDays)
+            SignInService.shared.signIn(email, name, id)
 
             // 로그인 완료 후 MainViewController로 이동
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
