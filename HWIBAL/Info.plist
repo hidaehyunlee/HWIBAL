@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>글 작성시 사진 첨부를 위해 사진 라이브러리 이용이 필요합니다. </string>
+	<key>NSCameraUsageDescription</key>
+	<string>글 작성시 사진 촬영을 위해 카메라 이용이 필요합니다.</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
@@ -19,6 +21,8 @@
 	</array>
 	<key>GIDClientID</key>
 	<string>506591939944-n3bg8gghlb632d53iq8nm0alan3sfo8r.apps.googleusercontent.com</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
