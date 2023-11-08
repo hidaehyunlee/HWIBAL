@@ -36,10 +36,10 @@ class UserService {
         }
     }
 
-    func updateUser(email: String, autoExpireDays: Int? = nil) {
+    func updateUser(id: String, autoExpireDays: Int? = nil) {
         let context = coreDataManager.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "email == %@", email)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
 
         do {
             if let userToUpdate = try context.fetch(fetchRequest).first {
@@ -54,7 +54,7 @@ class UserService {
                 AutoExpireDate: \(String(describing: userToUpdate.autoExpireDate))
                 """)
             } else {
-                print("Error fetching users: \(email)")
+                print("Error fetching users: \(id)")
             }
         } catch {
             print("Error updating user: \(error)")
@@ -115,15 +115,15 @@ class UserService {
         }
     }
 
-    func deleteUser(_ email: String) {
+    func deleteUser(_ id: String) {
         let context = coreDataManager.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "email == %@", email)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
 
         do {
             if let deleteUser = try context.fetch(fetchRequest).first {
                 context.delete(deleteUser)
-                print("삭제된 유저: ", deleteUser.email as Any)
+                print("삭제된 유저: ", deleteUser.id as Any)
                 coreDataManager.saveContext()
                 printAllUsers()
             } else {

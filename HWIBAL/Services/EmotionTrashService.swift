@@ -46,6 +46,7 @@ class EmotionTrashService {
             }
             
             coreDataManager.saveContext()
+            FireBaseManager.shared.createReport(user: user, reportId: UUID().uuidString, text: text)
         }
     }
     

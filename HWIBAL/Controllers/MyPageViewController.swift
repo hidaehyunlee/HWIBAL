@@ -60,8 +60,9 @@ private extension MyPageViewController {
         print("🫵 클릭: 회원탈퇴")
         let witdrawalAlert = UIAlertController(title: "", message: "계정을 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다.", preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "회원탈퇴", style: .destructive) { _ in
+            FireBaseManager.shared.deleteUser(userId: (SignInService.shared.signedInUser?.id)!)
             SignInService.shared.setWithdrawal()
-            UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
+            UserService.shared.deleteUser((SignInService.shared.signedInUser?.id)!)
             self.goToSignInVC()
         }
         witdrawalAlert.addAction(action)
@@ -140,9 +141,9 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 for day in days {
                     let formattedDay = "\(day)일"
                     let action = UIAlertAction(title: formattedDay, style: .default) { _ in
-                        UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!, autoExpireDays: day)
+                        UserService.shared.updateUser(id: (SignInService.shared.signedInUser?.id)!, autoExpireDays: day)
                         print("\(day) 후 감정쓰레기를 태워 드립니다.")
-                        UserDefaults.standard.set(day, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))")
+                        UserDefaults.standard.set(day, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.id))")
                         if let indexPath = self.selectedIndexPath,
                            let cell = tableView.cellForRow(at: indexPath) as? MyPageCustomCell
                         {
@@ -161,7 +162,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
             case .logout:
                 print("🫵 클릭: 로그아웃")
-                SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
+                SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.id)!)
                 goToSignInVC()
         }
 

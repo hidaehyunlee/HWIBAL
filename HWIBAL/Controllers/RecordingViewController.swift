@@ -36,9 +36,9 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
  
     func loadSignedInUser() {
         if SignInService.shared.isSignedIn(),
-           let userEmail = SignInService.shared.loadSignedInUserEmail()
+           let userId = SignInService.shared.loadSignedInUserId()
         {
-            currentUser = UserService.shared.getExistUser(userEmail)
+            currentUser = UserService.shared.getExistUser(userId)
         }
     }
     

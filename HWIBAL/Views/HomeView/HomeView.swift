@@ -12,6 +12,7 @@ final class HomeView: UIView, RootView {
     // MARK: - Properties
     
     var emotionCount = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!).count
+    // 코어데이터에 없고 Firebase에 유저정보가 있을 때 에러남 -> 유저정보 불러오고 그다음 코드가 수행되어야 함(completion Handler 추가해야할 듯)
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

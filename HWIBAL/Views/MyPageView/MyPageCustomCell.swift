@@ -72,12 +72,12 @@ class MyPageCustomCell: UITableViewCell {
     
     @objc func didTapSwitch(sender: UISwitch) {
         if sender.isOn {
-            SignInService.shared.setSignedInUser((SignInService.shared.signedInUser?.email)!)
-            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!)
+            SignInService.shared.setSignedInUser((SignInService.shared.signedInUser?.id)!)
+            UserService.shared.updateUser(id: (SignInService.shared.signedInUser?.id)!)
             print(SignInService.shared.isSignedIn())
         } else {
-            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
-            UserService.shared.updateUser(email: (SignInService.shared.signedInUser?.email)!)
+            SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.id)!)
+            UserService.shared.updateUser(id: (SignInService.shared.signedInUser?.id)!)
             print(SignInService.shared.isSignedIn())
         }
     }
@@ -119,7 +119,7 @@ class MyPageCustomCell: UITableViewCell {
         case .autoVolatilizationDate:
             appearanceControl.isHidden = true
             switchControl.isHidden = true
-            dateLabel.text = "\(UserDefaults.standard.integer(forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))"))일"
+            dateLabel.text = "\(UserDefaults.standard.integer(forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.id))"))일"
             versionInfo.isHidden = true
         case .appVersion:
             appearanceControl.isHidden = true

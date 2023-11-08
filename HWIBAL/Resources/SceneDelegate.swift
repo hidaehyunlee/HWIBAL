@@ -22,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         if SignInService.shared.isSignedIn() {
-            if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
-               let user = UserService.shared.getExistUser(signedInUserEmail) {
+            if let signedInUserId = SignInService.shared.loadSignedInUserId(),
+               let user = UserService.shared.getExistUserAsId(signedInUserId) {
                 SignInService.shared.signedInUser = user
                 window?.rootViewController = MainViewController()
                 SignInService.shared.getSignedInUserInfo()
@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneWillEnterForeground(_ scene: UIScene) {
         print("자동 휘발일 확인")
-        if let email = SignInService.shared.signedInUser?.email,
+        if let id = SignInService.shared.signedInUser?.id,
            let autoExpireDate = SignInService.shared.signedInUser?.autoExpireDate {
             let currentDate = Date()
             if currentDate >= autoExpireDate {
@@ -53,8 +53,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
 
                 // 다음 자동 삭제를 위해 expire date 업데이트
-                let autoExpireDays = UserDefaults.standard.integer(forKey: "autoExpireDays_\(email))")
-                UserService.shared.updateUser(email: email, autoExpireDays: autoExpireDays)
+                let autoExpireDays = UserDefaults.standard.integer(forKey: "autoExpireDays_\(id))")
+                UserService.shared.updateUser(id: id, autoExpireDays: autoExpireDays)
             } else {
                 let differenceInDays = Calendar.current.dateComponents([.day], from: currentDate, to: autoExpireDate).day
                 print("자동 휘발일 D-\(String(describing: differenceInDays))")

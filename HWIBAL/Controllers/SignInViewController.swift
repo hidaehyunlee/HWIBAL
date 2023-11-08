@@ -41,14 +41,15 @@ final class SignInViewController: RootViewController<SignInView> {
             let name = user.profile?.name ?? "default name"
             let id = self.extractIDFromEmail(email) // 구글은 email로부터 id 생성
 
-            SignInService.shared.signIn(email, name, id) // 코어데이터에 저장
-
-            // 로그인 완료 후 MainViewController로 이동
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let sceneDelegate = windowScene.delegate as? SceneDelegate
-            {
-                let mainViewController = MainViewController()
-                sceneDelegate.window?.rootViewController = mainViewController
+            SignInService.shared.signIn(email, name, id) {
+                // 로그인 완료 후 MainViewController로 이동
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let sceneDelegate = windowScene.delegate as? SceneDelegate
+                {
+                    let mainViewController = MainViewController()
+                    sceneDelegate.window?.rootViewController = mainViewController
+                }
+                FireBaseManager.shared.updateLastSignInDateOfUser(userId: id, lastSignInDate: Date())
             }
         }
     }
@@ -76,7 +77,7 @@ extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizati
 
             // 계정 정보 가져오기
             let id = appleIDCredential.user
-            let familyName = appleIDCredential.fullName?.familyName ?? ""
+            let familyName = appleIDCredential.fullName?.familyName ?? "사용자"
             let givenName = appleIDCredential.fullName?.givenName ?? ""
             let name = "\(familyName)\(givenName)"
             let email = appleIDCredential.email ?? ""
@@ -86,16 +87,15 @@ extension SignInViewController: ASAuthorizationControllerDelegate, ASAuthorizati
             // print("token : \(String(describing: tokeStr))")
 
             // 현재 옵셔널로 값 넘어가는 상태 (상관 없는 것 같음)
-            SignInService.shared.signIn(email, name, id)
-
-            // 로그인 완료 후 MainViewController로 이동
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let sceneDelegate = windowScene.delegate as? SceneDelegate
-            {
-                let mainViewController = MainViewController()
-                sceneDelegate.window?.rootViewController = mainViewController
+            SignInService.shared.signIn(email, name, id) {
+                // 로그인 완료 후 MainViewController로 이동
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let sceneDelegate = windowScene.delegate as? SceneDelegate
+                {
+                    let mainViewController = MainViewController()
+                    sceneDelegate.window?.rootViewController = mainViewController
+                }
             }
-
         default:
             break
         }
