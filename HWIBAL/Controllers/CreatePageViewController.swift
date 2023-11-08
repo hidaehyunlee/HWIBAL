@@ -39,34 +39,44 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        adjustCounterLabelWithKeyboard(notification: notification, isShowing: true)
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            updateViewConstraintsForKeyboardHeight(keyboardHeight: keyboardSize.height)
+        }
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        adjustCounterLabelWithKeyboard(notification: notification, isShowing: false)
+        resetViewConstraintsForKeyboardDismissal()
     }
-    
-    func adjustCounterLabelWithKeyboard(notification: NSNotification, isShowing: Bool) {
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
 
-        let keyboardHeight = isShowing ? keyboardFrame.cgRectValue.height : 0
-
+    func updateViewConstraintsForKeyboardHeight(keyboardHeight: CGFloat) {
         rootView.counterLabel.snp.remakeConstraints { make in
-            if isShowing {
-                make.bottom.equalTo(self.view.snp.bottom).offset(-keyboardHeight - 10)
-            } else {
-                make.trailing.equalToSuperview().offset(-24)
-                make.bottom.equalToSuperview().offset(-40)
-            }
-            make.centerX.equalTo(rootView.snp.centerX)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-keyboardHeight - 10)
+        }
+
+        rootView.cameraButton.snp.remakeConstraints { make in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-keyboardHeight - 10)
         }
         
         UIView.animate(withDuration: 0.3) {
-            self.rootView.layoutIfNeeded()
+            self.view.layoutIfNeeded()
         }
     }
 
+    func resetViewConstraintsForKeyboardDismissal() {
+        rootView.counterLabel.snp.remakeConstraints { make in
+            make.trailing.equalToSuperview().offset(-24)
+            make.bottom.equalToSuperview().offset(-40)
+        }
+
+        rootView.cameraButton.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(24)
+            make.bottom.equalToSuperview().offset(-40)
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
 
     @objc func dismissKeyboard() {
         view.endEditing(true)
