@@ -22,6 +22,7 @@
 		3F5BE2502AFB2861000B495F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BE24F2AFB2861000B495F /* SettingViewController.swift */; };
 		3F5BE2522AFB2882000B495F /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BE2512AFB2882000B495F /* SettingView.swift */; };
 		3F5BE2552AFB29A7000B495F /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BE2542AFB29A7000B495F /* SettingCell.swift */; };
+		3F5BE2572AFB5720000B495F /* Extension+UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BE2562AFB5720000B495F /* Extension+UIDevice.swift */; };
 		3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */; };
 		3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */; };
 		3F783A242AD805330024D692 /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A232AD805330024D692 /* ColorGuide.swift */; };
@@ -88,6 +89,7 @@
 		3F5BE24F2AFB2861000B495F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		3F5BE2512AFB2882000B495F /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		3F5BE2542AFB29A7000B495F /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		3F5BE2562AFB5720000B495F /* Extension+UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIDevice.swift"; sourceTree = "<group>"; };
 		3F783A092AD7DC1A0024D692 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A232AD805330024D692 /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 			children = (
 				DEFE3A162AD53F3C0076FE11 /* RootView.swift */,
 				3F5BE24D2AF8F6BF000B495F /* Extension+UIColor.swift */,
+				3F5BE2562AFB5720000B495F /* Extension+UIDevice.swift */,
 				3F783A2E2AD8C81D0024D692 /* MainButton.swift */,
 				3F783A322AD8EA7E0024D692 /* CircleButton.swift */,
 				3F783A302AD8E76B0024D692 /* CloseButton.swift */,
@@ -458,6 +461,7 @@
 				DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */,
 				3F9445662ADFD5EA0003DCD4 /* ReportService.swift in Sources */,
 				DEFE3A2B2AD542300076FE11 /* HomeViewController.swift in Sources */,
+				3F5BE2572AFB5720000B495F /* Extension+UIDevice.swift in Sources */,
 				3F783A262AD8053D0024D692 /* FontGiude.swift in Sources */,
 				3F5BE24E2AF8F6BF000B495F /* Extension+UIColor.swift in Sources */,
 				DE434DF92ADCCDF500C77FE4 /* UserService.swift in Sources */,

@@ -23,7 +23,8 @@ class SettingCell: UITableViewCell {
     
     private let versionInfo: UILabel = {
         let label = UILabel()
-        label.text = "1.0.1"
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+        label.text = "\(appVersion)"
         label.textAlignment = .right
         label.font = FontGuide.size16
         label.textColor = ColorGuide.main

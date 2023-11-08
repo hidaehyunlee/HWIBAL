@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import MessageUI
 
 final class SettingViewController: RootViewController<SettingView> {
     private var settingItems: [SettingItem] = []
     private var selectedIndexPath: IndexPath?
+    let inquireVC = MFMailComposeViewController()
 
     // MARK: - Lifecycle
 
@@ -66,6 +68,16 @@ private extension SettingViewController {
             sceneDelegate.window?.rootViewController = signInViewController
         }
     }
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) {
+            (action) in
+            print("확인")
+        }
+        sendMailErrorAlert.addAction(confirmAction)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
+    }
 }
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
@@ -98,6 +110,35 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             print("🫵 클릭: 앱 버전")
         case .inquire:
             print("🫵 클릭: 문의하기")
+            let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+            guard let unwrappedID = SignInService.shared.signedInUser?.id else { return }
+            
+            if MFMailComposeViewController.canSendMail() {
+                let composeVC = MFMailComposeViewController()
+                composeVC.mailComposeDelegate = self
+                
+                composeVC.setToRecipients(["hwibari@gmail.com"])
+                composeVC.setSubject("[아휘발] 문의하기")
+                composeVC.setMessageBody("""
+                                         문의하실 사항을 아래 서식에 맞추어 상세히 기입해주세요.
+                                         
+                                         문의 유형:
+                                         문의 내용:
+                                         
+                                         App Version: \(appVersion)
+                                         Device: \(UIDevice().getModelName())
+                                         OS: \(UIDevice().getOsVersion())
+                                         UserID: \(unwrappedID)
+                                         
+                                         """,
+                                         isHTML: false)
+                
+                self.present(composeVC, animated: true, completion: nil)
+                
+            }
+            else {
+                self.showSendMailErrorAlert()
+            }
         case .withdrawal:
             print("🫵 클릭: 회원탈퇴")
             let witdrawalAlert = UIAlertController(title: "", message: "계정을 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다.", preferredStyle: .actionSheet)
@@ -114,7 +155,12 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+}
+
+extension SettingViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }
 
 struct SettingItem {
