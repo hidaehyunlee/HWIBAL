@@ -107,14 +107,14 @@ final class HomeView: UIView, RootView {
     // MARK: - Initialization
     
     func initializeUI() {
-            backgroundColor = .systemBackground
+        backgroundColor = .systemBackground
             
-            myPageButton.isEnabled = false
-            myPageButton.customView?.alpha = 0.2
-            setupButton()
-            addSubviews()
-            setupConstraints()
-            setupHwibariImageView()
+        myPageButton.isEnabled = false
+        myPageButton.customView?.alpha = 0.2
+        setupButton()
+        addSubviews()
+        setupConstraints()
+        setupHwibariImageView()
         
         if !UserDefaults.standard.bool(forKey: "TutorialCompleted") {
             setupTooltipView()
@@ -123,7 +123,7 @@ final class HomeView: UIView, RootView {
             myPageButton.isEnabled = true
             myPageButton.customView?.alpha = 1.0
         }
-        }
+    }
     
     // MARK: - Private Functions
     
@@ -161,9 +161,9 @@ final class HomeView: UIView, RootView {
             make.height.equalTo(407 * UIScreen.main.bounds.height / 852) // 높이 조정
         }
         myPageButton.customView?.snp.makeConstraints { make in
-                make.width.equalTo(23)
-                make.height.equalTo(23)
-            }
+            make.width.equalTo(23)
+            make.height.equalTo(23)
+        }
     }
     
     private func setupHwibariImageView() {
@@ -269,7 +269,6 @@ final class HomeView: UIView, RootView {
     }
     
     private func setupTooltipView() {
-
         addSubview(tooltipView)
         tooltipView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -313,12 +312,12 @@ final class HomeView: UIView, RootView {
     
     // 추가 애니메이션을 시작하는 함수
     private func continueRemoveAnimation() {
-            hwibariImage.animationImages = [
-                UIImage(named: "hwibari_ing02_fire")!,
-                UIImage(named: "burningImage")!,
-                UIImage(named: "hwibari_ing01_fire")!,
-                UIImage(named: "hwibari_default")!
-            ]
+        hwibariImage.animationImages = [
+            UIImage(named: "hwibari_ing02_fire")!,
+            UIImage(named: "burningImage")!,
+            UIImage(named: "hwibari_ing01_fire")!,
+            UIImage(named: "hwibari_default")!
+        ]
         
         hwibariImage.animationDuration = 1.0 // 애니메이션 한 번의 지속 시간을 설정
         hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
@@ -406,7 +405,7 @@ final class HomeView: UIView, RootView {
         if emotionCount == 0 {
             AlertManager.shared.showMessageAlert(
                 on: viewController!,
-                title: "알림",
+                title: "",
                 message: "휘발시킬 감정쓰레기가 없어요!",
                 completion: nil
             )
@@ -422,14 +421,12 @@ final class HomeView: UIView, RootView {
         }
     }
 
-    
     @objc private func hideTooltipButtonTapped() {
         UserDefaults.standard.set(true, forKey: "TutorialCompleted")
         tooltipView.isHidden = true
         myPageButton.isEnabled = true
         myPageButton.customView?.alpha = 1.0
     }
-
 
     @objc private func createButtonTapped() {
         print("'작성하기'가 탭되었습니다.")
