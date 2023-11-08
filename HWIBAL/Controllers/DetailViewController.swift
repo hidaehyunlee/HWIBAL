@@ -48,49 +48,38 @@ final class DetailViewController: RootViewController<DetailView> {
     }
 
     @objc func goToFirstButtonTapped() {
-        rootView.collectionView.setContentOffset(CGPoint(x: -DetailView.CarouselConst.insetX, y: 0), animated: true)
+        rootView.collectionView.setContentOffset(CGPoint(x: -DetailView.CarouselConst.insetX, y: -DetailView.CarouselConst.insetY), animated: true)
         DispatchQueue.main.async { [weak self] in
             self?.rootView.updateNumberOfPageLabel(1)
         }
     }
 
-    @objc func playPauseButtonTapped(sender: UIButton) {
-        let index = sender.tag
-        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
-        let reversedIndex = userEmotionTrashes.count - 1 - index
-        let data = userEmotionTrashes[reversedIndex]
-
-        if let recording = data.recording, let filePath = recording.filePath {
-            guard let audioURL = URL(string: filePath) else {
-                print("Error: URL로 변환 실패")
-                return
-            }
-
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: audioURL.path) {
-                do {
-                    player = try AVAudioPlayer(contentsOf: audioURL)
-                    player?.prepareToPlay()
-                    player?.delegate = self
-                } catch {
-                    print("플레이어 생성 Error: \(error)")
-                }
-            } else {
-                print("Error: 파일이 존재하지 않음")
-            }
-        }
-    }
-
-    @objc func deleteButtonTapped(sender: UIButton) {
-        let index = sender.tag
-        let cellId = userEmotionTrashes[index].id
-
-        AlertManager.shared.showAlert(on: self, title: "감정쓰레기 삭제", message: "당신의 이 감정을 불태워 드릴게요.", okCompletion: { _ in
-            EmotionTrashService.shared.deleteEmotionTrash(SignInService.shared.signedInUser!, cellId!)
-            NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
-            self.navigationController?.popViewController(animated: true)
-        })
-    }
+//    @objc func playPauseButtonTapped(sender: UIButton) {
+//        let index = sender.tag
+//        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
+//        let reversedIndex = userEmotionTrashes.count - 1 - index
+//        let data = userEmotionTrashes[reversedIndex]
+//
+//        if let recording = data.recording, let filePath = recording.filePath {
+//            guard let audioURL = URL(string: filePath) else {
+//                print("Error: URL로 변환 실패")
+//                return
+//            }
+//
+//            let fileManager = FileManager.default
+//            if fileManager.fileExists(atPath: audioURL.path) {
+//                do {
+//                    player = try AVAudioPlayer(contentsOf: audioURL)
+//                    player?.prepareToPlay()
+//                    player?.delegate = self
+//                } catch {
+//                    print("플레이어 생성 Error: \(error)")
+//                }
+//            } else {
+//                print("Error: 파일이 존재하지 않음")
+//            }
+//        }
+//    }
 }
 
 extension DetailViewController: UICollectionViewDataSource {
@@ -105,7 +94,6 @@ extension DetailViewController: UICollectionViewDataSource {
             cell.initializeUI()
             cellsInitialized[indexPath] = true
         }
-
         let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
         let reversedIndex = userEmotionTrashes.count - 1 - indexPath.item
         let data = userEmotionTrashes[reversedIndex]
@@ -139,9 +127,6 @@ extension DetailViewController: UICollectionViewDataSource {
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
         cell.textContentLabel.text = data.text
 
-        rootView.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-        rootView.deleteButton.tag = indexPath.item
-
         cell.layer.cornerRadius = 12
         cell.layer.masksToBounds = true
 
@@ -165,8 +150,8 @@ extension DetailViewController: UICollectionViewDataSource {
 
 extension DetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // let cellId = userEmotionTrashes[indexPath.item].id
-        // print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
+//        let cellId = userEmotionTrashes[indexPath.item].id
+//        print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
     }
 
     // 스크롤이 멈추면 호출되며, 스크롤이 셀의 중앙에 멈추도록 함
@@ -194,6 +179,12 @@ extension DetailViewController: UICollectionViewDelegate {
     }
 }
 
+extension DetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .zero
+    }
+}
+
 extension DetailViewController: AVAudioPlayerDelegate {
     // 오디오 파일이 끝나면 버튼 UI 업데이트하는 델리게이트 메서드
 //    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
@@ -202,38 +193,3 @@ extension DetailViewController: AVAudioPlayerDelegate {
 //        }
 //    }
 }
-
-// extension DetailViewController: UICollectionViewDelegateFlowLayout {
-//    // 셀 줌 인/아웃을 위한 스크롤 이벤트 처리
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let collectionView = rootView.collectionView
-//        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-//        let cellWidthIncludeSpacing = layout.itemSize.width + layout.minimumLineSpacing
-//        let offsetX = collectionView.contentOffset.x
-//        let index = (offsetX + collectionView.contentInset.left) / cellWidthIncludeSpacing
-//        let roundedIndex = round(index)
-//
-//        if Int(roundedIndex) != prevIndex {
-//            if let preCell = collectionView.cellForItem(at: IndexPath(item: prevIndex, section: 0)) {
-//                transform(cell: preCell, isFocus: false)
-//            }
-//            if let currentCell = collectionView.cellForItem(at: IndexPath(item: Int(roundedIndex), section: 0)) {
-//                transform(cell: currentCell, isFocus: true)
-//            }
-//            prevIndex = Int(roundedIndex)
-//        }
-//    }
-
-//    // 셀 확대/축소
-//    private func transform(cell: UICollectionViewCell, isFocus: Bool) {
-//        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-//            if isFocus {
-//                cell.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-//                // 셀 내부 하위 뷰도 같이 커지는 문제 해결해야함
-//                // 양 옆 inset 해결해야함
-//            } else {
-//                cell.transform = .identity
-//            }
-//        }, completion: nil)
-//    }
-// }

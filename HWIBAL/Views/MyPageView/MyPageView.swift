@@ -80,70 +80,6 @@ final class MyPageView: UIView, RootView {
         tableView.register(MyPageCustomCell.self, forCellReuseIdentifier: MyPageCustomCell.identifier)
         return tableView
     }()
-    
-    let withdrawal: UILabel = {
-        let label = UILabel()
-        label.text = "회원탈퇴"
-        label.textColor = ColorGuide.textHint
-        label.font = FontGuide.size14
-        label.isUserInteractionEnabled = true
-        label.snp.makeConstraints { make in
-            make.height.equalTo(24)
-        }
-        return label
-    }()
-    
-    let seperateLineOne: UIView = {
-        let view = UIView()
-        view.backgroundColor = ColorGuide.inputLine
-        view.snp.makeConstraints { make in
-            make.width.equalTo(1)
-            make.height.equalTo(12)
-        }
-        return view
-    }()
-    
-    let termsOfUse: UILabel = {
-        let label = UILabel()
-        label.text = "이용약관"
-        label.textColor = ColorGuide.textHint
-        label.font = FontGuide.size14
-        label.isUserInteractionEnabled = true
-        label.snp.makeConstraints { make in
-            make.height.equalTo(24)
-        }
-        return label
-    }()
-    
-    let seperateLineTwo: UIView = {
-        let view = UIView()
-        view.backgroundColor = ColorGuide.inputLine
-        view.snp.makeConstraints { make in
-            make.width.equalTo(1)
-            make.height.equalTo(12)
-        }
-        return view
-    }()
-    
-    let privacyPolicy: UILabel = {
-        let label = UILabel()
-        label.text = "개인정보처리방침"
-        label.textColor = ColorGuide.textHint
-        label.font = FontGuide.size14
-        label.isUserInteractionEnabled = true
-        label.snp.makeConstraints { make in
-            make.height.equalTo(24)
-        }
-        return label
-    }()
-    
-    lazy var corpArea: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [withdrawal, seperateLineOne, termsOfUse, seperateLineTwo, privacyPolicy])
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 8
-        return stackView
-    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -191,12 +127,6 @@ final class MyPageView: UIView, RootView {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(300)
-        }
-        
-        addSubview(corpArea)
-        corpArea.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-40)
         }
     }
     
