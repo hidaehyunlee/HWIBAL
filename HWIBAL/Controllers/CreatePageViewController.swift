@@ -28,11 +28,54 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         setupPlayButton()
         hideKeyboard()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func hideKeyboard() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            updateViewConstraintsForKeyboardHeight(keyboardHeight: keyboardSize.height)
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        resetViewConstraintsForKeyboardDismissal()
+    }
+
+    func updateViewConstraintsForKeyboardHeight(keyboardHeight: CGFloat) {
+        rootView.counterLabel.snp.remakeConstraints { make in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-keyboardHeight - 10)
+        }
+
+        rootView.cameraButton.snp.remakeConstraints { make in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-keyboardHeight - 10)
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    func resetViewConstraintsForKeyboardDismissal() {
+        rootView.counterLabel.snp.remakeConstraints { make in
+            make.trailing.equalToSuperview().offset(-24)
+            make.bottom.equalToSuperview().offset(-40)
+        }
+
+        rootView.cameraButton.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(24)
+            make.bottom.equalToSuperview().offset(-40)
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
 
     @objc func dismissKeyboard() {
@@ -52,11 +95,26 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func startOrStopRecording() {
-        let recordingVC = RecordingViewController()
+        // 이미 저장된 오디오 URL이 있는지 확인
+        if let savedAudioURL = savedAudioURL {
+            let recordingVC = RecordingViewController()
+            // Timestamp 추출
+            let timestamp = savedAudioURL.lastPathComponent.replacingOccurrences(of: "recording_", with: "").replacingOccurrences(of: ".m4a", with: "")
+            // 기존 녹음 삭제를 위한 timestamp 전달
+            recordingVC.existingAudioTimestamp = timestamp
+            presentRecordingVC(recordingVC)
+        } else {
+            // 기존 녹음이 없으므로 바로 RecordingViewController 표시
+            presentRecordingVC(RecordingViewController())
+        }
+    }
+
+    func presentRecordingVC(_ recordingVC: RecordingViewController) {
         recordingVC.modalPresentationStyle = .custom
         recordingVC.transitioningDelegate = recordingVC
         present(recordingVC, animated: true, completion: nil)
     }
+
 
     @objc func receiveAudioNotification(_ notification: Notification) {
         if let url = notification.userInfo?["savedAudioURL"] as? URL {
@@ -236,7 +294,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .init("RecordingDidFinish"), object: nil)
     }
 }

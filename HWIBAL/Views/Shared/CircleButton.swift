@@ -24,9 +24,6 @@ class CircleButton: UIButton {
         tintColor = customButtonType.titleColor
         backgroundColor = customButtonType.backgroundColor
         layer.cornerRadius = CGFloat(customButtonType.size / 2)
-        snp.makeConstraints { make in
-            make.width.height.equalTo(customButtonType.size)
-        }
     }
     
     private func configureButton() {
@@ -34,9 +31,6 @@ class CircleButton: UIButton {
         tintColor = customButtonType.titleColor
         backgroundColor = customButtonType.backgroundColor
         layer.cornerRadius = CGFloat(customButtonType.size / 2)
-        snp.makeConstraints { make in
-            make.width.height.equalTo(customButtonType.size)
-        }
     }
 
     func updateButtonType(to newType: ButtonType) {
@@ -86,11 +80,5 @@ class CircleButton: UIButton {
             case .photo, .record, .play, .pause, .stop: return 36
             }
         }
-    }
-}
-
-extension CircleButton {
-    var buttonSize: CGFloat {
-        return CGFloat(customButtonType.size)
     }
 }
