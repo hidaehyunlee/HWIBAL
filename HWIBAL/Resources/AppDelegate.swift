@@ -8,20 +8,28 @@
 import CoreData
 import UIKit
 import UserNotifications
+import Firebase
 import FirebaseCore
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
-        if #available(iOS 11.0, *) {
-            let notiCenter = UNUserNotificationCenter.current()
-            notiCenter.requestAuthorization(options: [.alert, .badge, .sound]) { (didAllow, e) in }
-            notiCenter.delegate = self
+        if #available(iOS 12.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: [.alert, .sound, .badge, .providesAppNotificationSettings], completionHandler: { didAllow,Error in
+            })
         } else {
-            let setting = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(setting)
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: {didAllow,Error in
+                print(didAllow)
+            })
         }
+        UNUserNotificationCenter.current().delegate = self
+        
+        FirebaseApp.configure()
+//        Messaging.messaging().delegate = self
+        
+        application.registerForRemoteNotifications()
         
         return true
     }
