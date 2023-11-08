@@ -42,7 +42,7 @@ class EmotionTrashCell: UICollectionViewCell {
 
         textView.text = ""
         textView.backgroundColor = ColorGuide.main
-        textView.font = FontGuide.size14
+        textView.font = FontGuide.size16
         textView.textColor = .white
         textView.isEditable = false
         textView.isSelectable = false
