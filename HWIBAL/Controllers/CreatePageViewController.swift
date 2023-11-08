@@ -28,12 +28,45 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         setupPlayButton()
         hideKeyboard()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func hideKeyboard() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        adjustCounterLabelWithKeyboard(notification: notification, isShowing: true)
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        adjustCounterLabelWithKeyboard(notification: notification, isShowing: false)
+    }
+    
+    func adjustCounterLabelWithKeyboard(notification: NSNotification, isShowing: Bool) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        let keyboardHeight = isShowing ? keyboardFrame.cgRectValue.height : 0
+
+        rootView.counterLabel.snp.remakeConstraints { make in
+            if isShowing {
+                make.bottom.equalTo(self.view.snp.bottom).offset(-keyboardHeight - 10)
+            } else {
+                make.trailing.equalToSuperview().offset(-24)
+                make.bottom.equalToSuperview().offset(-40)
+            }
+            make.centerX.equalTo(rootView.snp.centerX)
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.rootView.layoutIfNeeded()
+        }
+    }
+
 
     @objc func dismissKeyboard() {
         view.endEditing(true)
@@ -251,7 +284,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .init("RecordingDidFinish"), object: nil)
     }
 }
