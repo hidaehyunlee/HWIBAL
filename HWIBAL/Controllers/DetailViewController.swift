@@ -39,6 +39,7 @@ final class DetailViewController: RootViewController<DetailView> {
     }
 
     private func initDetailView() {
+        navigationController?.navigationBar.prefersLargeTitles = false
         rootView.collectionView.delegate = self
         rootView.collectionView.dataSource = self
 
