@@ -8,7 +8,7 @@
 import UIKit
 
 class MyPageCustomCell: UITableViewCell {
-    static let identifier = "settingCustom"
+    static let identifier = "myPageCustom"
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -24,18 +24,6 @@ class MyPageCustomCell: UITableViewCell {
     var dateLabel: UILabel = {
         let label = UILabel()
         label.text = "일주일"
-        label.textAlignment = .right
-        label.font = FontGuide.size16
-        label.textColor = ColorGuide.textHint
-        label.snp.makeConstraints { make in
-            make.height.equalTo(20)
-        }
-        return label
-    }()
-    
-    let versionInfo: UILabel = {
-        let label = UILabel()
-        label.text = "v1.0.0"
         label.textAlignment = .right
         label.font = FontGuide.size16
         label.textColor = ColorGuide.textHint
@@ -98,7 +86,7 @@ class MyPageCustomCell: UITableViewCell {
         }
     }
 
-    public func configure(_ settingItem: SettingItem, _ user: User) {
+    public func configure(_ settingItem: MyPageItem, _ user: User) {
         titleLabel.text = settingItem.title
         switchControl.addTarget(self, action: #selector(didTapSwitch(sender:)), for: .valueChanged)
         appearanceControl.addTarget(self, action: #selector(didTapappearanceSwitch(sender:)), for: .valueChanged)
@@ -109,28 +97,19 @@ class MyPageCustomCell: UITableViewCell {
             switchControl.isHidden = true
             indicator.isHidden = true
             dateLabel.isHidden = true
-            versionInfo.isHidden = true
         case .autoLogin:
             appearanceControl.isHidden = true
             indicator.isHidden = true
             dateLabel.isHidden = true
             switchControl.isOn = UserDefaults.standard.bool(forKey: "isSignedIn")
-            versionInfo.isHidden = true
         case .autoVolatilizationDate:
             appearanceControl.isHidden = true
             switchControl.isHidden = true
             dateLabel.text = "\(UserDefaults.standard.integer(forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))"))일"
-            versionInfo.isHidden = true
-        case .appVersion:
-            appearanceControl.isHidden = true
-            switchControl.isHidden = true
-            indicator.isHidden = true
-            dateLabel.isHidden = true
         case .logout:
             appearanceControl.isHidden = true
             switchControl.isHidden = true
             dateLabel.isHidden = true
-            versionInfo.isHidden = true
         }
         initializeUI()
     }
@@ -166,12 +145,6 @@ class MyPageCustomCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.trailing.equalTo(indicator.snp.leading).offset(-10)
             make.width.equalTo(44)
-        }
-        
-        contentView.addSubview(versionInfo)
-        versionInfo.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-30)
         }
     }
     

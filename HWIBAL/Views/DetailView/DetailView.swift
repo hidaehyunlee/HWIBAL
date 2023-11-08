@@ -81,7 +81,12 @@ final class DetailView: UIView, RootView {
 
     lazy var deleteButton = MainButton(type: .delete)
 
-    private lazy var detailMainView: UIView = {
+    private lazy var detailLayoutGuideView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private lazy var detailComponentView: UIView = {
         let view = UIView()
         return view
     }()
@@ -89,27 +94,34 @@ final class DetailView: UIView, RootView {
     func initializeUI() {
         backgroundColor = .systemBackground
 
-        addSubview(detailMainView)
-        detailMainView.addSubview(goToFirstButton)
-        detailMainView.addSubview(numberOfPageLabel)
-        detailMainView.addSubview(collectionView)
+        addSubview(detailLayoutGuideView)
+        detailLayoutGuideView.addSubview(detailComponentView)
+        detailComponentView.addSubview(goToFirstButton)
+        detailComponentView.addSubview(numberOfPageLabel)
+        detailComponentView.addSubview(collectionView)
         addSubview(deleteButton)
-
-        detailMainView.snp.makeConstraints { make in
+        
+        detailLayoutGuideView.snp.makeConstraints { make in
             make.top.equalTo(layoutMarginsGuide.snp.top)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(deleteButton.snp.top)
         }
 
+        detailComponentView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(475 * UIScreen.main.bounds.height / 852)
+        }
+
         goToFirstButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(54)
-            make.top.equalToSuperview().offset(45)
+            make.leading.equalTo(detailComponentView.snp.leading).offset(54)
+            make.top.equalTo(detailComponentView.snp.top)
             make.height.equalTo(20)
         }
 
         numberOfPageLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-54)
-            make.top.equalToSuperview().offset(45)
+            make.trailing.equalTo(detailComponentView.snp.trailing).offset(-54)
+            make.top.equalTo(detailComponentView.snp.top)
             make.height.equalTo(20)
         }
 

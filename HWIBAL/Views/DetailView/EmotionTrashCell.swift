@@ -11,20 +11,6 @@ import UIKit
 class EmotionTrashCell: UICollectionViewCell {
     static let identifier = "EmotionTrashCell"
 
-//    lazy var showImageButton: UIButton = {
-//        let button = UIButton()
-//
-//        button.setTitle("사진보기", for: .normal)
-//        button.titleLabel?.font = FontGuide.size14Bold
-//        button.setTitleColor(.white, for: .normal)
-//        button.backgroundColor = ColorGuide.subButton.withAlphaComponent(0.5)
-//        button.layer.cornerRadius = 14
-//        button.layer.masksToBounds = true
-//        button.addTarget(self, action: #selector(showImageButtonTapped), for: .touchUpInside) // ✏️VC로 옮기기
-//
-//        return button
-//    }()
-
     lazy var showImageButton: CircleButton = {
         let button = CircleButton(type: .photo)
         button.addTarget(self, action: #selector(showImageButtonTapped), for: .touchUpInside)
@@ -37,7 +23,6 @@ class EmotionTrashCell: UICollectionViewCell {
         let image = UIImage(named: "play")
         button.setBackgroundImage(image, for: .normal)
         button.isHidden = true
-        button.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -76,8 +61,6 @@ class EmotionTrashCell: UICollectionViewCell {
         addSubview(playPauseButton)
 
         showImageButton.snp.makeConstraints { make in
-            make.width.equalTo(77)
-            make.height.equalTo(28)
             make.trailing.equalToSuperview().offset(-20)
             make.bottom.equalToSuperview().offset(-20)
         }
