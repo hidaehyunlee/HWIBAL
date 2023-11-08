@@ -54,43 +54,32 @@ final class DetailViewController: RootViewController<DetailView> {
         }
     }
 
-    @objc func playPauseButtonTapped(sender: UIButton) {
-        let index = sender.tag
-        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
-        let reversedIndex = userEmotionTrashes.count - 1 - index
-        let data = userEmotionTrashes[reversedIndex]
-
-        if let recording = data.recording, let filePath = recording.filePath {
-            guard let audioURL = URL(string: filePath) else {
-                print("Error: URL로 변환 실패")
-                return
-            }
-
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: audioURL.path) {
-                do {
-                    player = try AVAudioPlayer(contentsOf: audioURL)
-                    player?.prepareToPlay()
-                    player?.delegate = self
-                } catch {
-                    print("플레이어 생성 Error: \(error)")
-                }
-            } else {
-                print("Error: 파일이 존재하지 않음")
-            }
-        }
-    }
-
-    @objc func deleteButtonTapped(sender: UIButton) {
-        let index = sender.tag
-        let cellId = userEmotionTrashes[index].id
-
-        AlertManager.shared.showAlert(on: self, title: "감정쓰레기 삭제", message: "당신의 이 감정을 불태워 드릴게요.", okCompletion: { _ in
-            EmotionTrashService.shared.deleteEmotionTrash(SignInService.shared.signedInUser!, cellId!)
-            NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
-            self.navigationController?.popViewController(animated: true)
-        })
-    }
+//    @objc func playPauseButtonTapped(sender: UIButton) {
+//        let index = sender.tag
+//        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
+//        let reversedIndex = userEmotionTrashes.count - 1 - index
+//        let data = userEmotionTrashes[reversedIndex]
+//
+//        if let recording = data.recording, let filePath = recording.filePath {
+//            guard let audioURL = URL(string: filePath) else {
+//                print("Error: URL로 변환 실패")
+//                return
+//            }
+//
+//            let fileManager = FileManager.default
+//            if fileManager.fileExists(atPath: audioURL.path) {
+//                do {
+//                    player = try AVAudioPlayer(contentsOf: audioURL)
+//                    player?.prepareToPlay()
+//                    player?.delegate = self
+//                } catch {
+//                    print("플레이어 생성 Error: \(error)")
+//                }
+//            } else {
+//                print("Error: 파일이 존재하지 않음")
+//            }
+//        }
+//    }
 }
 
 extension DetailViewController: UICollectionViewDataSource {
@@ -105,7 +94,6 @@ extension DetailViewController: UICollectionViewDataSource {
             cell.initializeUI()
             cellsInitialized[indexPath] = true
         }
-
         let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
         let reversedIndex = userEmotionTrashes.count - 1 - indexPath.item
         let data = userEmotionTrashes[reversedIndex]
@@ -139,9 +127,6 @@ extension DetailViewController: UICollectionViewDataSource {
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
         cell.textContentLabel.text = data.text
 
-        rootView.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-        rootView.deleteButton.tag = indexPath.item
-
         cell.layer.cornerRadius = 12
         cell.layer.masksToBounds = true
 
@@ -165,8 +150,8 @@ extension DetailViewController: UICollectionViewDataSource {
 
 extension DetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // let cellId = userEmotionTrashes[indexPath.item].id
-        // print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
+//        let cellId = userEmotionTrashes[indexPath.item].id
+//        print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
     }
 
     // 스크롤이 멈추면 호출되며, 스크롤이 셀의 중앙에 멈추도록 함
@@ -191,6 +176,12 @@ extension DetailViewController: UICollectionViewDelegate {
                 self?.rootView.updateNumberOfPageLabel(currentPage)
             }
         }
+    }
+}
+
+extension DetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .zero
     }
 }
 
