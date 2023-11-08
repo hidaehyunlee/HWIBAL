@@ -107,15 +107,23 @@ final class HomeView: UIView, RootView {
     // MARK: - Initialization
     
     func initializeUI() {
-        backgroundColor = .systemBackground
-        myPageButton.isEnabled = false
-        myPageButton.customView?.alpha = 0.2
-        setupButton()
-        addSubviews()
-        setupConstraints()
-        setupHwibariImageView()
-        setupTooltipView()
-    }
+            backgroundColor = .systemBackground
+            
+            myPageButton.isEnabled = false
+            myPageButton.customView?.alpha = 0.2
+            setupButton()
+            addSubviews()
+            setupConstraints()
+            setupHwibariImageView()
+        
+        if !UserDefaults.standard.bool(forKey: "TutorialCompleted") {
+            setupTooltipView()
+        } else {
+            tooltipView.isHidden = true
+            myPageButton.isEnabled = true
+            myPageButton.customView?.alpha = 1.0
+        }
+        }
     
     // MARK: - Private Functions
     
@@ -305,21 +313,12 @@ final class HomeView: UIView, RootView {
     
     // 추가 애니메이션을 시작하는 함수
     private func continueRemoveAnimation() {
-        if emotionCount == 0 {
-            hwibariImage.animationImages = [
-                UIImage(named: "hwibari_ing01_fire")!,
-                UIImage(named: "burningImage")!,
-                UIImage(named: "hwibari_ing01_fire")!,
-                UIImage(named: "hwibari_default")!
-            ]
-        } else {
             hwibariImage.animationImages = [
                 UIImage(named: "hwibari_ing02_fire")!,
                 UIImage(named: "burningImage")!,
                 UIImage(named: "hwibari_ing01_fire")!,
                 UIImage(named: "hwibari_default")!
             ]
-        }
         
         hwibariImage.animationDuration = 1.0 // 애니메이션 한 번의 지속 시간을 설정
         hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
@@ -404,20 +403,33 @@ final class HomeView: UIView, RootView {
     @objc private func removeButtonTapped() {
         print("'전체지우기'가 탭되었습니다.")
         
-        // AlertManager를 사용하여 확인 다이얼로그를 표시
-        AlertManager.shared.showAlert(on: viewController!,
-                                      title: "다, 휘발 🔥",
-                                      message: "정말로 전체 지우시겠습니까?",
-                                      okCompletion: { _ in
-                                          self.startRemoveAnimation()
-                                      })
+        if emotionCount == 0 {
+            AlertManager.shared.showMessageAlert(
+                on: viewController!,
+                title: "알림",
+                message: "휘발시킬 감정쓰레기가 없어요!",
+                completion: nil
+            )
+        } else {
+            AlertManager.shared.showAlert(
+                on: viewController!,
+                title: "다, 휘발 🔥",
+                message: "정말로 전체 지우시겠습니까?",
+                okCompletion: { _ in
+                    self.startRemoveAnimation()
+                }
+            )
+        }
     }
+
     
     @objc private func hideTooltipButtonTapped() {
+        UserDefaults.standard.set(true, forKey: "TutorialCompleted")
         tooltipView.isHidden = true
         myPageButton.isEnabled = true
         myPageButton.customView?.alpha = 1.0
     }
+
 
     @objc private func createButtonTapped() {
         print("'작성하기'가 탭되었습니다.")
