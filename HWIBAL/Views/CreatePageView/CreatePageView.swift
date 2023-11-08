@@ -58,7 +58,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
                 
         textView.delegate = self
         textView.backgroundColor = .systemBackground
-        textView.font = FontGuide.size14
+        textView.font = FontGuide.size16
         textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
         addSubview(textView)
         
