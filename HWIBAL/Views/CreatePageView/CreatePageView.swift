@@ -58,7 +58,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
                 
         textView.delegate = self
         textView.backgroundColor = .systemBackground
-        textView.font = FontGuide.size14
+        textView.font = FontGuide.size16
         textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
         addSubview(textView)
         
@@ -112,11 +112,13 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         cameraButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(24)
             make.bottom.equalToSuperview().offset(-40)
+            make.width.height.equalTo(36)
         }
 
         soundButton.snp.makeConstraints { make in
             make.leading.equalTo(cameraButton.snp.trailing).offset(16)
             make.bottom.equalTo(cameraButton.snp.bottom)
+            make.width.height.equalTo(36)
         }
 
         playButton.snp.makeConstraints { make in

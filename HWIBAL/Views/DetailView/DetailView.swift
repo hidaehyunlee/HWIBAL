@@ -75,67 +75,34 @@ final class DetailView: UIView, RootView {
         view.contentInset = CarouselConst.collectionViewContentInset
         view.decelerationRate = .fast // 스크롤이 빠르게 되도록 (페이징 애니메이션같이 보이게하기 위함)
         view.translatesAutoresizingMaskIntoConstraints = false
-
-        return view
-    }()
-
-    lazy var deleteButton = MainButton(type: .delete)
-
-    private lazy var detailLayoutGuideView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    private lazy var detailComponentView: UIView = {
-        let view = UIView()
+        
         return view
     }()
 
     func initializeUI() {
         backgroundColor = .systemBackground
 
-        addSubview(detailLayoutGuideView)
-        detailLayoutGuideView.addSubview(detailComponentView)
-        detailComponentView.addSubview(goToFirstButton)
-        detailComponentView.addSubview(numberOfPageLabel)
-        detailComponentView.addSubview(collectionView)
-        addSubview(deleteButton)
-        
-        detailLayoutGuideView.snp.makeConstraints { make in
-            make.top.equalTo(layoutMarginsGuide.snp.top)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(deleteButton.snp.top)
-        }
-
-        detailComponentView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalTo(475 * UIScreen.main.bounds.height / 852)
-        }
+        addSubview(goToFirstButton)
+        addSubview(numberOfPageLabel)
+        addSubview(collectionView)
 
         goToFirstButton.snp.makeConstraints { make in
-            make.leading.equalTo(detailComponentView.snp.leading).offset(54)
-            make.top.equalTo(detailComponentView.snp.top)
+            make.leading.equalToSuperview().offset(54)
+            make.top.equalTo(layoutMarginsGuide).offset(25)
+            make.width.equalTo(100)
             make.height.equalTo(20)
         }
 
         numberOfPageLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(detailComponentView.snp.trailing).offset(-54)
-            make.top.equalTo(detailComponentView.snp.top)
+            make.trailing.equalToSuperview().offset(-54)
+            make.top.equalTo(layoutMarginsGuide).offset(25)
             make.height.equalTo(20)
         }
 
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(goToFirstButton.snp.bottom).offset(15)
+            make.top.equalTo(goToFirstButton.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(CarouselConst.itemSize.height)
-        }
-
-        deleteButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalTo(UIScreen.main.bounds.width - 48)
-            make.height.equalTo(56)
-            make.bottom.equalToSuperview().offset(-40)
+            make.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
 
@@ -163,15 +130,15 @@ final class DetailView: UIView, RootView {
 // Carousel 애니메이션: itemSize, itemSpacing, insetX 정의
 extension DetailView {
     enum CarouselConst {
-        static let itemSize = CGSize(width: 307 * UIScreen.main.bounds.width / 393, height: 440 * UIScreen.main.bounds.height / 852)
+        static let itemSize = CGSize(width: 307 * UIScreen.main.bounds.width / 393, height: UIScreen.main.bounds.height * 0.75)
         static let itemSpacing = 24.0
 
         static var insetX: CGFloat {
             (UIScreen.main.bounds.width - itemSize.width) / 2.0
         }
-
+        static var insetY: CGFloat = -15
         static var collectionViewContentInset: UIEdgeInsets {
-            UIEdgeInsets(top: 0, left: insetX, bottom: 0, right: insetX)
+            UIEdgeInsets(top: insetY, left: insetX, bottom: 0, right: insetX)
         }
     }
 }
