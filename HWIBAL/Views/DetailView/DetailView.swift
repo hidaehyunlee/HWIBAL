@@ -136,9 +136,9 @@ extension DetailView {
         static var insetX: CGFloat {
             (UIScreen.main.bounds.width - itemSize.width) / 2.0
         }
-
+        static var insetY: CGFloat = -15
         static var collectionViewContentInset: UIEdgeInsets {
-            UIEdgeInsets(top: -15, left: insetX, bottom: 0, right: insetX)
+            UIEdgeInsets(top: insetY, left: insetX, bottom: 0, right: insetX)
         }
     }
 }
