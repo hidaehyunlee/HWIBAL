@@ -109,10 +109,11 @@ extension DetailViewController: UICollectionViewDataSource {
         let data = userEmotionTrashes[reversedIndex]
 
         if let imageData = data.image, let image = UIImage(data: imageData) {
-            cell.imageModalView.imageView.image = image
+            cell.imageContentView.image = image
+            cell.imageContentView.isHidden = false
         } else {
-            cell.imageModalView.imageView.image = nil
-            cell.showImageButton.isHidden = true
+            cell.imageContentView.image = nil
+            cell.imageContentView.isHidden = true
         }
 
         // for v1.0.0
