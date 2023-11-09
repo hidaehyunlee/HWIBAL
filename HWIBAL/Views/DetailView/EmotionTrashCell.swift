@@ -23,7 +23,7 @@ class EmotionTrashCell: UICollectionViewCell {
         let image = UIImage(named: "play")
         button.setBackgroundImage(image, for: .normal)
         button.isHidden = true
-        
+
         return button
     }()
 
@@ -88,7 +88,18 @@ class EmotionTrashCell: UICollectionViewCell {
         imageModalView.removeFromSuperview()
         daysAgoLabel.text = ""
         textContentLabel.text = ""
-        // imageModalView.backImageView.image = nil
+    }
+
+    func transformToLarge() {
+        UIView.animate(withDuration: 0.15) {
+            self.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+        }
+    }
+
+    func transformToStandard() {
+        UIView.animate(withDuration: 0.15) {
+            self.transform = CGAffineTransform.identity
+        }
     }
 
     @objc private func showImageButtonTapped() {

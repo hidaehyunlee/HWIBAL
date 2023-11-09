@@ -13,8 +13,8 @@ import UIKit
 var player: AVAudioPlayer?
 
 final class DetailViewController: RootViewController<DetailView> {
+    var centerCell: EmotionTrashCell?
     var cellsInitialized: [IndexPath: Bool] = [:]
-    private var prevIndex: Int = 0
     private lazy var userEmotionTrashes: [EmotionTrash] = []
 
     override func viewDidLoad() {
@@ -46,6 +46,15 @@ final class DetailViewController: RootViewController<DetailView> {
         rootView.totalPage = userEmotionTrashes.count
 
         rootView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if let cell = rootView.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? EmotionTrashCell {
+            centerCell = cell
+            centerCell?.transformToLarge() // 고민헤봐야 함. 
+        }
     }
 
     @objc func goToFirstButtonTapped() {
@@ -150,10 +159,10 @@ extension DetailViewController: UICollectionViewDataSource {
 }
 
 extension DetailViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        let cellId = userEmotionTrashes[indexPath.item].id
 //        print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
-    }
+//    }
 
     // 스크롤이 멈추면 호출되며, 스크롤이 셀의 중앙에 멈추도록 함
     func scrollViewWillEndDragging(
@@ -166,7 +175,25 @@ extension DetailViewController: UICollectionViewDelegate {
         targetContentOffset.pointee = CGPoint(x: index * cellWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
     }
 
-    // 서온님께 여쭤보기
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView is UICollectionView else { return }
+
+        let centerPoint = CGPoint(x: rootView.collectionView.frame.size.width / 2 + scrollView.contentOffset.x,
+                                  y: rootView.collectionView.frame.size.height / 2 + scrollView.contentOffset.y)
+        if let indexPath = rootView.collectionView.indexPathForItem(at: centerPoint) {
+            centerCell = (rootView.collectionView.cellForItem(at: indexPath) as? EmotionTrashCell)
+            centerCell?.transformToLarge()
+        }
+
+        if let cell = centerCell {
+            let offsetX = centerPoint.x - cell.center.x
+            if offsetX < -40 || offsetX > 40 {
+                cell.transformToStandard()
+                centerCell = nil
+            }
+        }
+    }
+
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let visibleRect = CGRect(origin: rootView.collectionView.contentOffset, size: rootView.collectionView.bounds.size)
         let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
@@ -186,11 +213,11 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension DetailViewController: AVAudioPlayerDelegate {
-    // 오디오 파일이 끝나면 버튼 UI 업데이트하는 델리게이트 메서드
-//    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-//        if flag {
-//            cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
+// extension DetailViewController: AVAudioPlayerDelegate {
+//     // 오디오 파일이 끝나면 버튼 UI 업데이트하는 델리게이트 메서드
+//        func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+//            if flag {
+//                cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
+//            }
 //        }
-//    }
-}
+// }
