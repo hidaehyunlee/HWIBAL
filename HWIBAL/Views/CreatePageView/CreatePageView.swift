@@ -15,7 +15,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
     let soundWaveView = UIView()
     var isImageViewAttached: Bool = false
     let playButton = CircleButton(type: .play)
-
+    
     let textView = UITextView()
     let paragraphStyle2 = NSMutableParagraphStyle()
     
@@ -55,7 +55,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         addSubview(soundButton)
         addSubview(cameraButton)
         bringSubviewToFront(counterLabel)
-                
+        
         textView.delegate = self
         textView.backgroundColor = .systemBackground
         textView.font = FontGuide.size16
@@ -64,7 +64,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         
         addSubview(playButton)
         
-        // v1.0.0 
+        // v1.0.0
         soundButton.isHidden = true
         playButton.isHidden = true
     }
@@ -87,7 +87,7 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         formatter.dateFormat = "yyyy년 MM월 dd일 HH:mm"
         return formatter.string(from: date)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -102,38 +102,32 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
             make.bottom.equalToSuperview().offset(-40)
         }
         
-        textView.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalTo(counterLabel.snp.top).offset(-50).priority(.high)
-        }
-        
         cameraButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(24)
             make.bottom.equalToSuperview().offset(-40)
             make.width.height.equalTo(36)
         }
-
+        
         soundButton.snp.makeConstraints { make in
             make.leading.equalTo(cameraButton.snp.trailing).offset(16)
             make.bottom.equalTo(cameraButton.snp.bottom)
             make.width.height.equalTo(36)
         }
-
+        
         playButton.snp.makeConstraints { make in
             make.leading.equalTo(soundButton.snp.trailing).offset(16)
             make.bottom.equalTo(cameraButton.snp.bottom)
         }
         
-        if isImageViewAttached {
-            let textViewNewHeight = textView.frame.height/2
-            textView.frame = CGRect(
-                x: textView.frame.origin.x,
-                y: textView.frame.origin.y,
-                width: textView.frame.width,
-                height: textViewNewHeight
-            )
+        textView.snp.remakeConstraints { make in
+            make.top.equalTo(dateLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
+            if isImageViewAttached {
+                make.height.equalTo(147)
+            } else {
+                make.bottom.equalTo(counterLabel.snp.top).offset(-50).priority(.high)
+            }
         }
     }
 }

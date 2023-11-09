@@ -115,7 +115,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         present(recordingVC, animated: true, completion: nil)
     }
 
-
     @objc func receiveAudioNotification(_ notification: Notification) {
         if let url = notification.userInfo?["savedAudioURL"] as? URL {
             savedAudioURL = url
@@ -185,17 +184,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         imagePicker.sourceType = sourceType
         imagePicker.delegate = self
         present(imagePicker, animated: true)
-    }
-    
-    func adjustLayoutForKeyboardState() {
-        if keyboardHeight > 0 {
-            let padding: CGFloat = 10
-            rootView.counterLabel.frame.origin.y = view.bounds.height - keyboardHeight - rootView.counterLabel.frame.height - padding
-            rootView.cameraButton.frame.origin.y = rootView.counterLabel.frame.minY - rootView.cameraButton.frame.height - padding
-            rootView.soundButton.frame.origin.y = rootView.cameraButton.frame.origin.y
-        } else {
-            rootView.layoutSubviews()
-        }
     }
     
     func setupNavigationBar() {
@@ -322,9 +310,10 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         imageView.snp.makeConstraints { make in
             make.leading.equalTo(rootView.textView.snp.leading)
             make.trailing.equalTo(rootView.textView.snp.trailing)
-            make.top.equalTo(rootView.textView.snp.top).offset((rootView.textView.frame.height / 2) + 10)
-            make.bottom.equalTo(rootView.cameraButton.snp.top).offset(-10)
+            make.top.equalTo(rootView.textView.snp.top).offset((rootView.textView.frame.height / 2) + 40)
+            make.bottom.equalToSuperview().offset(-86)
         }
         rootView.isImageViewAttached = true
+        view.layoutIfNeeded()
     }
 }
