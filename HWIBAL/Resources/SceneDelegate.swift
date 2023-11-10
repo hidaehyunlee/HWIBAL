@@ -20,17 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             window?.overrideUserInterfaceStyle = .light
         }
-        
-        if SignInService.shared.isSignedIn() {
-            if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
-               let user = UserService.shared.getExistUser(signedInUserEmail) {
-                SignInService.shared.signedInUser = user
-                window?.rootViewController = MainViewController()
-                SignInService.shared.getSignedInUserInfo()
-            }
-        } else {
-            window?.rootViewController = SignInViewController()
-        }
+        window?.rootViewController = LaunchScreenViewController()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}
