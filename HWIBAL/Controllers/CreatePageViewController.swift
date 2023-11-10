@@ -259,6 +259,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 
             if let savedAudioURL = self.savedAudioURL, let currentUser = SignInService.shared.signedInUser {
                 recording = RecordingService.shared.createRecording(filePath: savedAudioURL.path, duration: TimeInterval(), title: "Recording on \(Date())", user: currentUser)
+                print(recording?.filePath)
             }
 
             if let recording = recording {
