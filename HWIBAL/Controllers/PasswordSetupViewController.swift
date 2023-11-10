@@ -21,9 +21,7 @@ class PasswordSetupViewController: RootViewController<PasswordSetupView> {
         super.viewDidLoad()
         initializeUI()
     }
-}
-
-private extension PasswordSetupViewController {
+    
     func initializeUI() {
         rootView.delegate = self
     }

@@ -28,6 +28,8 @@
 		3F6765532AFDDD8D00ABDFF8 /* LockSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6765522AFDDD8D00ABDFF8 /* LockSettingCell.swift */; };
 		3F6765552AFDE5CD00ABDFF8 /* PasswordSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6765542AFDE5CD00ABDFF8 /* PasswordSetupViewController.swift */; };
 		3F67655A2AFDE86000ABDFF8 /* PasswordSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6765592AFDE86000ABDFF8 /* PasswordSetupView.swift */; };
+		3F6765602AFE36A300ABDFF8 /* PasswordInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F67655F2AFE36A300ABDFF8 /* PasswordInputViewController.swift */; };
+		3F6765622AFE36C600ABDFF8 /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6765612AFE36C600ABDFF8 /* PasswordInputView.swift */; };
 		3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */; };
 		3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */; };
 		3F783A242AD805330024D692 /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A232AD805330024D692 /* ColorGuide.swift */; };
@@ -50,7 +52,7 @@
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
 		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
 		6A7EB8D12AFCE33500D3334A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6A7EB8D02AFCE33500D3334A /* Lottie */; };
-		6A7EB8D32AFCE38100D3334A /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7EB8D22AFCE38100D3334A /* LaunchScreenView.swift */; };
+		6A7EB8D32AFCE38100D3334A /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7EB8D22AFCE38100D3334A /* LaunchScreenViewController.swift */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
 		DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */; };
 		DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */; };
@@ -101,6 +103,8 @@
 		3F6765522AFDDD8D00ABDFF8 /* LockSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSettingCell.swift; sourceTree = "<group>"; };
 		3F6765542AFDE5CD00ABDFF8 /* PasswordSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSetupViewController.swift; sourceTree = "<group>"; };
 		3F6765592AFDE86000ABDFF8 /* PasswordSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSetupView.swift; sourceTree = "<group>"; };
+		3F67655F2AFE36A300ABDFF8 /* PasswordInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputViewController.swift; sourceTree = "<group>"; };
+		3F6765612AFE36C600ABDFF8 /* PasswordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputView.swift; sourceTree = "<group>"; };
 		3F783A092AD7DC1A0024D692 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A232AD805330024D692 /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
@@ -121,7 +125,7 @@
 		3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportEmptyView.swift; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
-		6A7EB8D22AFCE38100D3334A /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
+		6A7EB8D22AFCE38100D3334A /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -205,12 +209,13 @@
 			path = LockSettingView;
 			sourceTree = "<group>";
 		};
-		3F6765562AFDE64700ABDFF8 /* PasswordSetupView */ = {
+		3F6765562AFDE64700ABDFF8 /* PasswordView */ = {
 			isa = PBXGroup;
 			children = (
 				3F6765592AFDE86000ABDFF8 /* PasswordSetupView.swift */,
+				3F6765612AFE36C600ABDFF8 /* PasswordInputView.swift */,
 			);
-			path = PasswordSetupView;
+			path = PasswordView;
 			sourceTree = "<group>";
 		};
 		3F783A2B2AD8C4210024D692 /* ReportView */ = {
@@ -310,7 +315,7 @@
 		DEFE3A142AD53EB30076FE11 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3F6765562AFDE64700ABDFF8 /* PasswordSetupView */,
+				3F6765562AFDE64700ABDFF8 /* PasswordView */,
 				3F67654D2AFDDD5900ABDFF8 /* LockSettingView */,
 				3F5BE2532AFB2888000B495F /* SettingView */,
 				0791B3442AE0F721004B8740 /* CreatePageView */,
@@ -364,11 +369,12 @@
 				3F5BE24F2AFB2861000B495F /* SettingViewController.swift */,
 				3F67654B2AFDDC1B00ABDFF8 /* LockSettingViewController.swift */,
 				3F6765542AFDE5CD00ABDFF8 /* PasswordSetupViewController.swift */,
+				3F67655F2AFE36A300ABDFF8 /* PasswordInputViewController.swift */,
 				07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */,
 				DEFE3A2A2AD542300076FE11 /* HomeViewController.swift */,
 				DEFE3A2F2AD5440F0076FE11 /* MainViewController.swift */,
 				3F783A2C2AD8C4750024D692 /* ReportViewController.swift */,
-				6A7EB8D22AFCE38100D3334A /* LaunchScreenView.swift */,
+				6A7EB8D22AFCE38100D3334A /* LaunchScreenViewController.swift */,
 				DE434E0A2ADE4F0900C77FE4 /* DetailViewController.swift */,
 				07264AB72AEA45E10030BAFE /* RecordingViewController.swift */,
 				07264AB92AEA52BB0030BAFE /* BottomSheetPresentationController.swift */,
@@ -492,6 +498,7 @@
 				DEFE3A172AD53F3C0076FE11 /* RootView.swift in Sources */,
 				DEFE3A2D2AD5429D0076FE11 /* MyPageViewController.swift in Sources */,
 				3F5BE2502AFB2861000B495F /* SettingViewController.swift in Sources */,
+				3F6765622AFE36C600ABDFF8 /* PasswordInputView.swift in Sources */,
 				3F783A242AD805330024D692 /* ColorGuide.swift in Sources */,
 				3F9BE37F2AF385860036D880 /* User+CoreDataClass.swift in Sources */,
 				DEFE3A002AD53C3A0076FE11 /* AppDelegate.swift in Sources */,
@@ -517,7 +524,7 @@
 				DE7930282AF0EAA40040258A /* EmptyDetailView.swift in Sources */,
 				DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */,
 				DE434E0B2ADE4F0900C77FE4 /* DetailViewController.swift in Sources */,
-				6A7EB8D32AFCE38100D3334A /* LaunchScreenView.swift in Sources */,
+				6A7EB8D32AFCE38100D3334A /* LaunchScreenViewController.swift in Sources */,
 				3F9445622ADF79D80003DCD4 /* SignInService.swift in Sources */,
 				3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */,
 				DEFE3A302AD5440F0076FE11 /* MainViewController.swift in Sources */,
@@ -527,6 +534,7 @@
 				3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */,
 				DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */,
 				3F5BE2552AFB29A7000B495F /* SettingCell.swift in Sources */,
+				3F6765602AFE36A300ABDFF8 /* PasswordInputViewController.swift in Sources */,
 				DE434E0E2ADE4F2800C77FE4 /* DetailView.swift in Sources */,
 				DEFE3A252AD541820076FE11 /* MyPageView.swift in Sources */,
 				3F783A2F2AD8C81D0024D692 /* MainButton.swift in Sources */,

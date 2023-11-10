@@ -1,5 +1,5 @@
 //
-//  launch.swift
+//  LaunchScreenViewController.swift
 //  HWIBAL
 //
 //  Created by DJ S on 2023/11/09.
@@ -9,10 +9,21 @@ import Lottie
 import UIKit
 
 final class LaunchScreenViewController: UIViewController {
+    var completion: (() -> Void)?
+
+    init(completion: (() -> Void)?) {
+        self.completion = completion
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let animationView: LottieAnimationView = {
         print("애니메이션 확인")
         let lottieAnimationView = LottieAnimationView(name: "trash")
-        lottieAnimationView.backgroundColor = UIColor.clear
+        lottieAnimationView.backgroundColor = .systemBackground
         return lottieAnimationView
     }()
 
@@ -21,6 +32,7 @@ final class LaunchScreenViewController: UIViewController {
 
         print("런치스크린 확인")
 
+        view.backgroundColor = .systemBackground
         view.addSubview(animationView)
 
         let animationViewWidth: CGFloat = 200.0
@@ -36,24 +48,8 @@ final class LaunchScreenViewController: UIViewController {
                 self.animationView.removeFromSuperview()
             })
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let sceneDelegate = windowScene.delegate as? SceneDelegate
-            {
-                if SignInService.shared.isSignedIn() {
-                    print("Sign 확인")
-                    if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
-                       let user = UserService.shared.getExistUser(signedInUserEmail)
-                    {
-                        SignInService.shared.signedInUser = user
-                        sceneDelegate.window?.rootViewController = MainViewController()
-
-                        SignInService.shared.getSignedInUserInfo()
-                    }
-                } else {
-                    sceneDelegate.window?.rootViewController = SignInViewController()
-                }
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
+            self?.completion?()
         }
     }
 }

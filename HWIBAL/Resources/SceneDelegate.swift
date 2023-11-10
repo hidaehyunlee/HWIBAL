@@ -20,21 +20,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             window?.overrideUserInterfaceStyle = .light
         }
-        window?.rootViewController = LaunchScreenViewController()
         
+        window?.rootViewController = LaunchScreenViewController(completion: handleLaunchScreenCompletion)
+
+    }
+    
+    func handleLaunchScreenCompletion() {
         if SignInService.shared.isSignedIn() {
             if SignInService.shared.isLocked() {
-                // 앱 비번 입력 VC 띄우기
+                let passwordInputVC = PasswordInputViewController()
+                passwordInputVC.modalPresentationStyle = .fullScreen
+                window?.rootViewController?.present(passwordInputVC, animated: true, completion: nil)
             } else {
-                if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
-                   let user = UserService.shared.getExistUser(signedInUserEmail) {
-                    SignInService.shared.signedInUser = user
-                    window?.rootViewController = MainViewController()
-                    SignInService.shared.getSignedInUserInfo()
-                }
+                goToMainVC()
             }
         } else {
             window?.rootViewController = SignInViewController()
+        }
+    }
+    
+    func goToMainVC() {
+        if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
+           let user = UserService.shared.getExistUser(signedInUserEmail) {
+            SignInService.shared.signedInUser = user
+            window?.rootViewController = MainViewController()
+            SignInService.shared.getSignedInUserInfo()
         }
     }
 
