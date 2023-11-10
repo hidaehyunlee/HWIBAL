@@ -12,7 +12,7 @@ final class LaunchScreenViewController: UIViewController {
     let animationView: LottieAnimationView = {
         print("애니메이션 확인")
         let lottieAnimationView = LottieAnimationView(name: "trash")
-        lottieAnimationView.backgroundColor = UIColor(red: 52/255, green: 144/255, blue: 220/255, alpha: 1.0)
+        lottieAnimationView.backgroundColor = UIColor.clear
         return lottieAnimationView
     }()
 
@@ -23,10 +23,10 @@ final class LaunchScreenViewController: UIViewController {
 
         view.addSubview(animationView)
 
-        animationView.frame = view.bounds
+        let animationViewWidth: CGFloat = 200.0
+        let animationViewHeight: CGFloat = 200.0
+        animationView.frame = CGRect(x: 0, y: 0, width: animationViewWidth, height: animationViewHeight)
         animationView.center = view.center
-        animationView.backgroundColor = UIColor.systemBackground
-        animationView.alpha = 1
 
         animationView.play { _ in
             UIView.animate(withDuration: 0.7, animations: {
