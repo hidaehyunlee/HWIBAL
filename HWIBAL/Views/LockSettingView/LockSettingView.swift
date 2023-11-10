@@ -17,11 +17,11 @@ final class LockSettingView: UIView, RootView {
     
     var infoLabel: UILabel = {
         let label = UILabel()
-        label.text = "⚠️ 암호를 분실했을 경우 앱을 삭제하고 재설치 해야하며, 재설치 시 작성한 감정쓰레기는 삭제됩니다."
+        label.text = "⚠️ 암호를 분실했을 경우 암호 입력 화면에서 취소를 누르고 재로그인하시면 됩니다."
         label.textAlignment = .left
         label.numberOfLines = 2
         label.font = FontGuide.size14
-        label.textColor = ColorGuide.textHint
+        label.textColor = ColorGuide.main
         return label
     }()
     
@@ -42,7 +42,7 @@ final class LockSettingView: UIView, RootView {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(layoutMarginsGuide.snp.top).offset(35 * UIScreen.main.bounds.height / 852)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(50)
+            make.height.equalTo(100)
         }
         
         addSubview(infoLabel)

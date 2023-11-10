@@ -9,6 +9,7 @@ import UIKit
 
 class LockSettingViewController: RootViewController<LockSettingView> {
     private var lockSettingItems: [LockSettingItem] = []
+    private var selectedIndexPath: IndexPath?
 
     // MARK: - Lifecycle
 
@@ -37,7 +38,14 @@ private extension LockSettingViewController {
         // MARK: - TableView Setting
 
         let passwordLockItem = LockSettingItem(type: .passwordLock, title: "암호 잠금", isSwitchOn: true)
-        lockSettingItems = [passwordLockItem]
+        let changePasswordItem = LockSettingItem(type: .changePassword, title: "암호 변경", isSwitchOn: false)
+        lockSettingItems = [passwordLockItem, changePasswordItem]
+        
+//        if passwordLockItem.isSwitchOn {
+//            let biometricsAuthItem = LockSettingItem(type: .biometricsAuth, title: "생체인증", isSwitchOn: true)
+//            let changePasswordItem = LockSettingItem(type: .changePassword, title: "암호 변경", isSwitchOn: false)
+//        lockSettingItems += [biometricsAuthItem, changePasswordItem]
+//        }
     }
 }
 
@@ -49,6 +57,14 @@ extension LockSettingViewController: LockSettingCellDelegate {
             present(passwordSetupVC, animated: true, completion: nil)
         } else {
             UserDefaults.standard.set(false, forKey: "isLocked")
+        }
+    }
+    
+    func biometricsAuthSwitchToggled(isOn: Bool) {
+        if isOn {
+            UserDefaults.standard.set(true, forKey: "isAllowedBiometricsAuth")
+        } else {
+            UserDefaults.standard.set(false, forKey: "isAllowedBiometricsAuth")
         }
     }
 }
@@ -71,6 +87,23 @@ extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource 
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        let lockSettingItem = lockSettingItems[indexPath.row]
+
+        switch lockSettingItem.type {
+        case .passwordLock:
+            print("🫵 클릭: 암호 잠금")
+//        case .biometricsAuth:
+//            print("🫵 클릭: 생체인증")
+        case .changePassword:
+            print("🫵 클릭: 암호 변경")
+            let passwordSetupVC = PasswordSetupViewController()
+            passwordSetupVC.modalPresentationStyle = .fullScreen
+            present(passwordSetupVC, animated: true, completion: nil)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
@@ -79,6 +112,8 @@ extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource 
 struct LockSettingItem {
     enum ItemType {
         case passwordLock
+//        case biometricsAuth
+        case changePassword
     }
 
     let type: ItemType

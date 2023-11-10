@@ -22,13 +22,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         window?.rootViewController = LaunchScreenViewController(completion: handleLaunchScreenCompletion)
-
     }
     
     func handleLaunchScreenCompletion() {
         if SignInService.shared.isSignedIn() {
             if SignInService.shared.isLocked() {
-                let passwordInputVC = PasswordInputViewController()
+                let passwordInputVC =  PasswordInputViewController()
                 passwordInputVC.modalPresentationStyle = .fullScreen
                 window?.rootViewController?.present(passwordInputVC, animated: true, completion: nil)
             } else {

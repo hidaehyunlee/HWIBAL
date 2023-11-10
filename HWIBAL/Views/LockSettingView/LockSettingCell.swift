@@ -10,6 +10,7 @@ import SnapKit
 
 protocol LockSettingCellDelegate: AnyObject {
     func lockSettingSwitchToggled(isOn: Bool)
+//    func biometricsAuthSwitchToggled(isOn: Bool)
 }
 
 class LockSettingCell: UITableViewCell {
@@ -34,17 +35,49 @@ class LockSettingCell: UITableViewCell {
         return switchControl
     }()
     
+    let biometricsAuthSwitchControl: UISwitch = {
+        let switchControl = UISwitch()
+        switchControl.onTintColor = ColorGuide.main
+        switchControl.isOn = true
+        return switchControl
+    }()
+    
+    private let indicator: UIButton = {
+        let button = UIButton()
+        if let image = UIImage(named: ">") {
+            let colorImage = image.withRenderingMode(.alwaysTemplate)
+            button.setImage(colorImage, for: .normal)
+            button.tintColor = UIColor.label
+        }
+        button.isUserInteractionEnabled = false
+        return button
+    }()
+    
     @objc func didTapLockSettingSwitch(sender: UISwitch) {
         delegate?.lockSettingSwitchToggled(isOn: sender.isOn)
     }
     
+//    @objc func didTapBiometricsAuthSwitch(sender: UISwitch) {
+//        delegate?.biometricsAuthSwitchToggled(isOn: sender.isOn)
+//    }
+    
     public func configure(_ settingItem: LockSettingItem) {
         titleLabel.text = settingItem.title
         switchControl.addTarget(self, action: #selector(didTapLockSettingSwitch(sender:)), for: .valueChanged)
+//        biometricsAuthSwitchControl.addTarget(self, action: #selector(didTapBiometricsAuthSwitch(sender:)), for: .valueChanged)
         
         switch settingItem.type {
         case .passwordLock:
             switchControl.isOn = UserDefaults.standard.bool(forKey: "isLocked")
+//            biometricsAuthSwitchControl.isHidden = true
+            indicator.isHidden = true
+//        case .biometricsAuth:
+//            switchControl.isHidden = true
+//            biometricsAuthSwitchControl.isOn = UserDefaults.standard.bool(forKey: "isAllowedBiometricsAuth")
+//            indicator.isHidden = true
+        case .changePassword:
+            switchControl.isHidden = true
+//            biometricsAuthSwitchControl.isHidden = true
         }
         
         initializeUI()
@@ -61,6 +94,19 @@ class LockSettingCell: UITableViewCell {
         switchControl.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().offset(-30)
+        }
+        
+//        contentView.addSubview(biometricsAuthSwitchControl)
+//        biometricsAuthSwitchControl.snp.makeConstraints { make in
+//            make.centerY.equalToSuperview()
+//            make.trailing.equalToSuperview().offset(-30)
+//        }
+        
+        contentView.addSubview(indicator)
+        indicator.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-23)
+            make.width.height.equalTo(24)
         }
     }
 }
