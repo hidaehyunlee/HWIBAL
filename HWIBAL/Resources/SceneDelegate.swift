@@ -22,11 +22,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         if SignInService.shared.isSignedIn() {
-            if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
-               let user = UserService.shared.getExistUser(signedInUserEmail) {
-                SignInService.shared.signedInUser = user
-                window?.rootViewController = MainViewController()
-                SignInService.shared.getSignedInUserInfo()
+            if SignInService.shared.isLocked() {
+                // 앱 비번 입력 VC 띄우기
+            } else {
+                if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
+                   let user = UserService.shared.getExistUser(signedInUserEmail) {
+                    SignInService.shared.signedInUser = user
+                    window?.rootViewController = MainViewController()
+                    SignInService.shared.getSignedInUserInfo()
+                }
             }
         } else {
             window?.rootViewController = SignInViewController()

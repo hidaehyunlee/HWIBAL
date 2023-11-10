@@ -49,6 +49,10 @@ class SignInService {
     func isDarkMode() -> Bool {
         return UserDefaults.standard.bool(forKey: "isDarkMode")
     }
+    
+    func isLocked() -> Bool {
+        UserDefaults.standard.bool(forKey: "isLocked")
+    }
 
     func loadSignedInUserEmail() -> String? {
         return UserDefaults.standard.string(forKey: "loadSignedInUserEmail")

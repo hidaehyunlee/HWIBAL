@@ -63,9 +63,11 @@ class SettingCell: UITableViewCell {
         
         switch settingItem.type {
         case .appVersion:
+            versionInfo.isHidden = false
             indicator.isHidden = true
             lockStatus.isHidden = true
         case .lockSettings:
+            lockStatus.isHidden = false
             if UserDefaults.standard.bool(forKey: "isLocked") {
                 lockStatus.text = "켜짐"
             } else {

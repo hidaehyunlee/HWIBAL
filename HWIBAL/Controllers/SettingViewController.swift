@@ -16,9 +16,14 @@ final class SettingViewController: RootViewController<SettingView> {
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
-        print("viewDidLoad")
         super.viewDidLoad()
         initializeUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.rootView.tableView.reloadData()
     }
 }
 
@@ -154,6 +159,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             let action = UIAlertAction(title: "회원탈퇴", style: .destructive) { _ in
                 SignInService.shared.setWithdrawal()
                 UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
+                UserDefaults.standard.set(false, forKey: "isLocked")
                 self.goToSignInVC()
             }
             witdrawalAlert.addAction(action)

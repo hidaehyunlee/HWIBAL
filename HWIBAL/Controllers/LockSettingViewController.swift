@@ -16,6 +16,12 @@ class LockSettingViewController: RootViewController<LockSettingView> {
         super.viewDidLoad()
         initializeUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.rootView.tableView.reloadData()
+    }
 }
 
 private extension LockSettingViewController {
