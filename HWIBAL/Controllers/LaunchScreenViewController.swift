@@ -37,6 +37,7 @@ final class LaunchScreenViewController: UIViewController {
 
         let animationViewWidth: CGFloat = 200.0
         let animationViewHeight: CGFloat = 200.0
+        animationView.backgroundColor = UIColor.systemBackground
         animationView.frame = CGRect(x: 0, y: 0, width: animationViewWidth, height: animationViewHeight)
         animationView.center = view.center
 
