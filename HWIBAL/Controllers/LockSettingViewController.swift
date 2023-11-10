@@ -17,11 +17,11 @@ class LockSettingViewController: RootViewController<LockSettingView> {
         super.viewDidLoad()
         initializeUI()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.rootView.tableView.reloadData()
+
+        rootView.tableView.reloadData()
     }
 }
 
@@ -29,18 +29,18 @@ private extension LockSettingViewController {
     func initializeUI() {
         rootView.tableView.dataSource = self
         rootView.tableView.delegate = self
-        
+
         // MARK: - Navigation Setting
-        
+
         navigationItem.title = "잠금 설정"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         // MARK: - TableView Setting
 
         let passwordLockItem = LockSettingItem(type: .passwordLock, title: "암호 잠금", isSwitchOn: true)
         let changePasswordItem = LockSettingItem(type: .changePassword, title: "암호 변경", isSwitchOn: false)
         lockSettingItems = [passwordLockItem, changePasswordItem]
-        
+
 //        if passwordLockItem.isSwitchOn {
 //            let biometricsAuthItem = LockSettingItem(type: .biometricsAuth, title: "생체인증", isSwitchOn: true)
 //            let changePasswordItem = LockSettingItem(type: .changePassword, title: "암호 변경", isSwitchOn: false)
@@ -59,7 +59,7 @@ extension LockSettingViewController: LockSettingCellDelegate {
             UserDefaults.standard.set(false, forKey: "isLocked")
         }
     }
-    
+
     func biometricsAuthSwitchToggled(isOn: Bool) {
         if isOn {
             UserDefaults.standard.set(true, forKey: "isAllowedBiometricsAuth")
@@ -73,7 +73,7 @@ extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lockSettingItems.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: LockSettingCell.identifier, for: indexPath) as? LockSettingCell else {
             return UITableViewCell()
@@ -86,7 +86,7 @@ extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource 
 
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
         let lockSettingItem = lockSettingItems[indexPath.row]
@@ -103,7 +103,7 @@ extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource 
             present(passwordSetupVC, animated: true, completion: nil)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
@@ -126,4 +126,3 @@ struct LockSettingItem {
         self.isSwitchOn = isSwitchOn
     }
 }
-
