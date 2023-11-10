@@ -20,6 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             window?.overrideUserInterfaceStyle = .light
         }
+        window?.rootViewController = LaunchScreenViewController()
         
         if SignInService.shared.isSignedIn() {
             if SignInService.shared.isLocked() {
