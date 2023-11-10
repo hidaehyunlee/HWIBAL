@@ -350,17 +350,28 @@ final class HomeView: UIView, RootView {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                 burningView.removeFromSuperview()
-                action1()
+
+                let randomActionIndex = Int.random(in: 0..<3)
+                switch randomActionIndex {
+                case 0:
+                    action0()
+                case 1:
+                    action1()
+                case 2:
+                    action2()
+                default:
+                    break
+                }
             }
-            func action1() {
+            func action0() {
                 UIView.animate(withDuration: 1.0, animations: {
                     self.titleLabel1.text = "수고했어요. 토닥토닥💕"
                     self.hwibariImage.image = UIImage(named: "hwibariheart")
 
                     let jumpAnimation = CABasicAnimation(keyPath: "position.y")
-                    jumpAnimation.duration = 0.3 // 애니메이션 지속 시간
+                    jumpAnimation.duration = 0.2 // 애니메이션 지속 시간
                     jumpAnimation.fromValue = self.hwibariImage.layer.position.y // 현재 위치
-                    jumpAnimation.toValue = self.hwibariImage.layer.position.y + 20 // 위로 이동할 위치 (50은 위로 이동 거리)
+                    jumpAnimation.toValue = self.hwibariImage.layer.position.y - 50 // 위로 이동할 위치 (60은 위로 이동 거리)
 
                     jumpAnimation.autoreverses = true // 애니메이션 왕복
                     jumpAnimation.repeatCount = 3 // 반복 횟수
@@ -375,55 +386,54 @@ final class HomeView: UIView, RootView {
                     }
                 }
             }
-//            func action1() {
-//                UIView.animate(withDuration: 1.0, animations: {
-//
-//                    self.titleLabel1.text = "수고했어요. 토닥토닥💕"
-//                    self.hwibariImage.image = UIImage(named: "hwibariheart")
-//
-//                    let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
-//                    scaleAnimation.duration = 0.3
-//                    scaleAnimation.fromValue = 1.0
-//                    scaleAnimation.toValue = 1.4
-//
-//                    scaleAnimation.autoreverses = true
-//                    scaleAnimation.repeatCount = 3
-//
-//                    self.hwibariImage.layer.add(scaleAnimation, forKey: "scaleAnimation")
-//                }) { _ in
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//                        UIView.animate(withDuration: 0, animations: {
-//                            self.titleLabel1.text = "당신의"
-//                            self.hwibariImage.image = UIImage(named: "hwibari_default")
-//                        })
-//                    }
-//                }
-//            }
-//            func action1() {
-//                UIView.animate(withDuration: 1.0, animations: {
-//
-//                    self.titleLabel1.text = "수고했어요. 토닥토닥💕"
-//                    self.hwibariImage.image = UIImage(named: "hwibariheart")
-//
-//                    // Create a rotation animation
-//                    let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
-//                    rotationAnimation.duration = 0.3
-//                    rotationAnimation.fromValue = 0.0
-//                    rotationAnimation.toValue = CGFloat.pi * 2.0 // 360 degrees
-//
-//                    rotationAnimation.autoreverses = true
-//                    rotationAnimation.repeatCount = 3
-//
-//                    self.hwibariImage.layer.add(rotationAnimation, forKey: "rotationAnimation")
-//                }) { _ in
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//                        UIView.animate(withDuration: 0, animations: {
-//                            self.titleLabel1.text = "당신의"
-//                            self.hwibariImage.image = UIImage(named: "hwibari_default")
-//                        })
-//                    }
-//                }
-//            }
+            func action1() {
+                UIView.animate(withDuration: 1.0, animations: {
+
+                    self.titleLabel1.text = "수고했어요. 토닥토닥💕"
+                    self.hwibariImage.image = UIImage(named: "hwibariheart")
+
+                    let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+                    scaleAnimation.duration = 0.3
+                    scaleAnimation.fromValue = 1.0
+                    scaleAnimation.toValue = 1.3
+
+                    scaleAnimation.autoreverses = true
+                    scaleAnimation.repeatCount = 3
+
+                    self.hwibariImage.layer.add(scaleAnimation, forKey: "scaleAnimation")
+                }) { _ in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        UIView.animate(withDuration: 0, animations: {
+                            self.titleLabel1.text = "당신의"
+                            self.hwibariImage.image = UIImage(named: "hwibari_default")
+                        })
+                    }
+                }
+            }
+            func action2() {
+                UIView.animate(withDuration: 1.0, animations: {
+
+                    self.titleLabel1.text = "수고했어요. 토닥토닥💕"
+                    self.hwibariImage.image = UIImage(named: "hwibariheart")
+
+                    let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
+                    rotationAnimation.duration = 0.3
+                    rotationAnimation.fromValue = 0.0
+                    rotationAnimation.toValue = CGFloat.pi * 0.5 // (0~2로 각도조절, 0~360도)
+
+                    rotationAnimation.autoreverses = true
+                    rotationAnimation.repeatCount = 3
+
+                    self.hwibariImage.layer.add(rotationAnimation, forKey: "rotationAnimation")
+                }) { _ in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        UIView.animate(withDuration: 0, animations: {
+                            self.titleLabel1.text = "당신의"
+                            self.hwibariImage.image = UIImage(named: "hwibari_default")
+                        })
+                    }
+                }
+            }
         }
     }
     
