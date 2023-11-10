@@ -130,13 +130,13 @@ final class DetailView: UIView, RootView {
 // Carousel 애니메이션: itemSize, itemSpacing, insetX 정의
 extension DetailView {
     enum CarouselConst {
-        static let itemSize = CGSize(width: 307 * UIScreen.main.bounds.width / 393, height: UIScreen.main.bounds.height * 0.75)
-        static let itemSpacing = 24.0
+        static let itemSize = CGSize(width: 307 * UIScreen.main.bounds.width / 393, height: UIScreen.main.bounds.height * 0.7)
+        static let itemSpacing = 28.0
 
         static var insetX: CGFloat {
             (UIScreen.main.bounds.width - itemSize.width) / 2.0
         }
-        static var insetY: CGFloat = -15
+        static var insetY: CGFloat = -5
         static var collectionViewContentInset: UIEdgeInsets {
             UIEdgeInsets(top: insetY, left: insetX, bottom: 0, right: insetX)
         }
