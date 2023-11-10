@@ -19,6 +19,12 @@ final class SettingViewController: RootViewController<SettingView> {
         super.viewDidLoad()
         initializeUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.rootView.tableView.reloadData()
+    }
 }
 
 private extension SettingViewController {
@@ -30,13 +36,17 @@ private extension SettingViewController {
         
         navigationItem.title = "앱 설정"
         navigationController?.navigationBar.prefersLargeTitles = true
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = ColorGuide.main
+        self.navigationItem.backBarButtonItem = backBarButtonItem
         
         // MARK: - TableView Setting
 
         let appVersionItem = SettingItem(type: .appVersion, title: "앱 버전")
+        let lockSettingsItem = SettingItem(type: .lockSettings, title: "잠금 설정")
         let inquireItem = SettingItem(type: .inquire, title: "문의하기")
         let withdrawalItem = SettingItem(type: .withdrawal, title: "회원탈퇴")
-        settingItems = [appVersionItem, inquireItem, withdrawalItem]
+        settingItems = [appVersionItem, lockSettingsItem, inquireItem, withdrawalItem]
 
         // MARK: - Action
 
@@ -108,6 +118,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         switch settingItem.type {
         case .appVersion:
             print("🫵 클릭: 앱 버전")
+        case .lockSettings:
+            print("🫵 클릭: 잠금 설정")
+            let lockSettingVC = LockSettingViewController()
+            navigationController?.pushViewController(lockSettingVC, animated: true)
         case .inquire:
             print("🫵 클릭: 문의하기")
             let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
@@ -145,6 +159,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             let action = UIAlertAction(title: "회원탈퇴", style: .destructive) { _ in
                 SignInService.shared.setWithdrawal()
                 UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
+                UserDefaults.standard.set(false, forKey: "isLocked")
                 self.goToSignInVC()
             }
             witdrawalAlert.addAction(action)
@@ -166,6 +181,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
 struct SettingItem {
     enum ItemType {
         case appVersion
+        case lockSettings
         case inquire
         case withdrawal
     }

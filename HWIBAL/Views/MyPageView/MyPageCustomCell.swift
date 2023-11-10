@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class MyPageCustomCell: UITableViewCell {
     static let identifier = "myPageCustom"
@@ -23,10 +24,10 @@ class MyPageCustomCell: UITableViewCell {
     
     var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "일주일"
+        label.text = "7일"
         label.textAlignment = .right
         label.font = FontGuide.size16
-        label.textColor = ColorGuide.textHint
+        label.textColor = ColorGuide.main
         label.snp.makeConstraints { make in
             make.height.equalTo(20)
         }
