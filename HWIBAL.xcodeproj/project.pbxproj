@@ -65,6 +65,7 @@
 		DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */; };
 		DE7930282AF0EAA40040258A /* EmptyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7930272AF0EAA40040258A /* EmptyDetailView.swift */; };
 		DEB10FC52AFE2D58000FD93B /* trash.json in Resources */ = {isa = PBXBuildFile; fileRef = DEB10FC42AFE2D58000FD93B /* trash.json */; };
+		DEB10FC72AFE426D000FD93B /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB10FC62AFE426D000FD93B /* AudioPlayerService.swift */; };
 		DECCFAD02AF884D900BBAD5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DECCFACE2AF884D900BBAD5C /* LaunchScreen.storyboard */; };
 		DEDA76992ADFB98600EA41C1 /* EmotionTrashCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */; };
 		DEECD7352AEBC86600BE20CE /* DSWaveformImage in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7342AEBC86600BE20CE /* DSWaveformImage */; };
@@ -136,6 +137,7 @@
 		DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibal_test1.mp3; sourceTree = "<group>"; };
 		DE7930272AF0EAA40040258A /* EmptyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDetailView.swift; sourceTree = "<group>"; };
 		DEB10FC42AFE2D58000FD93B /* trash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trash.json; sourceTree = "<group>"; };
+		DEB10FC62AFE426D000FD93B /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
 		DEC256242AEF75E9002917C4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DECCFACF2AF884D900BBAD5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashCell.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				07D18F7B2AD948450080FACA /* AlertManager.swift */,
 				3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */,
 				0773963E2AF69AFA0034C414 /* RecordingService.swift */,
+				DEB10FC62AFE426D000FD93B /* AudioPlayerService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				DEFE3A1F2AD5402C0076FE11 /* HomeView.swift in Sources */,
 				3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */,
 				3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */,
+				DEB10FC72AFE426D000FD93B /* AudioPlayerService.swift in Sources */,
 				3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */,
 				0773963F2AF69AFA0034C414 /* RecordingService.swift in Sources */,
 				3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */,
@@ -697,7 +701,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HWIBAL/HWIBAL.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = KW2TYH5V3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
@@ -713,7 +717,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.HWIBAL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -734,7 +738,7 @@
 				CODE_SIGN_ENTITLEMENTS = HWIBAL/HWIBAL.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = KW2TYH5V3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
@@ -750,7 +754,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.HWIBAL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

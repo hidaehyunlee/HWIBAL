@@ -10,8 +10,6 @@ import AVFoundation
 import SnapKit
 import UIKit
 
-var player: AVAudioPlayer?
-
 final class DetailViewController: RootViewController<DetailView> {
     var centerCell: EmotionTrashCell?
     private lazy var userEmotionTrashes: [EmotionTrash] = []
@@ -65,33 +63,6 @@ final class DetailViewController: RootViewController<DetailView> {
             self?.rootView.updateNumberOfPageLabel(1)
         }
     }
-        
-    //    @objc func playPauseButtonTapped(sender: UIButton) {
-    //        let index = sender.tag
-    //        let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
-    //        let reversedIndex = userEmotionTrashes.count - 1 - index
-    //        let data = userEmotionTrashes[reversedIndex]
-    //
-    //        if let recording = data.recording, let filePath = recording.filePath {
-    //            guard let audioURL = URL(string: filePath) else {
-    //                print("Error: URL로 변환 실패")
-    //                return
-    //            }
-    //
-    //            let fileManager = FileManager.default
-    //            if fileManager.fileExists(atPath: audioURL.path) {
-    //                do {
-    //                    player = try AVAudioPlayer(contentsOf: audioURL)
-    //                    player?.prepareToPlay()
-    //                    player?.delegate = self
-    //                } catch {
-    //                    print("플레이어 생성 Error: \(error)")
-    //                }
-    //            } else {
-    //                print("Error: 파일이 존재하지 않음")
-    //            }
-    //        }
-    //    }
 }
     
 extension DetailViewController: UICollectionViewDataSource {
@@ -115,25 +86,15 @@ extension DetailViewController: UICollectionViewDataSource {
             cell.imageContentView.image = nil
             cell.imageContentView.isHidden = true
         }
-            
-        // for v1.0.0
-        //        if let recording = data.recording, let filePath = recording.filePath {
-        //            cell.playPauseButton.isHidden = false
-        //            cell.playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
-        //            cell.playPauseButton.tag = indexPath.item
-        //
-        //            if let player = player {
-        //                if player.isPlaying {
-        //                    player.pause()
-        //                    cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
-        //                } else {
-        //                    player.play()
-        //                    cell.playPauseButton.setBackgroundImage(UIImage(named: "pause"), for: .normal)
-        //                }
-        //            }
-        //        } else {
-        //            cell.playPauseButton.isHidden = true
-        //        }
+        
+        if let recording = data.recording, let filePath = recording.filePath {
+            cell.playPauseButton.isHidden = false
+            cell.filePath = filePath  // audioPlayer 대신 filePath를 설정합니다.
+            cell.playPauseButton.addTarget(cell, action: #selector(cell.playPauseButtonTapped), for: .touchUpInside)
+
+        } else {
+            cell.playPauseButton.isHidden = true
+        }
             
         cell.daysAgoLabel.text = getDaysAgo(startDate: Date(), endDate: data.timestamp ?? Date()) // 몇일전인지 구함
         cell.textContentLabel.text = data.text
@@ -215,11 +176,11 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
     }
 }
     
-// extension DetailViewController: AVAudioPlayerDelegate {
-//     // 오디오 파일이 끝나면 버튼 UI 업데이트하는 델리게이트 메서드
-//        func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-//            if flag {
-//                cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
-//            }
+//extension DetailViewController: AVAudioPlayerDelegate {
+//    // 오디오 파일이 끝나면 버튼 UI 업데이트하는 델리게이트 메서드
+//    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+//        if flag {
+//            cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
 //        }
-// }
+//    }
+//}
