@@ -44,8 +44,6 @@ final class DetailViewController: RootViewController<DetailView> {
         rootView.collectionView.dataSource = self
         
         rootView.totalPage = userEmotionTrashes.count
-        
-        rootView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -161,11 +159,6 @@ extension DetailViewController: UICollectionViewDataSource {
 }
     
 extension DetailViewController: UICollectionViewDelegate {
-    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //        let cellId = userEmotionTrashes[indexPath.item].id
-    //        print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
-    //    }
-        
     // 스크롤이 멈추면 호출되며, 스크롤이 셀의 중앙에 멈추도록 함
     func scrollViewWillEndDragging(
         _ scrollView: UIScrollView,

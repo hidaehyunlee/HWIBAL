@@ -10,23 +10,6 @@ import SnapKit
 import UIKit
 
 final class DetailView: UIView, RootView {
-    lazy var goToFirstButton: UIButton = {
-        let button = UIButton()
-
-        button.setTitle(" 맨 처음으로", for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = FontGuide.size14Bold
-
-        if let image = UIImage(named: "<-") {
-            let colorImage = image.withRenderingMode(.alwaysTemplate)
-            button.setImage(colorImage, for: .normal)
-            button.tintColor = UIColor.label
-        }
-        button.semanticContentAttribute = .forceLeftToRight
-
-        return button
-    }()
-
     var currentPage = 1
     var totalPage: Int = 0 {
         didSet {
@@ -82,16 +65,8 @@ final class DetailView: UIView, RootView {
     func initializeUI() {
         backgroundColor = .systemBackground
 
-        addSubview(goToFirstButton)
         addSubview(numberOfPageLabel)
         addSubview(collectionView)
-
-        goToFirstButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(54)
-            make.top.equalTo(layoutMarginsGuide).offset(25)
-            make.width.equalTo(100)
-            make.height.equalTo(20)
-        }
 
         numberOfPageLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-54)
@@ -100,7 +75,7 @@ final class DetailView: UIView, RootView {
         }
 
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(goToFirstButton.snp.bottom)
+            make.top.equalTo(numberOfPageLabel.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide)
         }
@@ -136,7 +111,7 @@ extension DetailView {
         static var insetX: CGFloat {
             (UIScreen.main.bounds.width - itemSize.width) / 2.0
         }
-        static var insetY: CGFloat = -5
+        static var insetY: CGFloat = -25
         static var collectionViewContentInset: UIEdgeInsets {
             UIEdgeInsets(top: insetY, left: insetX, bottom: 0, right: insetX)
         }
