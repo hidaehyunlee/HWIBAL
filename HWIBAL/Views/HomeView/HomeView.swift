@@ -255,11 +255,13 @@ final class HomeView: UIView, RootView {
                 UIImage(named: "hwibariopen2")!,
                 UIImage(named: "hwibariopen")!
             ]
-        } else {
+        } else if hwibariImage.image == UIImage(named: "hwibariopen01"){
             hwibariImage.animationImages = [
                 UIImage(named: "hwibariopen01")!,
                 UIImage(named: "hwibariopen02")!
             ]
+        } else {
+            hwibariImage.image = UIImage(named: "hwibari_default")
         }
     
         hwibariImage.animationDuration = 0.3
