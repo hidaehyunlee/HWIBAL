@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>비밀번호 대신 Face ID를 사용하여 계정에 액세스하세요.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>글 작성시 사진 첨부를 위해 사진 라이브러리 이용이 필요합니다. </string>
 	<key>NSCameraUsageDescription</key>
