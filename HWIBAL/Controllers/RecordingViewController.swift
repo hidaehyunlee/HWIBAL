@@ -47,6 +47,8 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func setupUI() {
+//        let startStopButton = CircleButton(type: .play)
+//        self.startStopButton = startStopButton
         startStopButton = UIButton()
         startStopButton.addTarget(self, action: #selector(startOrStopRecording), for: .touchUpInside)
         startStopButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
@@ -54,18 +56,19 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
 
         timerLabel = UILabel()
         timerLabel.text = "00:00"
+        timerLabel.font = FontGuide.size21
         timerLabel.textAlignment = .center
         view.addSubview(timerLabel)
         
         timerLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
             make.centerX.equalTo(view)
             make.width.equalTo(view)
             make.height.equalTo(40)
         }
         
         startStopButton.snp.makeConstraints { make in
-            make.top.equalTo(timerLabel.snp.bottom).offset(10)
+            make.top.equalTo(timerLabel.snp.bottom).offset(20)
             make.centerX.equalTo(view)
             make.width.height.equalTo(50)
         }

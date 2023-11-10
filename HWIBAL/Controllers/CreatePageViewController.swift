@@ -12,7 +12,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     var keyboardHeight: CGFloat = 0
     private var attachedImageView: UIImageView?
     var playButton: CircleButton?
-    //var playButton: UIButton?
     var savedAudioURL: URL?
     private var audioPlayer: AVAudioPlayer?
     private var isAudioPlaying = false
@@ -89,9 +88,9 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     private func setupPlayButton() {
         print("setupPlayButton called")
         
-        let playButton = CircleButton(type: .play) // 조건 2 충족: 공통 컴포넌트 사용
+        let playButton = CircleButton(type: .play)
         self.playButton = playButton
-        playButton.isHidden = true // 버튼을 처음에 숨김
+        playButton.isHidden = true
 
         view.addSubview(playButton)
         
@@ -130,7 +129,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         if let url = notification.userInfo?["savedAudioURL"] as? URL {
             savedAudioURL = url
             DispatchQueue.main.async {
-                self.playButton?.isHidden = false // 조건 1 충족: Notification 수신시 isHidden을 false로 변경
+                self.playButton?.isHidden = false
             }
         } else {
             print("Audio URL is nil")
@@ -146,7 +145,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         if let player = audioPlayer, player.isPlaying {
             player.pause()
             isAudioPlaying = false
-            playButton?.updateButtonType(to: .play) // UIImage(named: "play") 대신 CircleButton의 메소드 사용
+            playButton?.updateButtonType(to: .play)
         } else {
             do {
                 if audioPlayer == nil {
@@ -156,7 +155,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
                 }
                 audioPlayer?.play()
                 isAudioPlaying = true
-                playButton?.updateButtonType(to: .pause) // UIImage(named: "pause") 대신 CircleButton의 메소드 사용
+                playButton?.updateButtonType(to: .pause)
             } catch {
                 print("AVAudioPlayer init or resume failed with error: \(error.localizedDescription)")
             }
