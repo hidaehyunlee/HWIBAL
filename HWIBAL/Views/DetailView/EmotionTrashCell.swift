@@ -113,7 +113,7 @@ class EmotionTrashCell: UICollectionViewCell {
 
     func transformToLarge() {
         UIView.animate(withDuration: 0.15) {
-            self.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+            self.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
         }
     }
 
