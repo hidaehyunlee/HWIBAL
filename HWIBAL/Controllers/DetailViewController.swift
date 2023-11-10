@@ -15,6 +15,7 @@ var player: AVAudioPlayer?
 final class DetailViewController: RootViewController<DetailView> {
     var centerCell: EmotionTrashCell?
     private lazy var userEmotionTrashes: [EmotionTrash] = []
+    let numberOfItems = 256
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +97,7 @@ final class DetailViewController: RootViewController<DetailView> {
     
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return userEmotionTrashes.count
+        return numberOfItems
     }
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -105,7 +106,7 @@ extension DetailViewController: UICollectionViewDataSource {
         cell.initializeUI()
 
         let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
-        let reversedIndex = userEmotionTrashes.count - 1 - indexPath.item
+        let reversedIndex = userEmotionTrashes.count - 1 - (indexPath.item % userEmotionTrashes.count)
         let data = userEmotionTrashes[reversedIndex]
             
         if let imageData = data.image, let image = UIImage(data: imageData) {
@@ -201,7 +202,7 @@ extension DetailViewController: UICollectionViewDelegate {
         let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
             
         if let indexPath = rootView.collectionView.indexPathForItem(at: visiblePoint) {
-            let currentPage = indexPath.item + 1
+            let currentPage = (indexPath.item % userEmotionTrashes.count) + 1
             DispatchQueue.main.async { [weak self] in
                 self?.rootView.updateNumberOfPageLabel(currentPage)
             }
