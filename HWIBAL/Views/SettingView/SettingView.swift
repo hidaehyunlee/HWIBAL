@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class SettingView: UIView, RootView {
     let tableView: UITableView = {
