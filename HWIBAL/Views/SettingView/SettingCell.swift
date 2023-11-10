@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class SettingCell: UITableViewCell {
     static let identifier = "settingCustom"
@@ -34,6 +35,18 @@ class SettingCell: UITableViewCell {
         return label
     }()
     
+    private var lockStatus: UILabel = {
+        let label = UILabel()
+        label.text = "꺼짐"
+        label.textAlignment = .right
+        label.font = FontGuide.size16
+        label.textColor = ColorGuide.main
+        label.snp.makeConstraints { make in
+            make.height.equalTo(20)
+        }
+        return label
+    }()
+    
     private let indicator: UIButton = {
         let button = UIButton()
         if let image = UIImage(named: ">") {
@@ -50,11 +63,23 @@ class SettingCell: UITableViewCell {
         
         switch settingItem.type {
         case .appVersion:
+            versionInfo.isHidden = false
             indicator.isHidden = true
+            lockStatus.isHidden = true
+        case .lockSettings:
+            lockStatus.isHidden = false
+            if UserDefaults.standard.bool(forKey: "isLocked") {
+                lockStatus.text = "켜짐"
+            } else {
+                lockStatus.text = "꺼짐"
+            }
+            versionInfo.isHidden = true
         case .inquire:
             versionInfo.isHidden = true
+            lockStatus.isHidden = true
         case .withdrawal:
             versionInfo.isHidden = true
+            lockStatus.isHidden = true
         }
         initializeUI()
     }
@@ -77,6 +102,12 @@ class SettingCell: UITableViewCell {
         versionInfo.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().offset(-30)
+        }
+        
+        contentView.addSubview(lockStatus)
+        lockStatus.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalTo(indicator.snp.leading).offset(-10)
         }
     }
 }
