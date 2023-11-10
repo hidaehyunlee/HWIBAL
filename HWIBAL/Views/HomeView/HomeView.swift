@@ -353,7 +353,7 @@ final class HomeView: UIView, RootView {
                 action1()
             }
             func action1() {
-                UIView.animate(withDuration: 0.0, animations: {
+                UIView.animate(withDuration: 1.0, animations: {
                     self.titleLabel1.text = "수고했어요. 토닥토닥💕"
                     self.hwibariImage.image = UIImage(named: "hwibariheart")
 
@@ -376,7 +376,7 @@ final class HomeView: UIView, RootView {
                 }
             }
 //            func action1() {
-//                UIView.animate(withDuration: 0.0, animations: {
+//                UIView.animate(withDuration: 1.0, animations: {
 //
 //                    self.titleLabel1.text = "수고했어요. 토닥토닥💕"
 //                    self.hwibariImage.image = UIImage(named: "hwibariheart")
@@ -384,7 +384,7 @@ final class HomeView: UIView, RootView {
 //                    let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
 //                    scaleAnimation.duration = 0.3
 //                    scaleAnimation.fromValue = 1.0
-//                    scaleAnimation.toValue = 1.2
+//                    scaleAnimation.toValue = 1.4
 //
 //                    scaleAnimation.autoreverses = true
 //                    scaleAnimation.repeatCount = 3
@@ -400,7 +400,7 @@ final class HomeView: UIView, RootView {
 //                }
 //            }
 //            func action1() {
-//                UIView.animate(withDuration: 0.0, animations: {
+//                UIView.animate(withDuration: 1.0, animations: {
 //
 //                    self.titleLabel1.text = "수고했어요. 토닥토닥💕"
 //                    self.hwibariImage.image = UIImage(named: "hwibariheart")
