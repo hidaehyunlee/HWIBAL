@@ -32,6 +32,7 @@ class BottomSheetPresentationController: UIPresentationController {
 
         presentedView.layer.cornerRadius = 10
         presentedView.layer.masksToBounds = true
+        presentedView.backgroundColor = .systemBackground
         
         presentedView.frame = frameOfPresentedViewInContainerView
         

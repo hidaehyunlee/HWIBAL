@@ -10,7 +10,7 @@ import UIKit
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var keyboardHeight: CGFloat = 0
-    private var attachedImageView: UIImageView?
+    var attributedStringFilePath: URL?
     var playButton: CircleButton?
     var savedAudioURL: URL?
     private var audioPlayer: AVAudioPlayer?
@@ -254,36 +254,24 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 
     @objc func showWriteAlert() {
         AlertManager.shared.showMessageAlert(on: self, title: "", message: "오, 저런!\n휘발 주기에 맞춰 불 태워 드릴게요 🔥") {
-            let text = self.rootView.textView.text ?? ""
+            let attributedText = self.rootView.textView.attributedText ?? NSAttributedString()
             var recording: Recording?
 
             if let savedAudioURL = self.savedAudioURL, let currentUser = SignInService.shared.signedInUser {
                 recording = RecordingService.shared.createRecording(filePath: savedAudioURL.path, duration: TimeInterval(), title: "Recording on \(Date())", user: currentUser)
             }
 
-            if let recording = recording {
-                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
-                    print("attachedImageView 첨부 with recording")
-                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: attachedImage, recording: recording)
-                } else {
-                    print("attachedImageView nil with recording")
-                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: nil, recording: recording)
-                }
-            } else {
-                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
-                    print("attachedImageView 첨부 without recording")
-                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: attachedImage, recording: nil)
-                } else {
-                    print("attachedImageView nil without recording")
-                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: nil, recording: nil)
-                }
-            }
+            // Since we are using NSTextAttachment, we don't need to check for an attachedImageView.
+            // We can directly create the EmotionTrash with the attributedText which includes the text and images.
+            EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: attributedText.string, attributedText: attributedText, image: nil, recording: recording)
+            
             EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
 
             self.dismiss(animated: true, completion: nil)
         }
     }
+
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -299,31 +287,74 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
-            addAndLayoutAttachedImageView(with: image)
+            insertImageIntoTextView(image: image)
         }
         picker.dismiss(animated: true)
     }
     
-    private func addAndLayoutAttachedImageView(with image: UIImage) {
-        if let existingImageView = attachedImageView {
-            existingImageView.image = image
-            return
+    private func insertImageIntoTextView(image: UIImage) {
+        let targetSize = CGSize(width: rootView.textView.bounds.width, height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
+        let scaledImage = image.scaleToSize(targetSize: targetSize)
+        
+        // 조절된 이미지 -> NSTextAttachment로 만들기
+        let textAttachment = NSTextAttachment()
+        textAttachment.image = scaledImage
+        
+        // NSTextAttachment를 NSAttributedString으로 만들기
+        let attrStringWithImage = NSAttributedString(attachment: textAttachment)
+        
+        // 현재 UITextView에서 NSAttributedString 가져오기
+        let attributedString = NSMutableAttributedString(attributedString: rootView.textView.attributedText)
+        
+        // 이미지 -> NSAttributedString에 추가하기
+        attributedString.append(attrStringWithImage)
+        
+        // UITextView의 attributedText 업데이트
+        rootView.textView.attributedText = attributedString
+    }
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    func saveAttributedString(_ attributedString: NSAttributedString) -> URL? {
+        let uniqueFileName = UUID().uuidString + ".dat"
+        let savePath = getDocumentsDirectory().appendingPathComponent(uniqueFileName)
+        
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: attributedString, requiringSecureCoding: false)
+            try data.write(to: savePath)
+            return savePath
+        } catch {
+            print("AttributedString을 저장하는데 실패했습니다: \(error.localizedDescription)")
+            return nil
+        }
+    }
+}
+
+extension UIImage {
+    func scaleToSize(targetSize: CGSize) -> UIImage {
+        if self.size == targetSize {
+            return self
         }
         
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12.0
-        rootView.addSubview(imageView)
-        attachedImageView = imageView
+        let newSize: CGSize
+        let widthRatio  = targetSize.width  / self.size.width //widthRatio -> 이미지의 너비를 조정하기 위한 비율
+        let heightRatio = targetSize.height / self.size.height
         
-        imageView.snp.makeConstraints { make in
-            make.leading.equalTo(rootView.textView.snp.leading)
-            make.trailing.equalTo(rootView.textView.snp.trailing)
-            make.top.equalTo(rootView.textView.snp.top).offset((rootView.textView.frame.height / 2) + 40)
-            make.bottom.equalToSuperview().offset(-86)
+        if widthRatio > heightRatio {
+            newSize = CGSize(width: self.size.width * heightRatio, height: self.size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: self.size.width * widthRatio,  height: self.size.height * widthRatio)
         }
-        rootView.isImageViewAttached = true
-        view.layoutIfNeeded()
+        
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        self.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage ?? self
     }
 }
