@@ -145,7 +145,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         if let player = audioPlayer, player.isPlaying {
             player.pause()
             isAudioPlaying = false
-            playButton?.updateButtonType(to: .play)
+            playButton?.updateButtonType(to: .play) 
         } else {
             do {
                 if audioPlayer == nil {
