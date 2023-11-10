@@ -21,15 +21,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.overrideUserInterfaceStyle = .light
         }
         
+        window?.rootViewController = LaunchScreenViewController(completion: handleLaunchScreenCompletion)
+    }
+    
+    func handleLaunchScreenCompletion() {
         if SignInService.shared.isSignedIn() {
-            if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
-               let user = UserService.shared.getExistUser(signedInUserEmail) {
-                SignInService.shared.signedInUser = user
-                window?.rootViewController = MainViewController()
-                SignInService.shared.getSignedInUserInfo()
+            if SignInService.shared.isLocked() {
+                let passwordInputVC =  PasswordInputViewController()
+                passwordInputVC.modalPresentationStyle = .fullScreen
+                window?.rootViewController?.present(passwordInputVC, animated: true, completion: nil)
+            } else {
+                goToMainVC()
             }
         } else {
             window?.rootViewController = SignInViewController()
+        }
+    }
+    
+    func goToMainVC() {
+        if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
+           let user = UserService.shared.getExistUser(signedInUserEmail) {
+            SignInService.shared.signedInUser = user
+            window?.rootViewController = MainViewController()
+            SignInService.shared.getSignedInUserInfo()
         }
     }
 
@@ -63,6 +77,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        CoreDataManager.shared.saveContext()
     }
 }
