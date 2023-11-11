@@ -31,15 +31,12 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveAudioNotification(_:)), name: NSNotification.Name("RecordingDidFinish"), object: nil)
-
     }
-    
     
     func hideKeyboard() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
-    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -145,7 +142,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         if let player = audioPlayer, player.isPlaying {
             player.pause()
             isAudioPlaying = false
-            playButton?.updateButtonType(to: .play) 
+            playButton?.updateButtonType(to: .play)
         } else {
             do {
                 if audioPlayer == nil {
@@ -260,9 +257,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
             if let savedAudioURL = self.savedAudioURL, let currentUser = SignInService.shared.signedInUser {
                 recording = RecordingService.shared.createRecording(filePath: savedAudioURL.path, duration: TimeInterval(), title: "Recording on \(Date())", user: currentUser)
             }
-
-            // Since we are using NSTextAttachment, we don't need to check for an attachedImageView.
-            // We can directly create the EmotionTrash with the attributedText which includes the text and images.
             EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: attributedText.string, attributedText: attributedText, image: nil, recording: recording)
             
             EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
@@ -271,7 +265,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
             self.dismiss(animated: true, completion: nil)
         }
     }
-
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -306,12 +299,22 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         // 현재 UITextView에서 NSAttributedString 가져오기
         let attributedString = NSMutableAttributedString(attributedString: rootView.textView.attributedText)
         
+        // NSAttributedString에 폰트 및 색상 설정
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontGuide.size16,
+            .foregroundColor: UIColor.label // Set the text color to the system label color
+        ]
+
         // 이미지 -> NSAttributedString에 추가하기
         attributedString.append(attrStringWithImage)
-        
+        attributedString.addAttributes(attributes, range: NSRange(location: 0, length: attributedString.length))
+
         // UITextView의 attributedText 업데이트
         rootView.textView.attributedText = attributedString
+        
+        // 커서를 이미지 다음 줄로 이동 해야함
     }
+
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -334,24 +337,24 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
 
 extension UIImage {
     func scaleToSize(targetSize: CGSize) -> UIImage {
-        if self.size == targetSize {
+        if size == targetSize {
             return self
         }
         
         let newSize: CGSize
-        let widthRatio  = targetSize.width  / self.size.width //widthRatio -> 이미지의 너비를 조정하기 위한 비율
-        let heightRatio = targetSize.height / self.size.height
+        let widthRatio = targetSize.width / size.width // widthRatio -> 이미지의 너비를 조정하기 위한 비율
+        let heightRatio = targetSize.height / size.height
         
         if widthRatio > heightRatio {
-            newSize = CGSize(width: self.size.width * heightRatio, height: self.size.height * heightRatio)
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
         } else {
-            newSize = CGSize(width: self.size.width * widthRatio,  height: self.size.height * widthRatio)
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
         }
         
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
         
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        self.draw(in: rect)
+        draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         

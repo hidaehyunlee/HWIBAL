@@ -14,6 +14,7 @@ class EmotionTrashCell: UICollectionViewCell {
     lazy var showImageButton: CircleButton = {
         let button = CircleButton(type: .photo)
         button.addTarget(self, action: #selector(showImageButtonTapped), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
 
@@ -23,7 +24,7 @@ class EmotionTrashCell: UICollectionViewCell {
         let image = UIImage(named: "play")
         button.setBackgroundImage(image, for: .normal)
         button.isHidden = true
-        
+
         return button
     }()
 
@@ -40,10 +41,13 @@ class EmotionTrashCell: UICollectionViewCell {
     lazy var textContentLabel: UITextView = {
         let textView = UITextView()
 
-        textView.text = ""
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontGuide.size16Bold,
+            .foregroundColor: UIColor.white
+        ]
+
+        textView.attributedText = NSAttributedString(string: "", attributes: attributes)
         textView.backgroundColor = ColorGuide.main
-        textView.font = FontGuide.size16
-        textView.textColor = .white
         textView.isEditable = false
         textView.isSelectable = false
 

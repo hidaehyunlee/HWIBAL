@@ -29,7 +29,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = .systemBackground
         setupUI()
         loadSignedInUser()
         if let timestamp = existingAudioTimestamp {
@@ -55,6 +55,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         timerLabel = UILabel()
         timerLabel.text = "00:00"
         timerLabel.font = FontGuide.size21
+        timerLabel.textColor = .label
         timerLabel.textAlignment = .center
         view.addSubview(timerLabel)
         
