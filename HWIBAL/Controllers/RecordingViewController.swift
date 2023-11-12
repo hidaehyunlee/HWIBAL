@@ -32,6 +32,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setupUI()
+        requestAudioPermission()
         loadSignedInUser()
         if let timestamp = existingAudioTimestamp {
             // CreatePageViewController에서 전달받은 timestamp -> 기존 녹음 삭제
@@ -143,6 +144,7 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
             print("Error creating directory: \(error.localizedDescription)")
         }
     }
+
     func stopRecording() {
         audioRecorder?.stop()
         savedAudioURL = audioRecorder?.url
@@ -155,7 +157,6 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         stopTimer()
     }
 
-    
     func startTimer() {
         timerLabel.text = timeString(time: currentRecordingTime)
         recordingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
@@ -222,8 +223,6 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
 
-
-
     func getRecordingURL() -> URL {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
@@ -252,6 +251,16 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
         } else {
             print("No recording found with timestamp.")
         }
+    }
+    
+    func requestAudioPermission() {
+        AVCaptureDevice.requestAccess(for: .audio, completionHandler: { (granted: Bool) in
+            if granted {
+                print("Audio: 권한 허용")
+            } else {
+                print("Audio: 권한 거부")
+            }
+        })
     }
 }
 
