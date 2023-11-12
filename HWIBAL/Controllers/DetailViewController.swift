@@ -7,7 +7,7 @@
 
 import AVFAudio
 import AVFoundation
-import SnapKit
+//import SnapKit
 import UIKit
 
 var player: AVAudioPlayer?

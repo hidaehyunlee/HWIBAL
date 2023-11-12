@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		07264AB82AEA45E10030BAFE /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07264AB72AEA45E10030BAFE /* RecordingViewController.swift */; };
 		07264ABA2AEA52BB0030BAFE /* BottomSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07264AB92AEA52BB0030BAFE /* BottomSheetPresentationController.swift */; };
+		072E66B72AFE2DC400F5A223 /* trash.json in Resources */ = {isa = PBXBuildFile; fileRef = 072E66B62AFE2DC400F5A223 /* trash.json */; };
 		0759A4562AE26A18000FFF76 /* CreatePageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759A4552AE26A18000FFF76 /* CreatePageCameraViewController.swift */; };
 		0759A4582AE26A39000FFF76 /* CreatePageCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759A4572AE26A39000FFF76 /* CreatePageCameraView.swift */; };
 		076638FE2ADD22AD00A38FF5 /* CreatePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */; };
@@ -44,7 +45,6 @@
 		3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */; };
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
 		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
-		6A36A70C2AFE0AD40095EE97 /* trash.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A36A70B2AFE0AD40095EE97 /* trash.json */; };
 		6A7EB8D12AFCE33500D3334A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6A7EB8D02AFCE33500D3334A /* Lottie */; };
 		6A7EB8D32AFCE38100D3334A /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7EB8D22AFCE38100D3334A /* LaunchScreenView.swift */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
@@ -80,6 +80,7 @@
 /* Begin PBXFileReference section */
 		07264AB72AEA45E10030BAFE /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
 		07264AB92AEA52BB0030BAFE /* BottomSheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPresentationController.swift; sourceTree = "<group>"; };
+		072E66B62AFE2DC400F5A223 /* trash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trash.json; sourceTree = "<group>"; };
 		0759A4552AE26A18000FFF76 /* CreatePageCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageCameraViewController.swift; sourceTree = "<group>"; };
 		0759A4572AE26A39000FFF76 /* CreatePageCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageCameraView.swift; sourceTree = "<group>"; };
 		076638FD2ADD22AD00A38FF5 /* CreatePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageView.swift; sourceTree = "<group>"; };
@@ -113,7 +114,6 @@
 		3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportEmptyView.swift; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
-		6A36A70B2AFE0AD40095EE97 /* trash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = trash.json; path = ../../../../Downloads/trash.json; sourceTree = "<group>"; };
 		6A7EB8D22AFCE38100D3334A /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -273,7 +273,7 @@
 		DEFE3A132AD53E720076FE11 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6A36A70B2AFE0AD40095EE97 /* trash.json */,
+				072E66B62AFE2DC400F5A223 /* trash.json */,
 				DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */,
 				DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */,
 				DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */,
@@ -447,7 +447,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A36A70C2AFE0AD40095EE97 /* trash.json in Resources */,
+				072E66B72AFE2DC400F5A223 /* trash.json in Resources */,
 				DECCFAD02AF884D900BBAD5C /* LaunchScreen.storyboard in Resources */,
 				DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */,
 				DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */,

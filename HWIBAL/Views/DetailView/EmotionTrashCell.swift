@@ -41,6 +41,7 @@ class EmotionTrashCell: UICollectionViewCell {
         let textView = UITextView()
 
         textView.text = ""
+        textView.attributedText = NSAttributedString()
         textView.backgroundColor = ColorGuide.main
         textView.font = FontGuide.size16
         textView.textColor = .white
