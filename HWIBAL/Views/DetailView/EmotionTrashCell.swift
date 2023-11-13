@@ -38,12 +38,6 @@ class EmotionTrashCell: UICollectionViewCell {
     lazy var textContentLabel: UITextView = {
         let textView = UITextView()
 
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: FontGuide.size16Bold,
-            .foregroundColor: UIColor.white
-        ]
-
-        textView.attributedText = NSAttributedString(string: "", attributes: attributes)
         textView.backgroundColor = ColorGuide.main
         textView.isEditable = false
         textView.isSelectable = false

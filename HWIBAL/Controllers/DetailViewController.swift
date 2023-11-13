@@ -83,20 +83,58 @@ extension DetailViewController: UICollectionViewDataSource {
         if let attributedTextData = data.attributedStringData {
             do {
                 if let attributedText = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSAttributedString.self, from: attributedTextData) {
-                    cell.textContentLabel.attributedText = attributedText
+                    //  NSAttributedString에 커스텀 속성을 적용하여 라벨에 직접 설정
+                    let attributes: [NSAttributedString.Key: Any] = [
+                        .font: FontGuide.size16Bold,
+                        .foregroundColor: UIColor.white
+                    ]
+                    
+                    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
+                    mutableAttributedString.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttributedString.length))
+
+                    cell.textContentLabel.attributedText = mutableAttributedString
                 } else {
                     print("Failed to unarchive NSAttributedString from data.")
                 }
             } catch {
                 print("Error unarchiving data: \(error.localizedDescription)")
             }
+//            do {
+//                if let unarchivedData = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSAttributedString.self, from: attributedTextData) {
+//                    // 언아카이브된 NSAttributedString에서 이미지 및 크기 정보 가져오기
+//                    let fullRange = NSRange(location: 0, length: unarchivedData.length)
+//
+//                    unarchivedData.enumerateAttribute(.attachment, in: fullRange, options: []) { value, range, stop in
+//                        if let attachment = value as? NSTextAttachment {
+//                            if let attachmentTextData = attachment.contents,
+//                               let unarchivedText = String(data: attachmentTextData, encoding: .utf8) {
+//                                // attachmentText를 textView.text에 할당하거나 원하는 처리 수행
+//                                cell.textContentLabel.text = unarchivedText
+//                            }
+//                            // attachment에서 이미지 가져오기
+//                            if let unarchivedImage = attachment.image {
+//                                //print("Image: \(image)")
+//                                cell.imageContentView.image = unarchivedImage
+//                            }
+//
+//                            // attachment에서 크기 정보 가져오기
+//                            let imageSize = attachment.bounds.size
+//                            print("Image Size: \(imageSize)")
+//                        }
+//                    }
+//                } else {
+//                    print("Failed to unarchive NSAttributedString from data.")
+//                }
+//            } catch {
+//                print("Error unarchiving data: \(error.localizedDescription)")
+//            }
         } else {
             print("data.attributedStringData is nil")
         }
         
         if let recording = data.recording, let filePath = recording.filePath {
             cell.playPauseButton.isHidden = false
-            cell.filePath = filePath  // audioPlayer 대신 filePath를 설정합니다.
+            cell.filePath = filePath // audioPlayer 대신 filePath를 설정합니다.
             cell.playPauseButton.addTarget(cell, action: #selector(cell.playPauseButtonTapped), for: .touchUpInside)
         } else {
             cell.playPauseButton.isHidden = true
@@ -181,11 +219,11 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
     }
 }
     
-//extension DetailViewController: AVAudioPlayerDelegate {
+// extension DetailViewController: AVAudioPlayerDelegate {
 //    // 오디오 파일이 끝나면 버튼 UI 업데이트하는 델리게이트 메서드
 //    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
 //        if flag {
 //            cell.playPauseButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
 //        }
 //    }
-//}
+// }

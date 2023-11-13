@@ -36,13 +36,23 @@ class EmotionTrashService {
             
             newEmotionTrash.user = user
             
-            // This block should be inside the scope of `newEmotionTrash`
             if let attributedText = attributedText {
                 do {
                     newEmotionTrash.attributedStringData = try NSKeyedArchiver.archivedData(withRootObject: attributedText, requiringSecureCoding: false)
                 } catch {
                     print("AttributedString을 Data로 변환하는데 실패했습니다: \(error.localizedDescription)")
                 }
+            }
+            
+            if let reportEntity = NSEntityDescription.entity(forEntityName: "Report", in: context) {
+                let newReport = Report(entity: reportEntity, insertInto: context)
+                newReport.id = UUID()
+                newReport.text = text
+                newReport.attributedStringData = newEmotionTrash.attributedStringData
+                print(newReport.attributedStringData)
+
+                newReport.timestamp = Date()
+                newReport.user = user
             }
             
             coreDataManager.saveContext()

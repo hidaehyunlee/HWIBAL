@@ -282,7 +282,7 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
     }
     
     private func insertImageIntoTextView(image: UIImage) {
-        let targetSize = CGSize(width: rootView.textView.bounds.width, height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
+        let targetSize = CGSize(width: (DetailView.CarouselConst.itemSize.width) - (DetailView.CarouselConst.itemSpacing * 2), height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
         let scaledImage = image.scaleToSize(targetSize: targetSize)
         
         // 조절된 이미지 -> NSTextAttachment로 만들기
