@@ -5,8 +5,8 @@
 //  Created by daelee on 10/10/23.
 //
 
-import UIKit
 import LocalAuthentication
+import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -18,10 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.overrideUserInterfaceStyle = SignInService.shared.isDarkMode() ? .dark : .light
         window?.rootViewController = LaunchScreenViewController(completion: handleLaunchScreenCompletion)
     }
-    
+
     func handleLaunchScreenCompletion() {
         if SignInService.shared.isLocked() {
             if SignInService.shared.isSignedIn() {
+                showPasswordInput()
                 authenticateForUnlock()
             } else {
                 window?.rootViewController = SignInViewController()
@@ -30,13 +31,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = SignInViewController()
         }
     }
-    
+
     func authenticateForUnlock() {
         let context = LAContext()
 
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
             let reason = "잠금을 해제하려면 Face ID 인증을 사용하세요."
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { (success, error) in
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, _ in
                 DispatchQueue.main.async { [weak self] in
                     if success {
                         self?.goToMainVC()
@@ -51,13 +52,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
     }
-    
+
     func showPasswordInput() {
         let passwordInputVC = PasswordInputViewController()
         passwordInputVC.modalPresentationStyle = .fullScreen
         window?.rootViewController?.present(passwordInputVC, animated: true, completion: nil)
     }
-    
+
     func goToMainVC() {
         if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
            let user = UserService.shared.getExistUser(signedInUserEmail) {
@@ -77,11 +78,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print("자동 휘발일 확인")
         if UserDefaults.standard.bool(forKey: "isLocked") {
             print("앱이 잠겨있음")
+            showPasswordInput()
             authenticateForUnlock()
         } else {
             print("앱이 잠겨있지 않음")
         }
-        
+
         if let email = SignInService.shared.signedInUser?.email,
            let autoExpireDate = SignInService.shared.signedInUser?.autoExpireDate {
             let currentDate = Date()

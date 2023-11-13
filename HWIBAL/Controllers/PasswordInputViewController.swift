@@ -8,7 +8,12 @@
 import UIKit
 import LocalAuthentication
 
+protocol PasswordInputDelegate: AnyObject {
+    func passwordInputDidComplete()
+}
+
 class PasswordInputViewController: RootViewController<PasswordInputView> {
+    weak var delegate: PasswordInputDelegate?
     private var enteredPassword: [String] = [] {
         didSet {
             updateSubtitle()
@@ -24,6 +29,11 @@ class PasswordInputViewController: RootViewController<PasswordInputView> {
 }
 
 extension PasswordInputViewController: PasswordSetupViewDelegate {
+    private func passwordInputComplete() {
+        delegate?.passwordInputDidComplete()
+        dismiss(animated: true, completion: nil)
+    }
+
     func passwordButtonTapped(_ number: String) {
         if enteredPassword.count < 4 {
             enteredPassword.append(number)
@@ -102,16 +112,20 @@ extension PasswordInputViewController: PasswordSetupViewDelegate {
             self.enteredPassword.removeAll()
             self.enterPasswordSuccess()
         } else {
-            self.rootView.subTitle.text = "암호가 일치하지 않습니다.\n다시 입력해주세요."
-            self.rootView.password.text = ""
+            DispatchQueue.main.async { [weak self] in
+                self?.rootView.subTitle.text = "암호가 일치하지 않습니다.\n다시 입력해주세요."
+                self?.rootView.password.text = ""
+            }
             self.enteredPassword.removeAll()
         }
     }
     
     func resetPassword() {
         enteredPassword.removeAll()
-        rootView.password.text = ""
-        rootView.subTitle.text = "암호 4자리를 입력해주세요."
+        DispatchQueue.main.async { [weak self] in
+            self?.rootView.subTitle.text = "암호 4자리를 입력해주세요."
+            self?.rootView.password.text = ""
+        }
     }
     
     private func enterPasswordSuccess() {
