@@ -11,6 +11,7 @@ import UIKit
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var keyboardHeight: CGFloat = 0
+    var attributedStringFilePath: URL?
     private var attachedImageView: UIImageView?
     var playButton: CircleButton?
     var savedAudioURL: URL?
@@ -32,15 +33,12 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveAudioNotification(_:)), name: NSNotification.Name("RecordingDidFinish"), object: nil)
-
     }
-    
     
     func hideKeyboard() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
-    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -106,6 +104,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func startOrStopRecording() {
+        
         // 이미 저장된 오디오 URL이 있는지 확인
         if let savedAudioURL = savedAudioURL {
             let recordingVC = RecordingViewController()
@@ -145,7 +144,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         }
     }
 
-    
     @objc func playSavedAudio() {
         guard let url = savedAudioURL else {
             print("Audio URL is nil")
@@ -269,8 +267,9 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 
             if let savedAudioURL = self.savedAudioURL, let currentUser = SignInService.shared.signedInUser {
                 recording = RecordingService.shared.createRecording(filePath: savedAudioURL.path, duration: TimeInterval(), title: "Recording on \(Date())", user: currentUser)
+                print(recording?.filePath)
             }
-            EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: attributedText.string, image: nil, recording: recording)
+            EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: attributedText.string, attributedText: attributedText, image: nil, recording: recording)
             
             EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
@@ -299,22 +298,38 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
     }
     
     private func insertImageIntoTextView(image: UIImage) {
-        let targetSize = CGSize(width: rootView.textView.bounds.width, height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
+        let targetSize = CGSize(width: 252 * UIScreen.main.bounds.width / 393, height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
         let scaledImage = image.scaleToSize(targetSize: targetSize)
+        let roundedImage = scaledImage.rounded(withCornerRadius: 12.0)
         
         // 조절된 이미지 -> NSTextAttachment로 만들기
         let textAttachment = NSTextAttachment()
-        textAttachment.image = scaledImage
+        textAttachment.image = roundedImage
         
         // NSTextAttachment를 NSAttributedString으로 만들기
         let attrStringWithImage = NSAttributedString(attachment: textAttachment)
         
+        // 줄바꿈 문자를 추가한 후 이미지 -> NSAttributedString에 추가하기
+        let newLineString = NSAttributedString(string: "\n")
+            
         // 현재 UITextView에서 NSAttributedString 가져오기
         let attributedString = NSMutableAttributedString(attributedString: rootView.textView.attributedText)
-        
-        // 이미지 -> NSAttributedString에 추가하기
+            
+        // 이미지 앞에 줄바꿈 문자 추가
+        attributedString.append(newLineString)
         attributedString.append(attrStringWithImage)
+            
+        // 이미지 뒤에 줄바꿈 문자 추가
+        attributedString.append(newLineString)
         
+        // NSAttributedString에 폰트 및 색상 설정
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontGuide.size16,
+            .foregroundColor: UIColor.label // Set the text color to the system label color
+        ]
+
+        attributedString.addAttributes(attributes, range: NSRange(location: 0, length: attributedString.length))
+
         // UITextView의 attributedText 업데이트
         rootView.textView.attributedText = attributedString
     }
@@ -363,5 +378,15 @@ extension UIImage {
         UIGraphicsEndImageContext()
         
         return newImage ?? self
+    }
+    
+    func rounded(withCornerRadius cornerRadius: CGFloat) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        let rect = CGRect(origin: .zero, size: size)
+        UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).addClip()
+        draw(in: rect)
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return roundedImage ?? self
     }
 }

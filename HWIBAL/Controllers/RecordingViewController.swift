@@ -37,11 +37,24 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        requestAudioPermission()
         setupUI()
         loadSignedInUser()
         if let timestamp = existingAudioTimestamp {
             // CreatePageViewController에서 전달받은 timestamp -> 기존 녹음 삭제
             deleteRecordingWithTimestamp(timestamp)
+        }
+    }
+    
+    func requestAudioPermission() {
+        AVAudioSession.sharedInstance().requestRecordPermission { response in
+            if response {
+                // 사용자가 오디오 권한을 허용한 경우
+                print("오디오 권한이 허용되었습니다.")
+            } else {
+                // 사용자가 오디오 권한을 거부한 경우 또는 다른 이유로 권한이 허용되지 않은 경우
+                print("오디오 권한이 거부되었습니다.")
+            }
         }
     }
     
@@ -79,7 +92,6 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
             make.width.height.equalTo(55)
         }
 
-        
         cancelButton = UIButton(type: .system)
         cancelButton.setTitle("취소", for: .normal)
         cancelButton.titleLabel?.font = FontGuide.size16Bold
