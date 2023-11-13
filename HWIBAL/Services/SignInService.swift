@@ -21,7 +21,6 @@ class SignInService {
             UserService.shared.createUser(email: email, name: name, id: id)
             signedInUser = UserService.shared.getExistUser(email)
             setSignedInUser(email)
-            UserDefaults.standard.set(false, forKey: "isDarkMode")
             UserDefaults.standard.set(7, forKey: "autoExpireDays_\(String(describing: SignInService.shared.signedInUser?.email))")
             UserService.shared.printAllUsers()
         }
@@ -40,6 +39,7 @@ class SignInService {
     func setWithdrawal() {
         UserDefaults.standard.set("N/A", forKey: "loadSignedInUserEmail")
         UserDefaults.standard.set(false, forKey: "isSignedIn")
+        UserDefaults.standard.set(false, forKey: "isLocked")
     }
     
     func isSignedIn() -> Bool {

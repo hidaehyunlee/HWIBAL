@@ -8,11 +8,13 @@ import AVFoundation
 import EventBus
 import SnapKit
 import UIKit
+import Photos
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var keyboardHeight: CGFloat = 0
+    var attributedStringFilePath: URL?
     private var attachedImageView: UIImageView?
-    var playButton: UIButton?
+    var playButton: CircleButton?
     var savedAudioURL: URL?
     private var audioPlayer: AVAudioPlayer?
     private var isAudioPlaying = false
@@ -31,6 +33,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveAudioNotification(_:)), name: NSNotification.Name("RecordingDidFinish"), object: nil)
     }
     
     func hideKeyboard() {
@@ -85,16 +88,24 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     private func setupPlayButton() {
         print("setupPlayButton called")
         
-        let PlayButton = rootView.playButton
-        PlayButton.setImage(UIImage(named: "play"), for: .normal)
-        PlayButton.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
-        PlayButton.backgroundColor = .red
+        let playButton = CircleButton(type: .play)
+        self.playButton = playButton
+        playButton.isHidden = true
 
-        playButton = PlayButton
-        view.bringSubviewToFront(playButton!)
+        view.addSubview(playButton)
+        
+        playButton.snp.makeConstraints { make in
+            make.width.height.equalTo(36)
+            make.leading.equalTo(rootView.soundButton.snp.trailing).offset(16)
+            make.bottom.equalTo(rootView.cameraButton.snp.bottom)
+        }
+        
+        playButton.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
+        view.bringSubviewToFront(playButton)
     }
     
     @objc func startOrStopRecording() {
+        
         // 이미 저장된 오디오 URL이 있는지 확인
         if let savedAudioURL = savedAudioURL {
             let recordingVC = RecordingViewController()
@@ -118,14 +129,22 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     @objc func receiveAudioNotification(_ notification: Notification) {
         if let url = notification.userInfo?["savedAudioURL"] as? URL {
             savedAudioURL = url
+            // 새로운 오디오 URL로 audioPlayer 업데이트
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.delegate = self
+                audioPlayer?.prepareToPlay()
+            } catch {
+                print("Error initializing new audio player: \(error.localizedDescription)")
+            }
             DispatchQueue.main.async {
-                self.playButton?.backgroundColor = .green
+                self.playButton?.isHidden = false
             }
         } else {
             print("Audio URL is nil")
         }
     }
-    
+
     @objc func playSavedAudio() {
         guard let url = savedAudioURL else {
             print("Audio URL is nil")
@@ -135,7 +154,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         if let player = audioPlayer, player.isPlaying {
             player.pause()
             isAudioPlaying = false
-            playButton?.setImage(UIImage(named: "play"), for: .normal)
+            playButton?.updateButtonType(to: .play)
         } else {
             do {
                 if audioPlayer == nil {
@@ -145,7 +164,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
                 }
                 audioPlayer?.play()
                 isAudioPlaying = true
-                playButton?.setImage(UIImage(named: "pause"), for: .normal)
+                playButton?.updateButtonType(to: .pause)
             } catch {
                 print("AVAudioPlayer init or resume failed with error: \(error.localizedDescription)")
             }
@@ -155,7 +174,34 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {
             isAudioPlaying = false
-            playButton?.setImage(UIImage(named: "play"), for: .normal)
+            playButton?.updateButtonType(to: .play)
+        }
+    }
+    
+    func requestGalleryPermission(){
+        let photoLibraryAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+
+        switch photoLibraryAuthorizationStatus {
+        case .authorized:
+            // 권한이 허용된 경우
+            self.presentImagePicker(sourceType: .photoLibrary)
+        case .notDetermined:
+            // 권한을 아직 사용자에게 묻지 않은 경우
+            PHPhotoLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    DispatchQueue.main.async {
+                        self.presentImagePicker(sourceType: .photoLibrary)
+                    }
+                } else {
+                    // 권한이 거부된 경우에 대한 처리
+                    print("앨범 권한이 거부되었습니다.")
+                }
+            }
+        case .denied, .restricted:
+            // 권한이 거부되거나 제한된 경우에 대한 처리
+            print("앨범 권한이 거부되었습니다.")
+        @unknown default:
+            break
         }
     }
 
@@ -168,6 +214,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         let galleryAction = UIAlertAction(title: "앨범", style: .default) { _ in
             self.presentImagePicker(sourceType: .photoLibrary)
+            self.requestGalleryPermission()
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .destructive)
@@ -244,31 +291,15 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 
     @objc func showWriteAlert() {
         AlertManager.shared.showMessageAlert(on: self, title: "", message: "오, 저런!\n휘발 주기에 맞춰 불 태워 드릴게요 🔥") {
-            let text = self.rootView.textView.text ?? ""
+            let attributedText = self.rootView.textView.attributedText ?? NSAttributedString()
             var recording: Recording?
 
             if let savedAudioURL = self.savedAudioURL, let currentUser = SignInService.shared.signedInUser {
                 recording = RecordingService.shared.createRecording(filePath: savedAudioURL.path, duration: TimeInterval(), title: "Recording on \(Date())", user: currentUser)
                 print(recording?.filePath)
             }
-
-            if let recording = recording {
-                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
-                    print("attachedImageView 첨부 with recording")
-                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: attachedImage, recording: recording)
-                } else {
-                    print("attachedImageView nil with recording")
-                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: nil, recording: recording)
-                }
-            } else {
-                if let imageView = self.attachedImageView, let attachedImage = imageView.image {
-                    print("attachedImageView 첨부 without recording")
-                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: attachedImage, recording: nil)
-                } else {
-                    print("attachedImageView nil without recording")
-                    EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: text, image: nil, recording: nil)
-                }
-            }
+            EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: attributedText.string, attributedText: attributedText, image: nil, recording: recording)
+            
             EmotionTrashService.shared.printTotalEmotionTrashes(SignInService.shared.signedInUser!)
             NotificationCenter.default.post(name: NSNotification.Name("EmotionTrashUpdate"), object: nil)
 
@@ -290,31 +321,101 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
-            addAndLayoutAttachedImageView(with: image)
+            insertImageIntoTextView(image: image)
         }
         picker.dismiss(animated: true)
     }
     
-    private func addAndLayoutAttachedImageView(with image: UIImage) {
-        if let existingImageView = attachedImageView {
-            existingImageView.image = image
-            return
+    private func insertImageIntoTextView(image: UIImage) {
+        let targetSize = CGSize(width: 252 * UIScreen.main.bounds.width / 393, height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
+        let scaledImage = image.scaleToSize(targetSize: targetSize)
+        let roundedImage = scaledImage.rounded(withCornerRadius: 12.0)
+        
+        // 조절된 이미지 -> NSTextAttachment로 만들기
+        let textAttachment = NSTextAttachment()
+        textAttachment.image = roundedImage
+        
+        // NSTextAttachment를 NSAttributedString으로 만들기
+        let attrStringWithImage = NSAttributedString(attachment: textAttachment)
+        
+        // 줄바꿈 문자를 추가한 후 이미지 -> NSAttributedString에 추가하기
+        let newLineString = NSAttributedString(string: "\n")
+            
+        // 현재 UITextView에서 NSAttributedString 가져오기
+        let attributedString = NSMutableAttributedString(attributedString: rootView.textView.attributedText)
+            
+        // 이미지 앞에 줄바꿈 문자 추가
+        attributedString.append(newLineString)
+        attributedString.append(attrStringWithImage)
+            
+        // 이미지 뒤에 줄바꿈 문자 추가
+        attributedString.append(newLineString)
+        
+        // NSAttributedString에 폰트 및 색상 설정
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontGuide.size16,
+            .foregroundColor: UIColor.label // Set the text color to the system label color
+        ]
+
+        attributedString.addAttributes(attributes, range: NSRange(location: 0, length: attributedString.length))
+
+        // UITextView의 attributedText 업데이트
+        rootView.textView.attributedText = attributedString
+    }
+
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    func saveAttributedString(_ attributedString: NSAttributedString) -> URL? {
+        let uniqueFileName = UUID().uuidString + ".dat"
+        let savePath = getDocumentsDirectory().appendingPathComponent(uniqueFileName)
+        
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: attributedString, requiringSecureCoding: false)
+            try data.write(to: savePath)
+            return savePath
+        } catch {
+            print("AttributedString을 저장하는데 실패했습니다: \(error.localizedDescription)")
+            return nil
+        }
+    }
+}
+
+extension UIImage {
+    func scaleToSize(targetSize: CGSize) -> UIImage {
+        if size == targetSize {
+            return self
         }
         
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12.0
-        rootView.addSubview(imageView)
-        attachedImageView = imageView
+        let newSize: CGSize
+        let widthRatio = targetSize.width / size.width // widthRatio -> 이미지의 너비를 조정하기 위한 비율
+        let heightRatio = targetSize.height / size.height
         
-        imageView.snp.makeConstraints { make in
-            make.leading.equalTo(rootView.textView.snp.leading)
-            make.trailing.equalTo(rootView.textView.snp.trailing)
-            make.top.equalTo(rootView.textView.snp.top).offset((rootView.textView.frame.height / 2) + 40)
-            make.bottom.equalToSuperview().offset(-86)
+        if widthRatio > heightRatio {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
         }
-        rootView.isImageViewAttached = true
-        view.layoutIfNeeded()
+        
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage ?? self
+    }
+    
+    func rounded(withCornerRadius cornerRadius: CGFloat) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        let rect = CGRect(origin: .zero, size: size)
+        UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).addClip()
+        draw(in: rect)
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return roundedImage ?? self
     }
 }

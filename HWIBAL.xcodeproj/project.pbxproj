@@ -18,6 +18,7 @@
 		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
 		07D18F7C2AD948450080FACA /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F7B2AD948450080FACA /* AlertManager.swift */; };
 		3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F14EA8D2AD55E6C0047CE34 /* SnapKit */; };
+		3F379F932B022D8D00EE122A /* trash.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F379F922B022D8D00EE122A /* trash.json */; };
 		3F5BE24E2AF8F6BF000B495F /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BE24D2AF8F6BF000B495F /* Extension+UIColor.swift */; };
 		3F5BE2502AFB2861000B495F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BE24F2AFB2861000B495F /* SettingViewController.swift */; };
 		3F5BE2522AFB2882000B495F /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BE2512AFB2882000B495F /* SettingView.swift */; };
@@ -31,7 +32,6 @@
 		3F6765602AFE36A300ABDFF8 /* PasswordInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F67655F2AFE36A300ABDFF8 /* PasswordInputViewController.swift */; };
 		3F6765622AFE36C600ABDFF8 /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6765612AFE36C600ABDFF8 /* PasswordInputView.swift */; };
 		3F783A0A2AD7DC1A0024D692 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A082AD7DC1A0024D692 /* Model.xcdatamodeld */; };
-		3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */; };
 		3F783A242AD805330024D692 /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A232AD805330024D692 /* ColorGuide.swift */; };
 		3F783A262AD8053D0024D692 /* FontGiude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A252AD8053D0024D692 /* FontGiude.swift */; };
 		3F783A282AD8090E0024D692 /* MyPageCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A272AD8090E0024D692 /* MyPageCustomCell.swift */; };
@@ -41,6 +41,7 @@
 		3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A302AD8E76B0024D692 /* CloseButton.swift */; };
 		3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A322AD8EA7E0024D692 /* CircleButton.swift */; };
 		3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A342AD931C70024D692 /* ReportSummaryCell.swift */; };
+		3F82FDFC2B02390B00408804 /* scroll.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F82FDFB2B02390B00408804 /* scroll.json */; };
 		3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9445582ADCDE4B0003DCD4 /* DGCharts */; };
 		3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */; };
 		3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */; };
@@ -50,7 +51,6 @@
 		3F9BE37F2AF385860036D880 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9BE37D2AF385750036D880 /* User+CoreDataClass.swift */; };
 		3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */; };
 		3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */; };
-		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
 		6A7EB8D12AFCE33500D3334A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6A7EB8D02AFCE33500D3334A /* Lottie */; };
 		6A7EB8D32AFCE38100D3334A /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7EB8D22AFCE38100D3334A /* LaunchScreenViewController.swift */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
@@ -64,8 +64,9 @@
 		DE434E102ADE75D900C77FE4 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434E0F2ADE75D900C77FE4 /* DummyData.swift */; };
 		DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */; };
 		DE7930282AF0EAA40040258A /* EmptyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7930272AF0EAA40040258A /* EmptyDetailView.swift */; };
-		DEB10FC52AFE2D58000FD93B /* trash.json in Resources */ = {isa = PBXBuildFile; fileRef = DEB10FC42AFE2D58000FD93B /* trash.json */; };
 		DEB10FC72AFE426D000FD93B /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB10FC62AFE426D000FD93B /* AudioPlayerService.swift */; };
+		DEC3D5FE2B0215BA0055600C /* EmotionTrash+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC3D5FA2B0215BA0055600C /* EmotionTrash+CoreDataClass.swift */; };
+		DEC3D6002B0215BA0055600C /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC3D5FC2B0215BA0055600C /* Report+CoreDataClass.swift */; };
 		DECCFAD02AF884D900BBAD5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DECCFACE2AF884D900BBAD5C /* LaunchScreen.storyboard */; };
 		DEDA76992ADFB98600EA41C1 /* EmotionTrashCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */; };
 		DEECD7352AEBC86600BE20CE /* DSWaveformImage in Frameworks */ = {isa = PBXBuildFile; productRef = DEECD7342AEBC86600BE20CE /* DSWaveformImage */; };
@@ -94,6 +95,7 @@
 		0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recording+CoreDataClass.swift"; sourceTree = "<group>"; };
 		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
 		07D18F7B2AD948450080FACA /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		3F379F922B022D8D00EE122A /* trash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trash.json; sourceTree = "<group>"; };
 		3F5BE24D2AF8F6BF000B495F /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		3F5BE24F2AFB2861000B495F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		3F5BE2512AFB2882000B495F /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -107,7 +109,6 @@
 		3F67655F2AFE36A300ABDFF8 /* PasswordInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputViewController.swift; sourceTree = "<group>"; };
 		3F6765612AFE36C600ABDFF8 /* PasswordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputView.swift; sourceTree = "<group>"; };
 		3F783A092AD7DC1A0024D692 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F783A232AD805330024D692 /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		3F783A252AD8053D0024D692 /* FontGiude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGiude.swift; sourceTree = "<group>"; };
 		3F783A272AD8090E0024D692 /* MyPageCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCustomCell.swift; sourceTree = "<group>"; };
@@ -117,6 +118,7 @@
 		3F783A302AD8E76B0024D692 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		3F783A322AD8EA7E0024D692 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		3F783A342AD931C70024D692 /* ReportSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSummaryCell.swift; sourceTree = "<group>"; };
+		3F82FDFB2B02390B00408804 /* scroll.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scroll.json; sourceTree = "<group>"; };
 		3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDayOfTheWeekCell.swift; sourceTree = "<group>"; };
 		3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimeZoneCell.swift; sourceTree = "<group>"; };
 		3F9445612ADF79D80003DCD4 /* SignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInService.swift; sourceTree = "<group>"; };
@@ -125,8 +127,8 @@
 		3F9BE37D2AF385750036D880 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3FD4C31B2AEFA4B400B2FDD3 /* ReportEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportEmptyView.swift; sourceTree = "<group>"; };
 		3FF18E772AE7A4A100CC70D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6A7EB8D22AFCE38100D3334A /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		6AD552832B01E892008C8BB7 /* trash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trash.json; sourceTree = "<group>"; };
 		DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DE434DF82ADCCDF500C77FE4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DE434DFA2ADCCE0F00C77FE4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -136,9 +138,10 @@
 		DE434E0F2ADE75D900C77FE4 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hwibal_test1.mp3; sourceTree = "<group>"; };
 		DE7930272AF0EAA40040258A /* EmptyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDetailView.swift; sourceTree = "<group>"; };
-		DEB10FC42AFE2D58000FD93B /* trash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trash.json; sourceTree = "<group>"; };
 		DEB10FC62AFE426D000FD93B /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
 		DEC256242AEF75E9002917C4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		DEC3D5FA2B0215BA0055600C /* EmotionTrash+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmotionTrash+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DEC3D5FC2B0215BA0055600C /* Report+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Report+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DECCFACF2AF884D900BBAD5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEDA76982ADFB98600EA41C1 /* EmotionTrashCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTrashCell.swift; sourceTree = "<group>"; };
 		DEE212402AF38A5F0039E832 /* HWIBAL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HWIBAL.entitlements; sourceTree = "<group>"; };
@@ -191,6 +194,14 @@
 				0791B3492AE10A7F004B8740 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3F379F912B022D6A00EE122A /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				6AD552832B01E892008C8BB7 /* trash.json */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		3F5BE2532AFB2888000B495F /* SettingView */ = {
@@ -274,6 +285,7 @@
 				DEFE39FE2AD53C3A0076FE11 /* HWIBAL */,
 				DEFE39FD2AD53C3A0076FE11 /* Products */,
 				0791B3482AE10A7F004B8740 /* Frameworks */,
+				3F379F912B022D6A00EE122A /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -303,7 +315,8 @@
 		DEFE3A132AD53E720076FE11 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DEB10FC42AFE2D58000FD93B /* trash.json */,
+				3F82FDFB2B02390B00408804 /* scroll.json */,
+				3F379F922B022D8D00EE122A /* trash.json */,
 				DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */,
 				DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */,
 				DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */,
@@ -396,9 +409,9 @@
 		DEFE3A2E2AD542CF0076FE11 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3F783A172AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift */,
+				DEC3D5FA2B0215BA0055600C /* EmotionTrash+CoreDataClass.swift */,
+				DEC3D5FC2B0215BA0055600C /* Report+CoreDataClass.swift */,
 				3F9BE37D2AF385750036D880 /* User+CoreDataClass.swift */,
-				3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */,
 				0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */,
 			);
 			path = Models;
@@ -481,8 +494,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEB10FC52AFE2D58000FD93B /* trash.json in Resources */,
 				DECCFAD02AF884D900BBAD5C /* LaunchScreen.storyboard in Resources */,
+				3F379F932B022D8D00EE122A /* trash.json in Resources */,
+				3F82FDFC2B02390B00408804 /* scroll.json in Resources */,
 				DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */,
 				DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */,
 			);
@@ -513,10 +527,10 @@
 				DE434DF92ADCCDF500C77FE4 /* UserService.swift in Sources */,
 				DEFE3A1F2AD5402C0076FE11 /* HomeView.swift in Sources */,
 				3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */,
-				3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */,
 				DEB10FC72AFE426D000FD93B /* AudioPlayerService.swift in Sources */,
 				3FF18E782AE7A4A100CC70D2 /* NotificationService.swift in Sources */,
 				0773963F2AF69AFA0034C414 /* RecordingService.swift in Sources */,
+				DEC3D5FE2B0215BA0055600C /* EmotionTrash+CoreDataClass.swift in Sources */,
 				3FD4C31C2AEFA4B400B2FDD3 /* ReportEmptyView.swift in Sources */,
 				3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */,
 				3F5BE2522AFB2882000B495F /* SettingView.swift in Sources */,
@@ -551,10 +565,10 @@
 				3F9445682AE0D2BF0003DCD4 /* EmotionTrashService.swift in Sources */,
 				DE434DFB2ADCCE0F00C77FE4 /* SignInViewController.swift in Sources */,
 				0759A4582AE26A39000FFF76 /* CreatePageCameraView.swift in Sources */,
+				DEC3D6002B0215BA0055600C /* Report+CoreDataClass.swift in Sources */,
 				3F67655A2AFDE86000ABDFF8 /* PasswordSetupView.swift in Sources */,
 				07264AB82AEA45E10030BAFE /* RecordingViewController.swift in Sources */,
 				DEFE3A282AD541FB0076FE11 /* RootViewController.swift in Sources */,
-				3F783A1D2AD7DFBB0024D692 /* EmotionTrash+CoreDataClass.swift in Sources */,
 				07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -706,7 +720,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "글 작성시 사진 촬영을 위해 카메라 이용이 필요합니다.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "접근권한을 허용하고 Face ID로 앱 잠금을 해제해 보세요.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "접근권한을 허용하고 음성 녹음으로 감정쓰레기를 작성해 보세요.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "글 작성시 사진 첨부를 위해 사진 라이브러리 이용이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
@@ -743,7 +760,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "글 작성시 사진 촬영을 위해 카메라 이용이 필요합니다.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "접근권한을 허용하고 Face ID로 앱 잠금을 해제해 보세요.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "접근권한을 허용하고 음성 녹음으로 감정쓰레기를 작성해 보세요.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "글 작성시 사진 첨부를 위해 사진 라이브러리 이용이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
