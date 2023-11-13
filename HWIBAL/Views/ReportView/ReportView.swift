@@ -15,9 +15,9 @@ final class ReportView: UIView, RootView {
     let closeButton = CloseButton(color: .white)
     
     let animationView: LottieAnimationView = {
-        print("애니메이션 확인")
-        let lottieAnimationView = LottieAnimationView(name: "trash")
-        lottieAnimationView.backgroundColor = .systemBackground
+        let lottieAnimationView = LottieAnimationView(name: "scroll")
+        lottieAnimationView.backgroundColor = .clear
+        lottieAnimationView.contentMode = .scaleAspectFit
         return lottieAnimationView
     }()
     
@@ -128,6 +128,13 @@ final class ReportView: UIView, RootView {
             make.trailing.equalToSuperview().offset(-24)
             make.bottom.equalToSuperview()
         }
+        
+        addSubview(animationView)
+        animationView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-10)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(50)
+        }
     }
     
     func updateNumberOfPageLabel(_ currentPage: Int) {
@@ -144,5 +151,4 @@ final class ReportView: UIView, RootView {
         attributedString.append(totalPageAttributedString)
         numberOfPage.attributedText = attributedString
     }
-
 }

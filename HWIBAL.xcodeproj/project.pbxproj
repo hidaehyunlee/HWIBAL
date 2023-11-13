@@ -18,7 +18,6 @@
 		07D18F752AD83ECA0080FACA /* CreatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */; };
 		07D18F7C2AD948450080FACA /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D18F7B2AD948450080FACA /* AlertManager.swift */; };
 		3F14EA8E2AD55E6C0047CE34 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F14EA8D2AD55E6C0047CE34 /* SnapKit */; };
-		3F379F872B022AF600EE122A /* scroll.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F379F862B022AF600EE122A /* scroll.json */; };
 		3F379F932B022D8D00EE122A /* trash.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F379F922B022D8D00EE122A /* trash.json */; };
 		3F5BE24E2AF8F6BF000B495F /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BE24D2AF8F6BF000B495F /* Extension+UIColor.swift */; };
 		3F5BE2502AFB2861000B495F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5BE24F2AFB2861000B495F /* SettingViewController.swift */; };
@@ -43,6 +42,7 @@
 		3F783A312AD8E76B0024D692 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A302AD8E76B0024D692 /* CloseButton.swift */; };
 		3F783A332AD8EA7E0024D692 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A322AD8EA7E0024D692 /* CircleButton.swift */; };
 		3F783A352AD931C70024D692 /* ReportSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F783A342AD931C70024D692 /* ReportSummaryCell.swift */; };
+		3F82FDFC2B02390B00408804 /* scroll.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F82FDFB2B02390B00408804 /* scroll.json */; };
 		3F9445592ADCDE4B0003DCD4 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9445582ADCDE4B0003DCD4 /* DGCharts */; };
 		3F94455B2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */; };
 		3F94455D2ADD00270003DCD4 /* ReportTimeZoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */; };
@@ -55,7 +55,6 @@
 		3FF18E872AE7B12F00CC70D2 /* Report+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF18E832AE7B12F00CC70D2 /* Report+CoreDataClass.swift */; };
 		6A7EB8D12AFCE33500D3334A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6A7EB8D02AFCE33500D3334A /* Lottie */; };
 		6A7EB8D32AFCE38100D3334A /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7EB8D22AFCE38100D3334A /* LaunchScreenViewController.swift */; };
-		6AD552842B01E892008C8BB7 /* trash.json in Resources */ = {isa = PBXBuildFile; fileRef = 6AD552832B01E892008C8BB7 /* trash.json */; };
 		DE434DF22ADCCD1100C77FE4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF12ADCCD1100C77FE4 /* GoogleSignIn */; };
 		DE434DF42ADCCD1100C77FE4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE434DF32ADCCD1100C77FE4 /* GoogleSignInSwift */; };
 		DE434DF72ADCCDD400C77FE4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE434DF62ADCCDD400C77FE4 /* CoreDataManager.swift */; };
@@ -96,7 +95,6 @@
 		0791B34E2AE11846004B8740 /* Recording+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recording+CoreDataClass.swift"; sourceTree = "<group>"; };
 		07D18F742AD83ECA0080FACA /* CreatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePageViewController.swift; sourceTree = "<group>"; };
 		07D18F7B2AD948450080FACA /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
-		3F379F862B022AF600EE122A /* scroll.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scroll.json; sourceTree = "<group>"; };
 		3F379F922B022D8D00EE122A /* trash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trash.json; sourceTree = "<group>"; };
 		3F5BE24D2AF8F6BF000B495F /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		3F5BE24F2AFB2861000B495F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +119,7 @@
 		3F783A302AD8E76B0024D692 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		3F783A322AD8EA7E0024D692 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		3F783A342AD931C70024D692 /* ReportSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSummaryCell.swift; sourceTree = "<group>"; };
+		3F82FDFB2B02390B00408804 /* scroll.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scroll.json; sourceTree = "<group>"; };
 		3F94455A2ADCFFD20003DCD4 /* ReportDayOfTheWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDayOfTheWeekCell.swift; sourceTree = "<group>"; };
 		3F94455C2ADD00270003DCD4 /* ReportTimeZoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimeZoneCell.swift; sourceTree = "<group>"; };
 		3F9445612ADF79D80003DCD4 /* SignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInService.swift; sourceTree = "<group>"; };
@@ -316,8 +315,8 @@
 		DEFE3A132AD53E720076FE11 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3F82FDFB2B02390B00408804 /* scroll.json */,
 				3F379F922B022D8D00EE122A /* trash.json */,
-				3F379F862B022AF600EE122A /* scroll.json */,
 				DE6799BC2AEF410100ECECA0 /* hwibal_test1.mp3 */,
 				DEFE3A082AD53C3B0076FE11 /* Assets.xcassets */,
 				DEFE39FF2AD53C3A0076FE11 /* AppDelegate.swift */,
@@ -495,10 +494,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AD552842B01E892008C8BB7 /* trash.json in Resources */,
 				DECCFAD02AF884D900BBAD5C /* LaunchScreen.storyboard in Resources */,
 				3F379F932B022D8D00EE122A /* trash.json in Resources */,
-				3F379F872B022AF600EE122A /* scroll.json in Resources */,
+				3F82FDFC2B02390B00408804 /* scroll.json in Resources */,
 				DE6799BD2AEF410100ECECA0 /* hwibal_test1.mp3 in Resources */,
 				DEFE3A092AD53C3B0076FE11 /* Assets.xcassets in Resources */,
 			);
