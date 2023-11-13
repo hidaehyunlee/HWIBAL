@@ -76,11 +76,6 @@ extension DetailViewController: UICollectionViewDataSource {
     
         cell.initializeUI()
 
-        if cellsInitialized[indexPath] == nil {
-            cell.initializeUI()
-            cellsInitialized[indexPath] = true
-        }
-
         let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
         let reversedIndex = userEmotionTrashes.count - 1 - indexPath.item
         let data = userEmotionTrashes[reversedIndex]
