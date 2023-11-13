@@ -14,10 +14,10 @@ class EmotionTrashService {
     lazy var coreDataManager = CoreDataManager.shared
     lazy var recordingService = RecordingService.shared
     lazy var context = CoreDataManager.shared.persistentContainer.viewContext
+    var attributedStringFilePath: URL?
 
-    
     // ⚠️ audioRecording 저장형태에 따라 일부 변경될 수 있음
-    func createEmotionTrash(user: User, text: String, image: UIImage?, recording: Recording?) { //reacording을 인자로
+    func createEmotionTrash(user: User, text: String, attributedText: NSAttributedString?, image: UIImage?, recording: Recording?) {
         let context = coreDataManager.persistentContainer.viewContext
         
         if let entity = NSEntityDescription.entity(forEntityName: "EmotionTrash", in: context) {
@@ -30,17 +30,27 @@ class EmotionTrashService {
                 newEmotionTrash.image = image.pngData()
             }
             
-        //    newEmotionTrash.recording = recording
             if let recording = recording {
                 newEmotionTrash.recording = recording
             }
             
             newEmotionTrash.user = user
             
+            if let attributedText = attributedText {
+                do {
+                    newEmotionTrash.attributedStringData = try NSKeyedArchiver.archivedData(withRootObject: attributedText, requiringSecureCoding: false)
+                } catch {
+                    print("AttributedString을 Data로 변환하는데 실패했습니다: \(error.localizedDescription)")
+                }
+            }
+            
             if let reportEntity = NSEntityDescription.entity(forEntityName: "Report", in: context) {
                 let newReport = Report(entity: reportEntity, insertInto: context)
                 newReport.id = UUID()
                 newReport.text = text
+                newReport.attributedStringData = newEmotionTrash.attributedStringData
+                print(newReport.attributedStringData)
+
                 newReport.timestamp = Date()
                 newReport.user = user
             }
@@ -48,8 +58,6 @@ class EmotionTrashService {
             coreDataManager.saveContext()
         }
     }
-    
-
     
     func updateEmotionTrash(_ user: User, _ id: UUID, _ text: String, _ image: UIImage? = nil, _ recordingFilePath: String? = nil) {
         let fetchRequest: NSFetchRequest<EmotionTrash> = EmotionTrash.fetchRequest()
@@ -111,7 +119,20 @@ class EmotionTrashService {
         fetchRequest.predicate = NSPredicate(format: "user == %@", user)
         
         do {
-            return try context.fetch(fetchRequest)
+            let emotionTrashes = try context.fetch(fetchRequest)
+            // Process `emotionTrashes` inside the scope where it's declared
+            for emotionTrash in emotionTrashes {
+                if let data = emotionTrash.attributedStringData {
+                    do {
+                        // This should be a temporary variable or a property that's later used to display the attributed string
+                        let attributedString = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? NSAttributedString
+                        // You should now assign this `attributedString` to a property or pass it to where it needs to be displayed
+                    } catch {
+                        print("Data를 NSAttributedString으로 변환하는데 실패했습니다: \(error.localizedDescription)")
+                    }
+                }
+            }
+            return emotionTrashes
         } catch {
             print("Error fetching emotionTrashes: \(error)")
             return []

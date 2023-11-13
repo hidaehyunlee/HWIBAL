@@ -7,11 +7,19 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 final class ReportView: UIView, RootView {
     var currentPage = 1
     
     let closeButton = CloseButton(color: .white)
+    
+    let animationView: LottieAnimationView = {
+        let lottieAnimationView = LottieAnimationView(name: "scroll")
+        lottieAnimationView.backgroundColor = .clear
+        lottieAnimationView.contentMode = .scaleAspectFit
+        return lottieAnimationView
+    }()
     
     let goToFirstButton: UIButton = {
         let button = UIButton()
@@ -120,6 +128,13 @@ final class ReportView: UIView, RootView {
             make.trailing.equalToSuperview().offset(-24)
             make.bottom.equalToSuperview()
         }
+        
+        addSubview(animationView)
+        animationView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-10)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(50)
+        }
     }
     
     func updateNumberOfPageLabel(_ currentPage: Int) {
@@ -136,5 +151,4 @@ final class ReportView: UIView, RootView {
         attributedString.append(totalPageAttributedString)
         numberOfPage.attributedText = attributedString
     }
-
 }

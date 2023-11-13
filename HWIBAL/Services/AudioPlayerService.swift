@@ -11,19 +11,17 @@ class AudioPlayerService {
     var audioPlayer: AVAudioPlayer?
 
     init(filePath: String) {
-        guard let audioURL = URL(string: filePath) else {
-            print("Error: URL로 변환 실패")
-            return
-        }
+        let audioURL = URL(fileURLWithPath: filePath)
 
         do {
-            audioPlayer?.stop() // Stop any currently playing audio before starting a new one
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+
             audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
             audioPlayer?.prepareToPlay()
-            // audioPlayer?.delegate = self // Add this line to set the delegate
             audioPlayer?.play()
         } catch {
-            print("플레이어 생성 Error: \(error)")
+            print("AVAudioSession configuration error: \(error)")
         }
     }
 

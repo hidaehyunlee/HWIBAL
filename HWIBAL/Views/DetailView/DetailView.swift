@@ -88,14 +88,14 @@ final class DetailView: UIView, RootView {
 
         goToFirstButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(54)
-            make.top.equalTo(layoutMarginsGuide).offset(25)
+            make.top.equalTo(layoutMarginsGuide).offset(20)
             make.width.equalTo(100)
             make.height.equalTo(20)
         }
 
         numberOfPageLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-54)
-            make.top.equalTo(layoutMarginsGuide).offset(25)
+            make.top.equalTo(layoutMarginsGuide).offset(20)
             make.height.equalTo(20)
         }
 
