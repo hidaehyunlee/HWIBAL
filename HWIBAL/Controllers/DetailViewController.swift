@@ -13,6 +13,7 @@ import UIKit
 final class DetailViewController: RootViewController<DetailView> {
     var centerCell: EmotionTrashCell?
     private lazy var userEmotionTrashes: [EmotionTrash] = []
+    let numberOfItems = 256
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +42,6 @@ final class DetailViewController: RootViewController<DetailView> {
         rootView.collectionView.dataSource = self
         
         rootView.totalPage = userEmotionTrashes.count
-        
-        rootView.goToFirstButton.addTarget(self, action: #selector(goToFirstButtonTapped), for: .touchUpInside)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,7 +66,7 @@ final class DetailViewController: RootViewController<DetailView> {
     
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return userEmotionTrashes.count
+        return numberOfItems
     }
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -76,7 +75,7 @@ extension DetailViewController: UICollectionViewDataSource {
         cell.initializeUI()
 
         let userEmotionTrashes = EmotionTrashService.shared.fetchTotalEmotionTrashes(SignInService.shared.signedInUser!)
-        let reversedIndex = userEmotionTrashes.count - 1 - indexPath.item
+        let reversedIndex = userEmotionTrashes.count - 1 - (indexPath.item % userEmotionTrashes.count)
         let data = userEmotionTrashes[reversedIndex]
             
         if let imageData = data.image, let image = UIImage(data: imageData) {
@@ -121,11 +120,6 @@ extension DetailViewController: UICollectionViewDataSource {
 }
     
 extension DetailViewController: UICollectionViewDelegate {
-    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //        let cellId = userEmotionTrashes[indexPath.item].id
-    //        print("현재 cell id: \(cellId)") // 추후 삭제 구현시 확인을 위해 남겨둠
-    //    }
-        
     // 스크롤이 멈추면 호출되며, 스크롤이 셀의 중앙에 멈추도록 함
     func scrollViewWillEndDragging(
         _ scrollView: UIScrollView,
@@ -162,7 +156,7 @@ extension DetailViewController: UICollectionViewDelegate {
         let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
             
         if let indexPath = rootView.collectionView.indexPathForItem(at: visiblePoint) {
-            let currentPage = indexPath.item + 1
+            let currentPage = (indexPath.item % userEmotionTrashes.count) + 1
             DispatchQueue.main.async { [weak self] in
                 self?.rootView.updateNumberOfPageLabel(currentPage)
             }
