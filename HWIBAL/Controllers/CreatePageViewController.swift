@@ -282,15 +282,22 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
     }
     
     private func insertImageIntoTextView(image: UIImage) {
-        let targetSize = CGSize(width: (DetailView.CarouselConst.itemSize.width) - (DetailView.CarouselConst.itemSpacing * 2), height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
+        let targetSize = CGSize(width: 250 * UIScreen.main.bounds.width / 393, height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
         let scaledImage = image.scaleToSize(targetSize: targetSize)
+        let roundedImage = scaledImage.rounded(withCornerRadius: 12.0)
         
         // 조절된 이미지 -> NSTextAttachment로 만들기
         let textAttachment = NSTextAttachment()
-        textAttachment.image = scaledImage
+        textAttachment.image = roundedImage
         
         // NSTextAttachment를 NSAttributedString으로 만들기
         let attrStringWithImage = NSAttributedString(attachment: textAttachment)
+        
+        // 줄바꿈 문자를 추가한 후 이미지 -> NSAttributedString에 추가하기
+        let newLineString = NSAttributedString(string: "\n")
+        let combinedString = NSMutableAttributedString()
+        combinedString.append(attrStringWithImage)
+        combinedString.append(newLineString)
         
         // 현재 UITextView에서 NSAttributedString 가져오기
         let attributedString = NSMutableAttributedString(attributedString: rootView.textView.attributedText)
@@ -301,14 +308,12 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
             .foregroundColor: UIColor.label // Set the text color to the system label color
         ]
 
-        // 이미지 -> NSAttributedString에 추가하기
-        attributedString.append(attrStringWithImage)
+        // 이미지 및 줄바꿈 문자 -> NSAttributedString에 추가하기
+        attributedString.append(combinedString)
         attributedString.addAttributes(attributes, range: NSRange(location: 0, length: attributedString.length))
 
         // UITextView의 attributedText 업데이트
         rootView.textView.attributedText = attributedString
-        
-        // 커서를 이미지 다음 줄로 이동 해야함
     }
 
     func getDocumentsDirectory() -> URL {
@@ -355,5 +360,15 @@ extension UIImage {
         UIGraphicsEndImageContext()
         
         return newImage ?? self
+    }
+    
+    func rounded(withCornerRadius cornerRadius: CGFloat) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        let rect = CGRect(origin: .zero, size: size)
+        UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).addClip()
+        draw(in: rect)
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return roundedImage ?? self
     }
 }
