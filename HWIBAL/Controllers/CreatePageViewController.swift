@@ -282,7 +282,7 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
     }
     
     private func insertImageIntoTextView(image: UIImage) {
-        let targetSize = CGSize(width: 250 * UIScreen.main.bounds.width / 393, height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
+        let targetSize = CGSize(width: 252 * UIScreen.main.bounds.width / 393, height: (rootView.textView.bounds.width / image.size.width) * image.size.height)
         let scaledImage = image.scaleToSize(targetSize: targetSize)
         let roundedImage = scaledImage.rounded(withCornerRadius: 12.0)
         
@@ -295,12 +295,16 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
         
         // 줄바꿈 문자를 추가한 후 이미지 -> NSAttributedString에 추가하기
         let newLineString = NSAttributedString(string: "\n")
-        let combinedString = NSMutableAttributedString()
-        combinedString.append(attrStringWithImage)
-        combinedString.append(newLineString)
-        
+            
         // 현재 UITextView에서 NSAttributedString 가져오기
         let attributedString = NSMutableAttributedString(attributedString: rootView.textView.attributedText)
+            
+        // 이미지 앞에 줄바꿈 문자 추가
+        attributedString.append(newLineString)
+        attributedString.append(attrStringWithImage)
+            
+        // 이미지 뒤에 줄바꿈 문자 추가
+        attributedString.append(newLineString)
         
         // NSAttributedString에 폰트 및 색상 설정
         let attributes: [NSAttributedString.Key: Any] = [
@@ -308,8 +312,6 @@ extension CreatePageViewController: UIImagePickerControllerDelegate, UINavigatio
             .foregroundColor: UIColor.label // Set the text color to the system label color
         ]
 
-        // 이미지 및 줄바꿈 문자 -> NSAttributedString에 추가하기
-        attributedString.append(combinedString)
         attributedString.addAttributes(attributes, range: NSRange(location: 0, length: attributedString.length))
 
         // UITextView의 attributedText 업데이트

@@ -85,7 +85,7 @@ extension DetailViewController: UICollectionViewDataSource {
                 if let attributedText = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSAttributedString.self, from: attributedTextData) {
                     //  NSAttributedString에 커스텀 속성을 적용하여 라벨에 직접 설정
                     let attributes: [NSAttributedString.Key: Any] = [
-                        .font: FontGuide.size16Bold,
+                        .font: FontGuide.size16,
                         .foregroundColor: UIColor.white
                     ]
                     

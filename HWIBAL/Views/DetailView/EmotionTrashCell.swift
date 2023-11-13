@@ -41,7 +41,8 @@ class EmotionTrashCell: UICollectionViewCell {
         textView.backgroundColor = ColorGuide.main
         textView.isEditable = false
         textView.isSelectable = false
-
+        textView.showsVerticalScrollIndicator = false
+        
         return textView
     }()
 
