@@ -7,11 +7,19 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 final class ReportView: UIView, RootView {
     var currentPage = 1
     
     let closeButton = CloseButton(color: .white)
+    
+    let animationView: LottieAnimationView = {
+        print("애니메이션 확인")
+        let lottieAnimationView = LottieAnimationView(name: "trash")
+        lottieAnimationView.backgroundColor = .systemBackground
+        return lottieAnimationView
+    }()
     
     let goToFirstButton: UIButton = {
         let button = UIButton()
