@@ -37,11 +37,39 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        requestAudioPermission()
         setupUI()
         loadSignedInUser()
         if let timestamp = existingAudioTimestamp {
             // CreatePageViewController에서 전달받은 timestamp -> 기존 녹음 삭제
             deleteRecordingWithTimestamp(timestamp)
+        }
+    }
+    
+    func requestAudioPermission() {
+        // 현재 권한 상태 확인
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        switch audioSession.recordPermission {
+        case .granted:
+            // 이미 권한이 허용된 경우
+            print("Audio permission already granted")
+        case .undetermined:
+            audioSession.requestRecordPermission { granted in
+                if granted {
+                    // 사용자가 권한을 허용한 경우
+                    print("Audio permission granted")
+                } else {
+                    // 사용자가 권한을 거부한 경우 또는 다른 이유로 권한이 허용되지 않은 경우
+                    print("Audio permission denied")
+                }
+            }
+        case .denied:
+            // 사용자가 권한을 거부한 경우 또는 다른 이유로 권한이 허용되지 않은 경우
+            print("Audio permission denied")
+        @unknown default:
+            // 기타 상황에 대한 기본 처리
+            print("Unknown audio permission status")
         }
     }
     

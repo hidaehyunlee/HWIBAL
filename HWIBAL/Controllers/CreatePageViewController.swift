@@ -12,7 +12,6 @@ import UIKit
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var keyboardHeight: CGFloat = 0
     var attributedStringFilePath: URL?
-    var playButton: UIButton?
     private var attachedImageView: UIImageView?
     var playButton: CircleButton?
     var savedAudioURL: URL?
@@ -34,15 +33,12 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveAudioNotification(_:)), name: NSNotification.Name("RecordingDidFinish"), object: nil)
-
     }
-    
     
     func hideKeyboard() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
-    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -108,6 +104,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func startOrStopRecording() {
+        
         // 이미 저장된 오디오 URL이 있는지 확인
         if let savedAudioURL = savedAudioURL {
             let recordingVC = RecordingViewController()
@@ -147,7 +144,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         }
     }
 
-    
     @objc func playSavedAudio() {
         guard let url = savedAudioURL else {
             print("Audio URL is nil")
