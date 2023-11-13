@@ -70,8 +70,8 @@ extension PasswordSetupViewController: PasswordSetupViewDelegate {
     private func checkPassword() {
         if enteredPassword == previousPassword {
             let passwordString = previousPassword.joined()
-            UserDefaults.standard.set(true, forKey: "isLocked")
             UserDefaults.standard.set(passwordString, forKey: "appPassword")
+            UserDefaults.standard.set(true, forKey: "isLocked")
             cancelButtonTapped()
         } else {
             if currentAttempt < maxAttempts {

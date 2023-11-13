@@ -139,7 +139,6 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             let logoutAlert = UIAlertController(title: "", message: "로그아웃 하시겠습니까?", preferredStyle: .actionSheet)
             let action = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
                 SignInService.shared.SetOffAutoSignIn((SignInService.shared.signedInUser?.email)!)
-                UserDefaults.standard.set(false, forKey: "isLocked")
                 self.goToSignInVC()
             }
             logoutAlert.addAction(action)
