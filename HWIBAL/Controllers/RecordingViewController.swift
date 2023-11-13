@@ -47,29 +47,14 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func requestAudioPermission() {
-        // 현재 권한 상태 확인
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        switch audioSession.recordPermission {
-        case .granted:
-            // 이미 권한이 허용된 경우
-            print("Audio permission already granted")
-        case .undetermined:
-            audioSession.requestRecordPermission { granted in
-                if granted {
-                    // 사용자가 권한을 허용한 경우
-                    print("Audio permission granted")
-                } else {
-                    // 사용자가 권한을 거부한 경우 또는 다른 이유로 권한이 허용되지 않은 경우
-                    print("Audio permission denied")
-                }
+        AVAudioSession.sharedInstance().requestRecordPermission { response in
+            if response {
+                // 사용자가 오디오 권한을 허용한 경우
+                print("오디오 권한이 허용되었습니다.")
+            } else {
+                // 사용자가 오디오 권한을 거부한 경우 또는 다른 이유로 권한이 허용되지 않은 경우
+                print("오디오 권한이 거부되었습니다.")
             }
-        case .denied:
-            // 사용자가 권한을 거부한 경우 또는 다른 이유로 권한이 허용되지 않은 경우
-            print("Audio permission denied")
-        @unknown default:
-            // 기타 상황에 대한 기본 처리
-            print("Unknown audio permission status")
         }
     }
     
@@ -107,7 +92,6 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
             make.width.height.equalTo(55)
         }
 
-        
         cancelButton = UIButton(type: .system)
         cancelButton.setTitle("취소", for: .normal)
         cancelButton.titleLabel?.font = FontGuide.size16Bold
