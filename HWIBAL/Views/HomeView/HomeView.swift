@@ -360,6 +360,7 @@ final class HomeView: UIView, RootView {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                 burningView.removeFromSuperview()
+                commonAnimation()
 
                 let randomActionIndex = Int.random(in: 0..<3)
                 switch randomActionIndex {
@@ -375,10 +376,6 @@ final class HomeView: UIView, RootView {
             }
             func action0() {
                 UIView.animate(withDuration: 1.0, animations: {
-                    let imageNames = ["hwibari_smile_1", "hwibari_smile_2", "hwibari_smile_3"]
-                    let randomImageIndex = Int.random(in: 0..<imageNames.count)
-                    let randomImageName = imageNames[randomImageIndex]
-                    self.hwibariImage.image = UIImage(named: randomImageName)
 
                     let jumpAnimation = CABasicAnimation(keyPath: "position.y")
                     jumpAnimation.duration = 0.2 // 애니메이션 지속 시간
@@ -389,26 +386,10 @@ final class HomeView: UIView, RootView {
                     jumpAnimation.repeatCount = 3 // 반복 횟수
 
                     self.hwibariImage.layer.add(jumpAnimation, forKey: "jumpAnimation")
-                }) { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        UIView.animate(withDuration: 0, animations: {
-                            self.titleLabel1.text = "당신의"
-                            self.hwibariImage.image = UIImage(named: "hwibari_default")
-                            self.titleLabel1.isHidden = false
-                            self.titleLabel2.isHidden = false
-                            self.myPageButton.customView?.isHidden = false
-                            self.bottomButton.isHidden = false
-                            self.writeButton.isHidden = false
-                        })
-                    }
-                }
+                })
             }
             func action1() {
                 UIView.animate(withDuration: 1.0, animations: {
-                    let imageNames = ["hwibari_smile_1", "hwibari_smile_2", "hwibari_smile_3"]
-                    let randomImageIndex = Int.random(in: 0..<imageNames.count)
-                    let randomImageName = imageNames[randomImageIndex]
-                    self.hwibariImage.image = UIImage(named: randomImageName)
 
                     let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
                     scaleAnimation.duration = 0.3
@@ -419,26 +400,10 @@ final class HomeView: UIView, RootView {
                     scaleAnimation.repeatCount = 3
 
                     self.hwibariImage.layer.add(scaleAnimation, forKey: "scaleAnimation")
-                }) { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        UIView.animate(withDuration: 0, animations: {
-                            self.titleLabel1.text = "당신의"
-                            self.hwibariImage.image = UIImage(named: "hwibari_default")
-                            self.titleLabel1.isHidden = false
-                            self.titleLabel2.isHidden = false
-                            self.myPageButton.customView?.isHidden = false
-                            self.bottomButton.isHidden = false
-                            self.writeButton.isHidden = false
-                        })
-                    }
-                }
+                })
             }
             func action2() {
                 UIView.animate(withDuration: 0, animations: {
-                    let imageNames = ["hwibari_smile_1", "hwibari_smile_2", "hwibari_smile_3"]
-                    let randomImageIndex = Int.random(in: 0..<imageNames.count)
-                    let randomImageName = imageNames[randomImageIndex]
-                    self.hwibariImage.image = UIImage(named: randomImageName)
 
                     let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
                     rotationAnimation.duration = 0.3
@@ -449,20 +414,27 @@ final class HomeView: UIView, RootView {
                     rotationAnimation.repeatCount = 3
 
                     self.hwibariImage.layer.add(rotationAnimation, forKey: "rotationAnimation")
-                }) { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        UIView.animate(withDuration: 0, animations: {
-                            self.titleLabel1.text = "당신의"
-                            self.hwibariImage.image = UIImage(named: "hwibari_default")
-                            self.titleLabel1.isHidden = false
-                            self.titleLabel2.isHidden = false
-                            self.myPageButton.customView?.isHidden = false
-                            self.bottomButton.isHidden = false
-                            self.writeButton.isHidden = false
-                        })
-                    }
-                }
+                })
             }
+            func commonAnimation() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    UIView.animate(withDuration: 0, animations: {
+                        self.titleLabel1.text = "당신의"
+                        self.hwibariImage.image = UIImage(named: "hwibari_default")
+                        self.titleLabel1.isHidden = false
+                        self.titleLabel2.isHidden = false
+                        self.myPageButton.customView?.isHidden = false
+                        self.bottomButton.isHidden = false
+                        self.writeButton.isHidden = false
+                    })
+                }
+
+                let imageNames = ["hwibari_smile_1", "hwibari_smile_2", "hwibari_smile_3"]
+                let randomImageIndex = Int.random(in: 0..<imageNames.count)
+                let randomImageName = imageNames[randomImageIndex]
+                self.hwibariImage.image = UIImage(named: randomImageName)
+            }
+
         }
     }
     
