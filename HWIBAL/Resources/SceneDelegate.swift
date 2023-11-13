@@ -5,6 +5,7 @@
 //  Created by daelee on 10/10/23.
 //
 
+import LocalAuthentication
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -14,30 +15,50 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = .init(windowScene: windowScene)
         window?.makeKeyAndVisible()
-        
-        if SignInService.shared.isDarkMode() {
-            window?.overrideUserInterfaceStyle = .dark
-        } else {
-            window?.overrideUserInterfaceStyle = .light
-        }
-        
+        window?.overrideUserInterfaceStyle = SignInService.shared.isDarkMode() ? .dark : .light
         window?.rootViewController = LaunchScreenViewController(completion: handleLaunchScreenCompletion)
     }
-    
+
     func handleLaunchScreenCompletion() {
-        if SignInService.shared.isSignedIn() {
-            if SignInService.shared.isLocked() {
-                let passwordInputVC =  PasswordInputViewController()
-                passwordInputVC.modalPresentationStyle = .fullScreen
-                window?.rootViewController?.present(passwordInputVC, animated: true, completion: nil)
+        if SignInService.shared.isLocked() {
+            if SignInService.shared.isSignedIn() {
+                showPasswordInput()
+                authenticateForUnlock()
             } else {
-                goToMainVC()
+                window?.rootViewController = SignInViewController()
             }
         } else {
             window?.rootViewController = SignInViewController()
         }
     }
-    
+
+    func authenticateForUnlock() {
+        let context = LAContext()
+
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
+            let reason = "잠금을 해제하려면 Face ID 인증을 사용하세요."
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, _ in
+                DispatchQueue.main.async { [weak self] in
+                    if success {
+                        self?.goToMainVC()
+                    } else {
+                        self?.showPasswordInput()
+                    }
+                }
+            }
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                self?.showPasswordInput()
+            }
+        }
+    }
+
+    func showPasswordInput() {
+        let passwordInputVC = PasswordInputViewController()
+        passwordInputVC.modalPresentationStyle = .fullScreen
+        window?.rootViewController?.present(passwordInputVC, animated: true, completion: nil)
+    }
+
     func goToMainVC() {
         if let signedInUserEmail = SignInService.shared.loadSignedInUserEmail(),
            let user = UserService.shared.getExistUser(signedInUserEmail) {
@@ -55,6 +76,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneWillEnterForeground(_ scene: UIScene) {
         print("자동 휘발일 확인")
+        if UserDefaults.standard.bool(forKey: "isLocked") {
+            print("앱이 잠겨있음")
+            showPasswordInput()
+            authenticateForUnlock()
+        } else {
+            print("앱이 잠겨있지 않음")
+        }
+
         if let email = SignInService.shared.signedInUser?.email,
            let autoExpireDate = SignInService.shared.signedInUser?.autoExpireDate {
             let currentDate = Date()

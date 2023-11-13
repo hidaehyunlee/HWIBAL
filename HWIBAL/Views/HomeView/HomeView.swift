@@ -43,7 +43,7 @@ final class HomeView: UIView, RootView {
         return label
     }()
     
-    private lazy var hwibariImage: UIImageView = {
+    lazy var hwibariImage: UIImageView = {
         let imageView = hwibariImageView(named: "hwibari_default", contentMode: .scaleAspectFit)
         return imageView
     }()
@@ -89,15 +89,90 @@ final class HomeView: UIView, RootView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myPageButtonTapped))
         userIconView.isUserInteractionEnabled = true
         userIconView.addGestureRecognizer(tapGesture)
-        
-        userIconView.snp.makeConstraints { make in
-            make.width.equalTo(23)
-            make.height.equalTo(23)
-        }
-        
         return userButton
     }()
+    
+    private lazy var bottomButton: UIView = {
+        let button = UIView()
+        button.backgroundColor = ColorGuide.main
+        button.layer.cornerRadius = 4
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let removeTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeButtonTapped))
+        button.addGestureRecognizer(removeTapGesture)
 
+        addSubview(button)
+
+        let pencilView = writeButton
+
+        button.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalTo(pencilView.snp.leading).offset(-10)
+            make.bottom.equalToSuperview().offset(-40)
+        }
+
+        let removeLabel = UILabel()
+        removeLabel.textColor = .white
+        removeLabel.font = FontGuide.size19Bold
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.04
+        removeLabel.attributedText = NSMutableAttributedString(string: "다, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+
+        button.addSubview(removeLabel)
+
+        removeLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(button)
+            make.centerY.equalTo(button)
+            make.width.equalTo(83)
+            make.height.equalTo(24)
+        }
+
+        return button
+    }()
+    
+    private lazy var writeButton: UIView = {
+        let pencilButton = UIView()
+        pencilButton.backgroundColor = .white
+        pencilButton.layer.cornerRadius = 4
+        pencilButton.layer.borderWidth = 1.5
+        pencilButton.layer.borderColor = ColorGuide.main.cgColor
+        let pencilImageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
+        pencilButton.addGestureRecognizer(pencilImageViewTapGesture)
+
+        addSubview(pencilButton)
+
+        pencilButton.snp.makeConstraints { make in
+            make.width.equalTo(56)
+            make.height.equalTo(56)
+            make.trailing.equalToSuperview().offset(-24)
+            make.bottom.equalToSuperview().offset(-40)
+        }
+
+        let penImage = createPenImage
+        pencilButton.addSubview(penImage)
+
+        penImage.snp.makeConstraints { make in
+            make.width.equalTo(25)
+            make.height.equalTo(25)
+            make.center.equalToSuperview()
+        }
+        return pencilButton
+    }()
+
+    // MARK: - Pen Image
+
+    private lazy var createPenImage: UIView = {
+        let penImage = UIView()
+        penImage.translatesAutoresizingMaskIntoConstraints = false
+
+        let image0 = UIImage(named: "pen")
+        let imageView = UIImageView(image: image0)
+        imageView.contentMode = .scaleAspectFit
+        penImage.addSubview(imageView)
+
+        return penImage
+    }()
+    
     // MARK: - Label Title Update Function
     
     func updateEmotionTrashesCountLabel(_ emotionCount: Int) {
@@ -111,7 +186,7 @@ final class HomeView: UIView, RootView {
             
         myPageButton.isEnabled = false
         myPageButton.customView?.alpha = 0.2
-        setupButton()
+//        setupButton()
         addSubviews()
         setupConstraints()
         setupHwibariImageView()
@@ -138,6 +213,8 @@ final class HomeView: UIView, RootView {
         addSubview(titleLabel2)
         addSubview(centerView)
         centerView.addSubview(hwibariImage)
+        addSubview(bottomButton)
+        
         viewController?.navigationItem.rightBarButtonItem = myPageButton
     }
     
@@ -172,90 +249,15 @@ final class HomeView: UIView, RootView {
         hwibariImage.addGestureRecognizer(hwibariTapGesture)
     }
     
-    private func setupButton() {
-        let deleteButton = UIView()
-        deleteButton.backgroundColor = ColorGuide.main
-        deleteButton.layer.cornerRadius = 4
-        deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        let removeTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeButtonTapped))
-        deleteButton.addGestureRecognizer(removeTapGesture)
-        
-        addSubview(deleteButton)
-        
-        let pencilView = pencilImageView()
-        
-        deleteButton.snp.makeConstraints { make in
-            make.height.equalTo(56)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalTo(pencilView.snp.leading).offset(-10)
-            make.bottom.equalToSuperview().offset(-40)
-        }
-        
-        let removeLabel = UILabel()
-        removeLabel.textColor = .white
-        removeLabel.font = FontGuide.size19Bold
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.04
-        removeLabel.attributedText = NSMutableAttributedString(string: "다, 휘발 🔥", attributes: [NSAttributedString.Key.kern: -0.5, NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        
-        deleteButton.addSubview(removeLabel)
-        
-        removeLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(deleteButton)
-            make.centerY.equalTo(deleteButton)
-            make.width.equalTo(83)
-            make.height.equalTo(24)
-        }
-    }
-        
-    private func pencilImageView() -> UIView {
-        let writeButton = UIView()
-        writeButton.backgroundColor = .white
-        writeButton.layer.cornerRadius = 4
-        writeButton.layer.borderWidth = 1.5
-        writeButton.layer.borderColor = ColorGuide.main.cgColor
-        let pencilImageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
-        writeButton.addGestureRecognizer(pencilImageViewTapGesture)
-            
-        addSubview(writeButton)
-            
-        writeButton.snp.makeConstraints { make in
-            make.width.equalTo(56)
-            make.height.equalTo(56)
-            make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-40)
-        }
-            
-        let penImage = createPenImage()
-        writeButton.addSubview(penImage)
-            
-        penImage.snp.makeConstraints { make in
-            make.width.equalTo(25)
-            make.height.equalTo(25)
-            make.center.equalToSuperview()
-        }
-        return writeButton
-    }
-    
-    private func createPenImage() -> UIView {
-        let penImage = UIView()
-        penImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        let image0 = UIImage(named: "pen")
-        let imageView = UIImageView(image: image0)
-        imageView.contentMode = .scaleAspectFit
-        penImage.addSubview(imageView)
-        
-        return penImage
-    }
-    
     func returnHwibari() {
         if hwibariImage.image == UIImage(named: "hwibariopen2") {
+            print("있을 때 뚜껑닫기")
             hwibariImage.animationImages = [
                 UIImage(named: "hwibariopen2")!,
                 UIImage(named: "hwibariopen")!
             ]
-        } else if hwibariImage.image == UIImage(named: "hwibariopen01"){
+        } else if hwibariImage.image == UIImage(named: "hwibariopen01") {
+            print("아무것도 없을 때 뚜껑닫기")
             hwibariImage.animationImages = [
                 UIImage(named: "hwibariopen01")!,
                 UIImage(named: "hwibariopen02")!
@@ -321,6 +323,12 @@ final class HomeView: UIView, RootView {
             UIImage(named: "hwibari_default")!
         ]
         
+        titleLabel1.text = "수고했어요. 토닥토닥💕"
+        titleLabel2.isHidden = true
+        myPageButton.customView?.isHidden = true
+        bottomButton.isHidden = true
+        writeButton.isHidden = true
+        
         hwibariImage.animationDuration = 1.0 // 애니메이션 한 번의 지속 시간을 설정
         hwibariImage.animationRepeatCount = 1 // 애니메이션의 반복 횟수를 설정
         hwibariImage.startAnimating()
@@ -352,6 +360,7 @@ final class HomeView: UIView, RootView {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                 burningView.removeFromSuperview()
+                commonAnimation()
 
                 let randomActionIndex = Int.random(in: 0..<3)
                 switch randomActionIndex {
@@ -367,8 +376,6 @@ final class HomeView: UIView, RootView {
             }
             func action0() {
                 UIView.animate(withDuration: 1.0, animations: {
-                    self.titleLabel1.text = "수고했어요. 토닥토닥💕"
-                    self.hwibariImage.image = UIImage(named: "hwibariheart")
 
                     let jumpAnimation = CABasicAnimation(keyPath: "position.y")
                     jumpAnimation.duration = 0.2 // 애니메이션 지속 시간
@@ -379,20 +386,10 @@ final class HomeView: UIView, RootView {
                     jumpAnimation.repeatCount = 3 // 반복 횟수
 
                     self.hwibariImage.layer.add(jumpAnimation, forKey: "jumpAnimation")
-                }) { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        UIView.animate(withDuration: 0, animations: {
-                            self.titleLabel1.text = "당신의"
-                            self.hwibariImage.image = UIImage(named: "hwibari_default")
-                        })
-                    }
-                }
+                })
             }
             func action1() {
                 UIView.animate(withDuration: 1.0, animations: {
-
-                    self.titleLabel1.text = "수고했어요. 토닥토닥💕"
-                    self.hwibariImage.image = UIImage(named: "hwibariheart")
 
                     let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
                     scaleAnimation.duration = 0.3
@@ -403,20 +400,10 @@ final class HomeView: UIView, RootView {
                     scaleAnimation.repeatCount = 3
 
                     self.hwibariImage.layer.add(scaleAnimation, forKey: "scaleAnimation")
-                }) { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        UIView.animate(withDuration: 0, animations: {
-                            self.titleLabel1.text = "당신의"
-                            self.hwibariImage.image = UIImage(named: "hwibari_default")
-                        })
-                    }
-                }
+                })
             }
             func action2() {
-                UIView.animate(withDuration: 1.0, animations: {
-
-                    self.titleLabel1.text = "수고했어요. 토닥토닥💕"
-                    self.hwibariImage.image = UIImage(named: "hwibariheart")
+                UIView.animate(withDuration: 0, animations: {
 
                     let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
                     rotationAnimation.duration = 0.3
@@ -427,15 +414,27 @@ final class HomeView: UIView, RootView {
                     rotationAnimation.repeatCount = 3
 
                     self.hwibariImage.layer.add(rotationAnimation, forKey: "rotationAnimation")
-                }) { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        UIView.animate(withDuration: 0, animations: {
-                            self.titleLabel1.text = "당신의"
-                            self.hwibariImage.image = UIImage(named: "hwibari_default")
-                        })
-                    }
-                }
+                })
             }
+            func commonAnimation() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    UIView.animate(withDuration: 0, animations: {
+                        self.titleLabel1.text = "당신의"
+                        self.hwibariImage.image = UIImage(named: "hwibari_default")
+                        self.titleLabel1.isHidden = false
+                        self.titleLabel2.isHidden = false
+                        self.myPageButton.customView?.isHidden = false
+                        self.bottomButton.isHidden = false
+                        self.writeButton.isHidden = false
+                    })
+                }
+
+                let imageNames = ["hwibari_smile_1", "hwibari_smile_2", "hwibari_smile_3"]
+                let randomImageIndex = Int.random(in: 0..<imageNames.count)
+                let randomImageName = imageNames[randomImageIndex]
+                self.hwibariImage.image = UIImage(named: randomImageName)
+            }
+
         }
     }
     
