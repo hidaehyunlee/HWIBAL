@@ -65,8 +65,8 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         addSubview(playButton)
         
         // v1.0.0
-//        soundButton.isHidden = true
-//        playButton.isHidden = true
+        soundButton.isHidden = true
+        playButton.isHidden = true
     }
     
     @objc func textViewDidChange(_ textView: UITextView) {
@@ -112,6 +112,11 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
             make.leading.equalTo(cameraButton.snp.trailing).offset(16)
             make.bottom.equalTo(cameraButton.snp.bottom)
             make.width.height.equalTo(36)
+        }
+        
+        playButton.snp.makeConstraints { make in
+            make.leading.equalTo(soundButton.snp.trailing).offset(16)
+            make.bottom.equalTo(cameraButton.snp.bottom)
         }
         
         textView.snp.remakeConstraints { make in

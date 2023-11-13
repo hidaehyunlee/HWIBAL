@@ -9,18 +9,24 @@ import UIKit
 import AVFoundation
 
 class BottomSheetPresentationController: UIPresentationController {
+    let blurEffectView: UIVisualEffectView!
     let scrimView: UIView!
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+        let blurEffect = UIBlurEffect(style: .dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
         scrimView = UIView()
         scrimView.backgroundColor = UIColor(white: 0, alpha: 0.4)
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissController))
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.blurEffectView.isUserInteractionEnabled = true
+        self.blurEffectView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
-        return CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * 0.7), size: CGSize(width: self.containerView!.frame.width, height: self.containerView!.frame.height * 0.6))
+        return CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * 0.6), size: CGSize(width: self.containerView!.frame.width, height: self.containerView!.frame.height * 0.6))
     }
     
     override func presentationTransitionWillBegin() {
@@ -40,12 +46,13 @@ class BottomSheetPresentationController: UIPresentationController {
             self?.scrimView.alpha = 0.6
         }, completion: { _ in })
     }
-
     
     override func dismissalTransitionWillBegin() {
         self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
             self.scrimView.alpha = 0
+            self.blurEffectView.alpha = 0
         }, completion: { (UIViewControllerTransitionCoordinatorContext) in
+            self.blurEffectView.removeFromSuperview()
             self.scrimView.removeFromSuperview()
         })
     }

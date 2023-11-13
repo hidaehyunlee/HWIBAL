@@ -10,20 +10,17 @@ import UIKit
 
 class EmotionTrashCell: UICollectionViewCell {
     static let identifier = "EmotionTrashCell"
-
-    lazy var showImageButton: CircleButton = {
-        let button = CircleButton(type: .photo)
-        button.addTarget(self, action: #selector(showImageButtonTapped), for: .touchUpInside)
-        button.isHidden = true
-        return button
-    }()
+    var filePath: String?
 
     lazy var playPauseButton: UIButton = {
         let button = UIButton()
 
-        let image = UIImage(named: "play")
-        button.setBackgroundImage(image, for: .normal)
         button.isHidden = true
+        if let image = UIImage(named: "play") {
+            let colorImage = image.withRenderingMode(.alwaysTemplate)
+            button.setImage(colorImage, for: .normal)
+            button.tintColor = UIColor.white
+        }
 
         return button
     }()
@@ -54,49 +51,93 @@ class EmotionTrashCell: UICollectionViewCell {
         return textView
     }()
 
-    var imageModalView: ImageModalView = .init()
+    lazy var imageContentView: UIImageView = {
+        let imageView = UIImageView()
+
+        imageView.backgroundColor = ColorGuide.main
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        imageView.clipsToBounds = true
+        imageView.isHidden = true
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showImageModal))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+
+        return imageView
+    }()
 
     func initializeUI() {
         backgroundColor = ColorGuide.main
 
-        addSubview(showImageButton)
         addSubview(daysAgoLabel)
         addSubview(textContentLabel)
+        addSubview(imageContentView)
         addSubview(playPauseButton)
 
-        showImageButton.snp.makeConstraints { make in
+        textContentLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
-            make.bottom.equalToSuperview().offset(-20)
+            make.height.equalTo(315 * UIScreen.main.bounds.height / 852) // figma 기준 -20
+
+            if imageContentView.isHidden == true {
+                make.height.equalTo((315 + 160 + 20) * UIScreen.main.bounds.height / 852)
+            }
+        }
+
+        imageContentView.snp.makeConstraints { make in
+            if self.isHidden == false {
+                make.top.equalTo(textContentLabel.snp.bottom).offset(20)
+                make.leading.equalToSuperview().offset(20)
+                make.trailing.equalToSuperview().offset(-20)
+                make.height.equalTo(160 * UIScreen.main.bounds.height / 852) // figma보다 기준 -20
+            }
         }
 
         daysAgoLabel.snp.makeConstraints { make in
-            make.top.equalTo(showImageButton.snp.topMargin)
+            make.bottom.equalToSuperview().offset(-20)
             make.leading.equalToSuperview().offset(20)
         }
 
-        textContentLabel.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
-            make.bottom.equalTo(showImageButton.snp.topMargin).offset(-20)
-        }
-
         playPauseButton.snp.makeConstraints { make in
-            make.trailing.equalTo(showImageButton.snp.trailing).offset(8)
+            make.top.equalTo(imageContentView.snp.bottom).offset(20)
+            make.trailing.equalToSuperview().offset(-20)
             make.size.equalTo(36)
         }
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        showImageButton.isHidden = false
-        imageModalView.removeFromSuperview()
+        imageContentView.isHidden = true
         daysAgoLabel.text = ""
         textContentLabel.text = ""
-        // imageModalView.backImageView.image = nil
     }
 
-    @objc private func showImageButtonTapped() {
-        guard let image = imageModalView.imageView.image else {
+    func transformToLarge() {
+        UIView.animate(withDuration: 0.15) {
+            self.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+        }
+    }
+
+    func transformToStandard() {
+        UIView.animate(withDuration: 0.15) {
+            self.transform = CGAffineTransform.identity
+        }
+    }
+
+    @objc func playPauseButtonTapped() {
+        // filePath가 nil이 아닌지 확인한 후 재생을 시도합니다.
+        guard let filePath = filePath else {
+            return
+        }
+        print("파일 경로 존재 \(filePath)")
+        // filePath를 사용하여 오디오 재생
+        AudioPlayerService(filePath: filePath).playAudio()
+    }
+
+    @objc private func showImageModal() {
+        guard let image = imageContentView.image else {
             return
         }
 
@@ -104,8 +145,11 @@ class EmotionTrashCell: UICollectionViewCell {
         modalViewController.modalPresentationStyle = .overFullScreen
 
         let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
         modalViewController.view.addSubview(imageView)
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        imageView.clipsToBounds = true
         imageView.snp.makeConstraints { make in
             make.centerX.equalTo(modalViewController.view)
             make.centerY.equalTo(modalViewController.view)
