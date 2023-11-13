@@ -8,6 +8,7 @@ import AVFoundation
 import EventBus
 import SnapKit
 import UIKit
+import Photos
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var keyboardHeight: CGFloat = 0
@@ -176,6 +177,33 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
             playButton?.updateButtonType(to: .play)
         }
     }
+    
+    func requestGalleryPermission(){
+        let photoLibraryAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+
+        switch photoLibraryAuthorizationStatus {
+        case .authorized:
+            // 권한이 허용된 경우
+            self.presentImagePicker(sourceType: .photoLibrary)
+        case .notDetermined:
+            // 권한을 아직 사용자에게 묻지 않은 경우
+            PHPhotoLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    DispatchQueue.main.async {
+                        self.presentImagePicker(sourceType: .photoLibrary)
+                    }
+                } else {
+                    // 권한이 거부된 경우에 대한 처리
+                    print("앨범 권한이 거부되었습니다.")
+                }
+            }
+        case .denied, .restricted:
+            // 권한이 거부되거나 제한된 경우에 대한 처리
+            print("앨범 권한이 거부되었습니다.")
+        @unknown default:
+            break
+        }
+    }
 
     @objc func presentImagePickerOptions() {
         let actionSheet = UIAlertController(title: nil, message: "이미지 선택", preferredStyle: .actionSheet)
@@ -186,6 +214,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         
         let galleryAction = UIAlertAction(title: "앨범", style: .default) { _ in
             self.presentImagePicker(sourceType: .photoLibrary)
+            self.requestGalleryPermission()
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .destructive)

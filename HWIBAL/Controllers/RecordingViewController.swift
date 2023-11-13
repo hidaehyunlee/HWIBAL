@@ -5,13 +5,6 @@
 //  Created by 김도윤 on 2023/10/26.
 //
 
-//
-//  RecordingViewController.swift
-//  HWIBAL
-//
-//  Created by 김도윤 on 2023/10/26.
-//
-
 import AVFoundation
 import CoreData
 import UIKit
@@ -47,15 +40,13 @@ class RecordingViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func requestAudioPermission() {
-        AVAudioSession.sharedInstance().requestRecordPermission { response in
-            if response {
-                // 사용자가 오디오 권한을 허용한 경우
-                print("오디오 권한이 허용되었습니다.")
+        AVCaptureDevice.requestAccess(for: .audio, completionHandler: { (granted: Bool) in
+            if granted {
+                print("Audio: 권한 허용")
             } else {
-                // 사용자가 오디오 권한을 거부한 경우 또는 다른 이유로 권한이 허용되지 않은 경우
-                print("오디오 권한이 거부되었습니다.")
+                print("Audio: 권한 거부")
             }
-        }
+        })
     }
     
     func loadSignedInUser() {
