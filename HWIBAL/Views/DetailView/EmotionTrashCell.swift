@@ -11,6 +11,7 @@ import UIKit
 class EmotionTrashCell: UICollectionViewCell {
     static let identifier = "EmotionTrashCell"
     var filePath: String?
+    var audioPlayerService: AudioPlayerService?
 
     lazy var playPauseButton: UIButton = {
         let button = UIButton()
@@ -124,14 +125,18 @@ class EmotionTrashCell: UICollectionViewCell {
     }
 
     @objc func playPauseButtonTapped() {
-        // filePath가 nil이 아닌지 확인한 후 재생을 시도합니다.
         guard let filePath = filePath else {
+            print("File path is nil")
             return
         }
-        print("파일 경로 존재 \(filePath)")
-        // filePath를 사용하여 오디오 재생
-        AudioPlayerService(filePath: filePath).playAudio()
+
+        if audioPlayerService == nil {
+            audioPlayerService = AudioPlayerService(filePath: filePath)
+        }
+        
+        audioPlayerService?.playAudio()
     }
+
 
     @objc private func showImageModal() {
         guard let image = imageContentView.image else {
