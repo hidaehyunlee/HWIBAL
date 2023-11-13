@@ -160,6 +160,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 SignInService.shared.setWithdrawal()
                 UserService.shared.deleteUser((SignInService.shared.signedInUser?.email)!)
                 UserDefaults.standard.set(false, forKey: "isLocked")
+                UserDefaults.standard.set(false, forKey: "isSignedIn")
                 self.goToSignInVC()
             }
             witdrawalAlert.addAction(action)
