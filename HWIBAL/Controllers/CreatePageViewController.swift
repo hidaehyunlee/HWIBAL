@@ -14,6 +14,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     var attributedStringFilePath: URL?
     var playButton: UIButton?
     private var attachedImageView: UIImageView?
+    var playButton: CircleButton?
     var savedAudioURL: URL?
     private var audioPlayer: AVAudioPlayer?
     private var isAudioPlaying = false
@@ -33,12 +34,15 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveAudioNotification(_:)), name: NSNotification.Name("RecordingDidFinish"), object: nil)
+
     }
+    
     
     func hideKeyboard() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
+    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -87,13 +91,20 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     private func setupPlayButton() {
         print("setupPlayButton called")
         
-        let PlayButton = rootView.playButton
-        PlayButton.setImage(UIImage(named: "play"), for: .normal)
-        PlayButton.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
-        PlayButton.backgroundColor = .red
+        let playButton = CircleButton(type: .play)
+        self.playButton = playButton
+        playButton.isHidden = true
 
-        playButton = PlayButton
-        view.bringSubviewToFront(playButton!)
+        view.addSubview(playButton)
+        
+        playButton.snp.makeConstraints { make in
+            make.width.height.equalTo(36)
+            make.leading.equalTo(rootView.soundButton.snp.trailing).offset(16)
+            make.bottom.equalTo(rootView.cameraButton.snp.bottom)
+        }
+        
+        playButton.addTarget(self, action: #selector(playSavedAudio), for: .touchUpInside)
+        view.bringSubviewToFront(playButton)
     }
     
     @objc func startOrStopRecording() {
@@ -120,13 +131,22 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     @objc func receiveAudioNotification(_ notification: Notification) {
         if let url = notification.userInfo?["savedAudioURL"] as? URL {
             savedAudioURL = url
+            // 새로운 오디오 URL로 audioPlayer 업데이트
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.delegate = self
+                audioPlayer?.prepareToPlay()
+            } catch {
+                print("Error initializing new audio player: \(error.localizedDescription)")
+            }
             DispatchQueue.main.async {
-                self.playButton?.backgroundColor = .green
+                self.playButton?.isHidden = false
             }
         } else {
             print("Audio URL is nil")
         }
     }
+
     
     @objc func playSavedAudio() {
         guard let url = savedAudioURL else {
@@ -137,8 +157,8 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         if let player = audioPlayer, player.isPlaying {
             player.pause()
             isAudioPlaying = false
-            playButton?.setImage(UIImage(named: "play"), for: .normal)
-            // playButton?.updateButtonType(to: .play)
+            playButton?.updateButtonType(to: .play)
+        } else {
             do {
                 if audioPlayer == nil {
                     audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -147,7 +167,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
                 }
                 audioPlayer?.play()
                 isAudioPlaying = true
-                playButton?.setImage(UIImage(named: "pause"), for: .normal)
+                playButton?.updateButtonType(to: .pause)
             } catch {
                 print("AVAudioPlayer init or resume failed with error: \(error.localizedDescription)")
             }
@@ -157,7 +177,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {
             isAudioPlaying = false
-            playButton?.setImage(UIImage(named: "play"), for: .normal)
+            playButton?.updateButtonType(to: .play)
         }
     }
 

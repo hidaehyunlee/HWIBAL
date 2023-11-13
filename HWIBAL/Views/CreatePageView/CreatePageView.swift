@@ -14,7 +14,6 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
     let counterLabel = UILabel()
     let soundWaveView = UIView()
     var isImageViewAttached: Bool = false
-    let playButton = CircleButton(type: .play)
     
     let textView = UITextView()
     let paragraphStyle2 = NSMutableParagraphStyle()
@@ -62,11 +61,6 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
         textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
         addSubview(textView)
         
-        addSubview(playButton)
-        
-        // v1.0.0
-        soundButton.isHidden = true
-        playButton.isHidden = true
     }
     
     @objc func textViewDidChange(_ textView: UITextView) {
@@ -114,10 +108,6 @@ class CreatePageView: UIView, RootView, UITextViewDelegate {
             make.width.height.equalTo(36)
         }
         
-        playButton.snp.makeConstraints { make in
-            make.leading.equalTo(soundButton.snp.trailing).offset(16)
-            make.bottom.equalTo(cameraButton.snp.bottom)
-        }
         
         textView.snp.remakeConstraints { make in
             make.top.equalTo(dateLabel.snp.bottom).offset(10)
