@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 final class ReportViewController: RootViewController<ReportView> {
     private var ReportPageItems: [ReportPage] = []
@@ -26,6 +27,8 @@ final class ReportViewController: RootViewController<ReportView> {
         } else {
             initializeUI()
         }
+        
+        scrollindicator()
     }
     
 }
@@ -52,6 +55,17 @@ private extension ReportViewController {
         rootView.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         DispatchQueue.main.async { [weak self] in
             self?.rootView.updateNumberOfPageLabel(1)
+        }
+    }
+    
+    func scrollindicator() {
+        rootView.animationView.play { _ in
+            UIView.animate(withDuration: 0.5, animations: {
+                self.rootView.animationView.alpha = 0
+            }, completion: { _ in
+                self.rootView.animationView.isHidden = true
+                self.rootView.animationView.removeFromSuperview()
+            })
         }
     }
 }
