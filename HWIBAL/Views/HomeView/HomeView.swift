@@ -43,7 +43,7 @@ final class HomeView: UIView, RootView {
         return label
     }()
     
-    private lazy var hwibariImage: UIImageView = {
+    lazy var hwibariImage: UIImageView = {
         let imageView = hwibariImageView(named: "hwibari_default", contentMode: .scaleAspectFit)
         return imageView
     }()
@@ -131,47 +131,47 @@ final class HomeView: UIView, RootView {
     }()
     
     private lazy var writeButton: UIView = {
-            let pencilButton = UIView()
-            pencilButton.backgroundColor = .white
-            pencilButton.layer.cornerRadius = 4
-            pencilButton.layer.borderWidth = 1.5
-            pencilButton.layer.borderColor = ColorGuide.main.cgColor
-            let pencilImageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
-            pencilButton.addGestureRecognizer(pencilImageViewTapGesture)
+        let pencilButton = UIView()
+        pencilButton.backgroundColor = .white
+        pencilButton.layer.cornerRadius = 4
+        pencilButton.layer.borderWidth = 1.5
+        pencilButton.layer.borderColor = ColorGuide.main.cgColor
+        let pencilImageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(createButtonTapped))
+        pencilButton.addGestureRecognizer(pencilImageViewTapGesture)
 
-            addSubview(pencilButton)
+        addSubview(pencilButton)
 
-            pencilButton.snp.makeConstraints { make in
-                make.width.equalTo(56)
-                make.height.equalTo(56)
-                make.trailing.equalToSuperview().offset(-24)
-                make.bottom.equalToSuperview().offset(-40)
-            }
+        pencilButton.snp.makeConstraints { make in
+            make.width.equalTo(56)
+            make.height.equalTo(56)
+            make.trailing.equalToSuperview().offset(-24)
+            make.bottom.equalToSuperview().offset(-40)
+        }
 
         let penImage = createPenImage
-            pencilButton.addSubview(penImage)
+        pencilButton.addSubview(penImage)
 
-            penImage.snp.makeConstraints { make in
-                make.width.equalTo(25)
-                make.height.equalTo(25)
-                make.center.equalToSuperview()
-            }
-            return pencilButton
-        }()
+        penImage.snp.makeConstraints { make in
+            make.width.equalTo(25)
+            make.height.equalTo(25)
+            make.center.equalToSuperview()
+        }
+        return pencilButton
+    }()
 
-        // MARK: - Pen Image
+    // MARK: - Pen Image
 
-        private lazy var createPenImage: UIView = {
-            let penImage = UIView()
-            penImage.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var createPenImage: UIView = {
+        let penImage = UIView()
+        penImage.translatesAutoresizingMaskIntoConstraints = false
 
-            let image0 = UIImage(named: "pen")
-            let imageView = UIImageView(image: image0)
-            imageView.contentMode = .scaleAspectFit
-            penImage.addSubview(imageView)
+        let image0 = UIImage(named: "pen")
+        let imageView = UIImageView(image: image0)
+        imageView.contentMode = .scaleAspectFit
+        penImage.addSubview(imageView)
 
-            return penImage
-        }()
+        return penImage
+    }()
     
     // MARK: - Label Title Update Function
     
@@ -323,7 +323,7 @@ final class HomeView: UIView, RootView {
             UIImage(named: "hwibari_default")!
         ]
         
-        self.titleLabel1.text = "수고했어요. 토닥토닥💕"
+        titleLabel1.text = "수고했어요. 토닥토닥💕"
         titleLabel2.isHidden = true
         myPageButton.customView?.isHidden = true
         bottomButton.isHidden = true

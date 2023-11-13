@@ -46,13 +46,19 @@ final class LaunchScreenViewController: UIViewController {
         view.addSubview(animationView)
 
         view.addSubview(textLabel)
-        textLabel.frame = CGRect(x: 0, y: animationView.frame.maxY + 300, width: view.bounds.width, height: 70)
+        textLabel.snp.makeConstraints { make in
+            make.top.equalTo(animationView.snp.bottom).offset(-30)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(70)
+        }
 
-        let animationViewWidth: CGFloat = 200.0
-        let animationViewHeight: CGFloat = 200.0
         animationView.backgroundColor = UIColor.systemBackground
-        animationView.frame = CGRect(x: 0, y: 0, width: animationViewWidth, height: animationViewHeight)
-        animationView.center = view.center
+        animationView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(200)
+            make.height.equalTo(200)
+        }
 
         animationView.play { _ in
             UIView.animate(withDuration: 0.7, animations: {
