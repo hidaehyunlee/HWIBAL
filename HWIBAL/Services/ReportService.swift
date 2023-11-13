@@ -12,6 +12,18 @@ class ReportService {
     static let shared = ReportService()
     let coreDataManager = CoreDataManager.shared
     let context = CoreDataManager.shared.persistentContainer.viewContext
+    
+    // print: 유저의 전체 리포트 출력
+    func printTotalReports(_ user: User) {
+        let reports = fetchTotalEmotionTrashes(user)
+        for report in reports {
+            print("reports -")
+            print("""
+            text: \(report.text ?? "")
+            timestamp: \(report.timestamp ?? Date())
+            """)
+        }
+    }
 
     // fetch: 유저의 전체 감정쓰레기 가져오기
     func fetchTotalEmotionTrashes(_ user: User) -> [Report] {
@@ -109,13 +121,14 @@ class ReportService {
         let now = Date()
 
         // 이번 주의 시작과 끝 날짜 계산
-        guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)),
-              let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)
-        else {
+        if let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)),
+            let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek) {
+
+            return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfWeek, endDate: endOfWeek)
+            print("startOfWeek: \(startOfWeek), endOfWeek: \(endOfWeek)")
+        } else {
             return 0
         }
-
-        return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfWeek, endDate: endOfWeek)
     }
 
     // 지난주 감정쓰레기 개수 계산
@@ -123,13 +136,18 @@ class ReportService {
         let calendar = Calendar.current
         let now = Date()
 
-        // 지난 주의 시작과 끝 날짜 계산
-        guard let startOfLastWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)),
-              let endOfLastWeek = calendar.date(byAdding: .day, value: -7, to: startOfLastWeek) else {
-            return 0
-        }
+        // 현재 날짜가 속한 주의 시작 날짜 계산
+        if let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)) {
 
-        return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfLastWeek, endDate: endOfLastWeek)
+            // 지난 주의 시작과 끝 날짜 계산
+            if let startOfLastWeek = calendar.date(byAdding: .day, value: -7, to: startOfWeek),
+                let endOfLastWeek = calendar.date(byAdding: .day, value: 6, to: startOfLastWeek) {
+
+                return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfLastWeek, endDate: endOfLastWeek)
+                print("startOfLastWeek: \(startOfLastWeek), endOfLastWeek: \(endOfLastWeek)")
+            }
+        }
+        return 0
     }
     
     // 일주일 전과 이번주 감정쓰레기 비교
