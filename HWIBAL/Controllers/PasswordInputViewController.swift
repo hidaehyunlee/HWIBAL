@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import LocalAuthentication
+
+protocol PasswordInputDelegate: AnyObject {
+    func passwordInputDidComplete()
+}
 
 class PasswordInputViewController: RootViewController<PasswordInputView> {
+    weak var delegate: PasswordInputDelegate?
     private var enteredPassword: [String] = [] {
         didSet {
             updateSubtitle()
@@ -18,10 +24,16 @@ class PasswordInputViewController: RootViewController<PasswordInputView> {
         super.viewDidLoad()
 
         rootView.delegate = self
+        authenticateWithBiometrics()
     }
 }
 
 extension PasswordInputViewController: PasswordSetupViewDelegate {
+    private func passwordInputComplete() {
+        delegate?.passwordInputDidComplete()
+        dismiss(animated: true, completion: nil)
+    }
+
     func passwordButtonTapped(_ number: String) {
         if enteredPassword.count < 4 {
             enteredPassword.append(number)
@@ -41,7 +53,6 @@ extension PasswordInputViewController: PasswordSetupViewDelegate {
     func cancelButtonTapped() {
         resetPassword()
         UserDefaults.standard.set(false, forKey: "isSignedIn")
-        UserDefaults.standard.set(false, forKey: "isLocked")
         
         let signInVC = SignInViewController()
             
@@ -62,23 +73,59 @@ extension PasswordInputViewController: PasswordSetupViewDelegate {
         }
     }
     
+    private func authenticateWithBiometrics() {
+        if isBiometricAuthenticationAvailable() {
+            let context = LAContext()
+            context.localizedFallbackTitle = "비밀번호 입력"
+
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "잠금을 해제하려면 Face ID 인증을 사용하세요.") { (success, error) in
+                if success {
+                    DispatchQueue.main.async {
+                        self.enterPasswordSuccess()
+                    }
+                } else {
+                    self.checkPassword()
+                }
+            }
+        } else {
+            checkPassword()
+        }
+    }
+    
+    func isBiometricAuthenticationAvailable() -> Bool {
+        let context = LAContext()
+        var error: NSError?
+
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            return true
+        } else {
+            // Biometric 인증이 지원되지 않거나 설정되어 있지 않은 경우
+            return false
+        }
+    }
+    
     private func checkPassword() {
         let enterPassword = enteredPassword.joined()
         let password = UserDefaults.standard.string(forKey: "appPassword")
+        
         if enterPassword == password {
-            enteredPassword.removeAll()
-            enterPasswordSuccess()
+            self.enteredPassword.removeAll()
+            self.enterPasswordSuccess()
         } else {
-            rootView.subTitle.text = "암호가 일치하지 않습니다.\n다시 입력해주세요."
-            rootView.password.text = ""
-            enteredPassword.removeAll()
+            DispatchQueue.main.async { [weak self] in
+                self?.rootView.subTitle.text = "암호가 일치하지 않습니다.\n다시 입력해주세요."
+                self?.rootView.password.text = ""
+            }
+            self.enteredPassword.removeAll()
         }
     }
     
     func resetPassword() {
         enteredPassword.removeAll()
-        rootView.password.text = ""
-        rootView.subTitle.text = "암호 4자리를 입력해주세요."
+        DispatchQueue.main.async { [weak self] in
+            self?.rootView.subTitle.text = "암호 4자리를 입력해주세요."
+            self?.rootView.password.text = ""
+        }
     }
     
     private func enterPasswordSuccess() {
