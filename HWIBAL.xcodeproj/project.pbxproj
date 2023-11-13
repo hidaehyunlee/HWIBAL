@@ -720,7 +720,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "글 작성시 사진 촬영을 위해 카메라 이용이 필요합니다.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "접근권한을 허용하고 Face ID로 앱 잠금을 해제해 보세요.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "접근권한을 허용하고 음성 녹음으로 감정쓰레기를 작성해 보세요.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "글 작성시 사진 첨부를 위해 사진 라이브러리 이용이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
@@ -757,7 +760,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HWIBAL/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "글 작성시 사진 촬영을 위해 카메라 이용이 필요합니다.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "접근권한을 허용하고 Face ID로 앱 잠금을 해제해 보세요.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "접근권한을 허용하고 음성 녹음으로 감정쓰레기를 작성해 보세요.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "글 작성시 사진 첨부를 위해 사진 라이브러리 이용이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
