@@ -6,9 +6,9 @@
 
 import AVFoundation
 import EventBus
+import Photos
 import SnapKit
 import UIKit
-import Photos
 
 class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var keyboardHeight: CGFloat = 0
@@ -105,7 +105,6 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
     }
     
     @objc func startOrStopRecording() {
-        
         // 이미 저장된 오디오 URL이 있는지 확인
         if let savedAudioURL = savedAudioURL {
             let recordingVC = RecordingViewController()
@@ -178,13 +177,13 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         }
     }
     
-    func requestGalleryPermission(){
+    func requestGalleryPermission() {
         let photoLibraryAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
 
         switch photoLibraryAuthorizationStatus {
         case .authorized:
             // 권한이 허용된 경우
-            self.presentImagePicker(sourceType: .photoLibrary)
+            presentImagePicker(sourceType: .photoLibrary)
         case .notDetermined:
             // 권한을 아직 사용자에게 묻지 않은 경우
             PHPhotoLibrary.requestAuthorization { status in
@@ -200,6 +199,9 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         case .denied, .restricted:
             // 권한이 거부되거나 제한된 경우에 대한 처리
             print("앨범 권한이 거부되었습니다.")
+        case .limited:
+            // 제한된 액세스 경우 처리 (iOS 14 이상)
+            print("앨범 권한이 제한되었습니다.")
         @unknown default:
             break
         }
@@ -260,15 +262,14 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
         titleLabel.font = FontGuide.size32Bold
         titleLabel.sizeToFit()
         
-        let leftPadding: CGFloat = 16
-        let rightPadding: CGFloat = 16
-        let bottomPadding: CGFloat = 15
+        let titleLeftPadding: CGFloat = 16
+        let titleBottomPadding: CGFloat = 15
         
         let titleViewHeight = navigationController?.navigationBar.bounds.height ?? 44.0
         let titleViewWidth = navigationController?.navigationBar.bounds.width ?? UIScreen.main.bounds.width
         
         let titleView = UIView(frame: CGRect(x: 0, y: 0, width: titleViewWidth, height: titleViewHeight))
-        titleLabel.frame.origin = CGPoint(x: leftPadding, y: titleViewHeight - titleLabel.frame.height - bottomPadding)
+        titleLabel.frame.origin = CGPoint(x: titleLeftPadding, y: titleViewHeight - titleLabel.frame.height - titleBottomPadding)
         titleView.addSubview(titleLabel)
         
         navigationItem.title = "감정쓰레기"
@@ -296,7 +297,7 @@ class CreatePageViewController: RootViewController<CreatePageView>, AVAudioRecor
 
             if let savedAudioURL = self.savedAudioURL, let currentUser = SignInService.shared.signedInUser {
                 recording = RecordingService.shared.createRecording(filePath: savedAudioURL.path, duration: TimeInterval(), title: "Recording on \(Date())", user: currentUser)
-                print(recording?.filePath)
+                print(recording?.filePath as Any)
             }
             EmotionTrashService.shared.createEmotionTrash(user: SignInService.shared.signedInUser ?? User(), text: attributedText.string, attributedText: attributedText, image: nil, recording: recording)
             

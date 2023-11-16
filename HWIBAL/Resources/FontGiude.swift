@@ -16,8 +16,8 @@ enum FontGuide {
             UIFontDescriptor.AttributeName.size: size,
             UIFontDescriptor.AttributeName.featureSettings: [
                 [
-                    UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
-                    UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector,
+                    UIFontDescriptor.FeatureKey.type: kNumberSpacingType,
+                    UIFontDescriptor.FeatureKey.selector: kMonospacedNumbersSelector,
                 ],
             ],
         ]

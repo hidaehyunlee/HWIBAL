@@ -124,8 +124,10 @@ class ReportService {
         if let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)),
             let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek) {
 
-            return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfWeek, endDate: endOfWeek)
             print("startOfWeek: \(startOfWeek), endOfWeek: \(endOfWeek)")
+            
+            return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfWeek, endDate: endOfWeek)
+            
         } else {
             return 0
         }
@@ -143,8 +145,10 @@ class ReportService {
             if let startOfLastWeek = calendar.date(byAdding: .day, value: -7, to: startOfWeek),
                 let endOfLastWeek = calendar.date(byAdding: .day, value: 6, to: startOfLastWeek) {
 
-                return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfLastWeek, endDate: endOfLastWeek)
                 print("startOfLastWeek: \(startOfLastWeek), endOfLastWeek: \(endOfLastWeek)")
+                
+                return fetchEmotionTrashCount(user: SignInService.shared.signedInUser!, startDate: startOfLastWeek, endDate: endOfLastWeek)
+                
             }
         }
         return 0
