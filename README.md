@@ -10,7 +10,7 @@
 - **팀원:** [이대현](https://github.com/hidaehyunlee), [김서온](https://github.com/anfgbwl), [김도윤](https://github.com/doyuny), [서동준](https://github.com/june-hehe) 총 4명
 - **개발 기간:** 2023/10/10 ~ 2023/11/17
 - **프로젝트 저장소**: [Github 바로가기](https://github.com/hidaehyunlee/HWIBAL)
-  - *11월 중 앱스토어 출시 목표*
+- **서비스 주소:** [AppStore 바로가기](https://apps.apple.com/kr/app/%EC%95%84-%ED%9C%98%EB%B0%9C/id6471419210)
 
 <br>
 
