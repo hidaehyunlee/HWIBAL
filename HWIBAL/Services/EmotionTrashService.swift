@@ -49,8 +49,7 @@ class EmotionTrashService {
                 newReport.id = UUID()
                 newReport.text = text
                 newReport.attributedStringData = newEmotionTrash.attributedStringData
-                print(newReport.attributedStringData)
-
+                print(newReport.attributedStringData as Any)
                 newReport.timestamp = Date()
                 newReport.user = user
             }
@@ -119,20 +118,7 @@ class EmotionTrashService {
         fetchRequest.predicate = NSPredicate(format: "user == %@", user)
         
         do {
-            let emotionTrashes = try context.fetch(fetchRequest)
-            // Process `emotionTrashes` inside the scope where it's declared
-            for emotionTrash in emotionTrashes {
-                if let data = emotionTrash.attributedStringData {
-                    do {
-                        // This should be a temporary variable or a property that's later used to display the attributed string
-                        let attributedString = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? NSAttributedString
-                        // You should now assign this `attributedString` to a property or pass it to where it needs to be displayed
-                    } catch {
-                        print("Data를 NSAttributedString으로 변환하는데 실패했습니다: \(error.localizedDescription)")
-                    }
-                }
-            }
-            return emotionTrashes
+            return try context.fetch(fetchRequest)
         } catch {
             print("Error fetching emotionTrashes: \(error)")
             return []
